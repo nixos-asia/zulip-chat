@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Wouldn’t it make sense to not allow nesting by default, like tmux.</p>\n<p>Such issues can be taken care of: <a href=\"https://github.com/NixOS/nix/issues/6140#issuecomment-1986317698\">https://github.com/NixOS/nix/issues/6140#issuecomment-1986317698</a></p>",
+        "id": 427875407,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1710923419
+    },
+    {
+        "content": "<p>You can file a feature request on <a href=\"https://github.com/nixos/nix\">https://github.com/nixos/nix</a></p>",
+        "id": 427917259,
+        "sender_full_name": "Srid",
+        "timestamp": 1710938143
+    }
+]

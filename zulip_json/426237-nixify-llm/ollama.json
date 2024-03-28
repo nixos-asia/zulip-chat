@@ -1,0 +1,152 @@
+[
+    {
+        "content": "<p><a href=\"/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png\"></a></div><p><a href=\"https://github.com/ollama/ollama\">https://github.com/ollama/ollama</a></p>\n<p>You can run it from nixpkgs. Run these two commands in separate terminals:</p>\n<div class=\"codehilite\"><pre><span></span><code>nix run nixpkgs#ollama serve\n</code></pre></div>\n<div class=\"codehilite\"><pre><span></span><code>nix run nixpkgs#ollama run llama2-uncensored\n</code></pre></div>\n<p>Works on macOS, at least.</p>\n<p>(The query I used to test the model is inspired by the one Musk used to demonstrate Grok)</p>",
+        "id": 422467380,
+        "sender_full_name": "Srid",
+        "timestamp": 1708450185
+    },
+    {
+        "content": "<p>Well it might work if ROCm works. Which it doesn't if I try. So I would probably have to build a shell for ROCm or something. Otherwise I will be using CPU...</p>",
+        "id": 422471452,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708451653
+    },
+    {
+        "content": "<p>In case anyone likes to try this on AMD, here is the command to create a nice running docker container on Linux: </p>\n<div class=\"codehilite\"><pre><span></span><code>docker run -d --privileged --device /dev/kfd -v ollama:/root/.ollama -p 11434:11434 -e OLLAMA_DEBUG=1 -e ROCR_VISIBLE_DEVICES=&quot;0&quot; -e HSA_OVERRIDE_GFX_VERSION=10.3.0 --name ollama ollama/ollama:0.1.24-rocm\n</code></pre></div>\n<p>The HSA_OVERRIDE_GFX_VERSION=10.3.0 environment variable is only needed if your GPU is not offically supported by ROCm. Which is most consumer and workstation GPUs actually, except a handful. Depending on the GPU it might or might not work.</p>\n<p>And then you can do a </p>\n<div class=\"codehilite\"><pre><span></span><code>docker exec -it ollama ollama run llama2\n</code></pre></div>\n<p>Or whatever model you want to run</p>",
+        "id": 422472224,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708451938
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> Does the docker container run do anything special compared to pure Nix instance (<code>nix run ..</code>) above?</p>",
+        "id": 422472882,
+        "sender_full_name": "Srid",
+        "timestamp": 1708452165
+    },
+    {
+        "content": "<p>well it has ROCm installed obviously so that the GPU can use it. However that is just the container for ROCm they provide. Juding from the dockerfile in the ollama GitHub repo, they build them on the basis of some CentOS images provides by AMD. </p>\n<p>These in turn have their own repo, which I presume to be this one: <a href=\"https://github.com/ROCm/ROCm-docker\">https://github.com/ROCm/ROCm-docker</a></p>",
+        "id": 422474015,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708452560
+    },
+    {
+        "content": "<p>This here might be the dockerfile for the base image on top of which ollama is compiling their GO binary:</p>\n<p><a href=\"https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete\">https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete</a></p>",
+        "id": 422474741,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708452808
+    },
+    {
+        "content": "<p>I created a <code>process-compose-flake-module</code> for <code>ollama</code>, this is for a personal project that I am working on and here’s how easy it is to setup:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  services<span class=\"o\">.</span><span class=\"ss\">ollama</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n      <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n      <span class=\"ss\">host</span> <span class=\"o\">=</span> <span class=\"s2\">\"100.71.49.133\"</span><span class=\"p\">;</span>\n      <span class=\"c1\"># TODO: adding more than one model breaks in shellcheck</span>\n      <span class=\"ss\">models</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"llama2-uncensored\"</span> <span class=\"p\">];</span>\n   <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 429110544,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711224021
+    },
+    {
+        "content": "<p><code>nix run ...</code> cmd?</p>",
+        "id": 429110618,
+        "sender_full_name": "Srid",
+        "timestamp": 1711224067
+    },
+    {
+        "content": "<p>I will upstream this to services-flake, it is right now in the private repo as a module. </p>\n<p>More about the project soon.</p>",
+        "id": 429110791,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711224195
+    },
+    {
+        "content": "<p>Here it is: <a href=\"https://github.com/juspay/services-flake/pull/137\">https://github.com/juspay/services-flake/pull/137</a></p>",
+        "id": 429112943,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711225844
+    },
+    {
+        "content": "<p>The nix run command is a bit long though:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code><span class=\"w\"> </span>nix<span class=\"w\"> </span>run<span class=\"w\"> </span><span class=\"s2\">\"github:juspay/services-flake/ollama?dir=test\"</span><span class=\"c1\">#ollama --override-input services-flake github:juspay/services-flake/ollama</span>\n</code></pre></div>\n<p>This starts up ollama server with no models though, let me use a smaller sample model in test.</p>",
+        "id": 429113137,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711225956
+    },
+    {
+        "content": "<p><a href=\"https://ollama.com/library/tinyllama\">https://ollama.com/library/tinyllama</a> looks like a good candidate</p>",
+        "id": 429113264,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711226078
+    },
+    {
+        "content": "<p>Oh wait, I can’t really pull models in flake check because of sandbox mode. I think these models will have to be pre-fetched by another derivation.</p>",
+        "id": 429113642,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711226409
+    },
+    {
+        "content": "<p>A separate repo, that uses services-flake module, to provide a single <code>nix run ..</code> to get some of these models up running, including a chat interface even, would be cool.</p>",
+        "id": 429113660,
+        "sender_full_name": "Srid",
+        "timestamp": 1711226446
+    },
+    {
+        "content": "<p><a href=\"https://github.com/F1bonacc1/process-compose/issues/64\">https://github.com/F1bonacc1/process-compose/issues/64</a> I can provide a single nix run command this, basically allowing users to interact with the chat process in the process-compose window</p>",
+        "id": 429115404,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711227772
+    },
+    {
+        "content": "<p><a href=\"https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517\">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>\n<p>I will try it out with 0.88.0</p>",
+        "id": 429115425,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711227796
+    },
+    {
+        "content": "<p>Curious if there's a chat bot web app that can interact with ollama</p>",
+        "id": 429115680,
+        "sender_full_name": "Srid",
+        "timestamp": 1711228041
+    },
+    {
+        "content": "<p>There is this on top of search result: <a href=\"https://github.com/HelgeSverre/ollama-gui\">https://github.com/HelgeSverre/ollama-gui</a></p>",
+        "id": 429115894,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228192
+    },
+    {
+        "content": "<p>Let's ship it. Gonna be a rad demo of services-flake.</p>",
+        "id": 429115972,
+        "sender_full_name": "Srid",
+        "timestamp": 1711228243
+    },
+    {
+        "content": "<p><a href=\"https://github.com/open-webui/open-webui\">https://github.com/open-webui/open-webui</a> there’s also this (much more popular), but looks like it is bloated with a lot of features.</p>",
+        "id": 429116013,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228296
+    },
+    {
+        "content": "<p>I will give both the UIs a shot though</p>",
+        "id": 429116121,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228381
+    },
+    {
+        "content": "<p>I will try this tomorrow, going to get some sleep now</p>",
+        "id": 429116433,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228566
+    },
+    {
+        "content": "<p><a href=\"https://github.com/NixOS/nixpkgs/pull/275448\">https://github.com/NixOS/nixpkgs/pull/275448</a></p>",
+        "id": 429116456,
+        "sender_full_name": "Srid",
+        "timestamp": 1711228597
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/429115425\">said</a>:</p>\n<blockquote>\n<p><a href=\"https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517\">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>\n<p>I will try it out with 0.88.0</p>\n</blockquote>\n<p>Update: I didn’t notice that the STDIN support is not there, so even with the current PTY support, this isn’t possible in the process-compose window. Gotta take the WebUI route, anyways, the webui demo will be much cooler.</p>",
+        "id": 429117121,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711229050
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png\">Screenshot-2024-03-25-at-11.47.58PM.png</a><br>\nI have the UI running, it involved a lot of hacks to get it running because of the way open-webui uses the python backend.</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png\" title=\"Screenshot-2024-03-25-at-11.47.58PM.png\"><img src=\"/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png\"></a></div>",
+        "id": 429590092,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711433921
+    }
+]

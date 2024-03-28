@@ -1,0 +1,653 @@
+{
+    "streams": {
+        "flake-parts": {
+            "id": 419910,
+            "latest_id": 427483108,
+            "topic_data": {
+                "Community docs site in Emanote": {
+                    "latest_date": 1705985197,
+                    "size": 2
+                },
+                "Having multiple `pkgs`": {
+                    "latest_date": 1710768492,
+                    "size": 2
+                },
+                "stream events": {
+                    "latest_date": 1705161318,
+                    "size": 1
+                }
+            }
+        },
+        "general": {
+            "id": 413951,
+            "latest_id": 427137680,
+            "topic_data": {
+                "0th": {
+                    "latest_date": 1700662582,
+                    "size": 2
+                },
+                "ANN: NixOS Asia website": {
+                    "latest_date": 1702918472,
+                    "size": 17
+                },
+                "Current FOSS Scenario in India": {
+                    "latest_date": 1702134062,
+                    "size": 13
+                },
+                "FOSSMeet'24, Kerala (March 22-24)": {
+                    "latest_date": 1710439516,
+                    "size": 3
+                },
+                "FP India": {
+                    "latest_date": 1710439516,
+                    "size": 3
+                },
+                "Introduction": {
+                    "latest_date": 1709061477,
+                    "size": 6
+                },
+                "Letting Google index this Zulip": {
+                    "latest_date": 1710687099,
+                    "size": 6
+                },
+                "Social media stream": {
+                    "latest_date": 1703948845,
+                    "size": 2
+                },
+                "Syntax highlighting": {
+                    "latest_date": 1704297930,
+                    "size": 1
+                },
+                "stream events": {
+                    "latest_date": 1701277777,
+                    "size": 5
+                }
+            }
+        },
+        "haskell-flake": {
+            "id": 413949,
+            "latest_id": 430102669,
+            "topic_data": {
+                "0.5.0 plan": {
+                    "latest_date": 1711562183,
+                    "size": 5
+                },
+                "Can’t assign custom library packages in settings": {
+                    "latest_date": 1711568678,
+                    "size": 3
+                },
+                "Documentation updates": {
+                    "latest_date": 1710421639,
+                    "size": 1
+                },
+                "Failed to parse `cabal.project`": {
+                    "latest_date": 1708591608,
+                    "size": 8
+                },
+                "Non-standard package set": {
+                    "latest_date": 1709297205,
+                    "size": 3
+                },
+                "Removing IFD": {
+                    "latest_date": 1704783877,
+                    "size": 7
+                },
+                "Using horizon package set with haskell-flake": {
+                    "latest_date": 1707289374,
+                    "size": 6
+                },
+                "`custom` setting stopped working": {
+                    "latest_date": 1711641308,
+                    "size": 15
+                },
+                "`globalSettings` is for which package?": {
+                    "latest_date": 1709310331,
+                    "size": 16
+                },
+                "cabal-install ignoring user's package set": {
+                    "latest_date": 1706757901,
+                    "size": 61
+                },
+                "haskell-language-server dropped support for ghc 8.10": {
+                    "latest_date": 1708598026,
+                    "size": 3
+                },
+                "stream events": {
+                    "latest_date": 1700660225,
+                    "size": 1
+                },
+                "what is `toDefinedProject`?": {
+                    "latest_date": 1710340722,
+                    "size": 6
+                }
+            }
+        },
+        "horizon-haskell": {
+            "id": 424491,
+            "latest_id": 424227564,
+            "topic_data": {
+                "Introduction To Horizon Haskell": {
+                    "latest_date": 1709297230,
+                    "size": 3
+                },
+                "stream events": {
+                    "latest_date": 1707374023,
+                    "size": 1
+                }
+            }
+        },
+        "jenkins-nix-ci": {
+            "id": 416818,
+            "latest_id": 421630600,
+            "topic_data": {
+                "cannot get working in my setup": {
+                    "latest_date": 1707995310,
+                    "size": 7
+                },
+                "stream events": {
+                    "latest_date": 1702383069,
+                    "size": 1
+                }
+            }
+        },
+        "nix": {
+            "id": 413950,
+            "latest_id": 429873859,
+            "topic_data": {
+                "1Password TouchID auth for git, ssh, etc.": {
+                    "latest_date": 1707870108,
+                    "size": 5
+                },
+                "2 level deep packages in nix flakes": {
+                    "latest_date": 1704373940,
+                    "size": 7
+                },
+                "Add a flake input that doesn’t depend on external git": {
+                    "latest_date": 1709538008,
+                    "size": 4
+                },
+                "Becoming a package maintainer": {
+                    "latest_date": 1701100090,
+                    "size": 3
+                },
+                "Cache config in `nix run` of flake": {
+                    "latest_date": 1707845691,
+                    "size": 12
+                },
+                "Check whether generated code is in sync": {
+                    "latest_date": 1702465912,
+                    "size": 13
+                },
+                "Conditional internal option": {
+                    "latest_date": 1711550054,
+                    "size": 3
+                },
+                "Darwin: launchctl logs for a service": {
+                    "latest_date": 1711368460,
+                    "size": 9
+                },
+                "Dependency graph": {
+                    "latest_date": 1707994235,
+                    "size": 8
+                },
+                "Dependency patches without massive rebuilds": {
+                    "latest_date": 1708284744,
+                    "size": 1
+                },
+                "Emacs with Xwidgets (Darwin)": {
+                    "latest_date": 1710678534,
+                    "size": 2
+                },
+                "Expressions in flake inputs": {
+                    "latest_date": 1711471918,
+                    "size": 9
+                },
+                "Filesystem As Memory": {
+                    "latest_date": 1704218419,
+                    "size": 1
+                },
+                "Flake template vars": {
+                    "latest_date": 1709572261,
+                    "size": 4
+                },
+                "Git manyFiles issue": {
+                    "latest_date": 1708136915,
+                    "size": 1
+                },
+                "Haskell + Rust FFI": {
+                    "latest_date": 1704808497,
+                    "size": 11
+                },
+                "How to override Python packages?": {
+                    "latest_date": 1702319626,
+                    "size": 3
+                },
+                "IFD": {
+                    "latest_date": 1707244803,
+                    "size": 1
+                },
+                "LWN Article": {
+                    "latest_date": 1709314763,
+                    "size": 5
+                },
+                "Man pages with home-manager": {
+                    "latest_date": 1706157391,
+                    "size": 8
+                },
+                "Module system tutorial": {
+                    "latest_date": 1708102206,
+                    "size": 1
+                },
+                "Nix events in India": {
+                    "latest_date": 1709295968,
+                    "size": 4
+                },
+                "Nix performance": {
+                    "latest_date": 1705729568,
+                    "size": 1
+                },
+                "Nix tutorial series": {
+                    "latest_date": 1704778853,
+                    "size": 6
+                },
+                "Nix using incorrect GHC": {
+                    "latest_date": 1708591710,
+                    "size": 6
+                },
+                "Nix's Achilles heel?": {
+                    "latest_date": 1710596517,
+                    "size": 3
+                },
+                "NixCon NA 2024": {
+                    "latest_date": 1710269080,
+                    "size": 3
+                },
+                "Nixifying the vlang dev environment": {
+                    "latest_date": 1702063056,
+                    "size": 12
+                },
+                "Non-Rust dependencies in Rust flake template": {
+                    "latest_date": 1706323713,
+                    "size": 4
+                },
+                "Passing arguments to flake": {
+                    "latest_date": 1702431658,
+                    "size": 16
+                },
+                "Recursively search through flake inputs": {
+                    "latest_date": 1707191198,
+                    "size": 15
+                },
+                "Running python process using process-compose": {
+                    "latest_date": 1704352206,
+                    "size": 15
+                },
+                "Rust cross-compilation": {
+                    "latest_date": 1707910194,
+                    "size": 13
+                },
+                "Separating evaluation and realization": {
+                    "latest_date": 1708450747,
+                    "size": 4
+                },
+                "The Nix Abstractions": {
+                    "latest_date": 1711543671,
+                    "size": 2
+                },
+                "flake": {
+                    "latest_date": 1710937170,
+                    "size": 3
+                },
+                "helix": {
+                    "latest_date": 1708454342,
+                    "size": 7
+                },
+                "home-manager without admin access": {
+                    "latest_date": 1709315186,
+                    "size": 11
+                },
+                "jupyter env setup": {
+                    "latest_date": 1709979562,
+                    "size": 4
+                },
+                "nested nix shell": {
+                    "latest_date": 1710938143,
+                    "size": 2
+                },
+                "nix": {
+                    "latest_date": 1711116271,
+                    "size": 1
+                },
+                "nix - direnv and starship": {
+                    "latest_date": 1711134080,
+                    "size": 1
+                },
+                "nix-index": {
+                    "latest_date": 1707549982,
+                    "size": 11
+                },
+                "nosys `pkgs` handling": {
+                    "latest_date": 1708801310,
+                    "size": 5
+                },
+                "stream events": {
+                    "latest_date": 1700660530,
+                    "size": 1
+                },
+                "✔ automatic gc in home-manager": {
+                    "latest_date": 1707217425,
+                    "size": 9
+                }
+            }
+        },
+        "nix-browser": {
+            "id": 415454,
+            "latest_id": 423631692,
+            "topic_data": {
+                "Building Tauri apps": {
+                    "latest_date": 1701438921,
+                    "size": 1
+                },
+                "Unable to gather nix info issue": {
+                    "latest_date": 1709047571,
+                    "size": 2
+                },
+                "stream events": {
+                    "latest_date": 1701438860,
+                    "size": 1
+                }
+            }
+        },
+        "nixify-llm": {
+            "id": 426237,
+            "latest_id": 429590092,
+            "topic_data": {
+                "Aider vs": {
+                    "latest_date": 1708800973,
+                    "size": 3
+                },
+                "Editor integration (LSP?)": {
+                    "latest_date": 1708778137,
+                    "size": 46
+                },
+                "Eluther AI": {
+                    "latest_date": 1708453390,
+                    "size": 2
+                },
+                "LoRA model refinememt": {
+                    "latest_date": 1708778193,
+                    "size": 2
+                },
+                "Name of tool who makes all LLMV OpenAPI compatible": {
+                    "latest_date": 1708771075,
+                    "size": 22
+                },
+                "khoj": {
+                    "latest_date": 1708775249,
+                    "size": 2
+                },
+                "nixified.ai": {
+                    "latest_date": 1708450255,
+                    "size": 3
+                },
+                "ollama": {
+                    "latest_date": 1711433921,
+                    "size": 25
+                },
+                "sc - or how to AI editor": {
+                    "latest_date": 1711226771,
+                    "size": 25
+                },
+                "stream events": {
+                    "latest_date": 1708449862,
+                    "size": 2
+                }
+            }
+        },
+        "nixos": {
+            "id": 413948,
+            "latest_id": 429766644,
+            "topic_data": {
+                "Darwin's linux-builder": {
+                    "latest_date": 1708700392,
+                    "size": 6
+                },
+                "Deploying to DigitalOcean": {
+                    "latest_date": 1701465821,
+                    "size": 7
+                },
+                "Home CI machine (portable)": {
+                    "latest_date": 1709118594,
+                    "size": 39
+                },
+                "Installing a flake directly": {
+                    "latest_date": 1702388249,
+                    "size": 2
+                },
+                "NixOS  nat race condition?": {
+                    "latest_date": 1710632266,
+                    "size": 3
+                },
+                "NixOS Anywhere": {
+                    "latest_date": 1706066538,
+                    "size": 15
+                },
+                "NixOS tutorial series": {
+                    "latest_date": 1711457122,
+                    "size": 27
+                },
+                "QEMU internal SIGSEGV": {
+                    "latest_date": 1708522471,
+                    "size": 8
+                },
+                "Self-hosted GitHub runners": {
+                    "latest_date": 1711487521,
+                    "size": 46
+                },
+                "Self-hosting email": {
+                    "latest_date": 1709756125,
+                    "size": 9
+                },
+                "Setting up personal caches using `attic`": {
+                    "latest_date": 1707846205,
+                    "size": 18
+                },
+                "Specifying UUID in diskio": {
+                    "latest_date": 1711503303,
+                    "size": 14
+                },
+                "Usr files persist after being removed from the configuration": {
+                    "latest_date": 1709145631,
+                    "size": 6
+                },
+                "Zulip Nix packaging": {
+                    "latest_date": 1700928065,
+                    "size": 3
+                },
+                "disko-install": {
+                    "latest_date": 1711471651,
+                    "size": 11
+                },
+                "sdn router using NixOS microvm": {
+                    "latest_date": 1707252379,
+                    "size": 3
+                },
+                "secrets/password management": {
+                    "latest_date": 1710714223,
+                    "size": 10
+                },
+                "services.self-deploy": {
+                    "latest_date": 1710869061,
+                    "size": 1
+                },
+                "stream events": {
+                    "latest_date": 1700660079,
+                    "size": 1
+                },
+                "✔ VM - QEMU": {
+                    "latest_date": 1709736630,
+                    "size": 8
+                },
+                "✔ Weird behavior in socat": {
+                    "latest_date": 1710673601,
+                    "size": 7
+                },
+                "✔ systemd host resolve (matrix/twisted)": {
+                    "latest_date": 1709759516,
+                    "size": 15
+                }
+            }
+        },
+        "offtopic": {
+            "id": 420166,
+            "latest_id": 425770762,
+            "topic_data": {
+                "Github Pages": {
+                    "latest_date": 1710074914,
+                    "size": 1
+                },
+                "Publishing videos": {
+                    "latest_date": 1709734762,
+                    "size": 2
+                },
+                "memes": {
+                    "latest_date": 1705397513,
+                    "size": 2
+                },
+                "stream events": {
+                    "latest_date": 1705397489,
+                    "size": 1
+                }
+            }
+        },
+        "process-compose-flake": {
+            "id": 414022,
+            "latest_id": 429395233,
+            "topic_data": {
+                "Alternative to F<n> keys": {
+                    "latest_date": 1708614528,
+                    "size": 9
+                },
+                "Branding": {
+                    "latest_date": 1708622802,
+                    "size": 3
+                },
+                "Unable to select text in the tui": {
+                    "latest_date": 1701972652,
+                    "size": 4
+                },
+                "devenv": {
+                    "latest_date": 1710942773,
+                    "size": 1
+                },
+                "process-compose 1.0 released": {
+                    "latest_date": 1711372135,
+                    "size": 1
+                },
+                "process-compose log in GitHub runners": {
+                    "latest_date": 1708618608,
+                    "size": 5
+                },
+                "stream events": {
+                    "latest_date": 1700692519,
+                    "size": 1
+                }
+            }
+        },
+        "services-flake": {
+            "id": 414011,
+            "latest_id": 429717553,
+            "topic_data": {
+                "Compared to other tools": {
+                    "latest_date": 1709844909,
+                    "size": 1
+                },
+                "Darwin support for grafana": {
+                    "latest_date": 1711478471,
+                    "size": 1
+                },
+                "Docs": {
+                    "latest_date": 1710100043,
+                    "size": 1
+                },
+                "GSoC": {
+                    "latest_date": 1711478363,
+                    "size": 2
+                },
+                "dataDir for postgres service has incorrect permissions": {
+                    "latest_date": 1701431905,
+                    "size": 30
+                },
+                "stream events": {
+                    "latest_date": 1700680731,
+                    "size": 1
+                },
+                "✔ Using psql command instead of postgres in initialScript": {
+                    "latest_date": 1703795532,
+                    "size": 9
+                }
+            }
+        },
+        "social-media": {
+            "id": 415266,
+            "latest_id": 430090814,
+            "topic_data": {
+                "Discourse Announcements": {
+                    "latest_date": 1711505202,
+                    "size": 76
+                },
+                "Hacker News": {
+                    "latest_date": 1711530098,
+                    "size": 12
+                },
+                "Lobste.rs": {
+                    "latest_date": 1711488313,
+                    "size": 68
+                },
+                "StackOverflow": {
+                    "latest_date": 1702995052,
+                    "size": 8
+                },
+                "r/nixos": {
+                    "latest_date": 1711638854,
+                    "size": 283
+                },
+                "stream events": {
+                    "latest_date": 1701310357,
+                    "size": 2
+                }
+            }
+        },
+        "website": {
+            "id": 416826,
+            "latest_id": 427742611,
+            "topic_data": {
+                "<meta property=\"og:image\"> for wiki-links": {
+                    "latest_date": 1703694706,
+                    "size": 2
+                },
+                "Link to a sub-section of an internal page": {
+                    "latest_date": 1702905726,
+                    "size": 2
+                },
+                "Updates": {
+                    "latest_date": 1710860427,
+                    "size": 2
+                },
+                "[Emanote] Copy button to code blocks": {
+                    "latest_date": 1702391486,
+                    "size": 4
+                },
+                "obsidian graph in emanote": {
+                    "latest_date": 1703542596,
+                    "size": 22
+                },
+                "stream events": {
+                    "latest_date": 1702386765,
+                    "size": 1
+                }
+            }
+        }
+    },
+    "time": 1711647925.2091646
+}

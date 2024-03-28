@@ -1,0 +1,201 @@
+<html>
+<head><meta charset="utf-8"><title>ollama · nixify-llm · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/index.html">nixify-llm</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html">ollama</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422467380"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422467380" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422467380">(Feb 20 2024 at 17:29)</a>:</h4>
+<p><a href="/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png" title="image.png"><img src="/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png"></a></div><p><a href="https://github.com/ollama/ollama">https://github.com/ollama/ollama</a></p>
+<p>You can run it from nixpkgs. Run these two commands in separate terminals:</p>
+<div class="codehilite"><pre><span></span><code>nix run nixpkgs#ollama serve
+</code></pre></div>
+<div class="codehilite"><pre><span></span><code>nix run nixpkgs#ollama run llama2-uncensored
+</code></pre></div>
+<p>Works on macOS, at least.</p>
+<p>(The query I used to test the model is inspired by the one Musk used to demonstrate Grok)</p>
+
+
+
+<a name="422471452"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422471452" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422471452">(Feb 20 2024 at 17:54)</a>:</h4>
+<p>Well it might work if ROCm works. Which it doesn't if I try. So I would probably have to build a shell for ROCm or something. Otherwise I will be using CPU...</p>
+
+
+
+<a name="422472224"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422472224" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422472224">(Feb 20 2024 at 17:58)</a>:</h4>
+<p>In case anyone likes to try this on AMD, here is the command to create a nice running docker container on Linux: </p>
+<div class="codehilite"><pre><span></span><code>docker run -d --privileged --device /dev/kfd -v ollama:/root/.ollama -p 11434:11434 -e OLLAMA_DEBUG=1 -e ROCR_VISIBLE_DEVICES=&quot;0&quot; -e HSA_OVERRIDE_GFX_VERSION=10.3.0 --name ollama ollama/ollama:0.1.24-rocm
+</code></pre></div>
+<p>The HSA_OVERRIDE_GFX_VERSION=10.3.0 environment variable is only needed if your GPU is not offically supported by ROCm. Which is most consumer and workstation GPUs actually, except a handful. Depending on the GPU it might or might not work.</p>
+<p>And then you can do a </p>
+<div class="codehilite"><pre><span></span><code>docker exec -it ollama ollama run llama2
+</code></pre></div>
+<p>Or whatever model you want to run</p>
+
+
+
+<a name="422472882"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422472882" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422472882">(Feb 20 2024 at 18:02)</a>:</h4>
+<p><span class="user-mention" data-user-id="678574">@Andreas</span> Does the docker container run do anything special compared to pure Nix instance (<code>nix run ..</code>) above?</p>
+
+
+
+<a name="422474015"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422474015" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422474015">(Feb 20 2024 at 18:09)</a>:</h4>
+<p>well it has ROCm installed obviously so that the GPU can use it. However that is just the container for ROCm they provide. Juding from the dockerfile in the ollama GitHub repo, they build them on the basis of some CentOS images provides by AMD. </p>
+<p>These in turn have their own repo, which I presume to be this one: <a href="https://github.com/ROCm/ROCm-docker">https://github.com/ROCm/ROCm-docker</a></p>
+
+
+
+<a name="422474741"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422474741" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422474741">(Feb 20 2024 at 18:13)</a>:</h4>
+<p>This here might be the dockerfile for the base image on top of which ollama is compiling their GO binary:</p>
+<p><a href="https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete">https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete</a></p>
+
+
+
+<a name="429110544"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429110544" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429110544">(Mar 23 2024 at 20:00)</a>:</h4>
+<p>I created a <code>process-compose-flake-module</code> for <code>ollama</code>, this is for a personal project that I am working on and here’s how easy it is to setup:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  services<span class="o">.</span><span class="ss">ollama</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="ss">host</span> <span class="o">=</span> <span class="s2">"100.71.49.133"</span><span class="p">;</span>
+      <span class="c1"># TODO: adding more than one model breaks in shellcheck</span>
+      <span class="ss">models</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"llama2-uncensored"</span> <span class="p">];</span>
+   <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="429110618"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429110618" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429110618">(Mar 23 2024 at 20:01)</a>:</h4>
+<p><code>nix run ...</code> cmd?</p>
+
+
+
+<a name="429110791"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429110791" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429110791">(Mar 23 2024 at 20:03)</a>:</h4>
+<p>I will upstream this to services-flake, it is right now in the private repo as a module. </p>
+<p>More about the project soon.</p>
+
+
+
+<a name="429112943"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429112943" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429112943">(Mar 23 2024 at 20:30)</a>:</h4>
+<p>Here it is: <a href="https://github.com/juspay/services-flake/pull/137">https://github.com/juspay/services-flake/pull/137</a></p>
+
+
+
+<a name="429113137"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113137" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113137">(Mar 23 2024 at 20:32)</a>:</h4>
+<p>The nix run command is a bit long though:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="w"> </span>nix<span class="w"> </span>run<span class="w"> </span><span class="s2">"github:juspay/services-flake/ollama?dir=test"</span><span class="c1">#ollama --override-input services-flake github:juspay/services-flake/ollama</span>
+</code></pre></div>
+<p>This starts up ollama server with no models though, let me use a smaller sample model in test.</p>
+
+
+
+<a name="429113264"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113264" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113264">(Mar 23 2024 at 20:34)</a>:</h4>
+<p><a href="https://ollama.com/library/tinyllama">https://ollama.com/library/tinyllama</a> looks like a good candidate</p>
+
+
+
+<a name="429113642"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113642" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113642">(Mar 23 2024 at 20:40)</a>:</h4>
+<p>Oh wait, I can’t really pull models in flake check because of sandbox mode. I think these models will have to be pre-fetched by another derivation.</p>
+
+
+
+<a name="429113660"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113660" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113660">(Mar 23 2024 at 20:40)</a>:</h4>
+<p>A separate repo, that uses services-flake module, to provide a single <code>nix run ..</code> to get some of these models up running, including a chat interface even, would be cool.</p>
+
+
+
+<a name="429115404"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115404" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115404">(Mar 23 2024 at 21:02)</a>:</h4>
+<p><a href="https://github.com/F1bonacc1/process-compose/issues/64">https://github.com/F1bonacc1/process-compose/issues/64</a> I can provide a single nix run command this, basically allowing users to interact with the chat process in the process-compose window</p>
+
+
+
+<a name="429115425"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115425" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115425">(Mar 23 2024 at 21:03)</a>:</h4>
+<p><a href="https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>
+<p>I will try it out with 0.88.0</p>
+
+
+
+<a name="429115680"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115680" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115680">(Mar 23 2024 at 21:07)</a>:</h4>
+<p>Curious if there's a chat bot web app that can interact with ollama</p>
+
+
+
+<a name="429115894"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115894" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115894">(Mar 23 2024 at 21:09)</a>:</h4>
+<p>There is this on top of search result: <a href="https://github.com/HelgeSverre/ollama-gui">https://github.com/HelgeSverre/ollama-gui</a></p>
+
+
+
+<a name="429115972"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115972" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115972">(Mar 23 2024 at 21:10)</a>:</h4>
+<p>Let's ship it. Gonna be a rad demo of services-flake.</p>
+
+
+
+<a name="429116013"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116013" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116013">(Mar 23 2024 at 21:11)</a>:</h4>
+<p><a href="https://github.com/open-webui/open-webui">https://github.com/open-webui/open-webui</a> there’s also this (much more popular), but looks like it is bloated with a lot of features.</p>
+
+
+
+<a name="429116121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116121">(Mar 23 2024 at 21:13)</a>:</h4>
+<p>I will give both the UIs a shot though</p>
+
+
+
+<a name="429116433"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116433" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116433">(Mar 23 2024 at 21:16)</a>:</h4>
+<p>I will try this tomorrow, going to get some sleep now</p>
+
+
+
+<a name="429116456"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116456" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116456">(Mar 23 2024 at 21:16)</a>:</h4>
+<p><a href="https://github.com/NixOS/nixpkgs/pull/275448">https://github.com/NixOS/nixpkgs/pull/275448</a></p>
+
+
+
+<a name="429117121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429117121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429117121">(Mar 23 2024 at 21:24)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/429115425">said</a>:</p>
+<blockquote>
+<p><a href="https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>
+<p>I will try it out with 0.88.0</p>
+</blockquote>
+<p>Update: I didn’t notice that the STDIN support is not there, so even with the current PTY support, this isn’t possible in the process-compose window. Gotta take the WebUI route, anyways, the webui demo will be much cooler.</p>
+
+
+
+<a name="429590092"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429590092" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429590092">(Mar 26 2024 at 06:18)</a>:</h4>
+<p><a href="/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png">Screenshot-2024-03-25-at-11.47.58PM.png</a><br>
+I have the UI running, it involved a lot of hacks to get it running because of the way open-webui uses the python backend.</p>
+<div class="message_inline_image"><a href="/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png" title="Screenshot-2024-03-25-at-11.47.58PM.png"><img src="/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png"></a></div>
+
+
+
+<hr><p>Last updated: Mar 28 2024 at 17:45 UTC</p>
+</html>
