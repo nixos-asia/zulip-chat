@@ -18,7 +18,7 @@
         "timestamp": 1709296001
     },
     {
-        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424224265\">said</a>:</p>\n<blockquote>\n<p>[...] I think there's a way to install it without requiring it.</p>\n</blockquote>\n<p>You can try this: <a href=\"https://nixos.wiki/wiki/Nix_Installation_Guide#Installing_without_root_permissions\">https://nixos.wiki/wiki/Nix_Installation_Guide#Installing_without_root_permissions</a></p>",
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424224265\">said</a>:</p>\n<blockquote>\n<p>[...] I think there's a way to install it without requiring it.</p>\n</blockquote>\n<p>You can try this: <a href=\"https://wiki.nixos.org/wiki/Nix_Installation_Guide#Installing_without_root_permissions\">https://wiki.nixos.org/wiki/Nix_Installation_Guide#Installing_without_root_permissions</a></p>",
         "id": 424225861,
         "sender_full_name": "Srid",
         "timestamp": 1709296625

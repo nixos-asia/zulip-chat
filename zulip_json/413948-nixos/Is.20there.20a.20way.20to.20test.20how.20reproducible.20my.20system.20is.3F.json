@@ -18,7 +18,7 @@
         "timestamp": 1716539590
     },
     {
-        "content": "<p>If its only a <code>configuration.nix</code> file, it might not be reproducible because the packages might be coming from different nixpkgs on each of those devices, based on whatever is set in <a href=\"https://nixos.wiki/wiki/Nix_channels\">nix-channel</a>.</p>\n<p>But if you use <code>flake.nix</code>, it will be reproducible as you will be pinning the <code>nixpkgs</code> revision in <code>flake.lock</code>. See this tutorial to flakeify your existing <code>configuration.nix</code>: <a href=\"https://nixos.asia/en/nixos-install-flake#flakeify\">https://nixos.asia/en/nixos-install-flake#flakeify</a></p>",
+        "content": "<p>If its only a <code>configuration.nix</code> file, it might not be reproducible because the packages might be coming from different nixpkgs on each of those devices, based on whatever is set in <a href=\"https://wiki.nixos.org/wiki/Nix_channels\">nix-channel</a>.</p>\n<p>But if you use <code>flake.nix</code>, it will be reproducible as you will be pinning the <code>nixpkgs</code> revision in <code>flake.lock</code>. See this tutorial to flakeify your existing <code>configuration.nix</code>: <a href=\"https://nixos.asia/en/nixos-install-flake#flakeify\">https://nixos.asia/en/nixos-install-flake#flakeify</a></p>",
         "id": 440466615,
         "sender_full_name": "Shivaraj B H",
         "timestamp": 1716540458

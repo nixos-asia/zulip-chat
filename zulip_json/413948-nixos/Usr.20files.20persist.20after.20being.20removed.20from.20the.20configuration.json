@@ -12,7 +12,7 @@
         "timestamp": 1709122251
     },
     {
-        "content": "<p>Probably the best solution to this kind of thing so far would be:<br>\n<a href=\"https://nixos.wiki/wiki/Impermanence\">https://nixos.wiki/wiki/Impermanence</a></p>",
+        "content": "<p>Probably the best solution to this kind of thing so far would be:<br>\n<a href=\"https://wiki.nixos.org/wiki/Impermanence\">https://wiki.nixos.org/wiki/Impermanence</a></p>",
         "id": 423818447,
         "sender_full_name": "Tim DeHerrera",
         "timestamp": 1709127277

@@ -15,13 +15,13 @@
 <p>Date: 2023-11-29T13:26:44+00:00<br>
 Link: <a href="https://old.reddit.com/r/NixOS/comments/186pcmx/announcing_nixlangwiki/">https://old.reddit.com/r/NixOS/comments/186pcmx/announcing_nixlangwiki/</a></p>
 <blockquote>
-<p>We are happy to announce another unofficial community wiki, <a href="http://nixlang.wiki">nixlang.wiki</a> , as an alternative to the poorly maintained <a href="http://nixos.wiki">nixos.wiki</a> . If Arch Linux can have such a nice wiki, why shouldn't we be able to?</p>
+<p>We are happy to announce another unofficial community wiki, <a href="http://nixlang.wiki">nixlang.wiki</a> , as an alternative to the poorly maintained <a href="http://wiki.nixos.org">wiki.nixos.org</a> . If Arch Linux can have such a nice wiki, why shouldn't we be able to?</p>
 <p>To make the wiki less centralized, we have automatic, world readable backups of all articles to a git repository (<a href="https://github.com/nixlang-wiki/nixlang-wiki">https://github.com/nixlang-wiki/nixlang-wiki</a> ), to make it easier to migrate from the wiki in the future if necessary.</p>
 <p>We also just landed a feature that enables you to browse the wiki in your terminal, by download the entire wiki as man pages <a href="https://github.com/nixlang-wiki/nixlang-wiki/pull/2">https://github.com/nixlang-wiki/nixlang-wiki/pull/2</a> . It's a bit primitive right now, but we plan to improve it.</p>
 <p>So far we've been very glad to see the positive response from the community, and hope to see more contributions.</p>
 <p>EDIT: the reason why we don't try to improve the old one is because that's impossible, the maintainer has gone awol <a href="https://github.com/nix-community/wiki/issues/46#issuecomment-1381989599">https://github.com/nix-community/wiki/issues/46#issuecomment-1381989599</a> .</p>
 <p>Also we have good reasons to think that situation won't be resolved anytime soon, and we couldn't have features like a git backup without going for a different wiki platform than the very outdated mediawiki version <a href="https://github.com/nix-community/wiki/issues/50">https://github.com/nix-community/wiki/issues/50</a> .</p>
-<p>In the future, we expect to be able to migrate old <a href="http://nixos.wiki">nixos.wiki</a> articles over to <a href="http://nixlang.wiki">nixlang.wiki</a> , so there really isn't much lost.</p>
+<p>In the future, we expect to be able to migrate old <a href="http://wiki.nixos.org">wiki.nixos.org</a> articles over to <a href="http://nixlang.wiki">nixlang.wiki</a> , so there really isn't much lost.</p>
 <p>​</p>
 <p>submitted by   /u/cafkafk</p>
 <p>[link]   [comments]</p>
@@ -689,7 +689,7 @@ Link: <a href="https://old.reddit.com/r/NixOS/comments/18a6sgc/why_is_waybar_und
 <p>Date: 2023-12-03T08:08:50+00:00<br>
 Link: <a href="https://old.reddit.com/r/NixOS/comments/189oyak/operation_not_permitted_during_install/">https://old.reddit.com/r/NixOS/comments/189oyak/operation_not_permitted_during_install/</a></p>
 <blockquote>
-<p>Hi all, brand new to NixOS here. While following the NixOS installation guide: <a href="https://nixos.wiki/wiki/NixOS_Installation_Guide">https://nixos.wiki/wiki/NixOS_Installation_Guide</a> , it throws this error when I run nixos-install:</p>
+<p>Hi all, brand new to NixOS here. While following the NixOS installation guide: <a href="https://wiki.nixos.org/wiki/NixOS_Installation_Guide">https://wiki.nixos.org/wiki/NixOS_Installation_Guide</a> , it throws this error when I run nixos-install:</p>
 <p>copying channel...</p>
 <p>error: changing ownership of path '/mnt/nix/store': Operation not permitted</p>
 <p>As you can see from the screenshots below, I've already tried running it directly as root. I performed the steps provided in the instructions except I did not make a swap file or label the partitions.</p>
@@ -798,7 +798,7 @@ Link: <a href="https://old.reddit.com/r/NixOS/comments/18d3ftz/can_i_use_a_later
 <blockquote>
 <p>I have a new Framework laptop and I've read that to run 2x32GB of memory I will need to use a kernel &gt; 6.5. The current stable kernel is well above this but I know that NixOS is behind. (I'm still awaiting the memory so playing in a VM)</p>
 <p>I know I can change the kernel by changing boot.kernelPackages.</p>
-<p>Following the instructions at <a href="http://nixos.wiki/wiki/Linux_kernel">nixos.wiki/wiki/Linux_kernel</a> I tried to use "nix repl" to list available kernels. However when running the "pkgs.linuxPackages" command it just threw a load of errors and I didn't get the answer to my question.</p>
+<p>Following the instructions at <a href="http://wiki.nixos.org/wiki/Linux_kernel">wiki.nixos.org/wiki/Linux_kernel</a> I tried to use "nix repl" to list available kernels. However when running the "pkgs.linuxPackages" command it just threw a load of errors and I didn't get the answer to my question.</p>
 <p>So, firstly can someone guide me to get the list of available kernels and then I can see for myself whether it is possible or not?</p>
 <p>Alternatively, if someone was able to answer my question directly then it might put a stop to my NixOS experiment before it has begun or it might get me past the first hurdle.</p>
 <p>submitted by   /u/penguinmatt</p>

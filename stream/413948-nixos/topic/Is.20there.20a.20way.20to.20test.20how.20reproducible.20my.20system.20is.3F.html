@@ -30,7 +30,7 @@
 
 <a name="440466615"></a>
 <h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Is%20there%20a%20way%20to%20test%20how%20reproducible%20my%20system%20is%3F/near/440466615" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Is.20there.20a.20way.20to.20test.20how.20reproducible.20my.20system.20is.3F.html#440466615">(May 24 2024 at 08:47)</a>:</h4>
-<p>If its only a <code>configuration.nix</code> file, it might not be reproducible because the packages might be coming from different nixpkgs on each of those devices, based on whatever is set in <a href="https://nixos.wiki/wiki/Nix_channels">nix-channel</a>.</p>
+<p>If its only a <code>configuration.nix</code> file, it might not be reproducible because the packages might be coming from different nixpkgs on each of those devices, based on whatever is set in <a href="https://wiki.nixos.org/wiki/Nix_channels">nix-channel</a>.</p>
 <p>But if you use <code>flake.nix</code>, it will be reproducible as you will be pinning the <code>nixpkgs</code> revision in <code>flake.lock</code>. See this tutorial to flakeify your existing <code>configuration.nix</code>: <a href="https://nixos.asia/en/nixos-install-flake#flakeify">https://nixos.asia/en/nixos-install-flake#flakeify</a></p>
 
 
