@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Has anyone gotten Emacs to build on Darwin with xwidgets?</p>\n<p>cf. <a href=\"https://github.com/NixOS/nixpkgs/issues/110218\">https://github.com/NixOS/nixpkgs/issues/110218</a></p>\n<p>(xwidgets is required for running <a href=\"https://old.reddit.com/r/emacs/comments/jyowe0/introducing_emacswebkit_a_successor_to/\">webkit in emacs</a>)</p>",
+        "id": 427104366,
+        "sender_full_name": "Srid",
+        "timestamp": 1710678120
+    },
+    {
+        "content": "<p>If this was fixed in nixpkgs, one could normally build it as <code>pkgs.emacs29-macport.override { withXwidgets = true; }</code> </p>\n<p>(It used to build before, FWIW)</p>",
+        "id": 427105837,
+        "sender_full_name": "Srid",
+        "timestamp": 1710678534
+    }
+]

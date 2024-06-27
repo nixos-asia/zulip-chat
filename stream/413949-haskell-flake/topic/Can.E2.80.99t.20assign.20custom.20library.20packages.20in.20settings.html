@@ -1,0 +1,55 @@
+<html>
+<head><meta charset="utf-8"><title>Can’t assign custom library packages in settings · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Can.E2.80.99t.20assign.20custom.20library.20packages.20in.20settings.html">Can’t assign custom library packages in settings</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="429916344"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Can%E2%80%99t%20assign%20custom%20library%20packages%20in%20settings/near/429916344" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Can.E2.80.99t.20assign.20custom.20library.20packages.20in.20settings.html#429916344">(Mar 27 2024 at 17:52)</a>:</h4>
+<p>I have a reproducer:</p>
+<p>clone this repo: <a href="https://github.com/shivaraj-bh/haskell-rust-ffi-template/tree/master">https://github.com/shivaraj-bh/haskell-rust-ffi-template/tree/master</a></p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nix<span class="w"> </span>develop
+just<span class="w"> </span>run
+</code></pre></div>
+<p>Now, update haskell-flake <code>nix flake lock —update-input haskell-flake</code> and it fails with (while trying to enter the devshell):</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>error:<span class="w"> </span>attribute<span class="w"> </span><span class="s1">'hello_rust'</span><span class="w"> </span>missing
+</code></pre></div>
+<p>Which is a setting : <a href="https://github.com/shivaraj-bh/haskell-rust-ffi-template/blob/1038ca8a87aae4e448bbd7ea6e1c41ee4e7acb2d/haskell/default.nix#L6-L8">https://github.com/shivaraj-bh/haskell-rust-ffi-template/blob/1038ca8a87aae4e448bbd7ea6e1c41ee4e7acb2d/haskell/default.nix#L6-L8</a></p>
+
+
+
+<a name="429917075"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Can%E2%80%99t%20assign%20custom%20library%20packages%20in%20settings/near/429917075" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Can.E2.80.99t.20assign.20custom.20library.20packages.20in.20settings.html#429917075">(Mar 27 2024 at 17:56)</a>:</h4>
+<p>I'll take a look later today. Actually, this may be related to the ordering of settings,</p>
+<p><a href="https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77">https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77</a></p>
+
+
+
+<a name="429934842"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Can%E2%80%99t%20assign%20custom%20library%20packages%20in%20settings/near/429934842" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Can.E2.80.99t.20assign.20custom.20library.20packages.20in.20settings.html#429934842">(Mar 27 2024 at 19:44)</a>:</h4>
+<p>FTR,</p>
+<div class="codehilite"><pre><span></span><code>• Updated input &#39;haskell-flake&#39;:
+    &#39;github:srid/haskell-flake/f9d17c3aa68e65529f424816c8b9346ae602d1de&#39; (2024-02-06)
+  → &#39;github:srid/haskell-flake/5dcb739e9cc4e0edf5267de665fa7a905a543baa&#39; (2024-03-27)
+</code></pre></div>
+<p><code>nixci build</code> =&gt;</p>
+<div class="codehilite"><pre><span></span><code>       error: attribute &#39;hello_rust&#39; missing
+
+       at /nix/store/lz0159maimglzlpd6gmn0f02047mmih0-source/nix/modules/project/settings/default.nix:75:20:
+
+           74|           in
+           75|           lib.pipe super.${name} (
+             |                    ^
+           76|             # TODO: Do we care about the *order* of overrides?
+Error: devour-flake failed to run (exited: 1)
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

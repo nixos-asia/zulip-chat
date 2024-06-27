@@ -1,0 +1,146 @@
+[
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/Nix.20events.20in.20India/near/423809735\">said</a>:</p>\n<blockquote>\n<h2>home-manager online event</h2>\n<p><a href=\"https://nixos.asia/en/event/nix-dev-home\">https://nixos.asia/en/event/nix-dev-home</a></p>\n<blockquote>\n<p>We will demonstrate using Nix to declaratively manage your dotfiles, programs and services using home-manager, thus replacing the likes of legacy software like homebrew. The goal is to create an one-click environment to setup an user environment on any system, be it a Macbook or a Linux machine.</p>\n</blockquote>\n</blockquote>\n<p>Highly interested in using home-manager with a non-root install of nix. I work on multiple remote servers for HPC development (where I don't have admin priveleges), and would like to have an identical dev environment everywhere with modern tools etc available in my $PATH. Would be nice if the talk will cover this aspect.</p>",
+        "id": 424190025,
+        "sender_full_name": "Krishnakumar Gopalakrishnan",
+        "timestamp": 1709285080
+    },
+    {
+        "content": "<p><a href=\"#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424190025\">A message</a> was moved here from <a class=\"stream-topic\" data-stream-id=\"413950\" href=\"/#narrow/stream/413950-nix/topic/Nix.20events.20in.20India\">#nix &gt; Nix events in India</a> by <span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span>.</p>",
+        "id": 424224194,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1709295968
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"696247\">@Krishnakumar Gopalakrishnan</span> Welcome!</p>\n<p>I'm pretty sure home-manager on itself shouldn't require root access. </p>\n<p>It is Nix installation that normally does, but I think there's a way to install it without requiring it.</p>",
+        "id": 424224265,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296001
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424224265\">said</a>:</p>\n<blockquote>\n<p>[...] I think there's a way to install it without requiring it.</p>\n</blockquote>\n<p>You can try this: <a href=\"https://nixos.wiki/wiki/Nix_Installation_Guide#Installing_without_root_permissions\">https://nixos.wiki/wiki/Nix_Installation_Guide#Installing_without_root_permissions</a></p>",
+        "id": 424225861,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296625
+    },
+    {
+        "content": "<p>Also <a href=\"https://github.com/DavHau/nix-portable\">https://github.com/DavHau/nix-portable</a></p>\n<p>But has performance drawbacks,</p>\n<blockquote>\n<p>If user namespaces are not available on a system, nix-portable will fall back to using proot instead of bubblewrap. Proot's virtualization can have a significant performance overhead depending on the workload. In that situation, it might be beneficial to use a remote builder or alternatively build the derivations on another host and sync them via a cache like <a href=\"http://cachix.org\">cachix.org</a>.</p>\n</blockquote>",
+        "id": 424290182,
+        "sender_full_name": "Srid",
+        "timestamp": 1709312758
+    },
+    {
+        "content": "<p>Nix only needs root if using the daemon. You can still run Nix in \"single-user\" daemonless mode, and the only requirement is that the user calling the binary own the /nix dir</p>",
+        "id": 424290654,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709312880
+    },
+    {
+        "content": "<p>Little known fact that a static nix binary will create its own chroot store automatically for the current user of called and no /nix dir exists as well</p>",
+        "id": 424290836,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709312926
+    },
+    {
+        "content": "<p>(making nix-portable somewhat obsolete)</p>",
+        "id": 424290931,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709312951
+    },
+    {
+        "content": "<p>Okay, so basically <span class=\"user-mention\" data-user-id=\"696247\">@Krishnakumar Gopalakrishnan</span> can follow the \"Single user\" instructions here <a href=\"https://nixos.org/manual/nix/stable/installation/#single-user\">https://nixos.org/manual/nix/stable/installation/#single-user</a></p>",
+        "id": 424293435,
+        "sender_full_name": "Srid",
+        "timestamp": 1709313735
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"679006\">Tim DeHerrera</span> <a href=\"#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424290836\">said</a>:</p>\n<blockquote>\n<p>Little known fact that a static nix binary will create its own chroot store automatically for the current user of called and no /nix dir exists as well</p>\n</blockquote>\n<p>now all we need is for that to work on macos as it does on linux and and something like <code>nix bundle</code> for distributing runtimes with guis much like the other pack formats on linux</p>",
+        "id": 424296773,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1709314924
+    },
+    {
+        "content": "<p>Problem is, mac's kernel doesn't have the same namespace capabilities of Linux <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 424297481,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709315186
+    },
+    {
+        "content": "<p>Related: <a href=\"https://x.com/matthewcroughan/status/1787886356762382563?s=46\">https://x.com/matthewcroughan/status/1787886356762382563?s=46</a></p>",
+        "id": 437573504,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1715141783
+    },
+    {
+        "content": "<p>Probably a good candidate for a blog at <a href=\"http://nixos.asia\">nixos.asia</a>?</p>",
+        "id": 437573564,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1715141871
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/437573564\">said</a>:</p>\n<blockquote>\n<p>Probably a good candidate for a blog at <a href=\"http://nixos.asia\">nixos.asia</a>?</p>\n</blockquote>\n<p>Sure, or a tutorial.</p>",
+        "id": 437573643,
+        "sender_full_name": "Srid",
+        "timestamp": 1715141907
+    },
+    {
+        "content": "<p>Create an issue on GitHub so we don't forget.</p>",
+        "id": 437573664,
+        "sender_full_name": "Srid",
+        "timestamp": 1715141924
+    },
+    {
+        "content": "<p>The static version of nix can't install binary executables and needs to<br>\nbuild every single package from source.</p>",
+        "id": 437580409,
+        "sender_full_name": "Krishnakumar Gopalakrishnan",
+        "timestamp": 1715146931
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"696247\">@Krishnakumar Gopalakrishnan</span> you mean to say that binary cache, such as <a href=\"http://cache.nixos.org\">cache.nixos.org</a> isn’t used to fetch the packages in a single user installation?</p>",
+        "id": 437582923,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1715148362
+    },
+    {
+        "content": "<p>Anyways, I will check this out, here’s the issue to track progress: <a href=\"https://github.com/nixos-asia/website/issues/35\">https://github.com/nixos-asia/website/issues/35</a></p>",
+        "id": 437583208,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1715148462
+    },
+    {
+        "content": "<p>That's right. Without root access, static nix will have to build every<br>\nsingle package declared in the home.nix file from scratch.</p>\n<p>This is because the cached versions of the pre built binaries have<br>\nhardcoded locations that expect certain dynamic libraries to be loaded from<br>\ncertain standard library paths in the user's system (which requires root<br>\naccess typically eg. /usr/local/lib). The HPC package manager Spack from<br>\nLawrence Livermore National Laboratories addresses this exact problem<br>\n(relocatable binary issue) by using clever RPATH redirection mechanism<br>\nembedded into the binary and by explicitly providing binary caches that<br>\ntarget user-space installs.</p>\n<p>Most HPC and shared scientific computing clusters don't allow any kind of<br>\nwrite access to the /nix directory. In fact sysadmins don't even create<br>\nthis directory.</p>",
+        "id": 437630495,
+        "sender_full_name": "Krishnakumar Gopalakrishnan",
+        "timestamp": 1715167808
+    },
+    {
+        "content": "<p>Hey so, this isn't true unless you globally change the location of the /nix/store, which isn't necessary. The static version of Nix will automatically use a user namespace store in the users home directory if it doesn't have permission to write to /nix, which still uses /nix/store in the namespace, so the cache will work.</p>\n<p>You can also just give your user ownership of the /nix directory in single-user mode. Also, you don't need a static Nix to run in single-user mode. Two different things</p>",
+        "id": 437819752,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1715261583
+    },
+    {
+        "content": "<p>Hmm. Interesting. When I tried static nix, it appeared to be building my<br>\nhome-manager configured packages from source.</p>\n<p>I think readers will benefit from a detailed study and writeup of how to<br>\nget a static version of nix without sudo privileges or ownership of /nix,<br>\nand still make it use pre-built binaries.</p>",
+        "id": 437837238,
+        "sender_full_name": "Krishnakumar Gopalakrishnan",
+        "timestamp": 1715267929
+    },
+    {
+        "content": "<p>Did you check to make sure the cache was properly configured?</p>",
+        "id": 437913798,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1715307093
+    },
+    {
+        "content": "<p>It should be as simple as \"download static nix, excute a build\", if that's not working something else has gone wrong.</p>\n<p>I've done it several times</p>",
+        "id": 437913861,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1715307132
+    },
+    {
+        "content": "<p>(on Linux anyway)</p>",
+        "id": 437913877,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1715307159
+    }
+]

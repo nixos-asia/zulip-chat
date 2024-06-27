@@ -1,0 +1,42 @@
+<html>
+<head><meta charset="utf-8"><title>NixBSD, it&#x27;s NixOS on FreeBSD · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixBSD.2C.20it.27s.20NixOS.20on.20FreeBSD.html">NixBSD, it&#x27;s NixOS on FreeBSD</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="430952626"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixBSD%2C%20it%27s%20NixOS%20on%20FreeBSD/near/430952626" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixBSD.2C.20it.27s.20NixOS.20on.20FreeBSD.html#430952626">(Apr 03 2024 at 08:57)</a>:</h4>
+<p>Yesterday I came across a particular project trying to port something like NixOS to the FreeBSD ecosystem. </p>
+<p><a href="https://github.com/nixos-bsd/nixbsd">https://github.com/nixos-bsd/nixbsd</a></p>
+<p>For now they are maintaining their own fork of nixpkgs and some patches to the nix evaluator and are now trying to build something like a module system for FreeBSD.</p>
+<p>As I've been redoing my OPNsense router, which is based on FreeBSD 13, I had an idea. I am not so much interested in having an entire NixOS on FreeBSD. However: Would it be possible to build something like process-compose flakes on FreeBSD-based systems with this?</p>
+<p>That would be really neat for extending OPNsense or PFsense with just about anything that can be compiled for FreeBSD.</p>
+
+
+
+<a name="431300401"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixBSD%2C%20it%27s%20NixOS%20on%20FreeBSD/near/431300401" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixBSD.2C.20it.27s.20NixOS.20on.20FreeBSD.html#431300401">(Apr 04 2024 at 12:22)</a>:</h4>
+<p>Nobody here any interested in being Free with Nix on FreeBSD? <span aria-label="grinning face with smiling eyes" class="emoji emoji-1f601" role="img" title="grinning face with smiling eyes">:grinning_face_with_smiling_eyes:</span></p>
+
+
+
+<a name="431316550"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixBSD%2C%20it%27s%20NixOS%20on%20FreeBSD/near/431316550" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixBSD.2C.20it.27s.20NixOS.20on.20FreeBSD.html#431316550">(Apr 04 2024 at 13:42)</a>:</h4>
+<p>Well I tried Nix on freebsd a few years ago. It would be pretty cool to use it more like NixOS for sure, might give me more incentive to use it again</p>
+
+
+
+<a name="431318910"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixBSD%2C%20it%27s%20NixOS%20on%20FreeBSD/near/431318910" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixBSD.2C.20it.27s.20NixOS.20on.20FreeBSD.html#431318910">(Apr 04 2024 at 13:53)</a>:</h4>
+<p>I wouldn't want to redo the whole FreeBSD system to be like a Nix-infected borg drone. First and foremost my use-case would be to extend firewalls like pfsense / opnsense with Nix-managed services. </p>
+<p>Using something like process-compose flake on FreeBSD would be really great. Containerization is still a bit iffy on the platform, even though there is an experimental podman built now I believe.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

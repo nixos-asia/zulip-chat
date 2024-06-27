@@ -1,0 +1,116 @@
+<html>
+<head><meta charset="utf-8"><title>Nix using incorrect GHC · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20using.20incorrect.20GHC.html">Nix using incorrect GHC</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422582060"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20using%20incorrect%20GHC/near/422582060" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Aman Singh <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20using.20incorrect.20GHC.html#422582060">(Feb 21 2024 at 10:02)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span>  I have created this flake and want to add support for multiple version of ghc in my project.<br>
+While testing with GHC 8.10.7 I noticed that dependencies were complaining of base package being different than expected.</p>
+<p>Below is my <code>flake.nix</code></p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:nixos/nixpkgs"</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span>self<span class="p">,</span> nixpkgs<span class="p">}:</span>
+    <span class="k">let</span>
+        <span class="ss">system</span> <span class="o">=</span> <span class="s2">"x86_64-darwin"</span><span class="p">;</span>
+        <span class="ss">pkgs</span> <span class="o">=</span> nixpkgs<span class="o">.</span>legacyPackages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="p">;</span>
+        <span class="ss">overlay</span> <span class="o">=</span> final<span class="p">:</span> prev<span class="p">:</span> <span class="p">{</span>
+          <span class="ss">isomorphism-class</span> <span class="o">=</span> pkgs<span class="o">.</span>haskell<span class="o">.</span>lib<span class="o">.</span>dontCheck <span class="p">(</span>pkgs<span class="o">.</span>haskell<span class="o">.</span>lib<span class="o">.</span>doJailbreak prev<span class="o">.</span>isomorphism-class<span class="p">);</span>
+          <span class="ss">hspec</span> <span class="o">=</span> pkgs<span class="o">.</span>haskell<span class="o">.</span>lib<span class="o">.</span>doJailbreak prev<span class="o">.</span>hspec<span class="p">;</span>
+          <span class="ss">servant</span> <span class="o">=</span> pkgs<span class="o">.</span>haskell<span class="o">.</span>lib<span class="o">.</span>doJailbreak prev<span class="o">.</span>servant<span class="p">;</span>
+          <span class="ss">aeson</span> <span class="o">=</span> pkgs<span class="o">.</span>haskellPackages<span class="o">.</span>callHackage <span class="s2">"aeson"</span> <span class="s2">"1.5.6.0"</span> <span class="p">{};</span>
+          <span class="ss">test</span> <span class="o">=</span> final<span class="o">.</span>callCabal2nix <span class="s2">"test"</span> <span class="l">./.</span> <span class="p">{};</span>
+        <span class="p">};</span>
+      <span class="ss">myHaskellPackages</span> <span class="o">=</span> pkgs<span class="o">.</span>haskell<span class="o">.</span>packages<span class="o">.</span>ghc8107<span class="o">.</span>extend overlay<span class="p">;</span>
+    <span class="k">in</span>
+    <span class="p">{</span>
+      packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span><span class="ss">default</span> <span class="o">=</span> myHaskellPackages<span class="o">.</span>test<span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>I noticed that <code>aeson </code>is being built with <code>GHC 9.4.8</code>.  After checking it's derivation build logs.</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>$<span class="w"> </span>nix-store<span class="w"> </span>-l<span class="w"> </span>/nix/store/vmpqkhqcpcnhj0q29lmzbs7zxsnmwcw8-aeson-1.5.6.0.drv
+
+@nix<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">"action"</span>:<span class="w"> </span><span class="s2">"setPhase"</span>,<span class="w"> </span><span class="s2">"phase"</span>:<span class="w"> </span><span class="s2">"setupCompilerEnvironmentPhase"</span><span class="w"> </span><span class="o">}</span>
+Running<span class="w"> </span>phase:<span class="w"> </span>setupCompilerEnvironmentPhase
+Build<span class="w"> </span>with<span class="w"> </span>/nix/store/ckgd7ip5m9xid8xhr7qbz8iaxxfsnw7j-ghc-9.4.8.
+@nix<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">"action"</span>:<span class="w"> </span><span class="s2">"setPhase"</span>,<span class="w"> </span><span class="s2">"phase"</span>:<span class="w"> </span><span class="s2">"unpackPhase"</span><span class="w"> </span><span class="o">}</span>
+Running<span class="w"> </span>phase:<span class="w"> </span>unpackPhase
+unpacking<span class="w"> </span><span class="nb">source</span><span class="w"> </span>archive<span class="w"> </span>/nix/store/bhbxs5cp61d3hmlakcsb5i21lbdqpfpm-aeson-1.5.6.0.tar.gz
+<span class="nb">source</span><span class="w"> </span>root<span class="w"> </span>is<span class="w"> </span>aeson-1.5.6.0
+setting<span class="w"> </span>SOURCE_DATE_EPOCH<span class="w"> </span>to<span class="w"> </span>timestamp<span class="w"> </span><span class="m">1000000000</span><span class="w"> </span>of<span class="w"> </span>file<span class="w"> </span>aeson-1.5.6.0/tests/golden/th.expected
+@nix<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">"action"</span>:<span class="w"> </span><span class="s2">"setPhase"</span>,<span class="w"> </span><span class="s2">"phase"</span>:<span class="w"> </span><span class="s2">"patchPhase"</span><span class="w"> </span><span class="o">}</span>
+Running<span class="w"> </span>phase:<span class="w"> </span>patchPhase
+Replace<span class="w"> </span>Cabal<span class="w"> </span>file<span class="w"> </span>with<span class="w"> </span>edited<span class="w"> </span>version<span class="w"> </span>from<span class="w"> </span>mirror://hackage/aeson-1.5.6.0/revision/7.cabal.
+@nix<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">"action"</span>:<span class="w"> </span><span class="s2">"setPhase"</span>,<span class="w"> </span><span class="s2">"phase"</span>:<span class="w"> </span><span class="s2">"compileBuildDriverPhase"</span><span class="w"> </span><span class="o">}</span>
+Running<span class="w"> </span>phase:<span class="w"> </span>compileBuildDriverPhase
+setupCompileFlags:<span class="w"> </span>-package-db<span class="o">=</span>/private/tmp/nix-build-aeson-1.5.6.0.drv-1/tmp.SUGnXWZhew/setup-package.conf.d<span class="w"> </span>-j12<span class="w"> </span>-threaded<span class="w"> </span>-rtsopts
+<span class="o">[</span><span class="m">1</span><span class="w"> </span>of<span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span>Compiling<span class="w"> </span>Main<span class="w">             </span><span class="o">(</span><span class="w"> </span>Setup.lhs,<span class="w"> </span>/private/tmp/nix-build-aeson-1.5.6.0.drv-1/tmp.SUGnXWZhew/Main.o<span class="w"> </span><span class="o">)</span>
+<span class="o">[</span><span class="m">2</span><span class="w"> </span>of<span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span>Linking<span class="w"> </span>Setup
+@nix<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">"action"</span>:<span class="w"> </span><span class="s2">"setPhase"</span>,<span class="w"> </span><span class="s2">"phase"</span>:<span class="w"> </span><span class="s2">"configurePhase"</span><span class="w"> </span><span class="o">}</span>
+Running<span class="w"> </span>phase:<span class="w"> </span>configurePhase
+configureFlags:<span class="w"> </span>--verbose<span class="w"> </span>--prefix<span class="o">=</span>/nix/store/ral7v6f2xc6yi6axy53ln7d29a2cc6p8-aeson-1.5.6.0<span class="w"> </span>--libdir<span class="o">=</span><span class="nv">$prefix</span>/lib/<span class="nv">$compiler</span><span class="w"> </span>--libsubdir<span class="o">=</span><span class="nv">$abi</span>/<span class="nv">$libname</span><span class="w"> </span>--docdir<span class="o">=</span>/nix/store/mljk66bq4f5zskrn17gv8aiy43bkpfac-aeson-1.5.6.0-doc/share/doc/aeson-1.5.6.0<span class="w"> </span>--with-gcc<span class="o">=</span>clang<span class="w"> </span>--package-db<span class="o">=</span>/private/tmp/nix-build-aeson-1.5.6.0.drv-1/tmp.SUGnXWZhew/package.conf.d<span class="w"> </span>--ghc-options<span class="o">=</span>-j12<span class="w"> </span>--disable-split-objs<span class="w"> </span>--enable-library-profiling<span class="w"> </span>--profiling-detail<span class="o">=</span>exported-functions<span class="w"> </span>--disable-profiling<span class="w"> </span>--enable-shared<span class="w"> </span>--disable-coverage<span class="w"> </span>--enable-static<span class="w"> </span>--disable-executable-dynamic<span class="w"> </span>--enable-tests<span class="w"> </span>--disable-benchmarks<span class="w"> </span>--enable-library-vanilla<span class="w"> </span>--disable-library-for-ghci<span class="w"> </span>--ghc-options<span class="o">=</span>-haddock<span class="w"> </span>--extra-lib-dirs<span class="o">=</span>/nix/store/cday6lpb3xbxpswci75yp77q49jyjf97-ncurses-6.4/lib<span class="w"> </span>--extra-lib-dirs<span class="o">=</span>/nix/store/3hxzjdfb88ni8f7h7xbqirsm7massl90-libffi-3.4.4/lib<span class="w"> </span>--extra-lib-dirs<span class="o">=</span>/nix/store/dvb8a6g3vmzcckmdjgbcnkw7vpy5df0h-gmp-with-cxx-6.3.0/lib<span class="w"> </span>--extra-include-dirs<span class="o">=</span>/nix/store/p8igv6f25sjhhk95wbvcvb82v1sybv10-libiconv-50/include<span class="w"> </span>--extra-lib-dirs<span class="o">=</span>/nix/store/p8igv6f25sjhhk95wbvcvb82v1sybv10-libiconv-50/lib<span class="w"> </span>--extra-include-dirs<span class="o">=</span>/nix/store/ymw82wxygwr9mia2qnh6a7pbw6jr2rjw-libcxx-16.0.6-dev/include<span class="w"> </span>--extra-lib-dirs<span class="o">=</span>/nix/store/vj3mzjyppyjqpqs6k0v9hyr80abmp1ay-libcxx-16.0.6/lib<span class="w"> </span>--extra-include-dirs<span class="o">=</span>/nix/store/b3l52c0yywpjqwzkg5f600m5r1njgwx8-libcxxabi-16.0.6-dev/include<span class="w"> </span>--extra-lib-dirs<span class="o">=</span>/nix/store/jgzbk5v82s2da4fqd4pjnphpb0c9r351-libcxxabi-16.0.6/lib<span class="w"> </span>--extra-include-dirs<span class="o">=</span>/nix/store/m2v3zscdv32dwn55k2wpxjfn42hpjrh4-compiler-rt-libc-16.0.6-dev/include<span class="w"> </span>--extra-lib-dirs<span class="o">=</span>/nix/store/4zx1dv50bbj63z5nrh3wjhz22np1f862-compiler-rt-libc-16.0.6/lib<span class="w"> </span>--extra-framework-dirs<span class="o">=</span>/nix/store/a55b69y2gdzkd4i4cnjx6agyq0p2bsav-apple-framework-CoreFoundation/Library/Frameworks
+Using<span class="w"> </span>Parsec<span class="w"> </span>parser
+Configuring<span class="w"> </span>aeson-1.5.6.0...
+CallStack<span class="w"> </span><span class="o">(</span>from<span class="w"> </span>HasCallStack<span class="o">)</span>:
+<span class="w">  </span>withMetadata,<span class="w"> </span>called<span class="w"> </span>at<span class="w"> </span>libraries/Cabal/Cabal/src/Distribution/Simple/Utils.hs:370:14<span class="w"> </span><span class="k">in</span><span class="w"> </span>Cabal-3.8.1.0:Distribution.Simple.Utils
+Error:<span class="w"> </span>Setup:<span class="w"> </span>Encountered<span class="w"> </span>missing<span class="w"> </span>or<span class="w"> </span>private<span class="w"> </span>dependencies:
+bytestring<span class="w"> </span>&gt;<span class="o">=</span><span class="m">0</span>.10.8.1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>&lt;<span class="m">0</span>.11.2,
+ghc-prim<span class="w"> </span>&gt;<span class="o">=</span><span class="m">0</span>.2<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>&lt;<span class="m">0</span>.8,
+hashable-time<span class="w"> </span>&gt;<span class="o">=</span><span class="m">0</span>.2.1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>&lt;<span class="m">0</span>.3,
+primitive<span class="w"> </span>&gt;<span class="o">=</span><span class="m">0</span>.7.0.1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>&lt;<span class="m">0</span>.8,
+template-haskell<span class="w"> </span>&gt;<span class="o">=</span><span class="m">2</span>.9.0.0<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>&lt;<span class="m">2</span>.18,
+text<span class="w"> </span>&gt;<span class="o">=</span><span class="m">1</span>.2.3.0<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>&lt;<span class="m">1</span>.3,
+vector<span class="w"> </span>&gt;<span class="o">=</span><span class="m">0</span>.12.0.1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>&lt;<span class="m">0</span>.13
+</code></pre></div>
+<p>In logs it's visible that <code>aeson</code> is using <code>GHC 9.4.8</code>. If I comment <code>aeson</code> from my <code>flake.nix</code> then it uses the correct GHC but it picks the latest aeson package.</p>
+<p>How can I pin the <code>aeson</code> version and make it to use a specific GHC version ?</p>
+
+
+
+<a name="422583440"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20using%20incorrect%20GHC/near/422583440" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Aravind Gopal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20using.20incorrect.20GHC.html#422583440">(Feb 21 2024 at 10:09)</a>:</h4>
+<p>My suggestion. Use Haskell-flake. basePackages param would define the version of ghc and overrides would also be compiled with that ghc version</p>
+
+
+
+<a name="422585626"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20using%20incorrect%20GHC/near/422585626" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20using.20incorrect.20GHC.html#422585626">(Feb 21 2024 at 10:22)</a>:</h4>
+<p><span class="user-mention" data-user-id="671300">@Aravind Gopal</span> Here's first familiarizing himself with the basics before trying flake-parts and the rest.</p>
+
+
+
+<a name="422585947"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20using%20incorrect%20GHC/near/422585947" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20using.20incorrect.20GHC.html#422585947">(Feb 21 2024 at 10:24)</a>:</h4>
+<p><span class="user-mention" data-user-id="691893">@Aman Singh</span> </p>
+<p>The problem is here:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="ss">aeson</span> <span class="o">=</span> pkgs<span class="o">.</span>haskellPackages<span class="o">.</span>callHackage <span class="s2">"aeson"</span> <span class="s2">"1.5.6.0"</span> <span class="p">{};</span>
+</code></pre></div>
+<p><code>pkgs.haskellPackages</code> is the default haskell package set using GHC 9.4.8. Replace that with <code>prev</code> (just as you already do for the <code>test</code> package).</p>
+<p>Also see <a href="https://nixos.wiki/wiki/Overlays">https://nixos.wiki/wiki/Overlays</a></p>
+
+
+
+<a name="422586193"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20using%20incorrect%20GHC/near/422586193" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20using.20incorrect.20GHC.html#422586193">(Feb 21 2024 at 10:26)</a>:</h4>
+<p><code>prev</code> should refer to <code>pkgs.haskell.packages.ghc8107</code>, because you are passing that overlay to the <code>extend</code> function. Overlays are actually simple concept, to extend a Nix attrset. Their implementation is simple: <a href="https://github.com/NixOS/nixpkgs/blob/master/lib/fixed-points.nix">https://github.com/NixOS/nixpkgs/blob/master/lib/fixed-points.nix</a></p>
+
+
+
+<a name="422771450"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20using%20incorrect%20GHC/near/422771450" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Aman Singh <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20using.20incorrect.20GHC.html#422771450">(Feb 22 2024 at 08:48)</a>:</h4>
+<p>Yeah, it worked. Didn't knew functions carried such context as well. I was able to build my project. Trying haskell-flake now.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,103 @@
+<html>
+<head><meta charset="utf-8"><title>2 level deep packages in nix flakes · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html">2 level deep packages in nix flakes</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="411119683"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/2%20level%20deep%20packages%20in%20nix%20flakes/near/411119683" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> pcboy <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html#411119683">(Jan 04 2024 at 03:24)</a>:</h4>
+<p>Hello,</p>
+<p>My ticket <a href="https://github.com/srid/devour-flake/issues/21#issue-2063364563">here</a> got closed, which I understand. But now I wonder if there is any way to make it more flake compliant? I have no problem running my flake at the moment (only <code>nix flake show</code> gives a <code>error: expected a derivation</code> around the <code>pythonPackages</code> as it expects a derivation, but I can build packages fine).</p>
+<p>Let me explain the background behind this. I'm in a situation where I sometimes have the same package name for a python library and for its associated CLI.<br>
+So I want the CLI tool to stay in <code>packages.${system}.*</code> and the library to go in <code>packages.${system}.pythonPackages.*</code>.</p>
+<p>What would be a better way to handle this? Should I have derivations with multiple outputs or something?</p>
+<p>Note: I'm using <code>flake-utils.lib.eachDefaultSystem</code>, which is why you don't see the <code>${system}</code> in the code pasted in the ticket.</p>
+
+
+
+<a name="411162679"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/2%20level%20deep%20packages%20in%20nix%20flakes/near/411162679" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html#411162679">(Jan 04 2024 at 10:21)</a>:</h4>
+<p>Does your package build when you run <code>nix build .#&lt;package-name&gt;</code>?</p>
+
+
+
+<a name="411163480"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/2%20level%20deep%20packages%20in%20nix%20flakes/near/411163480" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html#411163480">(Jan 04 2024 at 10:27)</a>:</h4>
+<p>From what I interpret from the logs, it looks more of a type issue which is breaking while <code>devour-flake</code> is trying to evaluate the derivation given by <code>nix build .#default</code></p>
+
+
+
+<a name="411174118"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/2%20level%20deep%20packages%20in%20nix%20flakes/near/411174118" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> pcboy <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html#411174118">(Jan 04 2024 at 11:40)</a>:</h4>
+<p>Yes I have no problem building all my packages. But of course, doing <code>nix build .\#pythonPackages</code> will not work (as it's not a derivation), <code>nix build.\#pythonPackages.package1</code> will work (as it's a derivation).<br>
+What's happening, as far as I understand, is that devour-flake does not like the fact that <code>packages.${system}.pythonPackages</code> is not a derivation, because in a flake it seems it's not authorized/standard to have more than one level deep packages... This could  I guess be solved if devour-flake had some sort of recursive way of finding derivations inside <code>packages.**</code>, instead it seems it stops at one level deep (e.g packages.${system}.app1). But at the same time I understand that devour-flake does not want to support something not deemed standard.<br>
+Here what I'm wondering more then is what would be the recommend way?<br>
+It seems in nixpkgs, they are putting the packages into <code>legacyPackages</code> instead of <code>packages</code>, and in there they do have multiple levels of packages. But devour-flake would not work with that either I suppose?</p>
+<p>Here is a flake example of what I'm talking about:  </p>
+<div class="codehilite"><pre><span></span><code>{
+{
+  description = &quot;A basic flake with a shell&quot;;
+  inputs.nixpkgs.url = &quot;github:NixOS/nixpkgs/nixpkgs-unstable&quot;;
+  inputs.flake-utils.url = &quot;github:numtide/flake-utils&quot;;
+
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      packages.app1 = pkgs.stdenv.mkDerivation {
+        name = &quot;app1&quot;;
+        src = pkgs.hello;
+        installPhase = &quot;mkdir -p $out/bin &amp;&amp; install -m755 $src/bin/hello $out/bin/hello&quot;;
+      };
+
+      packages.app2 = pkgs.stdenv.mkDerivation {
+        name = &quot;app2&quot;;
+        src = pkgs.hello;
+        installPhase = &quot;mkdir -p $out/bin &amp;&amp; install -m755 $src/bin/hello $out/bin/hello&quot;;
+      };
+
+      packages.pythonPackages = {
+        app3 = pkgs.stdenv.mkDerivation {
+          name = &quot;app3&quot;;
+          src = pkgs.hello;
+          installPhase = &quot;mkdir -p $out/bin &amp;&amp; install -m755 $src/bin/hello $out/bin/hello&quot;;
+        };
+      };
+    });
+}
+</code></pre></div>
+
+
+
+<a name="411186656"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/2%20level%20deep%20packages%20in%20nix%20flakes/near/411186656" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html#411186656">(Jan 04 2024 at 13:09)</a>:</h4>
+<blockquote>
+<p><code>nix build.\#pythonPackages.package1</code> will work (as it's a derivation).</p>
+</blockquote>
+<p>Ah, I understand the issue now. Interesting.</p>
+
+
+
+<a name="411186790"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/2%20level%20deep%20packages%20in%20nix%20flakes/near/411186790" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html#411186790">(Jan 04 2024 at 13:10)</a>:</h4>
+<p><span class="user-mention" data-user-id="678102">@pcboy</span> I think the solution here is to make devour-flake use flake-schemas. Basically this PR needs to be completed and merged: <a href="https://github.com/srid/devour-flake/pull/11">https://github.com/srid/devour-flake/pull/11</a></p>
+
+
+
+<a name="411187027"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/2%20level%20deep%20packages%20in%20nix%20flakes/near/411187027" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/2.20level.20deep.20packages.20in.20nix.20flakes.html#411187027">(Jan 04 2024 at 13:12)</a>:</h4>
+<p>Because, once we start using flake-schemas - if for some reason your flake doesn't adhere to the standard schema, you can always define your own schema, and devour-flake (thus nixci) can use that.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

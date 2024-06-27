@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I looked and there doesn't seem to be a straightforward way to override flake inputs from the CLI. But I was wondering what method(s) you have employed to do so? I'm looking for opinions on how to do this with minimal changes.</p>\n<p>At the moment, I have this:</p>\n<div class=\"codehilite\"><pre><span></span><code>  inputs = {\n    nixpkgs-1stable.url = &quot;github:NixOS/nixpkgs/nixos-24.05&quot;;\n    home-manager-1stable.url = &quot;github:nix-community/home-manager/release-24.05&quot;;\n    home-manager-1stable.inputs.nixpkgs.follows = &quot;nixpkgs-1stable&quot;;\n\n    nixpkgs-1stable-small.url = &quot;github:NixOS/nixpkgs/nixos-24.05-small&quot;;\n    home-manager-1stable-small.url = &quot;github:nix-community/home-manager/release-24.05&quot;;\n    home-manager-1stable-small.inputs.nixpkgs.follows = &quot;nixpkgs-1stable-small&quot;;\n\n    nixpkgs-0unstable.url = &quot;github:NixOS/nixpkgs/nixos-unstable&quot;;\n    home-manager-0unstable.url = &quot;github:nix-community/home-manager/master&quot;;\n    home-manager-0unstable.inputs.nixpkgs.follows = &quot;nixpkgs-0unstable&quot;;\n\n    nixpkgs-0unstable-small.url = &quot;github:NixOS/nixpkgs/nixos-unstable-small&quot;;\n    home-manager-0unstable-small.url = &quot;github:nix-community/home-manager/master&quot;;\n    home-manager-0unstable-small.inputs.nixpkgs.follows = &quot;nixpkgs-0unstable-small&quot;;\n  };\n\n  outputs = { self,\n    nixpkgs-1stable,         home-manager-1stable,\n    nixpkgs-1stable-small,   home-manager-1stable-small,\n    nixpkgs-0unstable,       home-manager-0unstable,\n    nixpkgs-0unstable-small, home-manager-0unstable-small,\n    ... }:\n    let\n      nixpkgsRelease = &quot;24.05&quot;;\n      nixpkgs = nixpkgs-1stable;\n      home-manager = home-manager-1stable;\n      #nixpkgs = nixpkgs-1stable-small;\n      #home-manager = home-manager-1stable-small;\n      #nixpkgs = nixpkgs-0unstable;\n      #home-manager = home-manager-0unstable;\n      #nixpkgs = nixpkgs-0unstable-small;\n      #home-manager = home-manager-0unstable-small;\n\n# --- [ snip ] ---\n</code></pre></div>\n<p>I don't see a \"clean\" way (tbh, I don't see _any way_ lol) to override <code>nixpkgs</code> to be, say, <code>nixpkgs-0unstable-small</code> from the CLI without a tech-debt of changes.</p>",
+        "id": 442809486,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1717599178
+    },
+    {
+        "content": "<p>Had <code>inputs</code> not been \"static\", I could have provided <code>nixos-unstable-small</code> for <code>nixpkgs</code> and <code>master</code> for <code>home-manager</code>'s channels respectively. But alas, I'm stuck here :)</p>",
+        "id": 442809855,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1717599276
+    },
+    {
+        "content": "<p>(\"Static\" as in a <code>let..in</code> block in <code>inputs</code> such that I could use <code>github:NixOS/nixpkgs/${nixpkgsChannel}</code>.)</p>",
+        "id": 442810151,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1717599341
+    },
+    {
+        "content": "<p><code>--override-input</code>?</p>",
+        "id": 442812573,
+        "sender_full_name": "Srid",
+        "timestamp": 1717599886
+    },
+    {
+        "content": "<p>Oh wow, that worked. I should read the manual instead of user comments <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span> <br>\nThank you <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span></p>",
+        "id": 442829958,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1717603797
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"696416\">@Pratham Patel</span> By the way, is what you are trying to do here similar to <a href=\"https://github.com/srid/nixos-flake/issues/51\">this request</a>?</p>",
+        "id": 442846865,
+        "sender_full_name": "Srid",
+        "timestamp": 1717607565
+    },
+    {
+        "content": "<p>Kind of. I want to use a different channel of nixpkgs/home-manager to test if the the future (nixos-unstable/master) branches introduce a breaking change or not. This runs in a local CI server I have at my home. :)</p>",
+        "id": 442851031,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1717608734
+    }
+]

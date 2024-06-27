@@ -1,0 +1,325 @@
+<html>
+<head><meta charset="utf-8"><title>Running python process using process-compose · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html">Running python process using process-compose</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="410819876"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410819876" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Soumyajit Behera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410819876">(Jan 02 2024 at 09:46)</a>:</h4>
+<p>I am trying to run some process using process compose. <br>
+Using</p>
+<div class="codehilite"><pre><span></span><code>in
+   {
+    process-compose =
+      {
+        settings.processes = commonConfig {
+            load-test = {
+              command = pkgs.writeShellApplication {
+                name = &quot;load-test&quot;;
+                runtimeInputs = [pkgs.python3];
+                text = &#39;&#39;
+                  set -x
+                  python3 Backend/load-test/setup/auth.py
+                &#39;&#39;;
+              };
+            };
+          };
+        };
+  };
+}
+</code></pre></div>
+<p>But this is throwing the below error <br>
+error: flake 'git+file:///Users/soumyajit.behera/backend-nammayatri/b-nammayatri' does not provide attribute 'packages.aarch64-darwin.load-test', 'legacyPackages.aarch64-darwin.load-test'</p>
+<p>Can someone help me here?</p>
+
+
+
+<a name="410820492"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410820492" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410820492">(Jan 02 2024 at 09:50)</a>:</h4>
+<p><a href="#narrow/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose/near/410819876">A message</a> was moved here from <a class="stream-topic" data-stream-id="413950" href="/#narrow/stream/413950-nix/topic/Nix.20tutorial.20series">#nix &gt; Nix tutorial series</a> by <span class="user-mention silent" data-user-id="675703">Soumyajit Behera</span>.</p>
+
+
+
+<a name="410839860"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410839860" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410839860">(Jan 02 2024 at 12:39)</a>:</h4>
+<p>Your config is wrong. It should be <code>process-compose.load-test =</code> not <code>process-compose =</code></p>
+<p>See example here: <a href="https://github.com/Platonic-Systems/process-compose-flake/blob/main/example/flake.nix#L20">https://github.com/Platonic-Systems/process-compose-flake/blob/main/example/flake.nix#L20</a></p>
+<p>Also, we have a stream for process-compose: <a class="stream" data-stream-id="414022" href="/#narrow/stream/414022-process-compose-flake">#process-compose-flake</a></p>
+
+
+
+<a name="410847127"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410847127" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Soumyajit Behera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410847127">(Jan 02 2024 at 13:39)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>_:
+{
+  perSystem = perSystem@{ self&#39;, pkgs, lib, ... }: {
+    process-compose.load-test-nix =
+      {
+        settings.processes = {
+            echo-web.command = &#39;&#39;
+               while true; do
+                  echo &quot;heloow&quot;
+                done
+              &#39;&#39;;
+
+            auth = {
+              command = pkgs.writeShellApplication {
+                name = &quot;auth&quot;;
+                runtimeInputs = [ pkgs.python3 ];
+                text = &#39;&#39;
+                    python3 Backend/load-test/setup/auth.py
+                &#39;&#39;;
+              };
+            };
+          };
+      };
+  };
+}
+</code></pre></div>
+<p>With this there is no error but the process-compose is not coming up.</p>
+
+
+
+<a name="410849197"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410849197" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410849197">(Jan 02 2024 at 13:57)</a>:</h4>
+<p>Make sure you are using the latest process-compose. If in nammayatri, use the latest <code>common</code> repo flake input.</p>
+
+
+
+<a name="410967721"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410967721" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Soumyajit Behera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410967721">(Jan 03 2024 at 07:15)</a>:</h4>
+<p>The issue was with the older version of process compose . <br>
+Which needs a new argument for -p=0 (port) to come up. <br>
+So we can use -p=0  as argument in nix run.</p>
+
+
+
+<a name="410987041"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410987041" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Soumyajit Behera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410987041">(Jan 03 2024 at 10:04)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>let
+  my-python-packages = ps: with ps; [
+    ( buildPythonPackage rec {
+      pname = &quot;locust&quot;;
+      version = &quot;2.16.1&quot;;
+      format = &quot;pyproject&quot;;
+
+      src = fetchFromGitHub {
+        owner = &quot;locustio&quot;;
+        repo = &quot;locust&quot;;
+        rev = version;
+        sha256 = &quot;sha256-MKFzEFpDkD8e+ENZN0GAWYipPK9A4SCZZRHG5/5UaNM=&quot;;
+      };
+
+      patchPhase = &#39;&#39;
+        echo &#39;version = &quot;${version}&quot;&#39; &gt; locust/_version.py
+      &#39;&#39;;
+
+      propagatedBuildInputs = with python3Packages; [
+        requests
+        flask-basicauth
+        flask-cors
+        msgpack
+        gevent
+        pyzmq
+        roundrobin
+        geventhttpclient
+        psutil
+        typing-extensions
+        configargparse
+        setuptools
+      ];
+    })
+  ];
+</code></pre></div>
+<p>I wanted to add locust to my env  but this is giving error  <code>error: attribute 'buildPythonPackage' missing</code> </p>
+<p>I have tried importing  { inputs, buildPythonPackage, fetchPypi, fetchFromGitHub, python3Packages, ... }: <br>
+But this is not working</p>
+
+
+
+<a name="410988250"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/410988250" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#410988250">(Jan 03 2024 at 10:12)</a>:</h4>
+<p><code>buildPythonPackage</code> comes from <code>pkgs.python3Packages.buildPythonPackage</code></p>
+
+
+
+<a name="411005338"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/411005338" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Soumyajit Behera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#411005338">(Jan 03 2024 at 12:23)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>error: builder for &#39;/nix/store/rs8hwv9ra51064vxbdn05yz08kg1z801-python3.10-locust-2.19.1.drv&#39; failed with exit code 1;
+       last 10 log lines:
+       &gt;     _version_missing(config)
+       &gt;   File &quot;/nix/store/gaafmp68vslf33sawfi97rywids1s1kg-python3.10-setuptools-scm-7.1.0/lib/python3.10/site-packages/setuptools_scm/__init__.py&quot;, line 108, in _version_missing
+       &gt;     raise LookupError(
+       &gt; LookupError: setuptools-scm was unable to detect version for /private/tmp/nix-build-python3.10-locust-2.19.1.drv-0/source.
+       &gt;
+       &gt; Make sure you&#39;re either building from a fully intact git repository or PyPI tarballs. Most other sources (such as GitHub&#39;s tarballs, a git checkout without the .git folder) don&#39;t contain the necessary metadata and will not work.
+       &gt;
+       &gt; For example, if you&#39;re using pip, instead of https://github.com/user/proj/archive/master.zip use git+https://github.com/user/proj.git#egg=proj
+       &gt;
+       &gt; ERROR Backend subprocess exited when trying to invoke get_requires_for_build_wheel
+       For full logs, run &#39;nix log /nix/store/rs8hwv9ra51064vxbdn05yz08kg1z801-python3.10-locust-2.19.1.drv&#39;.
+error: 1 dependencies of derivation &#39;/nix/store/jgxlnqwwhnyahpvl68niz5qvrffcxpp5-ny-backend-env.drv&#39; failed to build
+</code></pre></div>
+<p>Adding locust to the env. <br>
+Its giving this error.</p>
+
+
+
+<a name="411012916"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/411012916" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#411012916">(Jan 03 2024 at 13:16)</a>:</h4>
+<p>You can avoid the setuptools-scm problem like this:</p>
+<div class="codehilite"><pre><span></span><code>{
+  inputs.nixpkgs.url = &quot;github:nixos/nixpkgs/nixpkgs-unstable&quot;;
+  outputs = inputs@{...}: {
+    packages.x86_64-linux.default =
+    let
+      pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+    in
+    with pkgs;
+    with pkgs.python3Packages;
+    ( buildPythonPackage rec {
+      pname = &quot;locust&quot;;
+      version = &quot;2.20.1&quot;;
+      format = &quot;pyproject&quot;;
+
+      src = fetchFromGitHub {
+        owner = &quot;locustio&quot;;
+        repo = &quot;locust&quot;;
+        rev = version;
+        sha256 = &quot;sha256-pPtH9rnIDFRUyWPPF7xmPtfpiBFIz9WLYTTV+W0s/es=&quot;;
+      };
+
+      patchPhase = &#39;&#39;
+        echo &#39;version = &quot;${version}&quot;&#39; &gt; locust/_version.py
+      &#39;&#39;;
+      SETUPTOOLS_SCM_PRETEND_VERSION = version;
+      nativeBuildInputs = [ setuptools-scm ];
+
+      propagatedBuildInputs = [
+       requests
+       flask-basicauth
+       flask-cors
+       msgpack
+       gevent
+       pyzmq
+       geventhttpclient
+       roundrobin
+       psutil
+       typing-extensions
+       configargparse
+       setuptools
+      ];
+    });
+
+  };
+}
+</code></pre></div>
+<p>See here: <a href="https://github.com/NixOS/nixpkgs/issues/41136#issuecomment-1101342698">https://github.com/NixOS/nixpkgs/issues/41136#issuecomment-1101342698</a></p>
+
+
+
+<a name="411013019"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/411013019" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#411013019">(Jan 03 2024 at 13:17)</a>:</h4>
+<p>Also after this the package will complaint about roundrobin being missing as it is still an open PR here <a href="https://github.com/NixOS/nixpkgs/pull/185087">https://github.com/NixOS/nixpkgs/pull/185087</a></p>
+
+
+
+<a name="411013060"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/411013060" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#411013060">(Jan 03 2024 at 13:17)</a>:</h4>
+<p>You will have to create another buildPythonPackage for roundrobin and link it here</p>
+
+
+
+<a name="411037031"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/411037031" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#411037031">(Jan 03 2024 at 15:55)</a>:</h4>
+<p><span class="user-mention" data-user-id="675703">@Soumyajit Behera</span> <br>
+Here’s a flake that builds locust, just run <code>nix build</code>:</p>
+<div class="codehilite"><pre><span></span><code>{
+  inputs.nixpkgs.url = &quot;github:nixos/nixpkgs/nixpkgs-unstable&quot;;
+  outputs = inputs@{ ... }:
+    let pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; in {
+      packages.x86_64-linux.default =
+        with pkgs;
+        with pkgs.python3Packages;
+        let
+          roundrobin = buildPythonPackage rec {
+            pname = &quot;roundrobin&quot;;
+            version = &quot;0.0.4&quot;;
+
+            src = fetchFromGitHub {
+              owner = &quot;linnik&quot;;
+              repo = pname;
+              rev = version;
+              sha256 = &quot;sha256-eedE4PE43sbJE/Ktrc31KjVdfqe2ChKCYUNIl7fir0E=&quot;;
+            };
+
+            checkPhase = &#39;&#39;
+              runHook preCheck
+              ${python.interpreter} -m unittest discover
+              runHook postCheck
+            &#39;&#39;;
+
+            pythonImportsCheck = [ pname ];
+
+          };
+        in
+        (buildPythonPackage rec {
+          pname = &quot;locust&quot;;
+          version = &quot;2.20.1&quot;;
+          format = &quot;pyproject&quot;;
+
+          src = fetchFromGitHub {
+            owner = &quot;locustio&quot;;
+            repo = &quot;locust&quot;;
+            rev = version;
+            sha256 = &quot;sha256-pPtH9rnIDFRUyWPPF7xmPtfpiBFIz9WLYTTV+W0s/es=&quot;;
+          };
+
+          patchPhase = &#39;&#39;
+            echo &#39;version = &quot;${version}&quot;&#39; &gt; locust/_version.py
+          &#39;&#39;;
+          SETUPTOOLS_SCM_PRETEND_VERSION = version;
+          nativeBuildInputs = [ setuptools-scm ];
+          pythonImportsCheck = [ pname ];
+
+          propagatedBuildInputs = [
+            requests
+            flask-basicauth
+            flask-cors
+            msgpack
+            gevent
+            pyzmq
+            geventhttpclient
+            roundrobin
+            psutil
+            typing-extensions
+            configargparse
+            setuptools
+          ];
+        });
+
+    };
+}
+</code></pre></div>
+
+
+
+<a name="411038642"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/411038642" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#411038642">(Jan 03 2024 at 16:04)</a>:</h4>
+<p>(One of these days we probably want to create a ... <code>python-flake</code>)</p>
+
+
+
+<a name="411139064"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Running%20python%20process%20using%20process-compose/near/411139064" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose.html#411139064">(Jan 04 2024 at 07:10)</a>:</h4>
+<p>Agreed</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

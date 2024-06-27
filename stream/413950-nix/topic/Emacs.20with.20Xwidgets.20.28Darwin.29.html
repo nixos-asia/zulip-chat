@@ -1,0 +1,28 @@
+<html>
+<head><meta charset="utf-8"><title>Emacs with Xwidgets (Darwin) · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Emacs.20with.20Xwidgets.20.28Darwin.29.html">Emacs with Xwidgets (Darwin)</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="427104366"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Emacs%20with%20Xwidgets%20%28Darwin%29/near/427104366" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Emacs.20with.20Xwidgets.20.28Darwin.29.html#427104366">(Mar 17 2024 at 12:22)</a>:</h4>
+<p>Has anyone gotten Emacs to build on Darwin with xwidgets?</p>
+<p>cf. <a href="https://github.com/NixOS/nixpkgs/issues/110218">https://github.com/NixOS/nixpkgs/issues/110218</a></p>
+<p>(xwidgets is required for running <a href="https://old.reddit.com/r/emacs/comments/jyowe0/introducing_emacswebkit_a_successor_to/">webkit in emacs</a>)</p>
+
+
+
+<a name="427105837"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Emacs%20with%20Xwidgets%20%28Darwin%29/near/427105837" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Emacs.20with.20Xwidgets.20.28Darwin.29.html#427105837">(Mar 17 2024 at 12:28)</a>:</h4>
+<p>If this was fixed in nixpkgs, one could normally build it as <code>pkgs.emacs29-macport.override { withXwidgets = true; }</code> </p>
+<p>(It used to build before, FWIW)</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

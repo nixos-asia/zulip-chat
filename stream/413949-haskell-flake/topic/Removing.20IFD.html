@@ -1,0 +1,90 @@
+<html>
+<head><meta charset="utf-8"><title>Removing IFD · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html">Removing IFD</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="406071884"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Removing%20IFD/near/406071884" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html#406071884">(Dec 05 2023 at 14:47)</a>:</h4>
+<p><span class="user-mention" data-user-id="671300">@Aravind Gopal</span> opened <a href="https://github.com/srid/haskell-flake/pull/204">https://github.com/srid/haskell-flake/pull/204</a> which removes the need for IFD in local packages.</p>
+<p>But IFD is still used in dependency overrides; for eg., <code>packages.foo.source</code> will use IFD, via callCabal2nix or callHackage. The open question here is: how do we solve it?</p>
+<p>cc <span class="user-mention" data-user-id="669081">@Shivaraj B H</span></p>
+
+
+
+<a name="406072902"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Removing%20IFD/near/406072902" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html#406072902">(Dec 05 2023 at 14:52)</a>:</h4>
+<p>We may have to borrow some ideas from <a href="https://horizon-haskell.net/">https://horizon-haskell.net/</a></p>
+
+
+
+<a name="407264742"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Removing%20IFD/near/407264742" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html#407264742">(Dec 11 2023 at 15:31)</a>:</h4>
+<p>From <span class="user-mention" data-user-id="671300">@Aravind Gopal</span> </p>
+<blockquote>
+<p>maintaining package sets seems like the only possible way for this.</p>
+<p>which is same as in horizon-haskell.</p>
+</blockquote>
+<p>Hmm, I'll take a look at this as a next project. Ideally we want to define package sets in Nix expressions itself, and stick close to nixpkgs (unlike horizon).</p>
+
+
+
+<a name="411872738"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Removing%20IFD/near/411872738" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html#411872738">(Jan 09 2024 at 06:23)</a>:</h4>
+<p>Here's one way to solve this: <a href="https://github.com/srid/haskell-flake/pull/204#pullrequestreview-1809771568">https://github.com/srid/haskell-flake/pull/204#pullrequestreview-1809771568</a></p>
+<p>Summary: copy over the hackage2nix/ callCabal2nix generated <code>default.nix</code> to a directory, and have the developer commit that to Git.</p>
+
+
+
+<a name="411872872"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Removing%20IFD/near/411872872" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html#411872872">(Jan 09 2024 at 06:24)</a>:</h4>
+<p>It looks like this (note: we overrode relude to test dependency override),</p>
+<p><a href="/user_uploads/60244/P0zCMPlvvYvMKjXeyLN19f29/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/P0zCMPlvvYvMKjXeyLN19f29/image.png" title="image.png"><img src="/user_uploads/60244/P0zCMPlvvYvMKjXeyLN19f29/image.png"></a></div><div class="codehilite"><pre><span></span><code>❯ cat .haskellSrc2nix/haskell-template.nix
+{ mkDerivation, aeson, async, base, data-default, directory
+, filepath, lib, mtl, optics-core, profunctors, relude, shower
+, time, with-utf8
+}:
+mkDerivation {
+  pname = &quot;haskell-template&quot;;
+  version = &quot;0.1.0.0&quot;;
+  src = /nix/store/51shzaxpi2abz3hfp4q05kcd1lls0lba-source;
+  isLibrary = false;
+  isExecutable = true;
+  executableHaskellDepends = [
+    aeson async base data-default directory filepath mtl optics-core
+    profunctors relude shower time with-utf8
+  ];
+  homepage = &quot;https://srid.ca/haskell-template&quot;;
+  description = &quot;A template for Haskell projects using Nix&quot;;
+  license = lib.licenses.mit;
+  mainProgram = &quot;haskell-template&quot;;
+}
+</code></pre></div>
+<p>But as you can see that hardcoded <code>src = /nix/store/51shzaxpi2abz3hfp4q05kcd1lls0lba-source;</code> is problematic. Looks like we have to do some hacky patching of this generated nix to have the src point back to the actual path.</p>
+
+
+
+<a name="411873737"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Removing%20IFD/near/411873737" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html#411873737">(Jan 09 2024 at 06:33)</a>:</h4>
+<blockquote>
+<p>Looks like we have to do some hacky patching of this generated nix to have the src point back to the actual path.</p>
+</blockquote>
+<p>AFAIR calling <code>cabal2nix</code> executable results in a relative path rather than a path linking to the /nix/store for local packages.</p>
+
+
+
+<a name="411876599"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Removing%20IFD/near/411876599" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Removing.20IFD.html#411876599">(Jan 09 2024 at 07:04)</a>:</h4>
+<p>But note we are using <code>callCabal2nix</code> which passes nix store paths,</p>
+<p>cf. <code>src</code> in <a href="https://github.com/NixOS/nixpkgs/blob/6a9382b8d1d9531be1a2fd611f3f91f30fb38678/pkgs/development/haskell-modules/make-package-set.nix#L140">https://github.com/NixOS/nixpkgs/blob/6a9382b8d1d9531be1a2fd611f3f91f30fb38678/pkgs/development/haskell-modules/make-package-set.nix#L140</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

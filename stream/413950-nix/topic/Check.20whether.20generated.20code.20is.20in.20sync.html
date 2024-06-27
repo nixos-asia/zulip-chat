@@ -1,0 +1,141 @@
+<html>
+<head><meta charset="utf-8"><title>Check whether generated code is in sync · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html">Check whether generated code is in sync</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="407467394"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407467394" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Vijay Gupta <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407467394">(Dec 12 2023 at 12:44)</a>:</h4>
+<p>I have a Haskell project that uses nix.</p>
+<p>We have a local cabal package take takes bunch of yaml files and generates Haskell code. Both the yaml file and generated code are checked into git. Anytime somebody changes the yaml files they must remember to regenerate the code. If they forgot to regenerate the code and thereby the yaml and Haskell code is out of sync  then CI should fail accordingly.</p>
+<p>The CI runs nix. How do we have this check in nix. We currently have a bash script that regenerates the code and looks for the diff.</p>
+
+
+
+<a name="407467462"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407467462" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Vijay Gupta <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407467462">(Dec 12 2023 at 12:44)</a>:</h4>
+<p><a href="https://github.com/nammayatri/nammayatri">https://github.com/nammayatri/nammayatri</a></p>
+
+
+
+<a name="407467760"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407467760" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Vijay Gupta <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407467760">(Dec 12 2023 at 12:46)</a>:</h4>
+<p>This is my shell script </p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+
+cabal<span class="w"> </span>run<span class="w"> </span>alchemist-generator-exe
+treefmt
+<span class="c1"># This script checks if there are any changes in the src-read-only folder</span>
+<span class="nv">CHANGES_FOUND</span><span class="o">=</span><span class="nb">false</span>
+
+git<span class="w"> </span>diff<span class="w"> </span>--unified<span class="o">=</span><span class="m">0</span><span class="w"> </span>--<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^\\+\\+\\+|^@@"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nv">file_path</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s2">"^\\+\\+\\+ b/\K(.+)"</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="s2">"</span><span class="nv">$line</span><span class="s2">"</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$file_path</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*<span class="s2">"/src-read-only/"</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span>git<span class="w"> </span>diff<span class="w"> </span>--unified<span class="o">=</span><span class="m">0</span><span class="w"> </span>--relative<span class="o">=</span><span class="s2">"</span><span class="nv">$file_path</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^@@"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>diff_line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">            </span><span class="nv">line_number</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s2">"@@\\s-\\d+(,\d+)?\\s+\\+\\K\d+"</span><span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="s2">"</span><span class="nv">$diff_line</span><span class="s2">"</span><span class="k">)</span>
+<span class="w">            </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$file_path</span>:<span class="nv">$line_number</span>:<span class="s2">"Changes found in src-read-only folder with diff line: </span><span class="nv">$diff_line</span><span class="s2">"</span>
+<span class="w">            </span><span class="nv">CHANGES_FOUND</span><span class="o">=</span><span class="nb">true</span>
+<span class="w">        </span><span class="k">done</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="k">done</span>
+
+<span class="c1"># git checkout -- .</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CHANGES_FOUND</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+
+<span class="k">fi</span>
+</code></pre></div>
+
+
+
+<a name="407468332"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407468332" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407468332">(Dec 12 2023 at 12:50)</a>:</h4>
+<p>You can use <a href="https://pre-commit.com/">pre-commit</a> to do this check. Flakes also has <a href="https://github.com/cachix/pre-commit-hooks.nix">support</a> for it.</p>
+<p>In fact, the nammayatri repo already uses it for checking a similar thing (<a href="https://github.com/nammayatri/nammayatri/blob/a7ccac2e67ccc428cdd51763c2a7cabf16a361a7/Backend/nix/pre-commit.nix#L9-L34">overlapping migrations</a>), so you can use the same approach.</p>
+
+
+
+<a name="407468431"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407468431" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407468431">(Dec 12 2023 at 12:50)</a>:</h4>
+<p>Instead of using <code>cabal run</code>, however, you'd have to use the Nix package itself (<code>lib.getExe self.packages.${pkgs.system}.alchemist-whatever</code>).</p>
+
+
+
+<a name="407470830"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407470830" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407470830">(Dec 12 2023 at 13:03)</a>:</h4>
+<p>There's one limitation to be aware of with pre-commit-hooks.nix. There's no user-defined ordering yet; <a href="https://github.com/cachix/pre-commit-hooks.nix/issues/250">https://github.com/cachix/pre-commit-hooks.nix/issues/250</a></p>
+
+
+
+<a name="407684803"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407684803" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Vijay Gupta <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407684803">(Dec 13 2023 at 09:44)</a>:</h4>
+<p>I am currently working on a pre-commit hook for this project to check diff, aiming to run both a package and a formatter in the same hook. However, I am encountering an issue where the formatter fails to run after the package execution.</p>
+<p>Here's a snippet of the relevant configuration:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>check-src-read-only-diff-check<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>true<span class="p">;</span>
+<span class="w">  </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"check-src-read-only-diff-check"</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Check that src-read-only folder is read-only"</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">types</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"file"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">pass_filenames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>true<span class="p">;</span>
+<span class="w">  </span><span class="nv">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">".*\\/((rider-platform\\/rider-app)|(provider-platform\\/dynamic-offer-driver-app))\\/Main\\/src-read-only\\/.*\\.hs</span>$<span class="s2">"</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bash -c '</span><span class="si">${</span><span class="nv">lib</span><span class="p">.getExe self</span><span class="s1">'.packages.alchemist}'</span><span class="p"> ; bash -c </span><span class="s1">'${lib.getExe config.treefmt.programs.ormolu.package}'</span><span class="s2">";</span>
+<span class="s2">};</span>
+</code></pre></div>
+<p>The issue arises after the package execution, preventing the formatter from running successfully. Am i doing something wrong here ?</p>
+<p>Any help or suggestions regarding the correct configuration or execution order would be greatly appreciated.</p>
+
+
+
+<a name="407686672"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407686672" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407686672">(Dec 13 2023 at 09:51)</a>:</h4>
+<p>How did you confirm that the package is running? If it is running and the formatter is not, one possible explanation could be that your package might be a service that doesn't complete, is it?</p>
+
+
+
+<a name="407687656"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407687656" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Vijay Gupta <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407687656">(Dec 13 2023 at 09:56)</a>:</h4>
+<p>Well package is supposed to generate the new unformatted files, which it is generating . Now the next thing i wanted was the formatter should format the files and after formatting if there are still new files in staged area i want the commit to be failed</p>
+
+
+
+<a name="407690142"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407690142" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407690142">(Dec 13 2023 at 10:08)</a>:</h4>
+<p>let me put forward a scenario, let's assume you make changes to your yaml files, the <code>.hs</code> files for these changes are not generated yet. <br>
+Now you proceed to commit these yaml files and when you do <code>alchemist</code> package and  sequentially <code>ormolu</code> runs and generates formatted <code>.hs</code> files, these files will not match the already existing <code>.hs</code> files and the commit will fail.</p>
+<p>The above mentioned is the ideal scenario and you are saying that <code>alchemist</code> is running, failing the commit, but the <code>formatter</code> is not running after alchemist? is my understanding here correct?</p>
+
+
+
+<a name="407694178"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407694178" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Vijay Gupta <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407694178">(Dec 13 2023 at 10:29)</a>:</h4>
+<p>So what we do is, we first put some change in yaml file. After that we run the alchemist-generator which is nix command which generates and formats the code. We stage those changes i.e. yaml and newly generated file.<br>
+Now, When I'm trying to commit i want the pre-commit to work in a such a way that It will first run the alchemist-generator which will generate the same code but it will be unformatted code.Hence, it will have  diff between staged and newly code generated . Now my goal is to format those newly generated code by <strong>ormulo</strong> and after that as we haven't made any change <br>
+all those files will be same as staged one and hence no file will be there in Unstaged area.<br>
+I want my pre-commit to fail only if the staged code is different from the unstaged code generated during pre-commit.<br>
+But with my pre-commit it's failing everytime as code is generated during pre-commit run but fails to format it.</p>
+
+
+
+<a name="407698265"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407698265" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Vijay Gupta <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407698265">(Dec 13 2023 at 10:50)</a>:</h4>
+<p>to check if the formatter is working, I removed <code>bash -c '${lib.getExe self'.packages.alchemist}'</code> from the code and tried to format  unformatted file using this hook. It didn't format those files.</p>
+
+
+
+<a name="407702458"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Check%20whether%20generated%20code%20is%20in%20sync/near/407702458" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Check.20whether.20generated.20code.20is.20in.20sync.html#407702458">(Dec 13 2023 at 11:11)</a>:</h4>
+<p>If your formatter is not working, most probable culprit could be the regex you have to detect the files, assuming rest of the configuration is correct.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

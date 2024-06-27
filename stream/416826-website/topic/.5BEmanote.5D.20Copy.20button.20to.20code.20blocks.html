@@ -1,0 +1,51 @@
+<html>
+<head><meta charset="utf-8"><title>[Emanote] Copy button to code blocks · website · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/416826-website/index.html">website</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/416826-website/topic/.5BEmanote.5D.20Copy.20button.20to.20code.20blocks.html">[Emanote] Copy button to code blocks</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="407467736"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/%5BEmanote%5D%20Copy%20button%20to%20code%20blocks/near/407467736" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/.5BEmanote.5D.20Copy.20button.20to.20code.20blocks.html#407467736">(Dec 12 2023 at 12:46)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> I was under the impression that changing <code>embed-code.tpl</code> file should change the way code block looks but I don't see any change at all.</p>
+<p>Updated <code>ember-code.tpl</code>:</p>
+<div class="codehilite"><pre><span></span><code>&lt;div class=&quot;py-0.5 mb-3 text-sm&quot; title=&quot;${ema:alt}&quot;&gt;
+  &lt;div style=&quot;position: relative;&quot;&gt;
+    &lt;button&gt;Copy&lt;/button&gt;
+    &lt;pre&gt;&lt;code class=&quot;${ema:code:language}&quot; &gt;&lt;ema:code:content /&gt;&lt;/code&gt;&lt;/pre&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+<p>This is how the code block is rendered:<br>
+<a href="/user_uploads/60244/-IdXF1_We_wxeChbo__L8sZc/Screenshot-2023-12-12-at-6.14.14-PM.png">Screenshot-2023-12-12-at-6.14.14-PM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/-IdXF1_We_wxeChbo__L8sZc/Screenshot-2023-12-12-at-6.14.14-PM.png" title="Screenshot-2023-12-12-at-6.14.14-PM.png"><img src="/user_uploads/60244/-IdXF1_We_wxeChbo__L8sZc/Screenshot-2023-12-12-at-6.14.14-PM.png"></a></div><p>As you can see in the inspect element on the right there is no button in the HTML snippet.</p>
+
+
+
+<a name="407472166"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/%5BEmanote%5D%20Copy%20button%20to%20code%20blocks/near/407472166" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/.5BEmanote.5D.20Copy.20button.20to.20code.20blocks.html#407472166">(Dec 12 2023 at 13:11)</a>:</h4>
+<p><code>embed-*.tpl</code> are used only for <a href="https://emanote.srid.ca/guide/markdown/embed">embed</a> wikilinks, cf. <code>![[..]]</code>. </p>
+<p>For code blocks, see <code>pandoc.tpl</code>, <br>
+<a href="/user_uploads/60244/sIN4_5TT-sRDu-h_j-PhkhYr/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/sIN4_5TT-sRDu-h_j-PhkhYr/image.png" title="image.png"><img src="/user_uploads/60244/sIN4_5TT-sRDu-h_j-PhkhYr/image.png"></a></div>
+
+
+
+<a name="407472514"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/%5BEmanote%5D%20Copy%20button%20to%20code%20blocks/near/407472514" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/416826-website/topic/.5BEmanote.5D.20Copy.20button.20to.20code.20blocks.html#407472514">(Dec 12 2023 at 13:13)</a>:</h4>
+<p>This topic was moved here from <a class="stream-topic" data-stream-id="413951" href="/#narrow/stream/413951-general/topic/.5BEmanote.5D.20Copy.20button.20to.20code.20blocks">#general &gt; [Emanote] Copy button to code blocks</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="407489510"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/%5BEmanote%5D%20Copy%20button%20to%20code%20blocks/near/407489510" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/.5BEmanote.5D.20Copy.20button.20to.20code.20blocks.html#407489510">(Dec 12 2023 at 14:31)</a>:</h4>
+<p>It would be nice to consolidate them in one place though, if that's even possible.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

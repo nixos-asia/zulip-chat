@@ -1,0 +1,147 @@
+<html>
+<head><meta charset="utf-8"><title>Recursively search through flake inputs · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html">Recursively search through flake inputs</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="410985088"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/410985088" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#410985088">(Jan 03 2024 at 09:49)</a>:</h4>
+<p>I recall <span class="user-mention" data-user-id="667408">@Srid</span> mentioning this before, but I don’t seem to recollect. For example, if I have a flake in <code>project-a</code> and this has <code>project-b</code> in its <code>inputs</code>, <code>project-b</code> in turn depends on <code>project-c</code> in its flake. My question is, how can I find if <code>project-a</code> depends on <code>project-c</code> without having to go through each of the flake. I want something like <code>nix why-depends</code> but for flake inputs.</p>
+
+
+
+<a name="411013853"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411013853" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411013853">(Jan 03 2024 at 13:23)</a>:</h4>
+<p>Unsure, but there is <code>nix flake metadata</code> which dumps the tree of inputs. It takes <code>--json</code> to produce a JSON output, so something can be built off it. Also nix-browser can (be made to) do this too, but a CLI would be nice.</p>
+
+
+
+<a name="411642027"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411642027" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411642027">(Jan 07 2024 at 23:34)</a>:</h4>
+<p>fwiw, for quickly traversing inputs in the flake you can simply load the flake in a repl, and a top-level <code>inputs</code> attribute exists for quickly traversing the inputs of a flake</p>
+
+
+
+<a name="411740218"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411740218" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411740218">(Jan 08 2024 at 13:42)</a>:</h4>
+<p>Hey Tim, thanks for that, I am aware that I can traverse through the entire graph of the inputs, i.e if I know the path to whatever input I am looking for. I was looking for a solution, that given an input, gives me the pinned version for that input in the dependency graph and the path to reach to that node in the graph.</p>
+<p>This is what worked for me:<br>
+To find the pinned revision:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>$<span class="w"> </span>nix<span class="w"> </span>flake<span class="w"> </span>metadata<span class="w"> </span>--json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">'.. | ."hedis"? | select( . != null )'</span>
+</code></pre></div>
+<p>Which gives me the following output:</p>
+<div class="codehilite" data-code-language="JSON"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"flake"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"locked"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"lastModified"</span><span class="p">:</span><span class="w"> </span><span class="mi">1689234100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"narHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256-J4mqtraMzLJguL0BwMUETeBpNJXRf86E2ZaP9xx+4tY="</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"owner"</span><span class="p">:</span><span class="w"> </span><span class="s2">"juspay"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"repo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hedis"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"rev"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77bf501da57639a60728b577e1c3780f70ddb418"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"github"</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"original"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"owner"</span><span class="p">:</span><span class="w"> </span><span class="s2">"juspay"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"repo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hedis"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"rev"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77bf501da57639a60728b577e1c3780f70ddb418"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"github"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="s2">"hedis"</span>
+</code></pre></div>
+<p>Now, what if I want to get the path to reach this node, I can still use jq to do this, thanks to <a href="https://stackoverflow.com/questions/39800718/how-to-use-jq-to-find-all-paths-to-a-certain-key">this</a> solution from stackoverflow:</p>
+<div class="codehilite"><pre><span></span><code>nix flake metadata --json | jq -c &#39;paths | select(.[-1] == &quot;hedis&quot;)&#39;
+</code></pre></div>
+<p>This gives me the output:</p>
+<div class="codehilite"><pre><span></span><code>[&quot;locks&quot;,&quot;nodes&quot;,&quot;euler-hs&quot;,&quot;inputs&quot;,&quot;hedis&quot;]
+[&quot;locks&quot;,&quot;nodes&quot;,&quot;hedis&quot;]
+</code></pre></div>
+<p>Now I know hedis comes from <a href="https://github.com/juspay/euler-hs">euler-hs</a>’s flake.</p>
+
+
+
+<a name="411781061"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411781061" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411781061">(Jan 08 2024 at 17:12)</a>:</h4>
+<p>Nice one; here's another example (shared-kernel is transitively used by two other flakes, in addition to direct reference by the root flake; though the output doesn't say whether they all are pinned at same rev):</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>❯<span class="w"> </span>nix<span class="w"> </span>flake<span class="w"> </span>metadata<span class="w"> </span>--json<span class="w"> </span>github:nammayatri/nammayatri<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">'paths | select(.[-1] == "shared-kernel")'</span>
+<span class="o">[</span><span class="s2">"locks"</span>,<span class="s2">"nodes"</span>,<span class="s2">"beckn-gateway"</span>,<span class="s2">"inputs"</span>,<span class="s2">"shared-kernel"</span><span class="o">]</span>
+<span class="o">[</span><span class="s2">"locks"</span>,<span class="s2">"nodes"</span>,<span class="s2">"namma-dsl"</span>,<span class="s2">"inputs"</span>,<span class="s2">"shared-kernel"</span><span class="o">]</span>
+<span class="o">[</span><span class="s2">"locks"</span>,<span class="s2">"nodes"</span>,<span class="s2">"root"</span>,<span class="s2">"inputs"</span>,<span class="s2">"shared-kernel"</span><span class="o">]</span>
+<span class="o">[</span><span class="s2">"locks"</span>,<span class="s2">"nodes"</span>,<span class="s2">"shared-kernel"</span><span class="o">]</span>
+</code></pre></div>
+
+
+
+<a name="411782003"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411782003" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411782003">(Jan 08 2024 at 17:16)</a>:</h4>
+<p>That shouldn’t be hard to solve, I will have a look tomorrow</p>
+
+
+
+<a name="411782731"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411782731" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411782731">(Jan 08 2024 at 17:18)</a>:</h4>
+<p>You could wrap all of this in a <code>pkgs.writeShellApplication</code> and make it a flake-app runnable as, for instance, <code>nix run github:shivaraj-bh/search-flake-inputs github:nammayatri/nammayatri shared-kernel</code></p>
+
+
+
+<a name="411782937"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411782937" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411782937">(Jan 08 2024 at 17:19)</a>:</h4>
+<p>Probably an overkill, unless it is going to do more / act general.</p>
+
+
+
+<a name="411786359"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411786359" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411786359">(Jan 08 2024 at 17:32)</a>:</h4>
+<p>I will probably come up with a more prettified output for this along with displaying a correspond short rev for the node in question, then making a flake-app around it would make sense</p>
+
+
+
+<a name="411786474"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/411786474" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#411786474">(Jan 08 2024 at 17:33)</a>:</h4>
+<p>Stretch goal: can it also search flake <em>output</em> tree?</p>
+
+
+
+<a name="412968894"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/412968894" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#412968894">(Jan 15 2024 at 14:29)</a>:</h4>
+<p><a href="https://github.com/shivaraj-bh/search-flake-inputs">https://github.com/shivaraj-bh/search-flake-inputs</a></p>
+<p><a href="/user_uploads/60244/H6QpQAQrmtkxcHtj83FhU_GE/Screenshot-2024-01-15-at-7.58.02PM.png">Screenshot-2024-01-15-at-7.58.02PM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/H6QpQAQrmtkxcHtj83FhU_GE/Screenshot-2024-01-15-at-7.58.02PM.png" title="Screenshot-2024-01-15-at-7.58.02PM.png"><img src="/user_uploads/60244/H6QpQAQrmtkxcHtj83FhU_GE/Screenshot-2024-01-15-at-7.58.02PM.png"></a></div>
+
+
+
+<a name="413083649"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/413083649" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#413083649">(Jan 16 2024 at 05:32)</a>:</h4>
+<p>announce it!</p>
+
+
+
+<a name="419927886"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/419927886" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#419927886">(Feb 05 2024 at 21:04)</a>:</h4>
+<p>this is really useful. thanks</p>
+
+
+
+<a name="419970206"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/419970206" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#419970206">(Feb 06 2024 at 03:45)</a>:</h4>
+<p>I was planning to announce it but was wondering if I could make a general purpose search application in rust. It will be able to search outputs, inputs and can be made extensible to search much more.</p>
+
+
+
+<a name="419970331"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Recursively%20search%20through%20flake%20inputs/near/419970331" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs.html#419970331">(Feb 06 2024 at 03:46)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="671017">tgunnoe</span> <a href="#narrow/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs/near/419927886">said</a>:</p>
+<blockquote>
+<p>this is really useful. thanks</p>
+</blockquote>
+<p>Maybe I should announce it at its current state and then later launch a successor that will deprecate this.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

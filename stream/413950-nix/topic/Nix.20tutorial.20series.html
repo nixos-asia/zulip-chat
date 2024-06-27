@@ -1,0 +1,65 @@
+<html>
+<head><meta charset="utf-8"><title>Nix tutorial series · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20tutorial.20series.html">Nix tutorial series</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="408630945"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20tutorial%20series/near/408630945" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20tutorial.20series.html#408630945">(Dec 18 2023 at 15:11)</a>:</h4>
+<p>Inspired by <a href="#narrow/stream/413948-nixos/topic/NixOS.20tutorial.20series">NixOS tutorial series</a>, we should also develop a Nix tutorial series starting from absolute basic workflows all the way to flakes and then to flake-parts.</p>
+<p>This is the topic to discuss ideas to that end.</p>
+
+
+
+<a name="408642891"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20tutorial%20series/near/408642891" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20tutorial.20series.html#408642891">(Dec 18 2023 at 16:12)</a>:</h4>
+<p>To add to that, we can have a dedicated series for setting up development environment for a Haskell project, another for Rust based project,  so on and so forth.</p>
+
+
+
+<a name="408670265"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20tutorial%20series/near/408670265" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20tutorial.20series.html#408670265">(Dec 18 2023 at 18:57)</a>:</h4>
+<p>We should include a page on debugging. Comment from someone:</p>
+<blockquote>
+<p>I also feel like there is a big missing piece in in the overall docs; to me the main issue is “ok, my code isn’t working, how do I debug it”. I feel like if I really knew how the pieces all worked together I could intuit my way to a solution, but since I havne’t done much building of packages/derivations I don’t have that skill set</p>
+</blockquote>
+
+
+
+<a name="411627108"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20tutorial%20series/near/411627108" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20tutorial.20series.html#411627108">(Jan 07 2024 at 19:40)</a>:</h4>
+<p>I'd also love to see more detailed info about setting up a dev environment, especially using currently available LSP support in common editors</p>
+
+
+
+<a name="411867626"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20tutorial%20series/near/411867626" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20tutorial.20series.html#411867626">(Jan 09 2024 at 05:40)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">icodeforyou.net</span> <a href="#narrow/stream/413950-nix/topic/Nix.20tutorial.20series/near/411627108">said</a>:</p>
+<blockquote>
+<p>I'd also love to see more detailed info about setting up a dev environment, especially using currently available LSP support in common editors</p>
+</blockquote>
+<p>In the context of language-specific development you mean? "Setting up dev environment" is partly being addressed in <a href="https://nixos.asia/en/nixify-haskell">https://nixos.asia/en/nixify-haskell</a> but we can mention LSP as well here.</p>
+
+
+
+<a name="411867652"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nix%20tutorial%20series/near/411867652" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nix.20tutorial.20series.html#411867652">(Jan 09 2024 at 05:40)</a>:</h4>
+<h3>Skeleton</h3>
+<p>I'm thinking our Nix tutorial series should develop it all the way to flake-parts, so:</p>
+<ul>
+<li>Stage 0: Nix expression language + derivations + etc.</li>
+<li>Stage 1: Flakes</li>
+<li>Stage 2: Module system (using <code>evalModules</code> to refactor one's complex Nix)</li>
+<li>Stage 3: flake-parts (module system for flakes; write your own module)</li>
+<li>Stage 4: use existing flake-parts modules (eg: haskell-flake, process-compose-flake)</li>
+</ul>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

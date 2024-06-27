@@ -1,0 +1,107 @@
+<html>
+<head><meta charset="utf-8"><title>Cache config in `nix run` of flake · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html">Cache config in `nix run` of flake</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="421260162"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421260162" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421260162">(Feb 13 2024 at 14:57)</a>:</h4>
+<p><a href="#narrow/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60/near/421225705">This convo</a> with <span class="user-mention" data-user-id="678574">@Andreas</span>  began as a way to provide project-specific caches to users who are installing these Nix packages outside of nixpkgs.</p>
+<p>One way to automate that providing of cache is to add the cache to <code>flake.nix</code> (<a href="https://github.com/juspay/nix-browser/blob/d7d33d764d7f0829cbd2160431e091d09a7b0700/flake.nix#L3-L7">see example</a>), and then ask the user to use <code>--accept-flake-config</code> to automatically use that cache when doing <code>nix run</code> or <code>nix profile install</code>, eg.:</p>
+<div class="codehilite"><pre><span></span><code>nix --accept-flake-config run github:juspay/nix-browser#nix-health
+</code></pre></div>
+
+
+
+<a name="421260346"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421260346" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421260346">(Feb 13 2024 at 14:58)</a>:</h4>
+<p>If you run this command on macOS or Linux, it should just get binaries from the cache without building any of the Rust packages.</p>
+
+
+
+<a name="421262529"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421262529" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421262529">(Feb 13 2024 at 15:07)</a>:</h4>
+<p>I get the error <code>warning: ignoring untrusted substituter 'https://cache.garnix.io', you are not a trusted user.</code></p>
+<p>Which apparently has been an issue: <a href="https://discourse.nixos.org/t/ux-problems-with-flakes-and-custom-caches-substituters/23691">https://discourse.nixos.org/t/ux-problems-with-flakes-and-custom-caches-substituters/23691</a></p>
+<p>So it appears I have to configure this cache as a trusted substituter before using this?</p>
+
+
+
+<a name="421263183"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421263183" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421263183">(Feb 13 2024 at 15:10)</a>:</h4>
+<p>You need to make yourself a trusted user. </p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>srid<span class="w"> </span>on<span class="w"> </span>appreciate<span class="w"> </span>~
+❯<span class="w"> </span>nix<span class="w"> </span>show-config<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>trusted-users
+trusted-users<span class="w"> </span><span class="o">=</span><span class="w"> </span>root<span class="w"> </span>srid
+
+srid<span class="w"> </span>on<span class="w"> </span>appreciate<span class="w"> </span>~
+❯<span class="w"> </span>grep<span class="w"> </span>trusted-users<span class="w"> </span>/etc/nix/nix.conf
+trusted-users<span class="w"> </span><span class="o">=</span><span class="w"> </span>root<span class="w"> </span>srid
+</code></pre></div>
+
+
+
+<a name="421264493"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421264493" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421264493">(Feb 13 2024 at 15:16)</a>:</h4>
+<p>I'll set this in my system flake <code>nix.settings.trusted-users</code> and check later</p>
+
+
+
+<a name="421265244"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421265244" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421265244">(Feb 13 2024 at 15:20)</a>:</h4>
+<p>It is one of the defaults we recommend to all, <a href="https://github.com/juspay/nix-dev-home?tab=readme-ov-file#cannot-use-cache--cachix">https://github.com/juspay/nix-dev-home?tab=readme-ov-file#cannot-use-cache--cachix</a></p>
+
+
+
+<a name="421265583"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421265583" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421265583">(Feb 13 2024 at 15:21)</a>:</h4>
+<p>Very wise suggestion I'd say. Also explains why I had trouble using other people's caches in the past when I didn't care to investigate.</p>
+
+
+
+<a name="421267712"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421267712" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421267712">(Feb 13 2024 at 15:31)</a>:</h4>
+<p>you can also set a group to the trusted users by prepending with <code>@</code>. I usually just drop <code>@wheel</code> as a trusted user since they also have sudo access.</p>
+<p>Also, even if you don't pass the <code>--accept-flake-config</code> flag, you will still be interactively prompted if you want to accept the cache config or not by default.</p>
+
+
+
+<a name="421275518"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421275518" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421275518">(Feb 13 2024 at 16:04)</a>:</h4>
+<p>I just found this comment <a href="https://github.com/NixOS/nix/issues/6672#issuecomment-1920721589">https://github.com/NixOS/nix/issues/6672#issuecomment-1920721589</a></p>
+<p>Suggesting to use the <code>trusted-public-keys</code> and <code>substituters</code> or <code>trusted-substituters</code> setting instead because just adding your user is a bit of a security issue. What do you guys say to that?</p>
+
+
+
+<a name="421278280"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421278280" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421278280">(Feb 13 2024 at 16:16)</a>:</h4>
+<p>Depends on how you want to balance security vs usability.</p>
+
+
+
+<a name="421280916"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421280916" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421280916">(Feb 13 2024 at 16:28)</a>:</h4>
+<p>Sure it is important to be aware that a trusted-user is essentially as powerful as root. Same issue as adding your user to the docker group as well. But multi-user systems are pretty rare these days. If you have one then sure, maybe you care more, but I am the admin in all my systems, and I get sudo based on the presence or absence of my yubikey where possible.</p>
+<p>What I would really like is some sort of remote protocol for sending my yubikey creds over an ssh connection. For Nix, it might be interesting if someone could be a "trusted-user" based on the presence or absence of a yubikey OTP. That would really be an "improvement" in my view, but on single user systems where you are basically the only user and admin, the point is kinda moot.</p>
+<p>Not being a trusted user just makes things more of a pain in the same way not having root on a smartphone can be a pain <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="421292715"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Cache%20config%20in%20%60nix%20run%60%20of%20flake/near/421292715" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake.html#421292715">(Feb 13 2024 at 17:34)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="679006">Tim DeHerrera</span> <a href="#narrow/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake/near/421280916">said</a>:</p>
+<blockquote>
+<p>What I would really like is some sort of remote protocol for sending my yubikey creds over an ssh connection. [..]</p>
+</blockquote>
+<p>I enjoy a similar UX for ssh-based auths (like <code>git pull</code> in a ssh session, which uses local Touch ID for 1Password key access):</p>
+<p><a href="#narrow/stream/413950-nix/topic/1Password.20TouchID.20auth.20for.20git.2C.20ssh.2C.20etc.2E">https://nixos.zulipchat.com/#narrow/stream/413950-nix/topic/1Password.20TouchID.20auth.20for.20git.2C.20ssh.2C.20etc.2E</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

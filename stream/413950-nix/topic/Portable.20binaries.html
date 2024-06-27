@@ -1,0 +1,42 @@
+<html>
+<head><meta charset="utf-8"><title>Portable binaries · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Portable.20binaries.html">Portable binaries</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="441964540"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Portable%20binaries/near/441964540" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413950-nix/topic/Portable.20binaries.html#441964540">(Jun 01 2024 at 21:09)</a>:</h4>
+<p>Problem: Linux doesn't have portable binaries like windows - download exe from a site and double click to run.</p>
+<p>I think we could build something based off nix, which runs on any distro and sets up /nix under some X, and allows people to run all nix binaries directly on any distro. </p>
+<p>Example:<br>
+makeitrun reptyr - launches reptyr as of nixos unstable / latest stable.</p>
+<p>X: </p>
+<ol>
+<li>Can be a ram based filesytem like tmpfs</li>
+<li>Can be a filesystem within a file. </li>
+<li>Can be a directory path - mainly if user wants to debug.</li>
+</ol>
+<p>makeitrun itself must be a statically linked binary - so that it can run without relying on any glibc etc.</p>
+<p>What do you peeps thing about it?</p>
+
+
+
+<a name="441993195"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Portable%20binaries/near/441993195" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/Portable.20binaries.html#441993195">(Jun 02 2024 at 01:34)</a>:</h4>
+<p><a href="#narrow/stream/413950-nix/topic/Portable.20binaries/near/441964540">A message</a> was moved here from <a class="stream-topic" data-stream-id="413951" href="/#narrow/stream/413951-general/topic/OSS.20contribution.20ideas">#general &gt; OSS contribution ideas</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="441993221"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Portable%20binaries/near/441993221" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Portable.20binaries.html#441993221">(Jun 02 2024 at 01:34)</a>:</h4>
+<p><a href="https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-bundle"><code>nix bundle</code></a>?</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

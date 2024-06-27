@@ -1,0 +1,39 @@
+<html>
+<head><meta charset="utf-8"><title>Add a flake input that doesn’t depend on external git · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Add.20a.20flake.20input.20that.20doesn.E2.80.99t.20depend.20on.20external.20git.html">Add a flake input that doesn’t depend on external git</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="424209207"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Add%20a%20flake%20input%20that%20doesn%E2%80%99t%20depend%20on%20external%20git/near/424209207" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Add.20a.20flake.20input.20that.20doesn.E2.80.99t.20depend.20on.20external.20git.html#424209207">(Mar 01 2024 at 11:08)</a>:</h4>
+<p>If I have to add a boolean flake input, it would look like: <code>inputs.flag.url = “github:boolean-options/true”;</code>.  This depends on github, is there a way to add this input without this dependency?</p>
+<p>Or is at a limitation of flake inputs that nix expressions can’t be flake inputs</p>
+
+
+
+<a name="424225133"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Add%20a%20flake%20input%20that%20doesn%E2%80%99t%20depend%20on%20external%20git/near/424225133" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Add.20a.20flake.20input.20that.20doesn.E2.80.99t.20depend.20on.20external.20git.html#424225133">(Mar 01 2024 at 12:32)</a>:</h4>
+<p>Inputs can't be arbitrary expressions: <a href="https://github.com/NixOS/nix/issues/5663">https://github.com/NixOS/nix/issues/5663</a></p>
+<p>You can use <code>path:./...</code> to point local flake though. Not sure if the hash is consistent across systems (need to verify), because I remember inconsistency when using local relative flake inputs in the path.</p>
+
+
+
+<a name="424291357"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Add%20a%20flake%20input%20that%20doesn%E2%80%99t%20depend%20on%20external%20git/near/424291357" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Add.20a.20flake.20input.20that.20doesn.E2.80.99t.20depend.20on.20external.20git.html#424291357">(Mar 01 2024 at 17:11)</a>:</h4>
+<p>Not yet, but there really isn't a good reason in my view (if you look at the last comment on that ticket I elaborate on that a bit)</p>
+
+
+
+<a name="424592895"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Add%20a%20flake%20input%20that%20doesn%E2%80%99t%20depend%20on%20external%20git/near/424592895" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Add.20a.20flake.20input.20that.20doesn.E2.80.99t.20depend.20on.20external.20git.html#424592895">(Mar 04 2024 at 07:40)</a>:</h4>
+<p>I was looking for this to use in an internal project at work because I was getting rate-limited in CI by github, failing the build. I ended up creating a subflake with <code>true</code> and <code>false</code> flake’s and I am accessing it in another flake with the <code>?dir=&lt;subdir&gt;</code> URL syntax.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

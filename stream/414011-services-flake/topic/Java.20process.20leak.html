@@ -1,0 +1,35 @@
+<html>
+<head><meta charset="utf-8"><title>Java process leak · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Java.20process.20leak.html">Java process leak</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="445659476"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Java%20process%20leak/near/445659476" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Java.20process.20leak.html#445659476">(Jun 19 2024 at 16:55)</a>:</h4>
+<p>Ghost process from an old <code>nixci build</code> on services-flake:</p>
+<p><a href="/user_uploads/60244/V_8LLN0nsfp7IdZkyNIXKRTD/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/V_8LLN0nsfp7IdZkyNIXKRTD/image.png" title="image.png"><img src="/user_uploads/60244/V_8LLN0nsfp7IdZkyNIXKRTD/image.png"></a></div><p><a href="/user_uploads/60244/pO1ygZcEQ1r2rxFzSSkb2BYd/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/pO1ygZcEQ1r2rxFzSSkb2BYd/image.png" title="image.png"><img src="/user_uploads/60244/pO1ygZcEQ1r2rxFzSSkb2BYd/image.png"></a></div><p><a href="/user_uploads/60244/DdRenktPP9O6RK8PgcUo1KQ4/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/DdRenktPP9O6RK8PgcUo1KQ4/image.png" title="image.png"><img src="/user_uploads/60244/DdRenktPP9O6RK8PgcUo1KQ4/image.png"></a></div><p>I can't even kill it.</p>
+
+
+
+<a name="445659597"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Java%20process%20leak/near/445659597" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Java.20process.20leak.html#445659597">(Jun 19 2024 at 16:56)</a>:</h4>
+<p>(Well, it stopped after trying to kill process-compose twice)</p>
+
+
+
+<a name="445659817"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Java%20process%20leak/near/445659817" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Java.20process.20leak.html#445659817">(Jun 19 2024 at 16:56)</a>:</h4>
+<p>Something to do with <code>cassandra-test</code> it seems.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

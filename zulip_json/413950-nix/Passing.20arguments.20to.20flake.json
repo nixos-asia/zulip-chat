@@ -1,0 +1,98 @@
+[
+    {
+        "content": "<p>I am taking inspiration from nix-systems work, but am struggling. </p>\n<p>I am trying to use a similar format to define user names, and host names so that I can pass them in as flake inputs and reference in all files as such.</p>\n<p>I have tried with local and remote files and flakes, but am not sure how to get the string out.</p>",
+        "id": 407602779,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430067
+    },
+    {
+        "content": "<p>I think you are looking for: <a href=\"https://github.com/NixOS/nix/issues/5663\">https://github.com/NixOS/nix/issues/5663</a></p>\n<p>Right now, only the nix-systems approach is possible.</p>",
+        "id": 407603056,
+        "sender_full_name": "Srid",
+        "timestamp": 1702430163
+    },
+    {
+        "content": "<p><a href=\"https://discourse.nixos.org/t/flake-how-to-have-a-literal-value-input-no-url-file-path/36035\">https://discourse.nixos.org/t/flake-how-to-have-a-literal-value-input-no-url-file-path/36035</a></p>",
+        "id": 407603288,
+        "sender_full_name": "Srid",
+        "timestamp": 1702430236
+    },
+    {
+        "content": "<p>I am following the nix-systems approach, but replacing system name with other names.</p>",
+        "id": 407603590,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430346
+    },
+    {
+        "content": "<p>I access system fine as a value, but if I try to access host, no bueno. I keep getting this is a set, not a string errors. And don't know how to get value as a string</p>",
+        "id": 407603959,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430471
+    },
+    {
+        "content": "<p>For example if I try something like ${hosts} = nixpkgs.lib.nixosSystem {}</p>",
+        "id": 407604172,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430554
+    },
+    {
+        "content": "<p>Where hosts is an input hosts.url = \"path:./hosts.nix;<br>\nhosts.flake = false;</p>",
+        "id": 407604316,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430621
+    },
+    {
+        "content": "<p>And hosts.nix contains [\"hostname\"]</p>",
+        "id": 407604453,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430659
+    },
+    {
+        "content": "<p>I have tried mixing up hosts.nix format as well, and also making it a flake in a gitlab repo (I get same error)</p>",
+        "id": 407604524,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430688
+    },
+    {
+        "content": "<p>I have tried inheriting and importing hosts as well</p>",
+        "id": 407604695,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702430759
+    },
+    {
+        "content": "<p>Is there a way to reproduce your problem? Difficult to help without seeing full context.</p>",
+        "id": 407605282,
+        "sender_full_name": "Srid",
+        "timestamp": 1702430974
+    },
+    {
+        "content": "<p>No, I think I understand why now. <br>\nYou can see current commit here which is a bad attempt: <a href=\"https://gitlab.com/stephenandary/flakes/-/tree/flakes/machines?ref_type=heads\">https://gitlab.com/stephenandary/flakes/-/tree/flakes/machines?ref_type=heads</a></p>",
+        "id": 407605743,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702431145
+    },
+    {
+        "content": "<p>In the nix-systems examples there are still let-in statements</p>",
+        "id": 407605874,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702431199
+    },
+    {
+        "content": "<p>I did not have that, I can try something like that, but I dont think it would play out how I want</p>",
+        "id": 407606128,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702431294
+    },
+    {
+        "content": "<p><code>${(import hosts).name} = ...</code></p>",
+        "id": 407606502,
+        "sender_full_name": "Srid",
+        "timestamp": 1702431442
+    },
+    {
+        "content": "<p>No bueno, but that atleast changed error to is a list instead of set haha. Thanks Srid. I can try to tinker with formats based on this</p>",
+        "id": 407607064,
+        "sender_full_name": "Stephen",
+        "timestamp": 1702431658
+    }
+]

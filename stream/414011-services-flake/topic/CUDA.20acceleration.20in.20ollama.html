@@ -1,0 +1,96 @@
+<html>
+<head><meta charset="utf-8"><title>CUDA acceleration in ollama · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html">CUDA acceleration in ollama</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446588010"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446588010" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ayrton Mercado <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446588010">(Jun 24 2024 at 11:17)</a>:</h4>
+<p>Guys, adding </p>
+<div class="codehilite"><pre><span></span><code>            **acceleration = &quot;cuda&quot;;**
+</code></pre></div>
+<p>has turned into a bit of an inside joke fr me. The resulting error is why I almost gave up on NixOS when I first picked it up a few weeks ago, namely I get the ... has an unfree license (‘CUDA EULA’), refusing to evaluate. whith a prescription for solutions. </p>
+<p>I have set the env variable</p>
+<div class="codehilite"><pre><span></span><code> $env.NIXPKGS_ALLOW_UNFREE
+1
+</code></pre></div>
+<p>added to my flake</p>
+<div class="codehilite"><pre><span></span><code>  packages.config.allowUnfree = true;
+</code></pre></div>
+<p>It is my understanding that the allowUnfree property I'm setting is not scoped correctly, but I'm having a tough time figuring out the correct scope. </p>
+<p>Found a thread on <a href="https://stackoverflow.com/questions/77585228/how-to-allow-unfree-packages-in-nix-for-each-situation-nixos-nix-nix-wit">stackoverflow</a> that probably has the answer but I can't follow it. (square peg/round hole). </p>
+<p>My biggest issue is the dissonance between calling a nix file a configuration and what it actually is (IMO) a program. I have yet to crack the language.</p>
+<p>I'm going to start <a href="https://nix.dev/tutorials/nix-language.html">here</a>. With some luck I'll be able to fix this by the end of the week :)</p>
+
+
+
+<a name="446588377"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446588377" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446588377">(Jun 24 2024 at 11:19)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> has marked this topic as unresolved.</p>
+
+
+
+<a name="446588378"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446588378" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446588378">(Jun 24 2024 at 11:19)</a>:</h4>
+<p><a href="#narrow/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama/near/446588010">A message</a> was moved here from <a class="stream-topic" data-stream-id="426237" href="/#narrow/stream/426237-nixify-llm/topic/.E2.9C.94.20Issues.20with.20ollama.20flake">#nixify-llm &gt; ✔ Issues with ollama flake</a> by <span class="user-mention silent" data-user-id="669081">Shivaraj B H</span>.</p>
+
+
+
+<a name="446589054"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446589054" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446589054">(Jun 24 2024 at 11:23)</a>:</h4>
+<p><span class="user-mention" data-user-id="730377">@Ayrton Mercado</span> I have to document this, you can use this for now:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="c1"># Inside perSystem</span>
+<span class="p">{</span>
+  <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"</span><span class="si">${</span>inputs<span class="o">.</span>nixpkgs<span class="si">}</span><span class="s2">/nixos/modules/misc/nixpkgs.nix"</span>
+  <span class="p">];</span>
+  <span class="ss">nixpkgs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Required for CUDA</span>
+    config<span class="o">.</span><span class="ss">allowUnfree</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="446589557"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446589557" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446589557">(Jun 24 2024 at 11:25)</a>:</h4>
+<p><a href="https://github.com/shivaraj-bh/ollama-flake/blob/46091264c576c57dabad3c52779ce43db094ad40/modules/nixpkgs.nix#L25">ollama-flake exports a <code>nixpkgs</code> module</a> that would handle this, but since that’s not the case after upstreaming to <code>services-flake</code>, it wasn’t working out of the box for you.</p>
+
+
+
+<a name="446592759"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446592759" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446592759">(Jun 24 2024 at 11:43)</a>:</h4>
+<p>Hold on, there seems to a bug in <code>services-flake</code> that I just fixed: <a href="https://github.com/juspay/services-flake/commit/8145ba10cb02dc0a843bba371fc2d42cea7fd226">https://github.com/juspay/services-flake/commit/8145ba10cb02dc0a843bba371fc2d42cea7fd226</a></p>
+
+
+
+<a name="446594731"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446594731" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446594731">(Jun 24 2024 at 11:54)</a>:</h4>
+<p>This commit demonstrates how to do it in the current services-flake’s <code>example/llm</code>: <a href="https://github.com/shivaraj-bh/services-flake/commit/bf3bf65a920dc6e3b4eb749ec3809fdeaf4b9360">https://github.com/shivaraj-bh/services-flake/commit/bf3bf65a920dc6e3b4eb749ec3809fdeaf4b9360</a></p>
+
+
+
+<a name="446595962"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446595962" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446595962">(Jun 24 2024 at 12:00)</a>:</h4>
+<p>Also documented it: <a href="https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7">https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7</a></p>
+
+
+
+<a name="446607084"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/CUDA%20acceleration%20in%20ollama/near/446607084" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ayrton Mercado <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama.html#446607084">(Jun 24 2024 at 12:57)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama/near/446595962">said</a>:</p>
+<blockquote>
+<p>Also documented it: <a href="https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7">https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7</a></p>
+</blockquote>
+<p>Confirmed on my end, the flake compiles</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

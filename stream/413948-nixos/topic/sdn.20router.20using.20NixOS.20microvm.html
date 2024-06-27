@@ -1,0 +1,33 @@
+<html>
+<head><meta charset="utf-8"><title>sdn router using NixOS microvm · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/sdn.20router.20using.20NixOS.20microvm.html">sdn router using NixOS microvm</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="419922078"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/sdn%20router%20using%20NixOS%20microvm/near/419922078" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/sdn.20router.20using.20NixOS.20microvm.html#419922078">(Feb 05 2024 at 20:24)</a>:</h4>
+<p>In case anyone is interested I thought I'd share how I was able to setup a virtual router using a NixOS microvm on my build server using cloud-hypervisor. It's really quite nice, considering that most commercial routers are woefully underpowered. At some point it might be nice to try and use the XDP in eBPF to handle the firewall as efficiently as possible, but honestly this is working pretty well as is:<br>
+<a href="https://github.com/nrdxp/nrdos/commit/68d2d0e7b30d8dff5c2b58e3e4f6eebed74f170f">https://github.com/nrdxp/nrdos/commit/68d2d0e7b30d8dff5c2b58e3e4f6eebed74f170f</a></p>
+
+
+
+<a name="419970660"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/sdn%20router%20using%20NixOS%20microvm/near/419970660" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/sdn.20router.20using.20NixOS.20microvm.html#419970660">(Feb 06 2024 at 03:50)</a>:</h4>
+<p>Thanks for sharing, was meaning to try this in the past, but never got time. This makes it easier!</p>
+
+
+
+<a name="420132740"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/sdn%20router%20using%20NixOS%20microvm/near/420132740" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/sdn.20router.20using.20NixOS.20microvm.html#420132740">(Feb 06 2024 at 20:46)</a>:</h4>
+<p>yeah only thing not working atm is local dns resolution. I'll probably try to work that out soon, I'm sure I missed something simple. Even so, I mostly rely on nebula for private network communication so its not urgent for me.</p>
+<p>Also, I don't expose any ports to the outside world or even respond to pings.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

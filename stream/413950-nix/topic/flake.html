@@ -1,0 +1,36 @@
+<html>
+<head><meta charset="utf-8"><title>flake · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/flake.html">flake</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="427879841"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/flake/near/427879841" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tamil Selvan <a href="http://chat.nixos.asia/stream/413950-nix/topic/flake.html#427879841">(Mar 20 2024 at 09:01)</a>:</h4>
+<p>Is there any support for flake inputs to have expressions in decl?</p>
+<div class="codehilite"><pre><span></span><code>inputs = {
+      var1.url =  (&quot;string1&quot; + &quot;string2&quot;);
+};
+</code></pre></div>
+<p>Expressions like these throw a thunk error and I am unable to force evaluate it</p>
+
+
+
+<a name="427914275"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/flake/near/427914275" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/flake.html#427914275">(Mar 20 2024 at 12:18)</a>:</h4>
+<p><code>inputs.${var1}.url = # ...</code></p>
+
+
+
+<a name="427914410"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/flake/near/427914410" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/flake.html#427914410">(Mar 20 2024 at 12:19)</a>:</h4>
+<p>However, this won't work in flake inputs. No eval of any kind is allowed in inputs unfortunately. It's a stricter subset of Nix, technically</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

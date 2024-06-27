@@ -1,0 +1,242 @@
+<html>
+<head><meta charset="utf-8"><title>sc - or how to AI editor · nixify-llm · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/index.html">nixify-llm</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html">sc - or how to AI editor</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422467775"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422467775" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422467775">(Feb 20 2024 at 17:31)</a>:</h4>
+<p><a href="https://github.com/efugier/smartcat">https://github.com/efugier/smartcat</a></p>
+<p>I hope this brings the power into my new <code>helix</code> setup.</p>
+<blockquote>
+<p>The key to make this work seamlessly is a good default prompt that tells the model to behave like a CLI tool an not write any unwanted text like markdown formatting or explanations.</p>
+</blockquote>
+
+
+
+<a name="422468627"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422468627" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422468627">(Feb 20 2024 at 17:36)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> just for my understanding.</p>
+<p>The config has:</p>
+<div class="codehilite" data-code-language="TOML"><pre><span></span><code><span class="k">[openai]</span><span class="w">  </span><span class="c1"># each supported api has their own config section with api and url</span>
+<span class="n">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&lt;your_api_key&gt;"</span>
+<span class="n">default_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"gpt-4"</span>
+<span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://api.openai.com/v1/chat/completions"</span>
+
+<span class="k">[mistral]</span>
+<span class="n">api_key_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pass mistral/api_key"</span><span class="w">  </span><span class="c1"># you can use a command to grab the key</span>
+<span class="n">default_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mistral-medium"</span>
+<span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://api.mistral.ai/v1/chat/completions"</span>
+</code></pre></div>
+<p>Does this mean I could run ollama locally and use them as backend?</p>
+
+
+
+<a name="422469119"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422469119" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422469119">(Feb 20 2024 at 17:39)</a>:</h4>
+<p>ollama provides an API, but I don't know if it is sufficient to replace openai/mistral API etc.</p>
+<p><a href="https://github.com/ollama/ollama/blob/main/docs/api.md">https://github.com/ollama/ollama/blob/main/docs/api.md</a></p>
+
+
+
+<a name="422469556"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422469556" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422469556">(Feb 20 2024 at 17:41)</a>:</h4>
+<p>A new helix topic in <a class="stream" data-stream-id="413950" href="/#narrow/stream/413950-nix">#nix</a> or <a class="stream" data-stream-id="420166" href="/#narrow/stream/420166-offtopic">#offtopic</a>  maybe?</p>
+
+
+
+<a name="422470074"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422470074" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422470074">(Feb 20 2024 at 17:45)</a>:</h4>
+<p><a href="#narrow/stream/420166-offtopic/topic/helix/near/422470027">https://nixos.zulipchat.com/#narrow/stream/420166-offtopic/topic/helix/near/422470027</a></p>
+
+
+
+<a name="422470198"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422470198" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422470198">(Feb 20 2024 at 17:46)</a>:</h4>
+<p><span class="user-mention" data-user-id="678738">@David Arnold</span> I DMed you this as well, but since you opened this up I might as well drop this here:<br>
+<a href="https://github.com/morph-labs/rift">https://github.com/morph-labs/rift</a></p>
+
+
+
+<a name="422470828"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422470828" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422470828">(Feb 20 2024 at 17:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="679006">Tim DeHerrera</span> <a href="#narrow/stream/426237-nixify-llm/topic/smartcat/near/422470198">schrieb</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="678738">David Arnold</span> I DMed you this as well, but since you opened this up I might as well drop this here:<br>
+<a href="https://github.com/morph-labs/rift">https://github.com/morph-labs/rift</a></p>
+</blockquote>
+<p>This short of seems the other extreme, making the editor lsp interface the upstream: <a href="https://github.com/morph-labs/rift/tree/main/rift-engine">https://github.com/morph-labs/rift/tree/main/rift-engine</a></p>
+<p>Maybe a good approach is to start out with something like <code>smartcat</code> for now and then transition to the "Rift Code Engine" as it matures and is being adopted.</p>
+
+
+
+<a name="422472292"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422472292" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422472292">(Feb 20 2024 at 17:59)</a>:</h4>
+<blockquote>
+<p>Once you got that working from helix you just have to select some text you want chatgpt to interact with, press the pipe | key and write something like <code>sc -r -c "write tests for that function"</code> and the output of the model will be appended right after your selection in the current buffer. The openai api is a bit slow but apart from that I'm super satisfied  with it!</p>
+</blockquote>
+
+
+
+<a name="422472533"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422472533" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422472533">(Feb 20 2024 at 18:00)</a>:</h4>
+<p>For now, it hasn't been a major inconvenience to just ask an LLM in browser to generate some code. I haven't even tried a more involved code assistant like co-pilot yet though, so maybe I just don't know what I'm missing <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="422473575"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422473575" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422473575">(Feb 20 2024 at 18:06)</a>:</h4>
+<p>I like to use co-pilot for assistance, but it’s annoying when it completes things on its own, that’s a bit distracting for me. I want something like this twitter post I shared earlier: <a href="https://x.com/victortaelin/status/1753593250340856179?s=46">https://x.com/victortaelin/status/1753593250340856179?s=46</a></p>
+<p>i.e auto-complete code when I ask the model to, avoids my round-trip to browser and also if it can learn from my code base as I am working on it, that will be awesome</p>
+
+
+
+<a name="422473593"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422473593" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422473593">(Feb 20 2024 at 18:06)</a>:</h4>
+<p>I think Rift Code Engin on one hand (a proper LSP "extension" for AI support) and linux-y <code>cat</code> style are probably on the two ends of the spectrum.</p>
+<p>I have seen some tutorials where you just write a code comment and then the AI does what you ask it for in the context of the current buffer.</p>
+<p>That's sort of the immediacy that I think is worth a lot when living your day in a code editor.</p>
+<p>But short of using VSCode and having access to the entire plugin system, it increasingly looks like <code>smartcat</code> is a good choice (combined with any OpanAPI compatible backend of ones liking via ollama et al).</p>
+<p>I just wonder if I'm building the right mental model towards the "how to use AI in the editor" question?</p>
+
+
+
+<a name="422473811"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422473811" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422473811">(Feb 20 2024 at 18:08)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/smartcat/near/422473575">schrieb</a>:</p>
+<blockquote>
+<p>I like to use co-pilot for assistance, but it’s annoying when it completes things on its own, that’s a bit distracting for me.</p>
+</blockquote>
+<p>Thanks for this data point!! <span aria-label="handshake" class="emoji emoji-1f91d" role="img" title="handshake">:handshake:</span> Exactly what we oldies need to know that haven't gotten their hands dirty yet <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="422473841"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422473841" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422473841">(Feb 20 2024 at 18:08)</a>:</h4>
+<p>I think LSP integration would be an improvment mostly because LSP tend to be aware of the entirety of the code base, it was my understanding that current code assistant are only aware of open files</p>
+
+
+
+<a name="422473943"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422473943" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422473943">(Feb 20 2024 at 18:08)</a>:</h4>
+<p>Maybe it should be a proper LSP api though, instead of a standalone server</p>
+
+
+
+<a name="422473987"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422473987" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422473987">(Feb 20 2024 at 18:09)</a>:</h4>
+<blockquote>
+<p>because LSP tend to be aware of the entirety of the code base, it was my understanding that current code assistant are only aware of open files</p>
+</blockquote>
+<p>Yeah that's a good point. <code>smartcat</code> litterally only of the selection, so it probably isn't all too powerful.</p>
+
+
+
+<a name="422474248"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422474248" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422474248">(Feb 20 2024 at 18:10)</a>:</h4>
+<p>I wonder what <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> would say of <code>smartcat</code>, would that fit your desired use case better or worse (because it lacks more context on the code-base/buffer)? I'll just listen to your experience and leap frog onto it <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="422474564"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422474564" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422474564">(Feb 20 2024 at 18:12)</a>:</h4>
+<p>Wait!</p>
+<blockquote>
+<p>-c, --context &lt;CONTEXT&gt;<br>
+          glob pattern to given the matched files' content as context</p>
+</blockquote>
+<p>That seems promising (and maybe just famously "good enough")?</p>
+
+
+
+<a name="422474630"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422474630" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422474630">(Feb 20 2024 at 18:12)</a>:</h4>
+<p>I will give smartcat a try and let you know my experience</p>
+
+
+
+<a name="422475020"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422475020" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422475020">(Feb 20 2024 at 18:14)</a>:</h4>
+<p>I want too, but struggling still with my key bindings in helix <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="422475701"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422475701" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422475701">(Feb 20 2024 at 18:18)</a>:</h4>
+<p>Here's another helix specific one: <a href="https://github.com/leona/helix-gpt">https://github.com/leona/helix-gpt</a> it seems that it could also be combined with any openapi compatible backend.</p>
+
+
+
+<a name="422475992"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/422475992" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#422475992">(Feb 20 2024 at 18:20)</a>:</h4>
+<p>Oh nice, I haven't seen that one before, might try to wire it up</p>
+
+
+
+<a name="429110210"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/429110210" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#429110210">(Mar 23 2024 at 19:55)</a>:</h4>
+<p>I was caught with other things, but I got around to trying out <code>sc</code> yesterday. Here’s what I think:</p>
+<ul>
+<li>It works nice, provided you are okay with sticking to openAI and mistral.</li>
+<li>I tried understanding the code base to see how easy will it be to add support for ollama’s REST APIs, but although doable, the project looks a bit hacky imo.</li>
+<li>I would like a package that is very simple, like “echo” but smart. There will be an extra argument of course, if you want to make an interaction a conversation, but that’s it. I realise that it takes much more for an LLM models results to be accurate, for which you will have to tune a bunch of model params, play around with prompts, etc. But I think this process can be automated with another process that basically learns from your conversations as you go, tuning the parameters and prompts to your style. And if something is gonna learn from my actions, it definitely not be owned by large corporations, but me, hosted at my home. So I am coming up with something interesting, will post about it soon.</li>
+</ul>
+
+
+
+<a name="429110818"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/429110818" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#429110818">(Mar 23 2024 at 20:04)</a>:</h4>
+<p>I have already started on the last point that I mentioned, here’s some progress: <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/429110544">https://nixos.zulipchat.com/#narrow/stream/426237-nixify-llm/topic/ollama/near/429110544</a></p>
+
+
+
+<a name="429113990"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/429113990" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#429113990">(Mar 23 2024 at 20:45)</a>:</h4>
+<p>Also, I have written a derivation to build smartcat, dumping it here:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span> lib<span class="p">,</span> fetchFromGitHub<span class="p">,</span> rustPlatform <span class="p">}:</span>
+
+rustPlatform<span class="o">.</span>buildRustPackage <span class="k">rec</span> <span class="p">{</span>
+  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">"smartcat"</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">"0.6.1"</span><span class="p">;</span>
+
+  <span class="ss">src</span> <span class="o">=</span> fetchFromGitHub <span class="p">{</span>
+    <span class="ss">owner</span> <span class="o">=</span> <span class="s2">"efugier"</span><span class="p">;</span>
+    <span class="ss">repo</span> <span class="o">=</span> pname<span class="p">;</span>
+    <span class="ss">rev</span> <span class="o">=</span> version<span class="p">;</span>
+    <span class="ss">hash</span> <span class="o">=</span> <span class="s2">"sha256-na/Yt5B3nJ0OIeJKVHeoZc+V1OUyimp7PqY7SGARc5s="</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">cargoPatches</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="l">../patches/smartcat/add-Cargo.lock.patch</span>
+  <span class="p">];</span>
+
+  <span class="ss">cargoHash</span> <span class="o">=</span> <span class="s2">"sha256-ifUHWPBidLXX5f2JfIw9TdyV+pVcRVWT1LmHyLHTVds="</span><span class="p">;</span>
+
+  <span class="ss">meta</span> <span class="o">=</span> <span class="k">with</span> lib<span class="p">;</span> <span class="p">{</span>
+    <span class="ss">description</span> <span class="o">=</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">      Putting a brain behind `cat`.</span>
+<span class="s s-Multiline">      Integrating language models in the Unix commands ecosystem through text streams.</span>
+<span class="s s-Multiline">    ''</span><span class="p">;</span>
+    <span class="ss">homepage</span> <span class="o">=</span> <span class="s2">"https://github.com/efugier/smartcat"</span><span class="p">;</span>
+    <span class="ss">license</span> <span class="o">=</span> licenses<span class="o">.</span>asl20<span class="p">;</span>
+    <span class="ss">maintainers</span> <span class="o">=</span> <span class="p">[</span> <span class="p">];</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="429114093"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/sc%20-%20or%20how%20to%20AI%20editor/near/429114093" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/sc.20-.20or.20how.20to.20AI.20editor.html#429114093">(Mar 23 2024 at 20:46)</a>:</h4>
+<p><a href="/user_uploads/60244/xKa6YqPM6AsVEXINT2AtLjpw/add-Cargo.lock.patch">add-Cargo.lock.patch</a><br>
+You will also need this patch file</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

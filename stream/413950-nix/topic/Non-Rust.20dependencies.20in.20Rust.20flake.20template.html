@@ -1,0 +1,49 @@
+<html>
+<head><meta charset="utf-8"><title>Non-Rust dependencies in Rust flake template · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Non-Rust.20dependencies.20in.20Rust.20flake.20template.html">Non-Rust dependencies in Rust flake template</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="418318413"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Non-Rust%20dependencies%20in%20Rust%20flake%20template/near/418318413" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> xqtc <a href="http://chat.nixos.asia/stream/413950-nix/topic/Non-Rust.20dependencies.20in.20Rust.20flake.20template.html#418318413">(Jan 26 2024 at 17:19)</a>:</h4>
+<p>Hey just stumbled about your <a href="https://github.com/srid/rust-nix-template">template for rust projects</a>. i was wondering where i would pass non rust dependencies when i want to run <code>nix build</code>? my project needs <code>openssl</code> and <code>pkg-config</code>.</p>
+
+
+
+<a name="418318895"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Non-Rust%20dependencies%20in%20Rust%20flake%20template/near/418318895" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Non-Rust.20dependencies.20in.20Rust.20flake.20template.html#418318895">(Jan 26 2024 at 17:22)</a>:</h4>
+<p><code>buildInputs</code></p>
+<p><a href="https://github.com/search?q=repo%3ANixOS%2Fnixpkgs%20buildRustPackage%20buildInputs&amp;type=code">examples</a></p>
+
+
+
+<a name="418320215"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Non-Rust%20dependencies%20in%20Rust%20flake%20template/near/418320215" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> xqtc <a href="http://chat.nixos.asia/stream/413950-nix/topic/Non-Rust.20dependencies.20in.20Rust.20flake.20template.html#418320215">(Jan 26 2024 at 17:30)</a>:</h4>
+<p>Already tried that. Build still fails, saying it can't find <code>pkgconfig</code>. Here's how i defined it:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>          <span class="c1"># Rust package</span>
+          packages<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>rustPlatform<span class="o">.</span>buildRustPackage <span class="p">{</span>
+            <span class="k">inherit</span> <span class="p">(</span>cargoToml<span class="o">.</span>package<span class="p">)</span> name version<span class="p">;</span>
+            <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span>
+              pkgs<span class="o">.</span>pkg-config
+              pkgs<span class="o">.</span>openssl
+            <span class="p">];</span>
+            <span class="ss">src</span> <span class="o">=</span> <span class="l">./.</span><span class="p">;</span>
+            cargoLock<span class="o">.</span><span class="ss">lockFile</span> <span class="o">=</span> <span class="l">./Cargo.lock</span><span class="p">;</span>
+          <span class="p">};</span>
+</code></pre></div>
+
+
+
+<a name="418380067"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Non-Rust%20dependencies%20in%20Rust%20flake%20template/near/418380067" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Non-Rust.20dependencies.20in.20Rust.20flake.20template.html#418380067">(Jan 27 2024 at 02:48)</a>:</h4>
+<p>I believe you are looking for nativeBuildInputs</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

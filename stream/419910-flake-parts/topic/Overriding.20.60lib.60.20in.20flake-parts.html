@@ -1,0 +1,105 @@
+<html>
+<head><meta charset="utf-8"><title>Overriding `lib` in flake-parts · flake-parts · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/419910-flake-parts/index.html">flake-parts</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Overriding.20.60lib.60.20in.20flake-parts.html">Overriding `lib` in flake-parts</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="439118559"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Overriding%20%60lib%60%20in%20flake-parts/near/439118559" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Overriding.20.60lib.60.20in.20flake-parts.html#439118559">(May 16 2024 at 23:22)</a>:</h4>
+<p>I got this working so far:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="ss">outputs</span> <span class="o">=</span> inputs<span class="p">:</span>
+    <span class="k">let</span>
+      <span class="ss">lib</span> <span class="o">=</span> inputs<span class="o">.</span>nixpkgs<span class="o">.</span>lib<span class="o">.</span>extend <span class="p">(</span>self<span class="p">:</span> super<span class="p">:</span> <span class="p">{</span>
+        <span class="c1"># Polyfill https://github.com/NixOS/nixpkgs/blob/ea77cefecb0ab07e61d6bde3e24c7ae6820b96d5/lib/attrsets.nix#L360</span>
+        <span class="ss">concatMapAttrs</span> <span class="o">=</span> <span class="k">with</span> self<span class="p">;</span> f<span class="p">:</span> v<span class="p">:</span>
+          foldl' mergeAttrs <span class="p">{</span> <span class="p">}</span>
+            <span class="p">(</span>attrValues
+              <span class="p">(</span>mapAttrs f v<span class="p">)</span>
+            <span class="p">);</span>
+      <span class="p">});</span>
+      <span class="ss">specialArgs</span> <span class="o">=</span> <span class="p">{</span> <span class="k">inherit</span> lib<span class="p">;</span> <span class="p">};</span>
+    <span class="k">in</span>
+    inputs<span class="o">.</span>flake-parts<span class="o">.</span>lib<span class="o">.</span>mkFlake <span class="p">{</span> <span class="k">inherit</span> inputs specialArgs<span class="p">;</span> <span class="p">}</span> <span class="p">{</span>
+</code></pre></div>
+<p>However, this leads to <code>error: attribute 'fileset' missing</code>. </p>
+<p>For some reason, <code>fileset</code> attribute gets lost.</p>
+
+
+
+<a name="439119492"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Overriding%20%60lib%60%20in%20flake-parts/near/439119492" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Overriding.20.60lib.60.20in.20flake-parts.html#439119492">(May 16 2024 at 23:31)</a>:</h4>
+<p>After the addition of the following to the lib overlay (with a 2nd nixpkgs, <code>nixpkgs-latest</code>, added),</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="ss">fileset</span> <span class="o">=</span> inputs<span class="o">.</span>nixpkgs-latest<span class="o">.</span>lib<span class="o">.</span>fileset<span class="p">;</span>
+</code></pre></div>
+<p>it works.</p>
+
+
+
+<a name="439119814"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Overriding%20%60lib%60%20in%20flake-parts/near/439119814" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Overriding.20.60lib.60.20in.20flake-parts.html#439119814">(May 16 2024 at 23:33)</a>:</h4>
+<p>More concisely,</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:nixos/nixpkgs/nixpkgs-unstable"</span><span class="p">;</span>
+    nixpkgs-latest<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:nixos/nixpkgs/nixpkgs-unstable"</span><span class="p">;</span>
+    <span class="o">...</span>
+  <span class="p">};</span>
+  <span class="ss">outputs</span> <span class="o">=</span> inputs<span class="p">:</span>
+    <span class="k">let</span>
+      specialArgs<span class="o">.</span><span class="ss">lib</span> <span class="o">=</span> inputs<span class="o">.</span>nixpkgs<span class="o">.</span>lib<span class="o">.</span>extend <span class="p">(</span>self<span class="p">:</span> _<span class="p">:</span> <span class="p">{</span>
+        <span class="c1"># Polyfill what's missing in our `inputs.nixpkgs`.</span>
+        <span class="k">inherit</span> <span class="p">(</span>inputs<span class="o">.</span>nixpkgs-latest<span class="o">.</span>lib<span class="p">)</span>
+          concatMapAttrs
+          fileset<span class="p">;</span>
+      <span class="p">});</span>
+    <span class="k">in</span>
+    inputs<span class="o">.</span>flake-parts<span class="o">.</span>lib<span class="o">.</span>mkFlake <span class="p">{</span> <span class="k">inherit</span> inputs specialArgs<span class="p">;</span> <span class="p">}</span> <span class="p">{</span>
+      <span class="o">...</span>
+</code></pre></div>
+
+
+
+<a name="439120209"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Overriding%20%60lib%60%20in%20flake-parts/near/439120209" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Overriding.20.60lib.60.20in.20flake-parts.html#439120209">(May 16 2024 at 23:37)</a>:</h4>
+<p>Wait, that didn't quite work for treefmt-nix, when using its devShell.</p>
+
+
+
+<a name="439120363"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Overriding%20%60lib%60%20in%20flake-parts/near/439120363" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Overriding.20.60lib.60.20in.20flake-parts.html#439120363">(May 16 2024 at 23:39)</a>:</h4>
+<p>We also need,</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>        _module<span class="o">.</span>args<span class="o">.</span><span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> inputs<span class="o">.</span>nixpkgs <span class="p">{</span>
+          <span class="k">inherit</span> system<span class="p">;</span>
+          <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span>self<span class="p">:</span> super<span class="p">:</span> <span class="p">{</span>
+              <span class="ss">lib</span> <span class="o">=</span> lib<span class="p">;</span>
+            <span class="p">})</span>
+          <span class="p">];</span>
+        <span class="p">};</span>
+</code></pre></div>
+
+
+
+<a name="439120636"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Overriding%20%60lib%60%20in%20flake-parts/near/439120636" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Overriding.20.60lib.60.20in.20flake-parts.html#439120636">(May 16 2024 at 23:42)</a>:</h4>
+<p>Alright, here's the final thing:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>        _module<span class="o">.</span>args<span class="o">.</span><span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> inputs<span class="o">.</span>nixpkgs <span class="p">{</span>
+          <span class="k">inherit</span> system<span class="p">;</span>
+          <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span>self<span class="p">:</span> super<span class="p">:</span> <span class="p">{</span>
+              <span class="ss">lib</span> <span class="o">=</span> super<span class="o">.</span>lib<span class="o">.</span>extend <span class="p">(</span>self<span class="p">:</span> super<span class="p">:</span> <span class="p">{</span>
+                <span class="k">inherit</span> <span class="p">(</span>inputs<span class="o">.</span>nixpkgs-latest<span class="o">.</span>lib<span class="p">)</span> concatMapAttrs<span class="p">;</span>
+              <span class="p">});</span>
+            <span class="p">})</span>
+          <span class="p">];</span>
+        <span class="p">};</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

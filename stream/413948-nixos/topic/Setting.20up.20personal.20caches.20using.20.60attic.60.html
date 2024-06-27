@@ -1,0 +1,136 @@
+<html>
+<head><meta charset="utf-8"><title>Setting up personal caches using `attic` · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html">Setting up personal caches using `attic`</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="421225705"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421225705" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421225705">(Feb 13 2024 at 11:36)</a>:</h4>
+<p>[contd convo with <span class="user-mention" data-user-id="678574">@Andreas</span> ]</p>
+<p>I've been recommending people use <code>nix run github:...</code> for installing some of my software like Emanote, nixci, nix-health (especially as they are out-of-date on the increasingly unwieldy monorepo nixpkgs). </p>
+<p>To that end, I want to setup a small package set without IFD, providing cache for Linux and mac. </p>
+<p>I could expose the local nix store via <code>nix-serve-ng</code>, but <a href="https://github.com/zhaofengli/attic">https://github.com/zhaofengli/attic</a> is probably the more reliable option down the line, especially for dealing with larger builds/caches (at work).</p>
+
+
+
+<a name="421226237"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421226237" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421226237">(Feb 13 2024 at 11:40)</a>:</h4>
+<p>Yes, I was thinking about using something like attic. That might be a neat thing. IIRC it also just acts as a kind of cache overlay on <a href="http://cache.nixos.org">cache.nixos.org</a>, so everything that is not in your specialized cache is just forwarded to the larger official one.</p>
+<p>For setting this up you would need some hardware though I guess, and an S3 compatible storage provider of some kind. And I was wondering how much storage and bandwidth you might need for your existing Haskell packages.</p>
+
+
+
+<a name="421226342"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421226342" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421226342">(Feb 13 2024 at 11:40)</a>:</h4>
+<p>I think attic supports local storage too, if you just want store them in local disk to begin with.</p>
+
+
+
+<a name="421226456"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421226456" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421226456">(Feb 13 2024 at 11:41)</a>:</h4>
+<p>As for bandwidth, for my personal projects the <a href="https://www.hetzner.com/dedicated-rootserver/matrix-ax/">1 Gbits/s</a> should probably be good enough to begin with.</p>
+
+
+
+<a name="421226615"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421226615" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421226615">(Feb 13 2024 at 11:42)</a>:</h4>
+<p>Of course cache is useless without a CI that pushes to it. For this I've been exploring GitHub runners (<a href="#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners">topic here</a>), and eventually want to set one up on my macbook as well.</p>
+
+
+
+<a name="421226639"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421226639" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421226639">(Feb 13 2024 at 11:43)</a>:</h4>
+<p>Yes it does support local storage. Which might be sufficient, right.</p>
+<p>I was just wondering what happens to your storage if your machine goes down for whatever reason.</p>
+
+
+
+<a name="421226702"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421226702" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421226702">(Feb 13 2024 at 11:43)</a>:</h4>
+<p>If store gets corrupt and recreated, just do a rebuild. There aren't a lot to rebuild.</p>
+
+
+
+<a name="421226824"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421226824" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421226824">(Feb 13 2024 at 11:44)</a>:</h4>
+<p>Need to figure out a smart gcroot pinning system, that works with CI along with these 'recovery' instances.</p>
+
+
+
+<a name="421227515"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421227515" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421227515">(Feb 13 2024 at 11:49)</a>:</h4>
+<blockquote>
+<p>a smart gcroot pinning system</p>
+</blockquote>
+<p>I am not quite sure I am following on this one</p>
+
+
+
+<a name="421227644"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421227644" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421227644">(Feb 13 2024 at 11:50)</a>:</h4>
+<p>garbage collect everything but last N commits of stable (and desired) branches of repos.</p>
+
+
+
+<a name="421227727"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421227727" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421227727">(Feb 13 2024 at 11:51)</a>:</h4>
+<p><a href="https://github.com/hercules-ci/hercules-ci-agent/issues/482">https://github.com/hercules-ci/hercules-ci-agent/issues/482</a></p>
+
+
+
+<a name="421229211"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421229211" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421229211">(Feb 13 2024 at 12:00)</a>:</h4>
+<p>Maybe the attic tutorial <a href="https://docs.attic.rs/tutorial.html">https://docs.attic.rs/tutorial.html</a> is interesting, too. It comes with some kind of garbage collection capabilities.</p>
+
+
+
+<a name="421255969"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421255969" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421255969">(Feb 13 2024 at 14:37)</a>:</h4>
+<p>FWIW, for me, digitalocean spaces is super cheap ($5 p/m) and putting it behind cloudflare CDN is free. Also they allow an unlimited number of buckets so long as you don't go over 500G so you could have multiple caches if you wanted to</p>
+
+
+
+<a name="421257153"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421257153" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421257153">(Feb 13 2024 at 14:42)</a>:</h4>
+<blockquote>
+<p>500G</p>
+</blockquote>
+<p>Cloudflare R2? What did you get this number from?</p>
+
+
+
+<a name="421257353"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421257353" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421257353">(Feb 13 2024 at 14:43)</a>:</h4>
+<p>Oh I guess I misremembered, it's 250G</p>
+
+
+
+<a name="421257475"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421257475" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421257475">(Feb 13 2024 at 14:44)</a>:</h4>
+<p>(for $5)</p>
+
+
+
+<a name="421292925"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421292925" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421292925">(Feb 13 2024 at 17:36)</a>:</h4>
+<p>Any reason why I shouldn't put the cache data on one of these? <a href="https://www.hetzner.com/storage/storage-box/">https://www.hetzner.com/storage/storage-box/</a></p>
+
+
+
+<a name="421294091"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Setting%20up%20personal%20caches%20using%20%60attic%60/near/421294091" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60.html#421294091">(Feb 13 2024 at 17:43)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60/near/421292925">said</a>:</p>
+<blockquote>
+<p>Any reason why I shouldn't put the cache data on one of these? <a href="https://www.hetzner.com/storage/storage-box/">https://www.hetzner.com/storage/storage-box/</a></p>
+</blockquote>
+<p>Do you have full SSH access to these? Not really, right. Not sure what you are planing but for attic is would probably be nice to get NixOS with Minio or something similar.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

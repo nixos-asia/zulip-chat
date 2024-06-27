@@ -1,0 +1,85 @@
+<html>
+<head><meta charset="utf-8"><title>Dependency graph · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html">Dependency graph</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="421480256"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421480256" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Aravind Gopal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421480256">(Feb 14 2024 at 16:11)</a>:</h4>
+<p>Is there any way to get the graph of a dependency used in a project even though it’s not a direct input in the current project flakes.</p>
+
+
+
+<a name="421483628"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421483628" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421483628">(Feb 14 2024 at 16:27)</a>:</h4>
+<p><code>nix path-info -r</code> will give runtime deps, add <code>--derivation</code> to calculate build time deps, or <code>nix-store - --requisites</code> on a derivation will be buildtime deps on an output path will be runtime deps closure</p>
+
+
+
+<a name="421523184"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421523184" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Aravind Gopal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421523184">(Feb 14 2024 at 20:04)</a>:</h4>
+<p>Thanks <span class="user-mention" data-user-id="679006">@Tim DeHerrera</span> the above command returned all runtime deps. Is there any way to find the dependency graph . currently looking into nix-output-monitor (srid bro suggestion)</p>
+
+
+
+<a name="421523969"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421523969" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421523969">(Feb 14 2024 at 20:09)</a>:</h4>
+<p>There are these two flags you can add to the <code>nix-store</code> variant I suggested. From the man page:</p>
+<div class="codehilite"><pre><span></span><code>*        • --graph
+*          Prints the references graph of the store paths paths in the format of the dot tool of AT&amp;T’s Graphviz package. This  can  be
+*          used  to visualise dependency graphs. To obtain a build-time dependency graph, apply this to a store derivation. To obtain a
+*          runtime dependency graph, apply it to an output path.
+</code></pre></div>
+<div class="codehilite"><pre><span></span><code>*        • --graphml
+*          Prints the references graph of the store paths paths in the GraphML file format. This can be used  to  visualise  dependency
+*          graphs. To obtain a build-time dependency graph, apply this to a store derivation. To obtain a runtime dependency graph, ap‐
+           ply it to an output path.
+</code></pre></div>
+<p>If that is what you are looking for.</p>
+
+
+
+<a name="421527413"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421527413" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Aravind Gopal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421527413">(Feb 14 2024 at 20:30)</a>:</h4>
+<p>Thank you so much <span class="user-mention" data-user-id="679006">@Tim DeHerrera</span>, This helped.</p>
+
+
+
+<a name="421626827"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421626827" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421626827">(Feb 15 2024 at 10:45)</a>:</h4>
+<p>Nice, TIL!</p>
+<div class="codehilite"><pre><span></span><code>nix-store --query --graph $(nix build --no-link --print-out-paths github:srid/emanote) | dot -Tsvg &gt; output.svg
+</code></pre></div>
+<p><a href="/user_uploads/60244/x037rrXnkXvHZnxmm8PCJDeY/output.svg">output.svg</a></p>
+<p><a href="/user_uploads/60244/QvOazxtLiAq68nMmr_duplU9/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/QvOazxtLiAq68nMmr_duplU9/image.png" title="image.png"><img src="/user_uploads/60244/QvOazxtLiAq68nMmr_duplU9/image.png"></a></div>
+
+
+
+<a name="421627004"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421627004" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421627004">(Feb 15 2024 at 10:46)</a>:</h4>
+<p>This is worth a candidate to <a href="https://nixos.asia/en/tips">https://nixos.asia/en/tips</a></p>
+
+
+
+<a name="421627672"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dependency%20graph/near/421627672" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dependency.20graph.html#421627672">(Feb 15 2024 at 10:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/nix.20dependency/near/421626827">said</a>:</p>
+<blockquote>
+<p>Nice, TIL!</p>
+<div class="codehilite"><pre><span></span><code>nix-store --query --graph $(nix build --no-link --print-out-paths github:srid/emanote) | dot -Tsvg &gt; output.svg
+</code></pre></div>
+<p><a href="/user_uploads/60244/x037rrXnkXvHZnxmm8PCJDeY/output.svg">output.svg</a></p>
+<p><a href="/user_uploads/60244/vspBt5P1XximCwiztk-IFzJ5/output.png">output.png</a></p>
+</blockquote>
+<p>Incidentally, this revealed to me that much of the bloat in emanote's closure is coming from nodejs (via tailwind).</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

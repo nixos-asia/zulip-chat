@@ -1,0 +1,2231 @@
+<html>
+<head><meta charset="utf-8"><title>ollama · nixify-llm · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/index.html">nixify-llm</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html">ollama</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422467380"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422467380" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422467380">(Feb 20 2024 at 17:29)</a>:</h4>
+<p><a href="/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png" title="image.png"><img src="/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png"></a></div><p><a href="https://github.com/ollama/ollama">https://github.com/ollama/ollama</a></p>
+<p>You can run it from nixpkgs. Run these two commands in separate terminals:</p>
+<div class="codehilite"><pre><span></span><code>nix run nixpkgs#ollama serve
+</code></pre></div>
+<div class="codehilite"><pre><span></span><code>nix run nixpkgs#ollama run llama2-uncensored
+</code></pre></div>
+<p>Works on macOS, at least.</p>
+<p>(The query I used to test the model is inspired by the one Musk used to demonstrate Grok)</p>
+
+
+
+<a name="422471452"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422471452" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422471452">(Feb 20 2024 at 17:54)</a>:</h4>
+<p>Well it might work if ROCm works. Which it doesn't if I try. So I would probably have to build a shell for ROCm or something. Otherwise I will be using CPU...</p>
+
+
+
+<a name="422472224"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422472224" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422472224">(Feb 20 2024 at 17:58)</a>:</h4>
+<p>In case anyone likes to try this on AMD, here is the command to create a nice running docker container on Linux: </p>
+<div class="codehilite"><pre><span></span><code>docker run -d --privileged --device /dev/kfd -v ollama:/root/.ollama -p 11434:11434 -e OLLAMA_DEBUG=1 -e ROCR_VISIBLE_DEVICES=&quot;0&quot; -e HSA_OVERRIDE_GFX_VERSION=10.3.0 --name ollama ollama/ollama:0.1.24-rocm
+</code></pre></div>
+<p>The HSA_OVERRIDE_GFX_VERSION=10.3.0 environment variable is only needed if your GPU is not offically supported by ROCm. Which is most consumer and workstation GPUs actually, except a handful. Depending on the GPU it might or might not work.</p>
+<p>And then you can do a </p>
+<div class="codehilite"><pre><span></span><code>docker exec -it ollama ollama run llama2
+</code></pre></div>
+<p>Or whatever model you want to run</p>
+
+
+
+<a name="422472882"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422472882" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422472882">(Feb 20 2024 at 18:02)</a>:</h4>
+<p><span class="user-mention" data-user-id="678574">@Andreas</span> Does the docker container run do anything special compared to pure Nix instance (<code>nix run ..</code>) above?</p>
+
+
+
+<a name="422474015"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422474015" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422474015">(Feb 20 2024 at 18:09)</a>:</h4>
+<p>well it has ROCm installed obviously so that the GPU can use it. However that is just the container for ROCm they provide. Juding from the dockerfile in the ollama GitHub repo, they build them on the basis of some CentOS images provides by AMD. </p>
+<p>These in turn have their own repo, which I presume to be this one: <a href="https://github.com/ROCm/ROCm-docker">https://github.com/ROCm/ROCm-docker</a></p>
+
+
+
+<a name="422474741"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/422474741" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#422474741">(Feb 20 2024 at 18:13)</a>:</h4>
+<p>This here might be the dockerfile for the base image on top of which ollama is compiling their GO binary:</p>
+<p><a href="https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete">https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete</a></p>
+
+
+
+<a name="429110544"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429110544" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429110544">(Mar 23 2024 at 20:00)</a>:</h4>
+<p>I created a <code>process-compose-flake-module</code> for <code>ollama</code>, this is for a personal project that I am working on and here’s how easy it is to setup:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  services<span class="o">.</span><span class="ss">ollama</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="ss">host</span> <span class="o">=</span> <span class="s2">"100.71.49.133"</span><span class="p">;</span>
+      <span class="c1"># TODO: adding more than one model breaks in shellcheck</span>
+      <span class="ss">models</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"llama2-uncensored"</span> <span class="p">];</span>
+   <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="429110618"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429110618" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429110618">(Mar 23 2024 at 20:01)</a>:</h4>
+<p><code>nix run ...</code> cmd?</p>
+
+
+
+<a name="429110791"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429110791" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429110791">(Mar 23 2024 at 20:03)</a>:</h4>
+<p>I will upstream this to services-flake, it is right now in the private repo as a module. </p>
+<p>More about the project soon.</p>
+
+
+
+<a name="429112943"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429112943" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429112943">(Mar 23 2024 at 20:30)</a>:</h4>
+<p>Here it is: <a href="https://github.com/juspay/services-flake/pull/137">https://github.com/juspay/services-flake/pull/137</a></p>
+
+
+
+<a name="429113137"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113137" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113137">(Mar 23 2024 at 20:32)</a>:</h4>
+<p>The nix run command is a bit long though:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="w"> </span>nix<span class="w"> </span>run<span class="w"> </span><span class="s2">"github:juspay/services-flake/ollama?dir=test"</span><span class="c1">#ollama --override-input services-flake github:juspay/services-flake/ollama</span>
+</code></pre></div>
+<p>This starts up ollama server with no models though, let me use a smaller sample model in test.</p>
+
+
+
+<a name="429113264"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113264" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113264">(Mar 23 2024 at 20:34)</a>:</h4>
+<p><a href="https://ollama.com/library/tinyllama">https://ollama.com/library/tinyllama</a> looks like a good candidate</p>
+
+
+
+<a name="429113642"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113642" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113642">(Mar 23 2024 at 20:40)</a>:</h4>
+<p>Oh wait, I can’t really pull models in flake check because of sandbox mode. I think these models will have to be pre-fetched by another derivation.</p>
+
+
+
+<a name="429113660"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429113660" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429113660">(Mar 23 2024 at 20:40)</a>:</h4>
+<p>A separate repo, that uses services-flake module, to provide a single <code>nix run ..</code> to get some of these models up running, including a chat interface even, would be cool.</p>
+
+
+
+<a name="429115404"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115404" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115404">(Mar 23 2024 at 21:02)</a>:</h4>
+<p><a href="https://github.com/F1bonacc1/process-compose/issues/64">https://github.com/F1bonacc1/process-compose/issues/64</a> I can provide a single nix run command this, basically allowing users to interact with the chat process in the process-compose window</p>
+
+
+
+<a name="429115425"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115425" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115425">(Mar 23 2024 at 21:03)</a>:</h4>
+<p><a href="https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>
+<p>I will try it out with 0.88.0</p>
+
+
+
+<a name="429115680"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115680" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115680">(Mar 23 2024 at 21:07)</a>:</h4>
+<p>Curious if there's a chat bot web app that can interact with ollama</p>
+
+
+
+<a name="429115894"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115894" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115894">(Mar 23 2024 at 21:09)</a>:</h4>
+<p>There is this on top of search result: <a href="https://github.com/HelgeSverre/ollama-gui">https://github.com/HelgeSverre/ollama-gui</a></p>
+
+
+
+<a name="429115972"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429115972" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429115972">(Mar 23 2024 at 21:10)</a>:</h4>
+<p>Let's ship it. Gonna be a rad demo of services-flake.</p>
+
+
+
+<a name="429116013"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116013" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116013">(Mar 23 2024 at 21:11)</a>:</h4>
+<p><a href="https://github.com/open-webui/open-webui">https://github.com/open-webui/open-webui</a> there’s also this (much more popular), but looks like it is bloated with a lot of features.</p>
+
+
+
+<a name="429116121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116121">(Mar 23 2024 at 21:13)</a>:</h4>
+<p>I will give both the UIs a shot though</p>
+
+
+
+<a name="429116433"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116433" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116433">(Mar 23 2024 at 21:16)</a>:</h4>
+<p>I will try this tomorrow, going to get some sleep now</p>
+
+
+
+<a name="429116456"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429116456" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429116456">(Mar 23 2024 at 21:16)</a>:</h4>
+<p><a href="https://github.com/NixOS/nixpkgs/pull/275448">https://github.com/NixOS/nixpkgs/pull/275448</a></p>
+
+
+
+<a name="429117121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429117121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429117121">(Mar 23 2024 at 21:24)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/429115425">said</a>:</p>
+<blockquote>
+<p><a href="https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>
+<p>I will try it out with 0.88.0</p>
+</blockquote>
+<p>Update: I didn’t notice that the STDIN support is not there, so even with the current PTY support, this isn’t possible in the process-compose window. Gotta take the WebUI route, anyways, the webui demo will be much cooler.</p>
+
+
+
+<a name="429590092"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/429590092" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#429590092">(Mar 26 2024 at 06:18)</a>:</h4>
+<p><a href="/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png">Screenshot-2024-03-25-at-11.47.58PM.png</a><br>
+I have the UI running, it involved a lot of hacks to get it running because of the way open-webui uses the python backend.</p>
+<div class="message_inline_image"><a href="/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png" title="Screenshot-2024-03-25-at-11.47.58PM.png"><img src="/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png"></a></div>
+
+
+
+<a name="430517242"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430517242" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430517242">(Mar 31 2024 at 23:45)</a>:</h4>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nix<span class="w"> </span>run<span class="w"> </span>github:shivaraj-bh/nixify-ollama
+</code></pre></div>
+
+
+
+<a name="430565055"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430565055" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430565055">(Apr 01 2024 at 09:05)</a>:</h4>
+<p>Unsurprisingly it does not use the GPU on my machine. We'd probably have to add all the ROCm related components.</p>
+
+
+
+<a name="430565113"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430565113" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430565113">(Apr 01 2024 at 09:06)</a>:</h4>
+<p>But other than that, nice work!</p>
+
+
+
+<a name="430565685"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430565685" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430565685">(Apr 01 2024 at 09:10)</a>:</h4>
+<p>oh I was a bit too quick: webui cannot find any models on my end...</p>
+
+
+
+<a name="430578950"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430578950" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430578950">(Apr 01 2024 at 11:21)</a>:</h4>
+<p>I faced this problem, I had to manually change the ollama server url and press on the refresh button. Will look for a way to fix this</p>
+
+
+
+<a name="430578983"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430578983" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430578983">(Apr 01 2024 at 11:21)</a>:</h4>
+<p>Anyways, open-webui is a bit too much, I am looking for a simper UI, which is easier to setup</p>
+
+
+
+<a name="430579062"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430579062" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430579062">(Apr 01 2024 at 11:22)</a>:</h4>
+<p>open-webui actually looks quite nice. I personally use my containerized ollama with other clients though.</p>
+
+
+
+<a name="430579092"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430579092" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430579092">(Apr 01 2024 at 11:22)</a>:</h4>
+<p>maybe we can work at making this ollama flake compatible with ROCm at some point. Did you test it with CUDA?</p>
+
+
+
+<a name="430579227"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430579227" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430579227">(Apr 01 2024 at 11:24)</a>:</h4>
+<p>GPU acceleration is next on my list after I get this UI to work out of the box.</p>
+
+
+
+<a name="430579298"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430579298" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430579298">(Apr 01 2024 at 11:25)</a>:</h4>
+<p>I mean it should just pick up the GPU if available. It's just that I don't keep the ROCm libraries on my system if I don't need them specifically. So there is not much to be found.</p>
+
+
+
+<a name="430579311"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430579311" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430579311">(Apr 01 2024 at 11:25)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430579062">said</a>:</p>
+<blockquote>
+<p>open-webui actually looks quite nice. I personally use my containerized ollama with other clients though.</p>
+</blockquote>
+<p>Yes, it does. I only hate how I can’t configure things like disabling web auth. When I am using it in my private network, or for development, I don’t really need it.</p>
+
+
+
+<a name="430579735"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430579735" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430579735">(Apr 01 2024 at 11:29)</a>:</h4>
+<blockquote>
+<p>I only hate how I can’t configure things like disabling web auth</p>
+</blockquote>
+<p>Yes, it appears to have feature you might rather want for a somewhat larger deployment, like load balancing and such</p>
+
+
+
+<a name="430579873"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430579873" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430579873">(Apr 01 2024 at 11:31)</a>:</h4>
+<blockquote>
+<p>oh I was a bit too quick: webui cannot find any models on my end…</p>
+</blockquote>
+<p><a href="/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png">Screenshot-2024-04-01-at-4.58.42PM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png" title="Screenshot-2024-04-01-at-4.58.42PM.png"><img src="/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png"></a></div><p>The problem appears to be that I am not prefixing the protocol before the IP, as soon as i do that, it starts working. I will fix it</p>
+
+
+
+<a name="430580414"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430580414" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430580414">(Apr 01 2024 at 11:37)</a>:</h4>
+<p>I have also included an <code>Up Next</code> section in README: <a href="https://github.com/shivaraj-bh/nixify-ollama/blob/main/README.md">https://github.com/shivaraj-bh/nixify-ollama/blob/main/README.md</a></p>
+<p>To track what I will be doing next</p>
+
+
+
+<a name="430583672"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430583672" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430583672">(Apr 01 2024 at 12:12)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430579873">said</a>:</p>
+<blockquote>
+<blockquote>
+<p>oh I was a bit too quick: webui cannot find any models on my end…</p>
+</blockquote>
+<p><a href="/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png">Screenshot-2024-04-01-at-4.58.42PM.png</a></p>
+<p>The problem appears to be that I am not prefixing the protocol before the IP, as soon as i do that, it starts working. I will fix it</p>
+</blockquote>
+<p>I have <a href="https://github.com/shivaraj-bh/nixify-ollama/commit/11f598a6ea40bb136ceaf58efdef242b58faebe6">fixed it</a>, select model should now work without requiring any hacks</p>
+
+
+
+<a name="430622206"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430622206" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430622206">(Apr 01 2024 at 16:24)</a>:</h4>
+<p>Yes, it's working now. Just a bit slow for my taste on CPU.</p>
+
+
+
+<a name="430622248"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430622248" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430622248">(Apr 01 2024 at 16:24)</a>:</h4>
+<p>but we are getting there</p>
+
+
+
+<a name="430622368"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430622368" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430622368">(Apr 01 2024 at 16:25)</a>:</h4>
+<p>I might look and see if I can get it to run with ROCm. So far I am only using containers for ROCm. But the stuff should all be in nixpkgs.</p>
+
+
+
+<a name="430624923"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430624923" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430624923">(Apr 01 2024 at 16:37)</a>:</h4>
+<p>Yes, I will continue working tomorrow. I am going to hit the sack for the day</p>
+
+
+
+<a name="430625130"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430625130" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430625130">(Apr 01 2024 at 16:38)</a>:</h4>
+<p>yeah it's somewhat late already where you are <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="430838740"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430838740" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430838740">(Apr 02 2024 at 17:21)</a>:</h4>
+<p>I decided to create an issue on your repo for ROCm support <span class="user-mention" data-user-id="669081">@Shivaraj B H</span></p>
+
+
+
+<a name="430839409"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430839409" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430839409">(Apr 02 2024 at 17:26)</a>:</h4>
+<p>Yup, I was checking out macOS support today, while I was in parallel setting up my new machine with Nvidia drivers to try out GPU acceleration</p>
+
+
+
+<a name="430839881"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430839881" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430839881">(Apr 02 2024 at 17:29)</a>:</h4>
+<p>I don’t have AMD hardware to test out ROCm, but I suppose I can test it on some cheap cloud instances</p>
+
+
+
+<a name="430839892"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430839892" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430839892">(Apr 02 2024 at 17:29)</a>:</h4>
+<p>that is nice, maybe we can adapt the Nvidia settings to run AMD stuff. Nice thing about ROCm is that it's just running on top of the AMDGPU kernel drivers.</p>
+
+
+
+<a name="430839941"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430839941" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430839941">(Apr 02 2024 at 17:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430839881">said</a>:</p>
+<blockquote>
+<p>I don’t have AMD hardware to test out ROCm, but I suppose I can test it on some cheap cloud instances</p>
+</blockquote>
+<p>Or I'd be the one testing it.</p>
+
+
+
+<a name="430841267"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430841267" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430841267">(Apr 02 2024 at 17:37)</a>:</h4>
+<p>Is there an easy way to export an environment variable depending on the user's GPU architecture?</p>
+
+
+
+<a name="430841420"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430841420" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430841420">(Apr 02 2024 at 17:38)</a>:</h4>
+<p>Also, since I am on a multi GPU system, I'd need a way to set the GPU that ollama is to be using. In docker that is fairly easy to do. I wonder how to do this here.</p>
+
+
+
+<a name="430843692"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430843692" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430843692">(Apr 02 2024 at 17:52)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430841267">said</a>:</p>
+<blockquote>
+<p>Is there an easy way to export an environment variable depending on the user's GPU architecture?</p>
+</blockquote>
+<p>What would this environment variable be used for?</p>
+
+
+
+<a name="430843858"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430843858" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430843858">(Apr 02 2024 at 17:53)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430841420">said</a>:</p>
+<blockquote>
+<p>Also, since I am on a multi GPU system, I'd need a way to set the GPU that ollama is to be using. In docker that is fairly easy to do. I wonder how to do this here.</p>
+</blockquote>
+<p>How does one do this in docker? Multi-gpu scenario is new to me as well, so gotta play around with it a bit</p>
+
+
+
+<a name="430844580"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430844580" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430844580">(Apr 02 2024 at 17:57)</a>:</h4>
+<p>Yes, so on the env variable front most user will have to set <code>HSA_OVERRIDE_GFX_VERSION=10.3.0</code> if they are on RDNA2 or RDNA arch GPUs. On RDNA3 this will be a different value. And it might not be needed if the GPU is officially supported by ROCm (which only very few are outside the data center).</p>
+<p>For selecting the second GPU in my machine, I pass <code>--device /dev/kfd</code> and <code>--device /dev/dri/renderD129</code> to the container. While <code>--device /dev/dri/renderD128</code> would select the first GPU.</p>
+<p>In addition I set the <code>ROCR_VISIBLE_DEVICES</code> to either <code>0</code> or <code>1</code>, which, I think, is there for isolating the GPUs.</p>
+
+
+
+<a name="430846206"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430846206" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430846206">(Apr 02 2024 at 18:06)</a>:</h4>
+<p>Does ollama detect the GPU correctly inside a docker container?</p>
+
+
+
+<a name="430848989"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430848989" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430848989">(Apr 02 2024 at 18:23)</a>:</h4>
+<p>yes, no issues. I am using ollama's own container images. They are probably built on top of AMD's official images for ROCm.</p>
+
+
+
+<a name="430849559"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430849559" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430849559">(Apr 02 2024 at 18:27)</a>:</h4>
+<p>I think a big benefit of having this running via Nix would be a reduced footprint compared to these somewhat massive ROCm container images.</p>
+
+
+
+<a name="430849761"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430849761" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430849761">(Apr 02 2024 at 18:28)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>ollama/ollama   0.1.24-rocm  9d567aacf463   7 weeks ago    20.9GB
+</code></pre></div>
+<p>That is the last image I pulled. Smaller might be better <span aria-label="grinning face with smiling eyes" class="emoji emoji-1f601" role="img" title="grinning face with smiling eyes">:grinning_face_with_smiling_eyes:</span></p>
+
+
+
+<a name="430849925"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430849925" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430849925">(Apr 02 2024 at 18:29)</a>:</h4>
+<p>I might have to look at how the container images are built, but I am quite certain it should be possible on native as well.</p>
+
+
+
+<a name="430850138"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430850138" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430850138">(Apr 02 2024 at 18:30)</a>:</h4>
+<p>it should be, yes</p>
+<p>I have just seen that they added a bit more documentation to their images:</p>
+<p><a href="https://hub.docker.com/r/bergutman/ollama-rocm">https://hub.docker.com/r/bergutman/ollama-rocm</a></p>
+
+
+
+<a name="430850211"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430850211" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430850211">(Apr 02 2024 at 18:31)</a>:</h4>
+<p>ah no, this is not the offical one</p>
+
+
+
+<a name="430850405"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430850405" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430850405">(Apr 02 2024 at 18:32)</a>:</h4>
+<p>I guess this should be the official dockerfile:</p>
+<p><a href="https://github.com/ollama/ollama/blob/main/Dockerfile">https://github.com/ollama/ollama/blob/main/Dockerfile</a></p>
+
+
+
+<a name="430856135"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430856135" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430856135">(Apr 02 2024 at 19:09)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430849761">said</a>:</p>
+<blockquote>
+<div class="codehilite"><pre><span></span><code>ollama/ollama   0.1.24-rocm  9d567aacf463   7 weeks ago    20.9GB
+</code></pre></div>
+<p>That is the last image I pulled. Smaller might be better <span aria-label="grinning face with smiling eyes" class="emoji emoji-1f601" role="img" title="grinning face with smiling eyes">:grinning_face_with_smiling_eyes:</span></p>
+</blockquote>
+<p>Damn, I just noticed the image size is 20GB</p>
+
+
+
+<a name="430856388"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430856388" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430856388">(Apr 02 2024 at 19:11)</a>:</h4>
+<p>yes, and since I already have multiple such images for different apps, you can see how that can easily become a bit cumbersome. Let's just say the image size is one of the many places AMD's ROCm could use some optimization.</p>
+<p>But I am happy that is working more or less nicely out of the box now. That is already a big thing. So they might get there eventually.</p>
+
+
+
+<a name="430862540"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430862540" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430862540">(Apr 02 2024 at 19:52)</a>:</h4>
+<p>It might just be very simple to enable ROCm, I am trying something out with CUDA, if that works out, I will post here and you can tell me if it works for you</p>
+
+
+
+<a name="430863301"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430863301" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430863301">(Apr 02 2024 at 19:57)</a>:</h4>
+<p>the only CUDA device I have is my laptop GPU with 2GB of VRAM. So you'd need to set a very small model for that. (Btw. defining models more dynamically might also be a nice add-on for this)</p>
+
+
+
+<a name="430863360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430863360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430863360">(Apr 02 2024 at 19:57)</a>:</h4>
+<p>but once you have a CUDA implementation going, I can see if I can derive a ROCm implementation from that one</p>
+
+
+
+<a name="430863926"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430863926" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430863926">(Apr 02 2024 at 20:01)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430862540">said</a>:</p>
+<blockquote>
+<p>It might just be very simple to enable ROCm, I am trying something out with CUDA, if that works out, I will post here and you can tell me if it works for you</p>
+</blockquote>
+<p>my bad, I wasn’t clear here.</p>
+<p>This is what I am trying for CUDA:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>services<span class="o">.</span>ollama<span class="o">.</span><span class="s2">"ollama"</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+   <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>ollama<span class="o">.</span>override <span class="p">{</span> <span class="ss">acceleration</span> <span class="o">=</span> <span class="s2">"cuda"</span><span class="p">;</span> <span class="p">};</span>
+   <span class="ss">host</span> <span class="o">=</span> <span class="s2">"0.0.0.0"</span><span class="p">;</span>
+    <span class="ss">models</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"llama2-uncensored"</span> <span class="p">];</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>What I want you to try is:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>services<span class="o">.</span>ollama<span class="o">.</span><span class="s2">"ollama"</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+   <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>ollama<span class="o">.</span>override <span class="p">{</span> <span class="ss">acceleration</span> <span class="o">=</span> <span class="err">“</span>rocm<span class="s2">"; };</span>
+<span class="s2">   host = "</span><span class="mf">0.0.0.0</span><span class="s2">";</span>
+<span class="s2">    models = [ "</span>llama2-uncensored<span class="s2">" ];</span>
+<span class="s2">};</span>
+</code></pre></div>
+
+
+
+<a name="430864155"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430864155" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430864155">(Apr 02 2024 at 20:02)</a>:</h4>
+<p>okay, but for that I'd need to actually provide the ROCm libraries somewhere, right? Otherwise there is nothing to pick up. Also ollama should detect that automatically, if it has been compiled with ROCm support. At least I believe it should.</p>
+
+
+
+<a name="430864265"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430864265" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430864265">(Apr 02 2024 at 20:03)</a>:</h4>
+<blockquote>
+<p>but for that I'd need to actually provide the ROCm libraries somewhere, right? </p>
+</blockquote>
+<p>nixpkgs does it for you: <a href="https://github.com/NixOS/nixpkgs/blob/8a22284f51fcd7771ee65ba124175bf9b90505ad/pkgs/tools/misc/ollama/default.nix#L51-L62">https://github.com/NixOS/nixpkgs/blob/8a22284f51fcd7771ee65ba124175bf9b90505ad/pkgs/tools/misc/ollama/default.nix#L51-L62</a></p>
+
+
+
+<a name="430864401"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430864401" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430864401">(Apr 02 2024 at 20:04)</a>:</h4>
+<blockquote>
+<p>package = pkgs.ollama.override { acceleration = “rocm"; };</p>
+</blockquote>
+<p>when you use the above override it will build ollama again with rocm libraries in its env, atleast that is what I believe it does.</p>
+
+
+
+<a name="430864594"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430864594" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430864594">(Apr 02 2024 at 20:05)</a>:</h4>
+<p>alright, I will clone the repo and try if that works tomorrow</p>
+
+
+
+<a name="430865110"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430865110" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430865110">(Apr 02 2024 at 20:09)</a>:</h4>
+<p>after the override for cuda, ollama detected the libraries:<br>
+(from the logs of <code>ollama serve</code>)</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="nv">time</span><span class="o">=</span><span class="m">2024</span>-04-02T20:07:05.102Z<span class="w"> </span><span class="nv">level</span><span class="o">=</span>INFO<span class="w"> </span><span class="nv">source</span><span class="o">=</span>gpu.go:237<span class="w"> </span><span class="nv">msg</span><span class="o">=</span><span class="s2">"Discovered GPU libraries: [/nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67]"</span>
+</code></pre></div>
+<p>but it fails at a later stage: </p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nvmlInit_v2<span class="w"> </span>err:<span class="w"> </span><span class="m">18</span>
+<span class="nv">time</span><span class="o">=</span><span class="m">2024</span>-04-02T20:07:05.106Z<span class="w"> </span><span class="nv">level</span><span class="o">=</span>INFO<span class="w"> </span><span class="nv">source</span><span class="o">=</span>gpu.go:249<span class="w"> </span><span class="nv">msg</span><span class="o">=</span><span class="s2">"Unable to load CUDA management library /nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67: nvml vram init failure: 18"</span>
+</code></pre></div>
+<p>I will investigate this tomorrow</p>
+
+
+
+<a name="430865347"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430865347" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430865347">(Apr 02 2024 at 20:10)</a>:</h4>
+<p>I am suspecting now already that for ROCm you might need other components too. Like <code>rocmPackages.rocm-runtime</code> for instance, or <code>rocmPackages.rocm-smi</code> maybe. Not sure.</p>
+
+
+
+<a name="430865637"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430865637" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430865637">(Apr 02 2024 at 20:13)</a>:</h4>
+<p>Yup, let’s check that out tomorrow. I will head out for today</p>
+
+
+
+<a name="430867659"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430867659" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430867659">(Apr 02 2024 at 20:27)</a>:</h4>
+<p>/me hasn't had a chance check this out because he is yet to find a reliable internet connection in Australia</p>
+
+
+
+<a name="430872215"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430872215" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430872215">(Apr 02 2024 at 20:57)</a>:</h4>
+<p>macOS support is still a WIP for the open-webui backend, works well on linux for now. It is because the lock.json only locks for one platform atm. I have to switch to pdm for package management instead of pip, ensuring multi-platform support.</p>
+
+
+
+<a name="430872515"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430872515" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430872515">(Apr 02 2024 at 20:59)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430865110">said</a>:</p>
+<blockquote>
+<p>after the override for cuda, ollama detected the libraries:<br>
+(from the logs of <code>ollama serve</code>)</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="nv">time</span><span class="o">=</span><span class="m">2024</span>-04-02T20:07:05.102Z<span class="w"> </span><span class="nv">level</span><span class="o">=</span>INFO<span class="w"> </span><span class="nv">source</span><span class="o">=</span>gpu.go:237<span class="w"> </span><span class="nv">msg</span><span class="o">=</span><span class="s2">"Discovered GPU libraries: [/nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67]”</span>
+</code></pre></div>
+<p>but it fails at a later stage: </p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nvmlInit_v2<span class="w"> </span>err:<span class="w"> </span><span class="m">18</span>
+<span class="nv">time</span><span class="o">=</span><span class="m">2024</span>-04-02T20:07:05.106Z<span class="w"> </span><span class="nv">level</span><span class="o">=</span>INFO<span class="w"> </span><span class="nv">source</span><span class="o">=</span>gpu.go:249<span class="w"> </span><span class="nv">msg</span><span class="o">=</span><span class="s2">"Unable to load CUDA management library /nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67: nvml vram init failure: 18”</span>
+</code></pre></div>
+<p>I will investigate this tomorrow</p>
+</blockquote>
+<p><span class="user-mention" data-user-id="678574">@Andreas</span> turns out it was just incompatibility between the driver version installed on my system vs the respective library exposed to ollama by the override. I matched them and now it works <span aria-label="tada" class="emoji emoji-1f389" role="img" title="tada">:tada:</span></p>
+
+
+
+<a name="430872782"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430872782" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430872782">(Apr 02 2024 at 21:00)</a>:</h4>
+<p>The speed difference is huge, like 20x. On my CPU I get about 10-11 tokens/second and with RTX 3070 8GB vram mobile GPU, I get about 200-210 tokens/second</p>
+
+
+
+<a name="430874851"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430874851" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430874851">(Apr 02 2024 at 21:14)</a>:</h4>
+<p>Wait, The token per second is for prompt eval, generation eval is much slower for both of them. For CPU it is 3.9 tokens/second and for GPU it is 24.7 tokens/seconds, about 10x better on GPU.</p>
+
+
+
+<a name="430949971"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430949971" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430949971">(Apr 03 2024 at 08:44)</a>:</h4>
+<p>yes, I will try later today. Where can you see the generation speed btw.?</p>
+
+
+
+<a name="430950120"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430950120" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430950120">(Apr 03 2024 at 08:44)</a>:</h4>
+<p>but the huge speed increase is to be expected. That's why I wanted GPU to work so badly. <span aria-label="grinning face with smiling eyes" class="emoji emoji-1f601" role="img" title="grinning face with smiling eyes">:grinning_face_with_smiling_eyes:</span></p>
+
+
+
+<a name="430951307"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430951307" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430951307">(Apr 03 2024 at 08:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430949971">said</a>:</p>
+<blockquote>
+<p>yes, I will try later today. Where can you see the generation speed btw.?</p>
+</blockquote>
+<p>You can find it in the logs of <code>ollama serve</code> process after a request is complete. I am thinking of exposing a benchmark script that can be run to compare numbers on different hardware.</p>
+
+
+
+<a name="430951537"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430951537" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430951537">(Apr 03 2024 at 08:51)</a>:</h4>
+<p>ah so it's in the logs. I never bothered to look at them so far. But I'd like to compare my two AMD cards with your Nvidia 3070.</p>
+<p>Also speed will depend on the model I guess. You are still using llama-7b-uncensored, right?</p>
+
+
+
+<a name="430952101"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430952101" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430952101">(Apr 03 2024 at 08:54)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/430951537">said</a>:</p>
+<blockquote>
+<p>ah so it's in the logs. I never bothered to look at them so far. But I'd like to compare my two AMD cards with your Nvidia 3070.</p>
+<p>Also speed will depend on the model I guess. You are still using llama-7b-uncensored, right?</p>
+</blockquote>
+<p>Yup, I am using llama-7b-uncensored. I tried with llama-70b-uncensored on my GPU, it is extremely slow, like 0.3-0.5 tokens/second</p>
+
+
+
+<a name="430952276"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430952276" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430952276">(Apr 03 2024 at 08:55)</a>:</h4>
+<p>Didn’t even bother trying on CPU</p>
+
+
+
+<a name="430952577"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430952577" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430952577">(Apr 03 2024 at 08:56)</a>:</h4>
+<p>I will start playing around in the night today, after I am done with work</p>
+
+
+
+<a name="430952847"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430952847" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430952847">(Apr 03 2024 at 08:58)</a>:</h4>
+<p>Actually you did bother trying on CPU. <span aria-label="big smile" class="emoji emoji-1f604" role="img" title="big smile">:big_smile:</span> </p>
+<p>Because ollama most likely did fall back to CPU as you ran out of VRAM with your 8 GB.</p>
+
+
+
+<a name="430953097"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430953097" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430953097">(Apr 03 2024 at 08:59)</a>:</h4>
+<p>but for smaller models, there are quite a few capable models for code-related tasks that fit into 8GB of VRAM. And even a good amount that might fit my 2 GB of VRAM on my somewhat older laptop.</p>
+
+
+
+<a name="430958463"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430958463" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430958463">(Apr 03 2024 at 09:23)</a>:</h4>
+<blockquote>
+<p>Because ollama most likely did fall back to CPU as you ran out of VRAM with your 8 GB.</p>
+</blockquote>
+<p>Right, that makes sense.</p>
+
+
+
+<a name="430974051"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/430974051" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#430974051">(Apr 03 2024 at 10:48)</a>:</h4>
+<p><a href="/user_uploads/60244/Lb9ZzETtGb-OJZMBn7U9Rrdb/E972A83F-3126-43BE-B30F-BC656E551C9A.jpg">E972A83F-3126-43BE-B30F-BC656E551C9A.jpg</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/Lb9ZzETtGb-OJZMBn7U9Rrdb/E972A83F-3126-43BE-B30F-BC656E551C9A.jpg" title="E972A83F-3126-43BE-B30F-BC656E551C9A.jpg"><img src="/user_uploads/60244/Lb9ZzETtGb-OJZMBn7U9Rrdb/E972A83F-3126-43BE-B30F-BC656E551C9A.jpg"></a></div><p>Now, I can access it on my phone as well</p>
+
+
+
+<a name="431004147"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431004147" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431004147">(Apr 03 2024 at 13:31)</a>:</h4>
+<p>I am right now trying this snippet of code:</p>
+<div class="codehilite"><pre><span></span><code>services.ollama.&quot;ollama&quot; = {
+   enable = true;
+   package = pkgs.ollama.override { acceleration = “rocm&quot;; };
+   host = &quot;0.0.0.0&quot;;
+    models = [ &quot;llama2-uncensored&quot; ];
+};
+</code></pre></div>
+<p>However the result is that Nix wants to compile rocblas-6.0.2 from source... or at least that what my CPU fans sound like. Not ideal. I tried compiling the ROCm stack from source once. I have a Ryzen 3900x, but even with that machine this will take several hours, depending on how much it needs to compile. </p>
+<p>That being said, how can I specify runtime dependencies for the service I am declaring? Because I have a feeling I might need some, as I do not have ROCm runtime packages available on my system by default.</p>
+
+
+
+<a name="431005266"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431005266" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431005266">(Apr 03 2024 at 13:36)</a>:</h4>
+<p>I will let it do it's building and see what happens (most likely it will not work, since... ROCm)</p>
+
+
+
+<a name="431010566"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431010566" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431010566">(Apr 03 2024 at 14:00)</a>:</h4>
+<blockquote>
+<p>However the result is that Nix wants to compile rocblas-6.0.2 from source</p>
+</blockquote>
+<p>assuming you are on x86_64-linux, it should be coming from cache: <a href="https://hydra.nixos.org/build/254389608">https://hydra.nixos.org/build/254389608</a></p>
+
+
+
+<a name="431010718"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431010718" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431010718">(Apr 03 2024 at 14:00)</a>:</h4>
+<p>that would make sense, however it did not</p>
+
+
+
+<a name="431011020"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431011020" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431011020">(Apr 03 2024 at 14:02)</a>:</h4>
+<p>right now it is stuck for some reason for the last 10 min so telling me:</p>
+<p><code>[1/1/10 built, 57 copied (9806.3/9806.5 MiB), 1089.1 MiB DL] building rocblas-6.0.2 (buildPhase): 4 warnings generated when compiling for gfx942.</code></p>
+<p>I will wait a bit longer and see if it back up on its feet again</p>
+
+
+
+<a name="431011160"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431011160" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431011160">(Apr 03 2024 at 14:02)</a>:</h4>
+<blockquote>
+<p>I will let it do it's building and see what happens (most likely it will not work, since... ROCm)</p>
+</blockquote>
+<p>The only problem I would see is the mismatch of versions between drivers installed on your OS with that of rocmPackages in the nixpkgs commit we are using in nixify-ollama’s flake.nix</p>
+
+
+
+<a name="431011275"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431011275" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431011275">(Apr 03 2024 at 14:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431011020">said</a>:</p>
+<blockquote>
+<p>right now it is stuck for some reason for the last 10 min so telling me:</p>
+<p><code>[1/1/10 built, 57 copied (9806.3/9806.5 MiB), 1089.1 MiB DL] building rocblas-6.0.2 (buildPhase): 4 warnings generated when compiling for gfx942.</code></p>
+<p>I will wait a bit longer and see if it back up on its feet again</p>
+</blockquote>
+<p>It definitely is building from scratch, not a good sign.</p>
+
+
+
+<a name="431011413"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431011413" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431011413">(Apr 03 2024 at 14:03)</a>:</h4>
+<blockquote>
+<p>mismatch of versions between drivers installed on your OS</p>
+</blockquote>
+<p>The drivers are the Linux kernel drivers for my kernel version. Which is the LTS kernel 6.1.82 right now.</p>
+<blockquote>
+<p>It definitely is building from scratch, not a good sign.</p>
+</blockquote>
+<p>Might this be due to the ollama package being overridden in the nixify flake?</p>
+
+
+
+<a name="431012598"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431012598" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431012598">(Apr 03 2024 at 14:08)</a>:</h4>
+<blockquote>
+<p>Might this be due to the ollama package being overridden in the nixify flake?</p>
+</blockquote>
+<p>That should rebuild only the ollama package and not the rocmPackages</p>
+
+
+
+<a name="431012788"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431012788" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431012788">(Apr 03 2024 at 14:09)</a>:</h4>
+<p>okay, my base system is on NixOS stable, not unstable. Would that have an impact here?</p>
+
+
+
+<a name="431013250"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431013250" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431013250">(Apr 03 2024 at 14:10)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431012788">said</a>:</p>
+<blockquote>
+<p>okay, my base system is on NixOS stable, not unstable. Would that have an impact here?</p>
+</blockquote>
+<p>probably, let’s wait for it to build. In any case, you can override rocmPackages as well (to match your system’s stable release), so not a problem</p>
+
+
+
+<a name="431018854"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431018854" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431018854">(Apr 03 2024 at 14:35)</a>:</h4>
+<p>since it's not moving anywhere, I decided to cancel it now</p>
+
+
+
+<a name="431018986"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431018986" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431018986">(Apr 03 2024 at 14:36)</a>:</h4>
+<p>yes, that is a bit of a sad state if Nix wants to rebuild stuff from scratch</p>
+
+
+
+<a name="431019241"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431019241" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431019241">(Apr 03 2024 at 14:37)</a>:</h4>
+<p>but since your flake itself uses nixpkgs unstable, normally it should pull in the binaries nonetheless, right?</p>
+
+
+
+<a name="431065629"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431065629" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431065629">(Apr 03 2024 at 14:45)</a>:</h4>
+<p>okay, so now I decided to downgrade your flake to the NixOS-23.11 branch, and now it is only compiling ollama itself.</p>
+
+
+
+<a name="431142442"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431142442" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431142442">(Apr 03 2024 at 17:29)</a>:</h4>
+<p>okay, so it compiled, but the webui now gets me an internal server error when trying to talk to model.</p>
+
+
+
+<a name="431143108"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431143108" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431143108">(Apr 03 2024 at 17:33)</a>:</h4>
+<p>When I do a </p>
+<div class="codehilite"><pre><span></span><code>curl http://localhost:11434/api/generate -d &#39;{
+  &quot;model&quot;: &quot;llama2-uncensored&quot;,
+  &quot;prompt&quot;:&quot;Why is the sky blue?&quot;
+}&#39;
+</code></pre></div>
+<p>I get <code>curl: (52) Empty reply from server</code></p>
+
+
+
+<a name="431143597"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431143597" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431143597">(Apr 03 2024 at 17:37)</a>:</h4>
+<p>when I run that on my docker llama2, there is no issue, I get a stream of individual response tokens</p>
+
+
+
+<a name="431144517"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431144517" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431144517">(Apr 03 2024 at 17:42)</a>:</h4>
+<p>how would I set the environment for the process compose flake services? I'd say passing <code>OLLAMA_DEBUG=1</code> might help find out what isn't moving there...</p>
+
+
+
+<a name="431146483"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431146483" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431146483">(Apr 03 2024 at 17:54)</a>:</h4>
+<p>As for stats, I get this on my GPU:</p>
+<div class="codehilite"><pre><span></span><code>[1712166751] print_timings: prompt eval time =      25.77 ms /     0 tokens (     inf ms per token,     0.00 tokens per second)
+[1712166751] print_timings:        eval time =    2132.53 ms /   118 runs   (   18.07 ms per token,    55.33 tokens per second)
+[1712166751] print_timings:       total time =    2158.30 ms
+</code></pre></div>
+
+
+
+<a name="431146560"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431146560" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431146560">(Apr 03 2024 at 17:55)</a>:</h4>
+<p>no idea if this is good or bad. But the response comes pretty fast I'd say</p>
+
+
+
+<a name="431147254"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147254" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147254">(Apr 03 2024 at 17:59)</a>:</h4>
+<p>I’d need to expose an option to add extraEnvs</p>
+
+
+
+<a name="431147293"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147293" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147293">(Apr 03 2024 at 17:59)</a>:</h4>
+<p>and this is from my secondary GPU</p>
+<div class="codehilite"><pre><span></span><code>[1712167117] print_timings: prompt eval time =      95.26 ms /    28 tokens (    3.40 ms per token,   293.94 tokens per second)
+[1712167117] print_timings:        eval time =    5266.83 ms /   212 runs   (   24.84 ms per token,    40.25 tokens per second)
+[1712167117] print_timings:       total time =    5362.09 ms
+</code></pre></div>
+
+
+
+<a name="431147403"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147403" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147403">(Apr 03 2024 at 18:00)</a>:</h4>
+<p>These stats are from within the docker, is it?</p>
+
+
+
+<a name="431147514"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147514" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147514">(Apr 03 2024 at 18:01)</a>:</h4>
+<p>What GPUs are you running on your machine?</p>
+
+
+
+<a name="431147534"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147534" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147534">(Apr 03 2024 at 18:01)</a>:</h4>
+<p>Yeah the stats are from within the docker containers</p>
+<p>Great idea having some env to set. Let's see how you implement it <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+<p>Is there a way to attach to the tty of the running process in process compose? That way I could see what ollama spits out in debug messages</p>
+
+
+
+<a name="431147574"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147574" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147574">(Apr 03 2024 at 18:01)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431147514">said</a>:</p>
+<blockquote>
+<p>What GPUs are you running on your machine?</p>
+</blockquote>
+<p>1) Radeon Pro W6800<br>
+2) Radeon Pro W6600</p>
+
+
+
+<a name="431147636"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147636" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147636">(Apr 03 2024 at 18:01)</a>:</h4>
+<p>You could do “nix run — -t=false” to disable tui mode in process-compose</p>
+
+
+
+<a name="431147894"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147894" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147894">(Apr 03 2024 at 18:03)</a>:</h4>
+<p>So you 3070 was getting 25 tokens per second, yes? I find it odd that the W6600 should be that much faster with 40 tokens per second.</p>
+
+
+
+<a name="431147905"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431147905" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431147905">(Apr 03 2024 at 18:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431147574">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431147514">said</a>:</p>
+<blockquote>
+<p>What GPUs are you running on your machine?</p>
+</blockquote>
+<p>1) Radeon Pro W6800<br>
+2) Radeon Pro W6600</p>
+</blockquote>
+<p>That’s 32 gb and 8gb vram respectively?</p>
+
+
+
+<a name="431148169"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431148169" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431148169">(Apr 03 2024 at 18:04)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431147894">said</a>:</p>
+<blockquote>
+<p>So you 3070 was getting 25 tokens per second, yes? I find it odd that the W6600 should be that much faster with 40 tokens per second.</p>
+</blockquote>
+<p>Does that depend on the prompt maybe? I will try giving the same prompt as you</p>
+
+
+
+<a name="431148277"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431148277" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431148277">(Apr 03 2024 at 18:05)</a>:</h4>
+<p>And is your GPU over clocked by any chance?</p>
+
+
+
+<a name="431148293"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431148293" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431148293">(Apr 03 2024 at 18:05)</a>:</h4>
+<p>that is possible, I was just trying the prompt via curl that ollama has on github. Just with the different model</p>
+<div class="codehilite"><pre><span></span><code>curl http://localhost:11434/api/generate -d &#39;{
+  &quot;model&quot;: &quot;llama2-uncensored&quot;,
+  &quot;prompt&quot;:&quot;Why is the sky blue?&quot;
+}&#39;
+</code></pre></div>
+
+
+
+<a name="431148490"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431148490" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431148490">(Apr 03 2024 at 18:07)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431148277">said</a>:</p>
+<blockquote>
+<p>And is your GPU over clocked by any chance?</p>
+</blockquote>
+<p>Nope, rather underclocked if compared to the gaming variant. The TDP for the Radeon Pro W6600 is basically locked at around 100W, it's s one slot card, which is very nice. The same goes for the W6800, which is the equivalent of the RX 6800, but uses less power. It does however have twice the VRAM.</p>
+
+
+
+<a name="431148672"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431148672" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431148672">(Apr 03 2024 at 18:08)</a>:</h4>
+<p>When it comes to gaming your 3070 should be rather close to my W6800 I'd say.</p>
+
+
+
+<a name="431150752"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431150752" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431150752">(Apr 03 2024 at 18:23)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431147636">said</a>:</p>
+<blockquote>
+<p>You could do “nix run — -t=false” to disable tui mode in process-compose</p>
+</blockquote>
+<p>copy pasting this will only get me <code>error: unrecognised flag '-t'</code></p>
+
+
+
+<a name="431155020"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431155020" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431155020">(Apr 03 2024 at 18:53)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431150752">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431147636">said</a>:</p>
+<blockquote>
+<p>You could do “nix run — -t=false” to disable tui mode in process-compose</p>
+</blockquote>
+<p>copy pasting this will only get me <code>error: unrecognised flag '-t’</code></p>
+</blockquote>
+<p>My bad, it is <code>nix run .#default -- -t=false</code></p>
+
+
+
+<a name="431155754"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431155754" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431155754">(Apr 03 2024 at 18:58)</a>:</h4>
+<p>(Yes that was me being stupid / lazy I guess) </p>
+<p>okay let's see... there are quite a few errors coming from ollama</p>
+
+
+
+<a name="431155859"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431155859" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431155859">(Apr 03 2024 at 18:58)</a>:</h4>
+<p>Also, I have implemented the <code>extraEnvs</code> option. You can pull the latest changes on <code>nixify-ollama</code> and use this:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  services<span class="o">.</span>ollama<span class="o">.</span><span class="s2">"ollama"</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">host</span> <span class="o">=</span> <span class="s2">"0.0.0.0"</span><span class="p">;</span>
+    <span class="ss">models</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"llama2-uncensored"</span> <span class="p">];</span>
+    <span class="ss">extraEnvs</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">OLLAMA_DEBUG</span><span class="o">=</span><span class="s2">"1"</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="431155940"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431155940" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431155940">(Apr 03 2024 at 18:59)</a>:</h4>
+<p>and at some point among the gigantic mess we see this:</p>
+<div class="codehilite"><pre><span></span><code>[ollama ] CUDA error: invalid device function
+[ollama ]   current device: 0, in function ggml_cuda_op_flatten at /build/source/llm/llama.cpp/ggml-cuda.cu:10012
+[ollama ]   hipGetLastError()
+[ollama ] GGML_ASSERT: /build/source/llm/llama.cpp/ggml-cuda.cu:256: !&quot;CUDA error&quot;
+[ollama ] loading library /tmp/ollama1196279674/rocm/libext_server.so
+[ollama ] SIGABRT: abort
+[ollama ] PC=0x7f95e13c3ddc m=10 sigcode=18446744073709551610
+[ollama ] signal arrived during cgo execution
+</code></pre></div>
+<p>My assumption is that I need to set a env var to get over this. So I will pull and try again.</p>
+
+
+
+<a name="431158649"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431158649" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431158649">(Apr 03 2024 at 19:16)</a>:</h4>
+<p>Success!!! </p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>services<span class="o">.</span>ollama<span class="o">.</span><span class="s2">"ollama"</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>ollama<span class="o">.</span>override <span class="p">{</span> <span class="ss">acceleration</span> <span class="o">=</span> <span class="s2">"rocm"</span><span class="p">;</span> <span class="p">};</span>
+  <span class="ss">host</span> <span class="o">=</span> <span class="s2">"0.0.0.0"</span><span class="p">;</span>
+  <span class="ss">models</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"llama2-uncensored"</span> <span class="p">];</span>
+  <span class="ss">extraEnvs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">HSA_OVERRIDE_GFX_VERSION</span> <span class="o">=</span> <span class="s2">"10.3.0"</span><span class="p">;</span>
+    <span class="ss">OLLAMA_DEBUG</span> <span class="o">=</span> <span class="s2">"1"</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div>
+
+
+
+<a name="431158795"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431158795" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431158795">(Apr 03 2024 at 19:17)</a>:</h4>
+<p>If I ask it about the Roman empire, I still get 56 tokens per second on the W6800</p>
+
+
+
+<a name="431159063"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159063" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159063">(Apr 03 2024 at 19:19)</a>:</h4>
+<p>sometimes to goes down to 48-49 tokens per second. but the model does not like to give long responses it seems</p>
+
+
+
+<a name="431159089"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159089" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159089">(Apr 03 2024 at 19:19)</a>:</h4>
+<p>but at least it is running now</p>
+
+
+
+<a name="431159227"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159227" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159227">(Apr 03 2024 at 19:20)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431158795">said</a>:</p>
+<blockquote>
+<p>If I ask it about the Roman empire, I still get 56 tokens per second on the W6800</p>
+</blockquote>
+<p>Is that the same in docker with GPU acceleration?</p>
+
+
+
+<a name="431159285"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159285" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159285">(Apr 03 2024 at 19:20)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431158649">said</a>:</p>
+<blockquote>
+<p>Success!!! </p>
+<p><div class="codehilite" data-code-language="Nix"><pre><span></span><code>services<span class="o">.</span>ollama<span class="o">.</span><span class="s2">"ollama"</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>ollama<span class="o">.</span>override <span class="p">{</span> <span class="ss">acceleration</span> <span class="o">=</span> <span class="s2">"rocm"</span><span class="p">;</span> <span class="p">};</span>
+  <span class="ss">host</span> <span class="o">=</span> <span class="err">“</span><span class="mf">0.0.0.0</span><span class="err">”</span><span class="p">;</span>
+  <span class="ss">models</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"llama2-uncensored” ];</span>
+<span class="s2">  extraEnvs = {</span>
+<span class="s2">    HSA_OVERRIDE_GFX_VERSION = “10.3.0”;</span>
+<span class="s2">    OLLAMA_DEBUG = “1”;</span>
+<span class="s2">  };</span>
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>Great, will star these messages to document them later.</p>
+
+
+
+<a name="431159360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159360">(Apr 03 2024 at 19:21)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431159227">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431158795">said</a>:</p>
+<blockquote>
+<p>If I ask it about the Roman empire, I still get 56 tokens per second on the W6800</p>
+</blockquote>
+<p>Is that the same in docker with GPU acceleration?</p>
+</blockquote>
+<p>I guess so, more or less</p>
+
+
+
+<a name="431159472"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159472" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159472">(Apr 03 2024 at 19:21)</a>:</h4>
+<p>I mean we could try and think how to structure the flake so that you can run with different GPU architectures.</p>
+
+
+
+<a name="431159644"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159644" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159644">(Apr 03 2024 at 19:22)</a>:</h4>
+<blockquote>
+<p>I mean we could try and think how to structure the flake so that you can run with different GPU architectures.</p>
+</blockquote>
+<p>I will be providing two different nix runnable apps, <code>nix run .#with-cuda</code> and <code>nix run .#with-rocm</code>. This is what I am thinking for now</p>
+
+
+
+<a name="431159769"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159769" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159769">(Apr 03 2024 at 19:23)</a>:</h4>
+<p>I'd just go for <code>#cuda</code> and <code>#rocm</code> ... and I think I'd also really like to disable the webui.</p>
+
+
+
+<a name="431159960"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159960" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159960">(Apr 03 2024 at 19:24)</a>:</h4>
+<p>webui, I am thinking only for the default app. Can disable it for others</p>
+
+
+
+<a name="431159996"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431159996" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431159996">(Apr 03 2024 at 19:25)</a>:</h4>
+<p>let me add <code>cuda</code> and <code>rocm</code> really quick</p>
+
+
+
+<a name="431160060"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431160060" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431160060">(Apr 03 2024 at 19:25)</a>:</h4>
+<p>I'd say let me (or the consumer) choose to enable to disable.</p>
+
+
+
+<a name="431160250"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431160250" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431160250">(Apr 03 2024 at 19:26)</a>:</h4>
+<p>In the future, I am also planning to export a home-manager module that will support systemd config for linux and launchd config for mac. To allow running ollama server in the background</p>
+
+
+
+<a name="431160332"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431160332" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431160332">(Apr 03 2024 at 19:27)</a>:</h4>
+<p>I mean there is already a nixos module, isn't there?</p>
+
+
+
+<a name="431160414"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431160414" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431160414">(Apr 03 2024 at 19:27)</a>:</h4>
+<p>Yes, I can take inspiration from it, but can’t reuse it in macos or other linux distros</p>
+
+
+
+<a name="431160503"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431160503" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431160503">(Apr 03 2024 at 19:28)</a>:</h4>
+<p>yes, that is true.</p>
+
+
+
+<a name="431169594"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431169594" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431169594">(Apr 03 2024 at 20:22)</a>:</h4>
+<p>Added support for <code>cuda</code> and <code>rocm</code>:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">default</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span> common <span class="p">];</span>
+    services<span class="o">.</span>ollama-stack<span class="o">.</span>open-webui<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="ss">cuda</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span> common <span class="p">];</span>
+    services<span class="o">.</span>ollama-stack<span class="o">.</span><span class="ss">extraOllamaConfig</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>ollama<span class="o">.</span>override <span class="p">{</span> <span class="ss">acceleration</span> <span class="o">=</span> <span class="s2">"cuda"</span><span class="p">;</span> <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+  <span class="ss">rocm</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span> common <span class="p">];</span>
+    services<span class="o">.</span>ollama-stack<span class="o">.</span><span class="ss">extraOllamaConfig</span> <span class="o">=</span> <span class="p">{</span>
+       <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>ollama<span class="o">.</span>override <span class="p">{</span> <span class="ss">acceleration</span> <span class="o">=</span> <span class="s2">"rocm"</span><span class="p">;</span> <span class="p">};</span>
+     <span class="p">};</span>
+   <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Above is the definition for three apps, you can enable or disable open-webui on any of them. You can even pass <code>extraOllamaConfig</code>, I didn’t add the <code>HSA_OVERRIDE_GFX_VERSION</code> yet because I want to understand more about why it is needed and how to determine the version</p>
+
+
+
+<a name="431170303"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431170303" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431170303">(Apr 03 2024 at 20:27)</a>:</h4>
+<p>I have a Hetzner dedicated server (x86_64-linux) now; how do I try this out?</p>
+
+
+
+<a name="431170497"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431170497" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431170497">(Apr 03 2024 at 20:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431170303">said</a>:</p>
+<blockquote>
+<p>I have a Hetzner dedicated server (x86_64-linux) now; how do I try this out?</p>
+</blockquote>
+<p><code>nix run github:shivaraj-bh/nixify-ollama</code></p>
+
+
+
+<a name="431171057"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171057" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171057">(Apr 03 2024 at 20:32)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431170497">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431170303">said</a>:</p>
+<blockquote>
+<p>I have a Hetzner dedicated server (x86_64-linux) now; how do I try this out?</p>
+</blockquote>
+<p><code>nix run github:shivaraj-bh/nixify-ollama</code></p>
+</blockquote>
+<p>And then to test it:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>curl<span class="w"> </span>http://&lt;hetzner-machine-ip&gt;:11434/api/generate<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "model": “llama2-uncensored",</span>
+<span class="s1">  "prompt": "Why is the sky blue?",</span>
+<span class="s1">  "stream": false</span>
+<span class="s1">}'</span>
+</code></pre></div>
+<p>or</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>open<span class="w"> </span>http://&lt;hetzner-machine-ip&gt;:1111
+</code></pre></div>
+<p>to open <code>open-webui</code></p>
+
+
+
+<a name="431171285"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171285" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171285">(Apr 03 2024 at 20:34)</a>:</h4>
+<p>What does the curl command do exactly? Why can't I type that prompt in the webui itself?</p>
+
+
+
+<a name="431171329"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171329" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171329">(Apr 03 2024 at 20:34)</a>:</h4>
+<p>(I have firewall setup so this means I'd have to setup port forwarding for 1111 the webui, which is fine, but why should I have to do it for 11434?)</p>
+
+
+
+<a name="431171564"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171564" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171564">(Apr 03 2024 at 20:36)</a>:</h4>
+<p><span class="user-mention" data-user-id="669081">@Shivaraj B H</span> </p>
+<p>On the <code>HSA_OVERRIDE_GFX_VERSION</code> variable. I didn't find any documentation on it. However, the whole ROCm stack can be compiled for different LLVM targets, which you can find here:</p>
+<p><a href="https://llvm.org/docs/AMDGPUUsage.html">https://llvm.org/docs/AMDGPUUsage.html</a> (there are quite a few recent ones not documented there, no idea why not)</p>
+<p>You will see that <code>gfx1030</code> corresponds to my Radeon Pro W6800 (which is basically the same as any consumer RX 6800). This is where I got the number from. Now usufally that should not be necessary for my card as it is one of the few which has official support. However as we have seen, it still is necessary to override this. As it will be for any other RDNA2 based card, and probably RDNA1. Basically you fake having a Radeon RX 6800 architecture to ROCm so that it runs anyways. Which works just fine on my W6600 for instance.</p>
+<p>If you have a more recent RDNA3 based card, you will need a different override. Most likely <code>SA_OVERRIDE_GFX_VERSION=11.0.0</code></p>
+
+
+
+<a name="431171684"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171684" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171684">(Apr 03 2024 at 20:37)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431171285">said</a>:</p>
+<blockquote>
+<p>What does the curl command do exactly? Why can't I type that prompt in the webui itself?</p>
+</blockquote>
+<p>You can do the same thing from webui as well</p>
+
+
+
+<a name="431171732"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171732" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171732">(Apr 03 2024 at 20:38)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431171329">said</a>:</p>
+<blockquote>
+<p>(I have firewall setup so this means I'd have to setup port forwarding for 1111 the webui, which is fine, but why should I have to do it for 11434?)</p>
+</blockquote>
+<p>only 1111 should suffice</p>
+
+
+
+<a name="431171817"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171817" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171817">(Apr 03 2024 at 20:38)</a>:</h4>
+<p><a href="/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png" title="image.png"><img src="/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png"></a></div><p>Should I sign up?</p>
+
+
+
+<a name="431171866"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171866" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171866">(Apr 03 2024 at 20:38)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431171285">said</a>:</p>
+<blockquote>
+<p>What does the curl command do exactly? Why can't I type that prompt in the webui itself?</p>
+</blockquote>
+<p>The curl command is just talking to ollama's API directly. That API is running on port 11434. Which the webui is most likely talking to as well.</p>
+
+
+
+<a name="431171925"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171925" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171925">(Apr 03 2024 at 20:39)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431171817">said</a>:</p>
+<blockquote>
+<p><a href="/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png">image.png</a></p>
+<p>Should I sign up?</p>
+</blockquote>
+<p>Yes, I was looking for ways to get rid of it. But open-webui has it hardcoded. You can signup with any dummy mail</p>
+
+
+
+<a name="431171927"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431171927" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431171927">(Apr 03 2024 at 20:39)</a>:</h4>
+<p>As a "noob user" looking to explore this, I'd just want to do the minimal thing necessary to get this up and running. Would be good to document it in README</p>
+
+
+
+<a name="431172072"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172072" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172072">(Apr 03 2024 at 20:40)</a>:</h4>
+<p>Okay I created an account. I suppose it stores it in local DB?</p>
+
+
+
+<a name="431172147"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172147" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172147">(Apr 03 2024 at 20:40)</a>:</h4>
+<p><a href="/user_uploads/60244/ZsNrrnZL6_QDSCcgXRMMvtLU/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/ZsNrrnZL6_QDSCcgXRMMvtLU/image.png" title="image.png"><img src="/user_uploads/60244/ZsNrrnZL6_QDSCcgXRMMvtLU/image.png"></a></div><p>Nice! <span aria-label="tada" class="emoji emoji-1f389" role="img" title="tada">:tada:</span></p>
+
+
+
+<a name="431172238"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172238" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172238">(Apr 03 2024 at 20:41)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431171927">said</a>:</p>
+<blockquote>
+<p>As a "noob user" looking to explore this, I'd just want to do the minimal thing necessary to get this up and running. Would be good to document it in README</p>
+</blockquote>
+<p>Yup, I was looking for simpler alternatives</p>
+
+
+
+<a name="431172272"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172272" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172272">(Apr 03 2024 at 20:41)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431172072">said</a>:</p>
+<blockquote>
+<p>Okay I created an account. I suppose it stores it in local DB?</p>
+</blockquote>
+<p>Yes</p>
+
+
+
+<a name="431172395"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172395" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172395">(Apr 03 2024 at 20:42)</a>:</h4>
+<p>This would be a great example for services-flake.</p>
+
+
+
+<a name="431172696"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172696" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172696">(Apr 03 2024 at 20:44)</a>:</h4>
+<p>If you port forward 11434 you can use the <a href="https://apps.apple.com/in/app/enchanted-llm/id6474268307">Enchanted ios client</a> to get a nice looking mobile and desktop app as well.</p>
+
+
+
+<a name="431172822"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172822" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172822">(Apr 03 2024 at 20:45)</a>:</h4>
+<p>So <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> you broke ROCm again because the <code>HSA_OVERRIDE_GFX_VERSION</code> variable isn't set... how do you propose to set it so I don't have to walk into <code>./nix/ollama.nix</code>?</p>
+
+
+
+<a name="431172871"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431172871" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431172871">(Apr 03 2024 at 20:45)</a>:</h4>
+<p>(Maybe we do that tomorrow <span aria-label="big smile" class="emoji emoji-1f604" role="img" title="big smile">:big_smile:</span> I'll check out for today!)</p>
+
+
+
+<a name="431173039"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431173039" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431173039">(Apr 03 2024 at 20:46)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431172822">said</a>:</p>
+<blockquote>
+<p>So <span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> you broke ROCm again because the <code>HSA_OVERRIDE_GFX_VERSION</code> variable isn't set... how do you propose to set it so I don't have to walk into <code>./nix/ollama.nix</code>?</p>
+</blockquote>
+<p>You can add the envs here: <a href="https://github.com/shivaraj-bh/nixify-ollama/blob/017dca208fbec393f8c5c6b574c1c1234df176ce/flake.nix#L70-L72">https://github.com/shivaraj-bh/nixify-ollama/blob/017dca208fbec393f8c5c6b574c1c1234df176ce/flake.nix#L70-L72</a></p>
+
+
+
+<a name="431179725"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431179725" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431179725">(Apr 03 2024 at 21:30)</a>:</h4>
+<p>The repo is now renamed to ollama-flake: <a href="https://github.com/shivaraj-bh/ollama-flake/issues/2">https://github.com/shivaraj-bh/ollama-flake/issues/2</a></p>
+
+
+
+<a name="431184304"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431184304" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431184304">(Apr 03 2024 at 22:01)</a>:</h4>
+<p><span class="user-mention" data-user-id="678574">@Andreas</span> I get about 77 tokens/second on the “why is the sky blue?” prompt, with GPU:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="o">[</span>ollama<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">{</span><span class="s2">"function"</span>:<span class="s2">"print_timings"</span>,<span class="s2">"level"</span>:<span class="s2">"INFO"</span>,<span class="s2">"line"</span>:257,<span class="s2">"msg"</span>:<span class="s2">"prompt eval time     =      62.70 ms /    28 tokens (    2.24 ms per token,   446.56 t</span>
+<span class="s2">okens per second)"</span>,<span class="s2">"n_prompt_tokens_processed"</span>:28,<span class="s2">"n_tokens_second"</span>:446.5638506562894,<span class="s2">"slot_id"</span>:0,<span class="s2">"t_prompt_processing"</span>:62.701,<span class="s2">"t_token"</span>:2.2393214285714285,<span class="s2">"</span>
+<span class="s2">task_id"</span>:0,<span class="s2">"tid"</span>:<span class="s2">"139803154691776"</span>,<span class="s2">"timestamp"</span>:1712181596<span class="o">}</span>
+<span class="o">[</span>ollama<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">{</span><span class="s2">"function"</span>:<span class="s2">"print_timings"</span>,<span class="s2">"level"</span>:<span class="s2">"INFO"</span>,<span class="s2">"line"</span>:271,<span class="s2">"msg"</span>:<span class="s2">"generation eval time =    1717.36 ms /   133 runs   (   12.91 ms per token,    77.44 t</span>
+<span class="s2">okens per second)"</span>,<span class="s2">"n_decoded"</span>:133,<span class="s2">"n_tokens_second"</span>:77.44463000100154,<span class="s2">"slot_id"</span>:0,<span class="s2">"t_token"</span>:12.91245112781955,<span class="s2">"t_token_generation"</span>:1717.356,<span class="s2">"task_id"</span>:0,<span class="s2">"tid</span>
+<span class="s2">"</span>:<span class="s2">"139803154691776"</span>,<span class="s2">"timestamp"</span>:1712181596<span class="o">}</span>
+</code></pre></div>
+
+
+
+<a name="431281306"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431281306" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431281306">(Apr 04 2024 at 10:40)</a>:</h4>
+<p>I have a feeling you should have some commented out env vars right in the main <code>flake.nix</code> ... useability.</p>
+<p>Yes I can get the 55 token / second I reported on the W6800. What you got now is more what I expected. Nvidia should be faster at this. Also because CUDA will be more otimized than ROCm. We might try ROCm 6.0 at some point and see if this improves performance on AMD, because right now this is ROCm 5.7 I am running.</p>
+
+
+
+<a name="431281533"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431281533" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431281533">(Apr 04 2024 at 10:42)</a>:</h4>
+<p>Also funny effect I had: ollama wouldn't shut down properly some <code>.ollama-unwrap</code> process got stuck, didn't release the bound port 11434 and even on reboot systemd had quite some work to do to get the process killed. Not sure what happened there...</p>
+
+
+
+<a name="431283150"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431283150" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431283150">(Apr 04 2024 at 10:52)</a>:</h4>
+<p>Next thing I'd do for usability is add a catered list of models that are commented out by default (because let's be honest llama2-7b is not the more talkative buddy) and document that a bit. So users can choose what they want.</p>
+
+
+
+<a name="431290236"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431290236" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431290236">(Apr 04 2024 at 11:35)</a>:</h4>
+<blockquote>
+<p>I have a feeling you should have some commented out env vars right in the main flake.nix ... useability.</p>
+</blockquote>
+<p>Right, the primary one’s I would see people using is <code>CUDA_VISIBLE_DEVICES</code> <code>HIP_VISIBLE_DEVICES</code> and of course <code>HSA_OVERRIDE_GFX_VERSION</code></p>
+
+
+
+<a name="431290414"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431290414" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431290414">(Apr 04 2024 at 11:36)</a>:</h4>
+<blockquote>
+<p>What you got now is more what I expected</p>
+</blockquote>
+<p>I investigated as to why the performance was poor earlier. Turns out, my GPU was not running in performance mode earlier.</p>
+
+
+
+<a name="431291168"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431291168" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431291168">(Apr 04 2024 at 11:39)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431283150">said</a>:</p>
+<blockquote>
+<p>Next thing I'd do for usability is add a catered list of models that are commented out by default (because let's be honest llama2-7b is not the more talkative buddy) and document that a bit. So users can choose what they want.</p>
+</blockquote>
+<p>Along with that I should also document how to override <code>cudaPackages</code> or <code>rocmPackages</code> to match the one’s installed on the system. </p>
+<p>What I tend to do is <code>nix run github:shivaraj-bh/ollama-flake#cuda —override-input nixpkgs flake:nixpkgs</code>. In my configuration, I have the registry <code>flake:nixpkgs</code> pinned to the same nixpkgs I use to install nvidia drivers for, so it should work out of the box. I will add this is as a possible solution.</p>
+
+
+
+<a name="431291590"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431291590" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431291590">(Apr 04 2024 at 11:41)</a>:</h4>
+<p>If they are on a non-nixos machine, then they will have to manually get the version of the drivers installed and use the compatible <code>cudaPackages</code> or <code>rocmPackages</code></p>
+
+
+
+<a name="431292842"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431292842" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431292842">(Apr 04 2024 at 11:46)</a>:</h4>
+<p>Yes, all that sounds quite good. There is also <code>ROCR_VISIBLE_DEVICES</code> for GPU isolation.</p>
+
+
+
+<a name="431293766"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431293766" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431293766">(Apr 04 2024 at 11:51)</a>:</h4>
+<p>I believe it is <code>HIP_VISIBLE_DEVICES</code>, I don’t see <code>ROCR_VISIBLE_DEVICES</code> in ollama docs: <a href="https://github.com/ollama/ollama/blob/9768e2dc7574c36608bb04ac39a3b79e639a837f/docs/gpu.md?plain=1#L88-L93">https://github.com/ollama/ollama/blob/9768e2dc7574c36608bb04ac39a3b79e639a837f/docs/gpu.md?plain=1#L88-L93</a></p>
+
+
+
+<a name="431294201"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431294201" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431294201">(Apr 04 2024 at 11:53)</a>:</h4>
+<p>yeah maybe that one doesn't do much in our context. </p>
+<p>AMD's docs are here for once: <a href="https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html">https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html</a> </p>
+<p>(At least they have some in this case)</p>
+
+
+
+<a name="431294734"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431294734" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431294734">(Apr 04 2024 at 11:56)</a>:</h4>
+<p>Gotcha, will add that too!</p>
+
+
+
+<a name="431294996"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431294996" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431294996">(Apr 04 2024 at 11:57)</a>:</h4>
+<p>funny thing is, that according to <code>CUDA_VISIBLE_DEVICES</code> has the same effect as <code>HIP_VISIBLE_DEVICES</code> for compatibility reasons</p>
+
+
+
+<a name="431299791"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431299791" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431299791">(Apr 04 2024 at 12:19)</a>:</h4>
+<p>once you make another commit, I will test this again and see which flag does what in practice. You never know.</p>
+
+
+
+<a name="431312176"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431312176" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431312176">(Apr 04 2024 at 13:20)</a>:</h4>
+<p>done: <a href="https://github.com/shivaraj-bh/ollama-flake/commit/7b6375cc4849c6b3a91be5543043d3c820d312f6">https://github.com/shivaraj-bh/ollama-flake/commit/7b6375cc4849c6b3a91be5543043d3c820d312f6</a></p>
+
+
+
+<a name="431375197"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431375197" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431375197">(Apr 04 2024 at 18:05)</a>:</h4>
+<p>just trying this out on my Nvidia Laptop with 2GB of VRAM. It starts building ollama 0.1.29 from source. Any idea why this might be happening? I am also on NixOS stable there...</p>
+
+
+
+<a name="431377071"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431377071" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431377071">(Apr 04 2024 at 18:18)</a>:</h4>
+<p>so after building a bit, it actually works. I can run <code>deepseek-coder:1.3-instruct</code> on my crappy Nvidia MX 150.</p>
+<p>And it gets me 27 tokens / sec. Not too bad for this older laptop GPU.</p>
+
+
+
+<a name="431378448"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431378448" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431378448">(Apr 04 2024 at 18:27)</a>:</h4>
+<p>I think it'd be nice to provide a list of models directly in flake.nix</p>
+
+
+
+<a name="431378491"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431378491" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431378491">(Apr 04 2024 at 18:27)</a>:</h4>
+<p>but I'll play with this setup a bit tomorrow for coding. Sadly it won't be very good at Nix.</p>
+
+
+
+<a name="431378587"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431378587" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431378587">(Apr 04 2024 at 18:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431375197">said</a>:</p>
+<blockquote>
+<p>just trying this out on my Nvidia Laptop with 2GB of VRAM. It starts building ollama 0.1.29 from source. Any idea why this might be happening? I am also on NixOS stable there...</p>
+</blockquote>
+<p>If you are overriding with acceleration = “cuda”, it will build ollama from scratch. Although, I have noticed that it doesn’t do that if I use garnix cache.</p>
+
+
+
+<a name="431378729"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431378729" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431378729">(Apr 04 2024 at 18:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431378448">said</a>:</p>
+<blockquote>
+<p>I think it'd be nice to provide a list of models directly in flake.nix</p>
+</blockquote>
+<p>I was thinking of linking to <a href="http://ollama.com/library">ollama.com/library</a></p>
+
+
+
+<a name="431378879"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431378879" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431378879">(Apr 04 2024 at 18:30)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431378491">said</a>:</p>
+<blockquote>
+<p>but I'll play with this setup a bit tomorrow for coding. Sadly it won't be very good at Nix.</p>
+</blockquote>
+<p>Someone’s gotta train it with good content. Unfortunately there isn’t much. Hopefully with <a href="http://Nixos.asia">Nixos.asia</a> tutorials, we can bridge that gap</p>
+
+
+
+<a name="431378990"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431378990" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431378990">(Apr 04 2024 at 18:31)</a>:</h4>
+<p>I mean my idea was to try and finetune something at some point. I am still stuck at the point of "What's the right data that I need for that?" ... because if I understand it correctly, most base models haven't see a whole lot of Nix code.</p>
+
+
+
+<a name="431379781"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431379781" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431379781">(Apr 04 2024 at 18:36)</a>:</h4>
+<p>Yup</p>
+
+
+
+<a name="431385201"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431385201" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431385201">(Apr 04 2024 at 19:12)</a>:</h4>
+<p>Getting back to the issue at hand: is there a good way passing an externally defined config file to the flake that would specify the models I would want to use? Otherwise I'd say it'll be nice to expose that list of models directly in <code>flake.nix</code> somehow.</p>
+
+
+
+<a name="431385315"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431385315" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431385315">(Apr 04 2024 at 19:13)</a>:</h4>
+<p>(I will be trying out the <a href="http://continue.dev">continue.dev</a> extension in VSCode a bit more with this local A.I. and deepseek-coder:1.3b-instruct. So far it performs quite okay.)</p>
+
+
+
+<a name="431504821"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431504821" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431504821">(Apr 05 2024 at 11:36)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431385201">said</a>:</p>
+<blockquote>
+<p>Getting back to the issue at hand: is there a good way passing an externally defined config file to the flake that would specify the models I would want to use? Otherwise I'd say it'll be nice to expose that list of models directly in <code>flake.nix</code> somehow.</p>
+</blockquote>
+<p>Nothing that comes to my mind right of the top, will give some thought to it over the weekend</p>
+
+
+
+<a name="431505550"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431505550" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431505550">(Apr 05 2024 at 11:41)</a>:</h4>
+<p>it just came up because with me not maintaining a fork of your repo, everytime I do <code>git pull</code> it obviously annoys me because of changes I made myself to the files. So how about reading the config of local network config and models from a TOML or YAML file that the user would have to create on his end and that is in <code>.gitignore</code>? You might provide a template in the repo for the user to adopt to their use case.</p>
+
+
+
+<a name="431506276"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431506276" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431506276">(Apr 05 2024 at 11:45)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/431505550">said</a>:</p>
+<blockquote>
+<p>it just came up because with me not maintaining a fork of your repo, everytime I do <code>git pull</code> it obviously annoys me because of changes I made myself to the files. So how about reading the config of local network config and models from a TOML or YAML file that the user would have to create on his end and that is in <code>.gitignore</code>? You might provide a template in the repo for the user to adopt to their use case.</p>
+</blockquote>
+<p>Yup, that makes sense</p>
+
+
+
+<a name="431943668"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431943668" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431943668">(Apr 08 2024 at 11:28)</a>:</h4>
+<p>macOS support added: <a href="https://github.com/shivaraj-bh/ollama-flake/pull/3">https://github.com/shivaraj-bh/ollama-flake/pull/3</a></p>
+<p>Next steps:</p>
+<ul>
+<li>Expose a <code>processComposeModule</code> for <span class="user-mention" data-user-id="678574">@Andreas</span> to use ollama-flake without having to clone and pull my repo all the time (I will also include example directory for how to use the module)</li>
+<li>Add CI</li>
+</ul>
+
+
+
+<a name="431947478"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431947478" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431947478">(Apr 08 2024 at 11:42)</a>:</h4>
+<p>Awesome!</p>
+
+
+
+<a name="431947580"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/431947580" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#431947580">(Apr 08 2024 at 11:42)</a>:</h4>
+<p>And I will bet on others being thankful for that possibility as well</p>
+
+
+
+<a name="432131460"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432131460" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432131460">(Apr 09 2024 at 06:02)</a>:</h4>
+<p>Is this expected? (on macOS, after downloading the model for about 30 mins)</p>
+<p><a href="/user_uploads/60244/l-QsWdGaW5NiDk1tIR2o-N6b/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/l-QsWdGaW5NiDk1tIR2o-N6b/image.png" title="image.png"><img src="/user_uploads/60244/l-QsWdGaW5NiDk1tIR2o-N6b/image.png"></a></div>
+
+
+
+<a name="432131640"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432131640" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432131640">(Apr 09 2024 at 06:03)</a>:</h4>
+<p>I have to debug this on macOS, usually a restart of that process and then the open-browser process solves it</p>
+
+
+
+<a name="432131649"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432131649" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432131649">(Apr 09 2024 at 06:03)</a>:</h4>
+<p>Alright, just a temporary issue. Re-running it worked</p>
+
+
+
+<a name="432131865"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432131865" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432131865">(Apr 09 2024 at 06:04)</a>:</h4>
+<p>I think it has to do with the initial_delay_seconds of the readiness_probe because uvicorn takes a while to start</p>
+
+
+
+<a name="432132749"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432132749" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432132749">(Apr 09 2024 at 06:09)</a>:</h4>
+<p>And also about the model pull taking long time, I am thinking of creating something like dockerPullImage for ollama models and serving it as a cache. I have ovserved that ollama pull starts off with a good bandwidth and it just goes to kbps in the end.</p>
+
+
+
+<a name="432133104"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432133104" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432133104">(Apr 09 2024 at 06:11)</a>:</h4>
+<p>In this way, I can also run flake checks, without requiring internet connection in sandbox mode</p>
+
+
+
+<a name="432303591"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432303591" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432303591">(Apr 09 2024 at 17:50)</a>:</h4>
+<p><span class="user-mention" data-user-id="678574">@Andreas</span> ollama-flake now exports a processComposeModule, see the examples: <a href="https://github.com/shivaraj-bh/ollama-flake/tree/main/example">https://github.com/shivaraj-bh/ollama-flake/tree/main/example</a></p>
+
+
+
+<a name="432303760"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432303760" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432303760">(Apr 09 2024 at 17:51)</a>:</h4>
+<p>You can use them in any of your flake now</p>
+
+
+
+<a name="432304047"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432304047" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432304047">(Apr 09 2024 at 17:52)</a>:</h4>
+<p>I will be updating the README with relevant details too</p>
+
+
+
+<a name="432305220"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432305220" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432305220">(Apr 09 2024 at 17:57)</a>:</h4>
+<p>I want to make some design changes, like decoupling the open-webui service from ollama itself, allowing to configure them separately. I will deprioritise this for now, as I see a feature like <code>dockerTools.pullImage</code> for ollama models being more useful, I will research a bit on that next.</p>
+
+
+
+<a name="432305508"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432305508" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432305508">(Apr 09 2024 at 17:58)</a>:</h4>
+<blockquote>
+<p>like decoupling the open-webui service from ollama itself</p>
+</blockquote>
+<p>This will also allow configuring multiple frontends in the future, enable and disable them as you like.</p>
+
+
+
+<a name="432309436"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432309436" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432309436">(Apr 09 2024 at 18:13)</a>:</h4>
+<p>awesome, looking very nice! I will give it a try tomorrow maybe or a but later...</p>
+
+
+
+<a name="432443833"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432443833" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432443833">(Apr 10 2024 at 08:19)</a>:</h4>
+<p>Got my PR merged to open-webui: <a href="https://github.com/open-webui/open-webui/pull/1472">https://github.com/open-webui/open-webui/pull/1472</a></p>
+<p>This has helped in packaging the frontend and backend in one single derivation. </p>
+<p>Earlier I had to do a lot of hacky stuff to workaround this:<br>
+<a href="/user_uploads/60244/HevSWTQQ_Wq0cJ0JziI2zjm9/Screenshot-2024-04-10-at-1.48.04PM.png">Screenshot-2024-04-10-at-1.48.04PM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/HevSWTQQ_Wq0cJ0JziI2zjm9/Screenshot-2024-04-10-at-1.48.04PM.png" title="Screenshot-2024-04-10-at-1.48.04PM.png"><img src="/user_uploads/60244/HevSWTQQ_Wq0cJ0JziI2zjm9/Screenshot-2024-04-10-at-1.48.04PM.png"></a></div>
+
+
+
+<a name="432443878"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432443878" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432443878">(Apr 10 2024 at 08:19)</a>:</h4>
+<p>Now it looks clean:<br>
+<a href="/user_uploads/60244/iBWi3oO5urcKQEEeNPUyce1e/Screenshot-2024-04-10-at-1.48.46PM.png">Screenshot-2024-04-10-at-1.48.46PM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/iBWi3oO5urcKQEEeNPUyce1e/Screenshot-2024-04-10-at-1.48.46PM.png" title="Screenshot-2024-04-10-at-1.48.46PM.png"><img src="/user_uploads/60244/iBWi3oO5urcKQEEeNPUyce1e/Screenshot-2024-04-10-at-1.48.46PM.png"></a></div>
+
+
+
+<a name="432445072"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432445072" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432445072">(Apr 10 2024 at 08:24)</a>:</h4>
+<p>I will resume work on ollama-flake tonight, will solve some juspay/nix-health issues now.</p>
+
+
+
+<a name="432457926"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/432457926" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#432457926">(Apr 10 2024 at 09:22)</a>:</h4>
+<p>Beautiful! I have a feeling this will be <em>the best ollama flake ever, period</em>... once people know about it, that is. Maybe after it has good usability, you could post it somewhere to create publicity?</p>
+
+
+
+<a name="434372013"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434372013" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434372013">(Apr 19 2024 at 14:15)</a>:</h4>
+<p>So, I am back after a quick break. Before I left, I tried to create a derivation that would pull the model and cache it in <code>/nix/store</code>, just like <code>dockerTools.pullImage</code> does, but with docker images. Unfortunately, there is a blocker for this: <a href="https://github.com/ollama/ollama/issues/3369">https://github.com/ollama/ollama/issues/3369</a>.</p>
+<p>I will get back to this, once that issue is resolved (I tried to implement it for a bit, but it isn’t that straightforward). Looking forward to that.</p>
+<p>For now, I will decouple the frontend service (open-webui) from the ollama backend service. Maybe also add another frontend service to it (to show how easily swap-able it can be), make a <code>0.1.0</code> release and announce it.</p>
+
+
+
+<a name="434408090"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434408090" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434408090">(Apr 19 2024 at 17:44)</a>:</h4>
+<p>it should be swap-able to some extent. Ollama has a long list of possible frontend service irrc. I am not sure that storing models in the nix store is a great strategy, as these can be fairly big, and you might want to add some from the <code>ollama</code> cli after the fact. Also you certainly would not want your 30 GB model to be garbage collected while still using it from time to time, so you'd have to prevent that somehow. In docker the image might be stored in the nix store without issues as it is immutable once built. But docker volumes and their content would not be, I suppose.</p>
+<p>idk if I am right though, let me know what you think.</p>
+
+
+
+<a name="434413562"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434413562" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434413562">(Apr 19 2024 at 18:23)</a>:</h4>
+<p>also: how does this work right now? I kinda don't see the command and just checking <code>nix flake show</code> and <code>nix flake info</code> and looking into <code>flake.nix</code> didn't really tell me how to run the rocm service right now... I am in a LXC container right now, running some Debian 12 which doesn't want to give me podman on ZFS sadly, and I was trying to get this to work.</p>
+
+
+
+<a name="434517380"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434517380" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434517380">(Apr 20 2024 at 16:51)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/434408090">said</a>:</p>
+<blockquote>
+<p>it should be swap-able to some extent. Ollama has a long list of possible frontend service irrc. I am not sure that storing models in the nix store is a great strategy, as these can be fairly big, and you might want to add some from the <code>ollama</code> cli after the fact. Also you certainly would not want your 30 GB model to be garbage collected while still using it from time to time, so you'd have to prevent that somehow. In docker the image might be stored in the nix store without issues as it is immutable once built. But docker volumes and their content would not be, I suppose.</p>
+<p>idk if I am right though, let me know what you think.</p>
+</blockquote>
+<p>You might be right, I haven’t fully evaluated this idea yet. Anyways, can’t do much until the issue I linked above from ollama is open.</p>
+
+
+
+<a name="434517477"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434517477" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434517477">(Apr 20 2024 at 16:52)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/434413562">said</a>:</p>
+<blockquote>
+<p>also: how does this work right now? I kinda don't see the command and just checking <code>nix flake show</code> and <code>nix flake info</code> and looking into <code>flake.nix</code> didn't really tell me how to run the rocm service right now... I am in a LXC container right now, running some Debian 12 which doesn't want to give me podman on ZFS sadly, and I was trying to get this to work.</p>
+</blockquote>
+<p>I have updated the README now, you can use the flake template. For you, it will look like:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>mkdir my-ollama-flake <span class="o">&amp;&amp;</span> cd <span class="l">./my-ollama-flake</span>
+nix flake init <span class="o">-</span>t <span class="l">github:shivaraj-bh/ollama-flake</span><span class="c1">#rocm</span>
+nix run
+</code></pre></div>
+
+
+
+<a name="434517517"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434517517" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434517517">(Apr 20 2024 at 16:53)</a>:</h4>
+<p>Or if you already have an existing flake where you would like to integrate this into, you can look at the examples and grab the necessary pieces</p>
+
+
+
+<a name="434519127"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434519127" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434519127">(Apr 20 2024 at 17:18)</a>:</h4>
+<p>I decided to not depend on <code>services-flake</code> in <code>ollama-flake</code> (yet to update <code>README</code>). I was unnecessarily keeping only the <code>ollama</code> service in the former and rest everything in the latter. let’s keep it simple! I have decided to bundle everything related to ollama in this single repository (from the server, to frontends, also the CLI clients and so on). </p>
+<p>Aside, I do have some ambitious plans for <code>ollama-flake</code> in the future, one of which being:</p>
+<p>Provide a <code>just generate-doc &lt;service&gt;</code> command in services-flake. This command will run a <code>process-compose</code> app that will start the <code>ollama</code> server (configured by <code>ollama-flake</code>), run a CLI client (gotta find something like <code>smartcat</code> for <code>ollama</code>), provide the context of docs of other services and the tests for <code>&lt;service&gt;</code> and out comes the doc for <code>&lt;service&gt;</code>. </p>
+<p>Let’s see how this idea fares</p>
+
+
+
+<a name="434519808"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434519808" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434519808">(Apr 20 2024 at 17:27)</a>:</h4>
+<p>So if I get this correctly you want to write tests and docs in an automated fashion?</p>
+<p>What would be the input of &lt;service&gt;? Some git repo with an existing codebase?</p>
+
+
+
+<a name="434519901"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434519901" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434519901">(Apr 20 2024 at 17:29)</a>:</h4>
+<p>Yes, at the moment focused only on docs. &lt;service&gt; here could be one of many that we support in services-flake. For example, Postgres or MySQL or Redis and so on. We do have docs for Postgres, but not for MySQL and many other services.</p>
+
+
+
+<a name="434580329"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434580329" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434580329">(Apr 21 2024 at 10:59)</a>:</h4>
+<p>Alright... one thing I noticed that confused me is this: your flake is now not really a flake for providing ollama, but a set of flake templates for providing ollama. If this is to be permanent, maybe the repo should be renamed again?</p>
+
+
+
+<a name="434659681"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/434659681" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#434659681">(Apr 22 2024 at 06:12)</a>:</h4>
+<p>There are other repos that follow the same approach of providing flake-templates/flake-module, like <a href="https://github.com/juspay/services-flake">services-flake</a>, <a href="https://github.com/juspay/rust-flake">rust-flake</a>, <a href="https://github.com/juspay/just-flake">just-flake</a>. I just went with the same naming convention. What do you think will be more appropriate?</p>
+
+
+
+<a name="435822853"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/435822853" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#435822853">(Apr 28 2024 at 04:56)</a>:</h4>
+<p>FYI</p>
+<p><a href="https://discourse.nixos.org/t/ollama-cant-find-libstdc-so-6/44305">https://discourse.nixos.org/t/ollama-cant-find-libstdc-so-6/44305</a></p>
+
+
+
+<a name="435828580"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/435828580" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#435828580">(Apr 28 2024 at 05:20)</a>:</h4>
+<p>I doubt he is using the Ollama package from nixpkgs, otherwise this shouldn’t occur.</p>
+
+
+
+<a name="435828858"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/435828858" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#435828858">(Apr 28 2024 at 05:21)</a>:</h4>
+<p>Aside: TIL that NixOS has a service for ollama: </p>
+<p><a href="https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/misc/ollama.nix">https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/misc/ollama.nix</a></p>
+
+
+
+<a name="435832944"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/435832944" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#435832944">(Apr 28 2024 at 05:39)</a>:</h4>
+<p>Yes, it just starts the server. Pulling the model is a manual process</p>
+
+
+
+<a name="435982828"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/435982828" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#435982828">(Apr 29 2024 at 08:18)</a>:</h4>
+<p><a href="https://github.com/ollama/ollama/releases/tag/v0.1.33-rc5">Ollama v0.1.33 with Llama 3, Phi 3, and Qwen 110B</a></p>
+<p><a href="https://news.ycombinator.com/item?id=40191723">https://news.ycombinator.com/item?id=40191723</a></p>
+
+
+
+<a name="436736378"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/436736378" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#436736378">(May 02 2024 at 16:52)</a>:</h4>
+<p>yeah I need to test ollama 0.1.33 actually</p>
+
+
+
+<a name="438938901"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/438938901" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#438938901">(May 16 2024 at 05:31)</a>:</h4>
+<p>Looks like <a href="#narrow/stream/426237-nixify-llm/topic/private-gpt">private-gpt</a> uses ollama</p>
+
+
+
+<a name="438939023"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/438939023" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#438939023">(May 16 2024 at 05:32)</a>:</h4>
+<p>It'd be interesting to be able to <code>nix run</code> it, and feed it local documents for querying.</p>
+<p>The nixpkgs PR has a module that is NixOS only, obviously.</p>
+
+
+
+<a name="438941925"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/438941925" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#438941925">(May 16 2024 at 05:52)</a>:</h4>
+<p>This is cool, I was looking to add one more UI before I announce. This is a good candidate</p>
+
+
+
+<a name="439898095"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/439898095" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#439898095">(May 21 2024 at 20:25)</a>:</h4>
+<p>There is a package request for open-webui in nixpkgs, someone just referenced to what I have packaged in ollama-flake: <a href="https://github.com/NixOS/nixpkgs/issues/309567#issuecomment-2105940033">https://github.com/NixOS/nixpkgs/issues/309567#issuecomment-2105940033</a></p>
+<p>If a PR gets merged in nixpkgs for the above issue, we can switch over to that.</p>
+
+
+
+<a name="440046672"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440046672" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440046672">(May 22 2024 at 09:01)</a>:</h4>
+<p>Nice to see features getting added to <code>nixpkgs</code> inspired by <code>ollama-flake</code>: <a href="https://github.com/NixOS/nixpkgs/pull/313606">https://github.com/NixOS/nixpkgs/pull/313606</a></p>
+
+
+
+<a name="440649515"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440649515" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440649515">(May 25 2024 at 16:47)</a>:</h4>
+<p><a href="/user_uploads/60244/_18CC5Rri-p9cvM1ZQqel_Z6/Screenshot-2024-05-25-at-10.15.52PM.png">Screenshot-2024-05-25-at-10.15.52PM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/_18CC5Rri-p9cvM1ZQqel_Z6/Screenshot-2024-05-25-at-10.15.52PM.png" title="Screenshot-2024-05-25-at-10.15.52PM.png"><img src="/user_uploads/60244/_18CC5Rri-p9cvM1ZQqel_Z6/Screenshot-2024-05-25-at-10.15.52PM.png"></a></div><p>private-gpt in ollama-flake! I will share the nix command for you to try out in a bit, I am yet to push the commits.</p>
+
+
+
+<a name="440649603"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440649603" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440649603">(May 25 2024 at 16:49)</a>:</h4>
+<p>In the screenshot you are seeing llama3:8b querying on <a href="https://nixos.asia/en/blog/replacing-docker-compose">https://nixos.asia/en/blog/replacing-docker-compose</a></p>
+
+
+
+<a name="440651465"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651465" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651465">(May 25 2024 at 17:21)</a>:</h4>
+<p>There you go: </p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nix<span class="w"> </span>run<span class="w"> </span><span class="s2">"github:shivaraj-bh/ollama-flake/private-gpt?dir=example/private-gpt” --refresh</span>
+</code></pre></div>
+
+
+
+<a name="440651649"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651649" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651649">(May 25 2024 at 17:24)</a>:</h4>
+<p>works on Linux and macOS</p>
+
+
+
+<a name="440651667"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651667" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651667">(May 25 2024 at 17:24)</a>:</h4>
+<p>Trying it out ...</p>
+<p>Should be <code>--refresh</code> not <code>-refresh</code>.</p>
+
+
+
+<a name="440651679"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651679" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651679">(May 25 2024 at 17:24)</a>:</h4>
+<p>Thanks, updated</p>
+
+
+
+<a name="440651684"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651684" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651684">(May 25 2024 at 17:25)</a>:</h4>
+<p>And should be next to <code>nix</code>, not at the end</p>
+
+
+
+<a name="440651699"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651699" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651699">(May 25 2024 at 17:25)</a>:</h4>
+<p><a href="/user_uploads/60244/ZQohTbwmOoxsbKtFp2rsBo-j/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/ZQohTbwmOoxsbKtFp2rsBo-j/image.png" title="image.png"><img src="/user_uploads/60244/ZQohTbwmOoxsbKtFp2rsBo-j/image.png"></a></div>
+
+
+
+<a name="440651721"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651721" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651721">(May 25 2024 at 17:25)</a>:</h4>
+<blockquote>
+<p>And should be next to <code>nix</code>, not at the end</p>
+</blockquote>
+<p>Seems to work even at the end</p>
+
+
+
+<a name="440651771"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651771" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651771">(May 25 2024 at 17:26)</a>:</h4>
+<p>s/<code>”</code>/<code>"</code>/g</p>
+
+
+
+<a name="440651786"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651786" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651786">(May 25 2024 at 17:26)</a>:</h4>
+<p>Is the <code>readiness check fail</code> of concern here?</p>
+<p><a href="/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png" title="image.png"><img src="/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png"></a></div>
+
+
+
+<a name="440651791"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651791" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651791">(May 25 2024 at 17:27)</a>:</h4>
+<p>Alright, what should I do now? It is running.</p>
+
+
+
+<a name="440651820"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651820" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651820">(May 25 2024 at 17:27)</a>:</h4>
+<p>readiness thing happens on macOS, I believe you remember it happened with open-webui too</p>
+
+
+
+<a name="440651828"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651828" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651828">(May 25 2024 at 17:27)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/440651786">said</a>:</p>
+<blockquote>
+<p>Is the <code>readiness check fail</code> of concern here?</p>
+<p><a href="/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png">image.png</a></p>
+</blockquote>
+<p>Exit code <code>-1</code>, incidentally.</p>
+
+
+
+<a name="440651829"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651829" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651829">(May 25 2024 at 17:27)</a>:</h4>
+<p>I need to fix that, for now restarting the process works</p>
+
+
+
+<a name="440651892"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651892" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651892">(May 25 2024 at 17:28)</a>:</h4>
+<p>Okay, I restarted it, now what?</p>
+<p><a href="/user_uploads/60244/x3UhaeFlESeGno3jPJYQj1fr/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/x3UhaeFlESeGno3jPJYQj1fr/image.png" title="image.png"><img src="/user_uploads/60244/x3UhaeFlESeGno3jPJYQj1fr/image.png"></a></div>
+
+
+
+<a name="440651911"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651911" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651911">(May 25 2024 at 17:28)</a>:</h4>
+<p>I expected it to automatically open something in my browser, TBH</p>
+
+
+
+<a name="440651918"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651918" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651918">(May 25 2024 at 17:29)</a>:</h4>
+<p>the browser is available at 8001 port, I need to add the open-browser process to this</p>
+
+
+
+<a name="440651926"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651926" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651926">(May 25 2024 at 17:29)</a>:</h4>
+<p>Its a  TODO</p>
+
+
+
+<a name="440651931"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651931" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651931">(May 25 2024 at 17:29)</a>:</h4>
+<p>Yea, that would be helpful - especially if it is cross-platform (<code>xdg-open</code> vs <code>open</code>?)</p>
+
+
+
+<a name="440651941"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651941" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651941">(May 25 2024 at 17:29)</a>:</h4>
+<p>So there are these two things to address before we have <code>nix run ...</code> <em>just work</em>?</p>
+
+
+
+<a name="440651997"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440651997" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440651997">(May 25 2024 at 17:30)</a>:</h4>
+<p>is this supposed to run on AMD / ROCm as well? I might try later...</p>
+
+
+
+<a name="440652012"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652012" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652012">(May 25 2024 at 17:30)</a>:</h4>
+<blockquote>
+<p>Yea, that would be helpful - especially if it is cross-platform (<code>xdg-open</code> vs <code>open</code>?)</p>
+</blockquote>
+<p>open-webui already has this, I need to generalise it: <a href="https://github.com/shivaraj-bh/ollama-flake/blob/b61859956129b63fc6e2c8ad1ab4c8d13cc6cc96/services/open-webui.nix#L87-L97">https://github.com/shivaraj-bh/ollama-flake/blob/b61859956129b63fc6e2c8ad1ab4c8d13cc6cc96/services/open-webui.nix#L87-L97</a></p>
+
+
+
+<a name="440652020"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652020" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652020">(May 25 2024 at 17:30)</a>:</h4>
+<blockquote>
+<p>is this supposed to run on AMD / ROCm as well? I might try later…</p>
+</blockquote>
+<p>Yes</p>
+
+
+
+<a name="440652064"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652064" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652064">(May 25 2024 at 17:31)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/440651771">said</a>:</p>
+<blockquote>
+<p>s/<code>”</code>/<code>”</code>/g</p>
+</blockquote>
+<p>zulip does something with the text while copy pasting, which changed the quotation and also the “—“ became “-“</p>
+<p>Edit: I can’t reproduce, maybe it was something else.</p>
+
+
+
+<a name="440652350"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652350" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652350">(May 25 2024 at 17:37)</a>:</h4>
+<p>Uploaded it an Ikea invoice,</p>
+<p><a href="/user_uploads/60244/ikj4lQ_rQHh9Ny7YTHb0NXGv/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/ikj4lQ_rQHh9Ny7YTHb0NXGv/image.png" title="image.png"><img src="/user_uploads/60244/ikj4lQ_rQHh9Ny7YTHb0NXGv/image.png"></a></div>
+
+
+
+<a name="440652360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652360">(May 25 2024 at 17:37)</a>:</h4>
+<p>There's a broken image link, though.</p>
+<p>Pointing to <code>http://localhost:8001/file=/Users/srid/code/the-actualism-way/private_gpt/ui/avatar-bot.ico</code></p>
+<p>(<code>/Users/srid/code/the-actualism-way/</code> is the $PWD)</p>
+
+
+
+<a name="440652425"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652425" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652425">(May 25 2024 at 17:38)</a>:</h4>
+<p>When I open that link, the text response is:</p>
+<div class="codehilite"><pre><span></span><code>{&quot;detail&quot;:&quot;File not allowed: /Users/srid/code/the-actualism-way/private_gpt/ui/avatar-bot.ico.&quot;}
+</code></pre></div>
+
+
+
+<a name="440652436"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652436" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652436">(May 25 2024 at 17:38)</a>:</h4>
+<p>It is missing the <code>./data/</code> parent directory.</p>
+
+
+
+<a name="440652447"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652447" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652447">(May 25 2024 at 17:38)</a>:</h4>
+<p>Noted, 3 things to fix then!</p>
+
+
+
+<a name="440652465"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652465" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652465">(May 25 2024 at 17:39)</a>:</h4>
+<p>But I can't find the <code>.ico</code> file in the <code>./data</code> directory. So 4th thing?</p>
+
+
+
+<a name="440652486"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652486" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652486">(May 25 2024 at 17:39)</a>:</h4>
+<p>It is probably in the private-gpt’s source, might have to copy it from there.</p>
+<p>Yes, it is: <a href="https://github.com/zylon-ai/private-gpt/blob/main/private_gpt/ui/avatar-bot.ico">https://github.com/zylon-ai/private-gpt/blob/main/private_gpt/ui/avatar-bot.ico</a></p>
+
+
+
+<a name="440652596"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440652596" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440652596">(May 25 2024 at 17:41)</a>:</h4>
+<blockquote>
+<p>might have to copy it from there.</p>
+</blockquote>
+<p>Or just point it to the /nix/store.. path</p>
+
+
+
+<a name="440653598"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440653598" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440653598">(May 25 2024 at 18:00)</a>:</h4>
+<blockquote>
+<p>Noted, 3 things to fix then!</p>
+</blockquote>
+<p>Fixed one of them: <a href="https://github.com/shivaraj-bh/ollama-flake/commit/1c19aadfbb975b2f16f05163322b677d13201760">https://github.com/shivaraj-bh/ollama-flake/commit/1c19aadfbb975b2f16f05163322b677d13201760</a></p>
+<p>Now the browser should open as soon as private-gpt is healthy</p>
+
+
+
+<a name="440653851"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440653851" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440653851">(May 25 2024 at 18:04)</a>:</h4>
+<p>Uploading <a href="https://www.foo.be/docs-free/social-architecture/book.pdf">https://www.foo.be/docs-free/social-architecture/book.pdf</a></p>
+<p>Took maybe 30 seconds to process. But the results are underwhelming:</p>
+<p><a href="/user_uploads/60244/dQ1Q_K6KtEuxzjU_boXFVRqL/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/dQ1Q_K6KtEuxzjU_boXFVRqL/image.png" title="image.png"><img src="/user_uploads/60244/dQ1Q_K6KtEuxzjU_boXFVRqL/image.png"></a></div>
+
+
+
+<a name="440653877"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440653877" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440653877">(May 25 2024 at 18:05)</a>:</h4>
+<p>Also, must it always create <code>$PWD/data</code>? Why not <code>~/.ollama-flake/data</code>?</p>
+
+
+
+<a name="440653897"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440653897" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440653897">(May 25 2024 at 18:05)</a>:</h4>
+<p>I think, that’s a better default, we can reuse the pre-loaded models</p>
+
+
+
+<a name="440653981"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440653981" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440653981">(May 25 2024 at 18:07)</a>:</h4>
+<blockquote>
+<p>Took maybe 30 seconds to process. But the results are underwhelming:</p>
+</blockquote>
+<p>I am yet to play around with larger documents. Works fine with smaller one’s. I have tried one with 2000-3000 words.</p>
+
+
+
+<a name="440658012"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440658012" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440658012">(May 25 2024 at 19:19)</a>:</h4>
+<p>This thing creates a <code>tiktoken_cache</code> directory in $PWD for some reason.</p>
+
+
+
+<a name="440658240"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440658240" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440658240">(May 25 2024 at 19:22)</a>:</h4>
+<p>I played a little with some RAG stuff in the open webui, and it was underwhelming as well. There must be some kind of better approach I haven't yet figured out. Maybe we should ask some other people around here who might know more?</p>
+
+
+
+<a name="440658294"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/440658294" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#440658294">(May 25 2024 at 19:23)</a>:</h4>
+<p>At least larger books didn't really work at all. But maybe having smaller documents is somewhat important.</p>
+
+
+
+<a name="441802917"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/441802917" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#441802917">(May 31 2024 at 20:47)</a>:</h4>
+<p>upstreaming open-webui to nixpkgs: <a href="https://github.com/NixOS/nixpkgs/pull/316248">https://github.com/NixOS/nixpkgs/pull/316248</a></p>
+
+
+
+<a name="441867579"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama/near/441867579" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.html#441867579">(Jun 01 2024 at 07:00)</a>:</h4>
+<p>Very nice!</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

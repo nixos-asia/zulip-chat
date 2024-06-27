@@ -1,0 +1,113 @@
+<html>
+<head><meta charset="utf-8"><title>Haskell + Rust FFI · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html">Haskell + Rust FFI</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="411019670"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411019670" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411019670">(Jan 03 2024 at 14:04)</a>:</h4>
+<p><span class="user-mention" data-user-id="677935">@Akhilesh Singh Bhadauriya</span> wants to nixify <a href="https://github.com/piyushKumar-1/haskell_cac_client">https://github.com/piyushKumar-1/haskell_cac_client</a></p>
+<p>This is basically a Haskell library with FFI bindings to Rust code in the same repo. </p>
+<p>I have worked on a similar project two years ago: <a href="https://github.com/ArdanaLabs/yubihsm-ed-sign">https://github.com/ArdanaLabs/yubihsm-ed-sign</a></p>
+<p>But now I'd like to use this opportunity to create a template repo for such projects, using <code>haskell-flake</code> and something for Rust.</p>
+
+
+
+<a name="411029697"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411029697" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Akhilesh Singh Bhadauriya <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411029697">(Jan 03 2024 at 15:06)</a>:</h4>
+<p>I tried to move this repo to nammayatri(<a href="https://github.com/nammayatri/nammayatri">https://github.com/nammayatri/nammayatri</a>) so I'm getting this following error:</p>
+<div class="codehilite"><pre><span></span><code> … while calling the &#39;derivationStrict&#39; builtin
+         at /builtin/derivation.nix:9:12: (source not available)
+       … while evaluating derivation &#39;ny-backend&#39;
+         whose name attribute is located at /nix/store/aiv6rdld7d7smj3rrh72da2sssl6z2xl-source/pkgs/stdenv/generic/make-derivation.nix:300:7
+       … while evaluating attribute &#39;__impureHostDeps&#39; of derivation &#39;ny-backend&#39;
+         at /nix/store/aiv6rdld7d7smj3rrh72da2sssl6z2xl-source/pkgs/stdenv/generic/make-derivation.nix:435:7:
+          434|       __propagatedSandboxProfile = lib.unique (computedPropagatedSandboxProfile ++ [ propagatedSandboxProfile ]);
+          435|       __impureHostDeps = computedImpureHostDeps ++ computedPropagatedImpureHostDeps ++ __propagatedImpureHostDeps ++ __impureHostDeps ++ stdenv.__extraImpureHostDeps ++ [
+             |       ^
+          436|         &quot;/dev/zero&quot;
+       (stack trace truncated; use &#39;--show-trace&#39; to show the full trace)
+       error: function &#39;anonymous lambda&#39; called without required argument &#39;cac_client&#39;
+       at /nix/store/l8awdgyzg1zanisz6xb492r6ybzzrnfc-cabal2nix-haskell-cac/default.nix:1:1:
+            1| { mkDerivation, base, cac_client, lib }:
+             | ^
+            2| mkDerivation {
+realpath: /Users/akhilesh.b/Desktop/nammayatri/.direnv/flake-profile.55906: No such file or directory
+error: path &#39;/Users/akhilesh.b/Desktop/nammayatri&#39; is not in the Nix store
+warning: Git tree &#39;/Users/akhilesh.b/Desktop/nammayatri&#39; is dirty
+direnv: nix-direnv: renewed cache
+direnv: export +XDG_DATA_DIRS ~PATH
+</code></pre></div>
+<p>Is this expected.</p>
+
+
+
+<a name="411031272"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411031272" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411031272">(Jan 03 2024 at 15:17)</a>:</h4>
+<p><span class="user-mention" data-user-id="677935">@Akhilesh Singh Bhadauriya</span> What is the diff, exactly? </p>
+<div class="codehilite"><pre><span></span><code>error: path &#39;/Users/akhilesh.b/Desktop/nammayatri&#39; is not in the Nix store
+</code></pre></div>
+<p>Your Nix seems to be referring to some absolute path.</p>
+
+
+
+<a name="411034075"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411034075" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411034075">(Jan 03 2024 at 15:35)</a>:</h4>
+<p>You can put post the link to the branch on GitHub</p>
+
+
+
+<a name="411164477"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411164477" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Akhilesh Singh Bhadauriya <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411164477">(Jan 04 2024 at 10:34)</a>:</h4>
+<p>No but i'm trying to compile everything in local. This is just showing the path where my nammayatri repo is.</p>
+
+
+
+<a name="411165583"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411165583" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411165583">(Jan 04 2024 at 10:42)</a>:</h4>
+<p>It would be nice to see the code committed somewhere so that we can reproduce the issue</p>
+
+
+
+<a name="411172846"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411172846" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Akhilesh Singh Bhadauriya <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411172846">(Jan 04 2024 at 11:29)</a>:</h4>
+<p>You can find this here <br>
+<a href="https://github.com/nammayatri/nammayatri/tree/Backend/FFI-RUst/issue">https://github.com/nammayatri/nammayatri/tree/Backend/FFI-RUst/issue</a></p>
+
+
+
+<a name="411187260"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411187260" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411187260">(Jan 04 2024 at 13:14)</a>:</h4>
+<p>You should not commit compiled assets like the <code>target</code> folder <span class="user-mention" data-user-id="677935">@Akhilesh Singh Bhadauriya</span></p>
+
+
+
+<a name="411187620"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411187620" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411187620">(Jan 04 2024 at 13:17)</a>:</h4>
+<p><span class="user-mention" data-user-id="677935">@Akhilesh Singh Bhadauriya</span> The CI is not showing the error you report. Instead it is showing something else:</p>
+<p><a href="https://jenkins-nix-ci.betta-gray.ts.net/job/nammayatri/job/Backend%252FFFI-RUst%252Fissue/2/pipeline-console/">https://jenkins-nix-ci.betta-gray.ts.net/job/nammayatri/job/Backend%252FFFI-RUst%252Fissue/2/pipeline-console/</a></p>
+<div class="codehilite"><pre><span></span><code>error: function &#39;anonymous lambda&#39; called without required argument &#39;cac_client&#39;
+</code></pre></div>
+
+
+
+<a name="411187711"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411187711" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411187711">(Jan 04 2024 at 13:17)</a>:</h4>
+<p>Which is understandable as we haven't written any Nix to a) build the Rust package, and b) make it available to the Haskell packages. Which is exactly what I plan to do <em>next week</em>.</p>
+
+
+
+<a name="411939258"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Haskell%20%2B%20Rust%20FFI/near/411939258" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Akhilesh Singh Bhadauriya <a href="http://chat.nixos.asia/stream/413950-nix/topic/Haskell.20.2B.20Rust.20FFI.html#411939258">(Jan 09 2024 at 13:54)</a>:</h4>
+<p>Nixified version of repo PR:<br>
+<a href="https://github.com/piyushKumar-1/haskell_cac_client/pull/2">https://github.com/piyushKumar-1/haskell_cac_client/pull/2</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,169 @@
+<html>
+<head><meta charset="utf-8"><title>macOS Sequoia · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html">macOS Sequoia</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="444065430"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444065430" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444065430">(Jun 11 2024 at 17:55)</a>:</h4>
+<p>I just upgraded to macOS Sequoia 15 beta, and had to do the following to make Nix work (I <a href="https://github.com/srid/nixos-config">already use</a> <code>nix-darwin</code> and <code>home-manager</code>):</p>
+<ul>
+<li>Explicitly mount the Nix Store volume, by entering the encryption password (stored in Keychain Access)</li>
+<li>Run <code>sudo launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist &amp;&amp; sudo launchctl kickstart -k system/org.nixos.nix-daemon</code> to start the Nix daemon.</li>
+</ul>
+
+
+
+<a name="444065484"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444065484" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444065484">(Jun 11 2024 at 17:55)</a>:</h4>
+<p>Incidentally, <code>nix</code> is no longer in $PATH for me; I did locate it at <code>/nix/var/nix/profiles/system/sw/bin/nix</code></p>
+
+
+
+<a name="444067885"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444067885" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444067885">(Jun 11 2024 at 18:09)</a>:</h4>
+<p>Well, not yet!</p>
+<div class="codehilite"><pre><span></span><code>❯ /nix/var/nix/profiles/system/sw/bin/nix run
+error: the user &#39;_nixbld1&#39; in the group &#39;nixbld&#39; does not exist
+</code></pre></div>
+<p>cf.</p>
+<ul>
+<li><a href="https://github.com/DeterminateSystems/nix-installer/issues/1001">https://github.com/DeterminateSystems/nix-installer/issues/1001</a></li>
+<li><a href="https://github.com/LnL7/nix-darwin/issues/970">https://github.com/LnL7/nix-darwin/issues/970</a></li>
+</ul>
+
+
+
+<a name="444070686"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444070686" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444070686">(Jun 11 2024 at 18:24)</a>:</h4>
+<p>I had to re-install Nix, while using the new GID/UID:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="c1"># Get ID of nixbld group</span>
+$<span class="w"> </span>dscl<span class="w"> </span>.<span class="w"> </span>-read<span class="w"> </span>/Groups/nixbld<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'($1 == "PrimaryGroupID:") { print $2 }'</span>
+
+<span class="c1"># Find the ID of base nixbld user</span>
+$<span class="w"> </span>dscacheutil<span class="w"> </span>-q<span class="w"> </span>user<span class="w">  </span><span class="p">|</span><span class="w"> </span>less
+
+<span class="c1"># Uninstall, after making sure no programs from nix store are running</span>
+$<span class="w"> </span>sudo<span class="w"> </span>/nix/nix-installer<span class="w"> </span>uninstall
+
+<span class="c1"># Install afresh, using the new GID/UID</span>
+$<span class="w">  </span>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>-L<span class="w"> </span>https://install.determinate.systems/nix<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--nix-build-group-id<span class="w"> </span><span class="m">30000</span><span class="w"> </span>--nix-build-user-id-base<span class="w"> </span><span class="m">305</span>
+</code></pre></div>
+
+
+
+<a name="444071478"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444071478" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444071478">(Jun 11 2024 at 18:28)</a>:</h4>
+<p>Now I get,</p>
+<div class="codehilite"><pre><span></span><code>error: unable to download &#39;https://cache.nixos.org/jnzj0r0jpmx0qp913riqpizvzidrqcfi.narinfo&#39;: Problem with the SSL CA cert (path? access rights?) (77)
+</code></pre></div>
+<p>To fix it,</p>
+<div class="codehilite"><pre><span></span><code>sudo rm /etc/ssl/certs/ca-certificates.crt
+sudo ln -s /nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+</code></pre></div>
+<p>Ref: <a href="https://github.com/NixOS/nix/issues/2899#issuecomment-1669501326">https://github.com/NixOS/nix/issues/2899#issuecomment-1669501326</a></p>
+
+
+
+<a name="444073129"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444073129" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444073129">(Jun 11 2024 at 18:37)</a>:</h4>
+<p>nix-darwin activation fails,</p>
+<p><a href="/user_uploads/60244/Ktay2l_xBIqiH7Q4-2GViCAY/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/Ktay2l_xBIqiH7Q4-2GViCAY/image.png" title="image.png"><img src="/user_uploads/60244/Ktay2l_xBIqiH7Q4-2GViCAY/image.png"></a></div>
+
+
+
+<a name="444073282"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444073282" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444073282">(Jun 11 2024 at 18:38)</a>:</h4>
+<p>Which is fine; just rename it as it tell you.</p>
+
+
+
+<a name="444073360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444073360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444073360">(Jun 11 2024 at 18:38)</a>:</h4>
+<p>Now home-manager part complaints:</p>
+<div class="codehilite"><pre><span></span><code>Starting Home Manager activation
+The previous generation number and path are in conflict! These
+must be either both empty or both set but are now set to
+
+    &#39;42&#39; and &#39;&#39;
+
+If you don&#39;t mind losing previous profile generations then
+the easiest solution is probably to run
+
+   rm /Users/srid/.local/state/nix/profiles/home-manager*
+   rm /Users/srid/.local/state/home-manager/gcroots/current-home
+
+and trying home-manager switch again. Good luck!
+srid@appreciate nixos-config %
+</code></pre></div>
+
+
+
+<a name="444073462"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444073462" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444073462">(Jun 11 2024 at 18:39)</a>:</h4>
+<p>Just ran those two <code>rm</code> commands; now:</p>
+<div class="codehilite"><pre><span></span><code>Starting Home Manager activation
+Activating checkFilesChanged
+Activating checkLaunchAgents
+Existing file &#39;/Users/srid/Library/LaunchAgents/org.nix-community.home.nix-gc.plist&#39; is in the way of &#39;/nix/store/zkh0jhdbba409065s1rwxfqlq4016x0n-home-manager-agents/org.nix-community.home.nix-gc.plist&#39;
+</code></pre></div>
+
+
+
+<a name="444073600"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444073600" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444073600">(Jun 11 2024 at 18:40)</a>:</h4>
+<p>Remove <code>/Users/srid/Library/LaunchAgents/org.nix-community.home.nix-gc.plist</code> and activate again. Now,</p>
+<div class="codehilite"><pre><span></span><code>Activating setupLaunchAgents
+Bootstrap failed: 5: Input/output error
+Try re-running the command as root for richer errors.
+</code></pre></div>
+
+
+
+<a name="444073721"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444073721" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444073721">(Jun 11 2024 at 18:40)</a>:</h4>
+<p>Strangely, re-running activation (<code>nix run</code> on srid/nixos-config) worked.</p>
+
+
+
+<a name="444073864"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444073864" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444073864">(Jun 11 2024 at 18:41)</a>:</h4>
+<p>My home-manager installed apps, like Rio terminal, are now accessible from Raycast <span aria-label="+1" class="emoji emoji-1f44d" role="img" title="+1">:+1:</span></p>
+
+
+
+<a name="444074139"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/macOS%20Sequoia/near/444074139" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/macOS.20Sequoia.html#444074139">(Jun 11 2024 at 18:43)</a>:</h4>
+<p>nix-health is happy:</p>
+<div class="codehilite"><pre><span></span><code>❯ nix-health
+🩺️ Checking the health of your Nix setup (aarch64-darwin on nix-darwin):
+✅ Rosetta Not Active
+   apple emulation = None
+✅ Minimum Nix Version
+   nix version = 2.18.2
+✅ Flakes Enabled
+   experimental-features = flakes nix-command repl-flake
+✅ Disk Space
+   min disk space = 1024.0 GB; total = 4.0 TB
+✅ Max Jobs
+   max-jobs = 10
+✅ Nix Caches in use
+   substituters = https://cache.nixos.org/
+✅ Trusted Users
+   trusted-users = github-runner root srid
+✅ Direnv installation
+   direnv location = Some(&quot;/etc/profiles/per-user/srid/bin/direnv&quot;)
+✅ All checks passed
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

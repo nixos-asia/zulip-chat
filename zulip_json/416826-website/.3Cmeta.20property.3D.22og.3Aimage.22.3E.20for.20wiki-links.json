@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>The corresponding Pandoc AST for the wiki-link <code>![[emanote-logo.svg]]</code> is: <code>[Para [Link (\"\",[],[(\"data-wikilink-type\",\"WikiLinkEmbed\")]) [] (\"emanote-logo.svg\",\"\")]]</code>. We can just pattern match on <code>Link</code> and <code>WikiLinkEmbed</code> to get <code>emanote-logo.svg</code> (let's assume for simplicity that <code>WikiLinkEmbed</code> only refers to static image files), but the problem here is that the relative URL is <code>_emanote-static/emanote-logo.svg</code> which is obtained from <a href=\"https://github.com/srid/emanote/blob/30d3d084ddf551e131523b2c41c5a5ab49592848/emanote/src/Emanote/Route/SiteRoute/Class.hs#L180C1-L206\">siteRouteUrl</a> function. I was considering to create a pandoc filter to fetch the <code>siteRouteUrl</code>-- if there is no way to fetch it by reusing the function linked above --, is that the correct approach? <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span></p>",
+        "id": 409526031,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1703224241
+    },
+    {
+        "content": "<p>There are functions to parse and resolve wikilinks, <a href=\"https://github.com/srid/emanote/blob/30d3d084ddf551e131523b2c41c5a5ab49592848/emanote/src/Emanote/Pandoc/Renderer/Url.hs#L31-L34\">https://github.com/srid/emanote/blob/30d3d084ddf551e131523b2c41c5a5ab49592848/emanote/src/Emanote/Pandoc/Renderer/Url.hs#L31-L34</a></p>",
+        "id": 410176665,
+        "sender_full_name": "Srid",
+        "timestamp": 1703694706
+    }
+]

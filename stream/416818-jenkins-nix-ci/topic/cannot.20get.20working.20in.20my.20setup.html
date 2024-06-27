@@ -1,0 +1,87 @@
+<html>
+<head><meta charset="utf-8"><title>cannot get working in my setup · jenkins-nix-ci · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/index.html">jenkins-nix-ci</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html">cannot get working in my setup</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="421500232"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416818-jenkins-nix-ci/topic/cannot%20get%20working%20in%20my%20setup/near/421500232" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> shaun smiley <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html#421500232">(Feb 14 2024 at 17:51)</a>:</h4>
+<p>I'm trying to figure out how to use this within my own NixOS setup, but I'm having difficulties.  I am not using nix-parts or any of the other stuff.  I have a fairly simple flake and have added the  <code>inputs.jenkins-nix-ci.nixosModules.default</code> block to imports.   However, I'm getting errors.</p>
+
+
+
+<a name="421500326"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416818-jenkins-nix-ci/topic/cannot%20get%20working%20in%20my%20setup/near/421500326" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> shaun smiley <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html#421500326">(Feb 14 2024 at 17:52)</a>:</h4>
+<div class="codehilite" data-code-language="error"><pre><span></span><code>       … while calling the 'seq' builtin
+
+         at /nix/store/l6ymqz1y4fiy57xh6f3y23zwp0i9lr4f-source/lib/modules.nix:320:18:
+
+          319|         options = checked options;
+          320|         config = checked (removeAttrs config [ "_module" ]);
+             |                  ^
+          321|         _module = checked (config._module);
+
+       … while evaluating a branch condition
+
+         at /nix/store/l6ymqz1y4fiy57xh6f3y23zwp0i9lr4f-source/lib/modules.nix:261:9:
+
+          260|       checkUnmatched =
+          261|         if config._module.check &amp;&amp; config._module.freeformType == null &amp;&amp; merged.unmatchedDefns != [] then
+             |         ^
+          262|           let
+
+       (stack trace truncated; use '--show-trace' to show the full trace)
+
+       error: infinite recursion encountered
+
+       at /nix/store/l6ymqz1y4fiy57xh6f3y23zwp0i9lr4f-source/lib/modules.nix:506:28:
+
+          505|         builtins.addErrorContext (context name)
+          506|           (args.${name} or config._module.args.${name})
+             |                            ^
+          507|       ) (lib.functionArgs f);
+</code></pre></div>
+
+
+
+<a name="421502895"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416818-jenkins-nix-ci/topic/cannot%20get%20working%20in%20my%20setup/near/421502895" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> shaun smiley <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html#421502895">(Feb 14 2024 at 18:05)</a>:</h4>
+<p>Ah, I need to remove the <code>inputs.</code> within the imports block since I already pass that above. That was likely giving me the recursion error.</p>
+
+
+
+<a name="421528363"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416818-jenkins-nix-ci/topic/cannot%20get%20working%20in%20my%20setup/near/421528363" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html#421528363">(Feb 14 2024 at 20:36)</a>:</h4>
+<p>Was it though?</p>
+
+
+
+<a name="421530287"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416818-jenkins-nix-ci/topic/cannot%20get%20working%20in%20my%20setup/near/421530287" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> shaun smiley <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html#421530287">(Feb 14 2024 at 20:49)</a>:</h4>
+<p>I also had to add sops as that seems to be a hard requirement. <br>
+But, I am still getting strange errors.</p>
+
+
+
+<a name="421530432"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416818-jenkins-nix-ci/topic/cannot%20get%20working%20in%20my%20setup/near/421530432" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> shaun smiley <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html#421530432">(Feb 14 2024 at 20:50)</a>:</h4>
+<p><code>       error: attribute 'flake' missing
+</code></p>
+
+
+
+<a name="421630600"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416818-jenkins-nix-ci/topic/cannot%20get%20working%20in%20my%20setup/near/421630600" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416818-jenkins-nix-ci/topic/cannot.20get.20working.20in.20my.20setup.html#421630600">(Feb 15 2024 at 11:08)</a>:</h4>
+<p><code>flake</code> is passed by the <code>nixos-flake</code> module, so as to make the caller flake available to all modules.</p>
+<p><a href="https://github.com/srid/nixos-flake/blob/3891b2030114f8661402991eac9be0ed59f786ae/flake-module.nix#L9">https://github.com/srid/nixos-flake/blob/3891b2030114f8661402991eac9be0ed59f786ae/flake-module.nix#L9</a></p>
+<p>If you are not using <code>flake-parts</code> (thus not using <code>nixos-flake</code>), you will have to manually pass these (via <code>specialArgs</code> or <code>_module.args.flake</code>).</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

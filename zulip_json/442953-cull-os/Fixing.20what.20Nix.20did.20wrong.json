@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>(copied from the matrix; this is about fixing flakes being a new concept and destroying the \"everything is a derivation\" concept of Nix; also see this post <a href=\"https://jade.fyi/blog/flakes-arent-real\">https://jade.fyi/blog/flakes-arent-real</a>)</p>\n<p>The way I want to fix this in Cab is overridable expressions.</p>\n<div class=\"codehilite\"><pre><span></span><code>{ a = 1; } ==&gt; a * a\n</code></pre></div>\n<p>assuming this is assigned to <code>b</code>, just evaluating <code>b</code> will get you <code>1</code>. But overriding it like <code>b &lt;== { a = 2; }</code> and then evaluating that expression will get you <code>4</code>. The trick here is that <code>==&gt;</code> is not a function symbol (unlike <code>:</code>, which has the same behavior in Cab as in Nix)</p>\n<p>So you will be able to do things like</p>\n<div class=\"codehilite\"><pre><span></span><code>inputs @ {\n  packages = import &lt;github:cull-os/packages&gt; &lt;== inputs;\n} ==&gt; {\n  packages.bar = packages.buildCrate ./.;\n}\n</code></pre></div>\n<p><code>import</code> will import <code>/${&lt;github:cull-os/cab&gt;}/default.cab</code>, which is another expression like our <a href=\"http://default.cab\">default.cab</a>. Then it will override it, with our inputs. The trick here is that our inputs were already overriden by the Cab CLI, which did <code>&lt;== { buildSystem = ...; targetSystem = ...; }</code> so the build and target systems get passed into CullOS packages. Then we get a neat attribute set packed with packages configured for our target.</p>",
+        "id": 446146257,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718995133
+    },
+    {
+        "content": "<p>I also want to implement the \"standard library\" in Pure Rust, eagerly checking for types of things. This will also make it a part of the language instead of some unrelated repository like nixpkgs. And it will be faster, as a result.</p>",
+        "id": 446146808,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718995339
+    }
+]

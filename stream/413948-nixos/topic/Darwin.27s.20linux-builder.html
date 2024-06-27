@@ -1,0 +1,106 @@
+<html>
+<head><meta charset="utf-8"><title>Darwin&#x27;s linux-builder · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Darwin.27s.20linux-builder.html">Darwin&#x27;s linux-builder</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422873371"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Darwin%27s%20linux-builder/near/422873371" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Darwin.27s.20linux-builder.html#422873371">(Feb 22 2024 at 18:00)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422484121">said</a>:</p>
+<blockquote>
+<p>The linux-builder in nix-darwin would streamline it even further,</p>
+<p><a href="https://nixcademy.com/2024/02/12/macos-linux-builder/">https://nixcademy.com/2024/02/12/macos-linux-builder/</a></p>
+<p>However, it:</p>
+<ul>
+<li>does not support rosetta</li>
+<li>does not build packages with IFD</li>
+</ul>
+</blockquote>
+<p>Turns out I'm wrong here re: IFD.</p>
+<p>This won't work:</p>
+<div class="codehilite"><pre><span></span><code>nix --option system aarch64-linux build -L
+</code></pre></div>
+<p>But this will:</p>
+<div class="codehilite"><pre><span></span><code>nix build -L .#packages.aarch64-linux.default
+</code></pre></div>
+<p>cf. <a href="https://github.com/NixOS/nixpkgs/issues/39664">https://github.com/NixOS/nixpkgs/issues/39664</a></p>
+<p>That said, I still couldn't get x86_64-linux builds to work.  It requires improving the nix-darwin linux builder to take arbitrary configuration, so I can set a <code>binfmt.emulatedSystems</code>.</p>
+
+
+
+<a name="422873411"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Darwin%27s%20linux-builder/near/422873411" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Darwin.27s.20linux-builder.html#422873411">(Feb 22 2024 at 18:00)</a>:</h4>
+<p><a href="#narrow/stream/413948-nixos/topic/Darwin.27s.20linux-builder/near/422873371">A message</a> was moved here from <a class="stream-topic" data-stream-id="413948" href="/#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29">#nixos &gt; Home CI machine (portable)</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="422875092"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Darwin%27s%20linux-builder/near/422875092" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Darwin.27s.20linux-builder.html#422875092">(Feb 22 2024 at 18:09)</a>:</h4>
+<p>What will it take to merge all these PRs?</p>
+<p><a href="/user_uploads/60244/Uimz2TR0XZwpTfcyDSEothSk/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/Uimz2TR0XZwpTfcyDSEothSk/image.png" title="image.png"><img src="/user_uploads/60244/Uimz2TR0XZwpTfcyDSEothSk/image.png"></a></div>
+
+
+
+<a name="422882375"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Darwin%27s%20linux-builder/near/422882375" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Darwin.27s.20linux-builder.html#422882375">(Feb 22 2024 at 18:45)</a>:</h4>
+<h2>x86 builds</h2>
+<p>Using <a href="https://github.com/LnL7/nix-darwin/pull/878">https://github.com/LnL7/nix-darwin/pull/878</a></p>
+<p>I can get x86 packages to build via linux-builder. The config,</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="c1"># To build Linux derivations whilst on macOS.</span>
+  nix<span class="o">.</span><span class="ss">linux-builder</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">systems</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s2">"x86_64-linux"</span>
+      <span class="s2">"aarch64-linux"</span>
+    <span class="p">];</span>
+    <span class="ss">config</span> <span class="o">=</span> <span class="p">{</span> lib<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+      boot<span class="o">.</span>binfmt<span class="o">.</span><span class="ss">emulatedSystems</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"x86_64-linux"</span> <span class="p">];</span>
+      <span class="ss">virtualisation</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># Larger linux-builder cores, ram, and disk.</span>
+        <span class="ss">cores</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+        <span class="ss">memorySize</span> <span class="o">=</span> lib<span class="o">.</span>mkForce <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">16</span><span class="p">);</span>
+        <span class="ss">diskSize</span> <span class="o">=</span> lib<span class="o">.</span>mkForce <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1</span><span class="p">);</span> <span class="c1"># In MB.</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+</code></pre></div>
+<p>Incidentally, I gain the impression that the linux-builder is draining my battery faster than the parallels VM.</p>
+
+
+
+<a name="422888671"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Darwin%27s%20linux-builder/near/422888671" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Darwin.27s.20linux-builder.html#422888671">(Feb 22 2024 at 19:21)</a>:</h4>
+<p>Timing for a) macOS native, b) arm linux, c) x86 emulation when building haskell-template. I'll do a thorough benchmark latter.</p>
+<p><a href="/user_uploads/60244/FfeCa9irWGv76yB6GeRgsY3t/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/FfeCa9irWGv76yB6GeRgsY3t/image.png" title="image.png"><img src="/user_uploads/60244/FfeCa9irWGv76yB6GeRgsY3t/image.png"></a></div>
+
+
+
+<a name="423032262"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Darwin%27s%20linux-builder/near/423032262" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Darwin.27s.20linux-builder.html#423032262">(Feb 23 2024 at 14:59)</a>:</h4>
+<p>Got something working on macOS. Along with <a href="https://github.com/srid/nixci/pull/39">https://github.com/srid/nixci/pull/39</a> I can now build Emanote (<a href="https://github.com/srid/emanote/pull/516">PR</a>) on arm Linux and mac, using the builders hosted on the same host (macbook),</p>
+<div class="codehilite" data-code-language="YAML"><pre><span></span><code><span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nix</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-hosted</span>
+<span class="w">    </span><span class="nt">strategy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">matrix</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># TODO: Disablig x86_64-linux for now, as it is causing qemu segfault.</span>
+<span class="w">        </span><span class="c1"># Fix treefmt check causing qemu segfault: https://nixos.zulipchat.com/#narrow/stream/413948-nixos/topic/QEMU.20internal.20SIGSEGV</span>
+<span class="w">        </span><span class="nt">system</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">aarch64-linux</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">aarch64-darwin</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Nix</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">nixci --build-systems "github:nix-systems/${{ matrix.system }}"</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

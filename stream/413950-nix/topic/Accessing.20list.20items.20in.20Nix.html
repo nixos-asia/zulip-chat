@@ -1,0 +1,26 @@
+<html>
+<head><meta charset="utf-8"><title>Accessing list items in Nix · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Accessing.20list.20items.20in.20Nix.html">Accessing list items in Nix</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="444701572"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Accessing%20list%20items%20in%20Nix/near/444701572" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Accessing.20list.20items.20in.20Nix.html#444701572">(Jun 14 2024 at 13:33)</a>:</h4>
+<p>Noob question: Is there no easier way to access list items than <code>builtins.elemAt</code> supplied with list and position?</p>
+<p>Attribute sets are somewhat easier to handle I feel.</p>
+
+
+
+<a name="444703975"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Accessing%20list%20items%20in%20Nix/near/444703975" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Accessing.20list.20items.20in.20Nix.html#444703975">(Jun 14 2024 at 13:45)</a>:</h4>
+<p>Usually you want to map over a list to do something with each item or fold it into a different data structure. Very rare that I need just a single item, but there is a lib function to access a list item based on equality somewhere iirc</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

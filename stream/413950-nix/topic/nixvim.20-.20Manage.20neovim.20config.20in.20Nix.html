@@ -1,0 +1,59 @@
+<html>
+<head><meta charset="utf-8"><title>nixvim - Manage neovim config in Nix · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixvim.20-.20Manage.20neovim.20config.20in.20Nix.html">nixvim - Manage neovim config in Nix</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446132703"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixvim%20-%20Manage%20neovim%20config%20in%20Nix/near/446132703" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixvim.20-.20Manage.20neovim.20config.20in.20Nix.html#446132703">(Jun 21 2024 at 17:23)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Nix.20development.20environments/near/430868272">said</a>:</p>
+<blockquote>
+<ul>
+<li>For LSP, I have <code>nil</code> (<code>nil_ls.enable = true;</code> in nixvim config)</li>
+</ul>
+</blockquote>
+<p>For those curious, here's our nixvim config, in the context of a home-manager template:</p>
+<p><a href="https://github.com/juspay/nix-dev-home/blob/main/home/neovim.nix">https://github.com/juspay/nix-dev-home/blob/main/home/neovim.nix</a></p>
+
+
+
+<a name="446135731"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixvim%20-%20Manage%20neovim%20config%20in%20Nix/near/446135731" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixvim.20-.20Manage.20neovim.20config.20in.20Nix.html#446135731">(Jun 21 2024 at 17:35)</a>:</h4>
+<p>oh thanks a lot, I will look at that!</p>
+
+
+
+<a name="446181673"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixvim%20-%20Manage%20neovim%20config%20in%20Nix/near/446181673" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixvim.20-.20Manage.20neovim.20config.20in.20Nix.html#446181673">(Jun 21 2024 at 22:01)</a>:</h4>
+<p>On a related note, this would be a <em>good first issue</em> to tackle for anyone looking to contribute to a Nix project:</p>
+<p><a href="https://github.com/juspay/nix-dev-home/issues/16">https://github.com/juspay/nix-dev-home/issues/16</a></p>
+<p>(The cool thing is to be able to <code>nix run ..</code> neovim with certain nixvim config, which is useful to be able to 'take your vim' wherever you go, such as when pairing on a coworker's machine)</p>
+
+
+
+<a name="446435013"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixvim%20-%20Manage%20neovim%20config%20in%20Nix/near/446435013" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixvim.20-.20Manage.20neovim.20config.20in.20Nix.html#446435013">(Jun 23 2024 at 16:00)</a>:</h4>
+<p>yeah that is an interesting issue. I will play a bit with Nixvim anyways, it looks a much nicer solution than my current Nvim config. I will have a look at it while I do</p>
+
+
+
+<a name="446435492"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixvim%20-%20Manage%20neovim%20config%20in%20Nix/near/446435492" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixvim.20-.20Manage.20neovim.20config.20in.20Nix.html#446435492">(Jun 23 2024 at 16:03)</a>:</h4>
+<p>so if I see this correctly (had to get the organization of the flake first), you use the home manager module approach to Nixvim?</p>
+
+
+
+<a name="446441033"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixvim%20-%20Manage%20neovim%20config%20in%20Nix/near/446441033" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixvim.20-.20Manage.20neovim.20config.20in.20Nix.html#446441033">(Jun 23 2024 at 16:32)</a>:</h4>
+<p>That entire repo provides only home-manager config, yes.</p>
+<p>But you can 'embed' it in nixos configuration in straightforward manner (like I do in srid/nixos-config using <code>nixos-flake</code>)</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

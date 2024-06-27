@@ -1,0 +1,111 @@
+<html>
+<head><meta charset="utf-8"><title>Bitwarden for SSH authentication and git commit signing · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html">Bitwarden for SSH authentication and git commit signing</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="442066311"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442066311" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442066311">(Jun 02 2024 at 15:45)</a>:</h4>
+<p>Has anyone used Bitwarden with a vaultwarden instance to sign git commits and store ssh keys?</p>
+
+
+
+<a name="442067443"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442067443" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442067443">(Jun 02 2024 at 15:56)</a>:</h4>
+<p>cc <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> </p>
+<p>(Also, related: <a href="#narrow/stream/413948-nixos/topic/secrets.2Fpassword.20management/near/427139745">this topic</a>)</p>
+
+
+
+<a name="442082389"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442082389" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442082389">(Jun 02 2024 at 17:54)</a>:</h4>
+<p>I wanted to try out self-hosted vaultwarden soonishly. Does it have that kind of capability?</p>
+
+
+
+<a name="442082737"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442082737" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442082737">(Jun 02 2024 at 17:57)</a>:</h4>
+<p>I use vaultwarden, but it’s only limited to my passwords at the moment. I don’t store my SSH keys there yet as I was looking for a better solution (related topic that srid linked ^). Bitwarden has <a href="https://bitwarden.com/products/secrets-manager/">Secrets manager</a>, but the last I checked, it was proprietary.</p>
+<p>I was planning to try this out myself with existing vaultwarden. Storing the keys and retrieving them using the “bw” CLI seems straightforward, but signing commits is what would be interesting to see. </p>
+<p>Anyways, I will update this thread with my progress.</p>
+
+
+
+<a name="442083135"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442083135" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442083135">(Jun 02 2024 at 18:00)</a>:</h4>
+<blockquote>
+<p>Storing the keys and retrieving them using the “bw” CLI seems straightforward</p>
+</blockquote>
+<p>So you would store them as what in vaultwarden? As a secure note? I still use regular Bitwarden for my passwords, so I am not sure which capabilities vaultwarden actually has.</p>
+
+
+
+<a name="442084129"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442084129" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442084129">(Jun 02 2024 at 18:08)</a>:</h4>
+<p>Signing shouldn't be that hard, let me see</p>
+
+
+
+<a name="442084262"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442084262" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442084262">(Jun 02 2024 at 18:09)</a>:</h4>
+<p><span class="user-mention" data-user-id="669081">@Shivaraj B H</span> For storing SSH private keys I use <a href="https://github.com/charmbracelet/melt">https://github.com/charmbracelet/melt</a> and store the melted key physically in my wallet. works well and is offline</p>
+
+
+
+<a name="442084341"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442084341" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442084341">(Jun 02 2024 at 18:10)</a>:</h4>
+<p>If everything goes wrong, I can use that key to redeploy everything and ssh into my servers which is great. it's not really possible for me to lose access this way</p>
+
+
+
+<a name="442085996"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442085996" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442085996">(Jun 02 2024 at 18:24)</a>:</h4>
+<p><span class="user-mention" data-user-id="725711">@RGBCube</span> how do you manage the seed phrases used to create the melted key?</p>
+
+
+
+<a name="442086131"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442086131" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442086131">(Jun 02 2024 at 18:25)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing/near/442083135">said</a>:</p>
+<blockquote>
+<blockquote>
+<p>Storing the keys and retrieving them using the “bw” CLI seems straightforward</p>
+</blockquote>
+<p>So you would store them as what in vaultwarden? As a secure note? I still use regular Bitwarden for my passwords, so I am not sure which capabilities vaultwarden actually has.</p>
+</blockquote>
+<p>Yes, I believe it should be secure note. I am guessing that’s what <span class="user-mention" data-user-id="725711">@RGBCube</span> is doing with his melted keys</p>
+
+
+
+<a name="442086561"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442086561" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442086561">(Jun 02 2024 at 18:29)</a>:</h4>
+<p>No, it's not in any password manager, i wrote the melted key down on a piece of paper and put it in my physical wallet.</p>
+
+
+
+<a name="442086632"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442086632" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442086632">(Jun 02 2024 at 18:30)</a>:</h4>
+<p>And the melted key doesn't have a passphrase, when you unmelt it it asks you for a passphrase</p>
+
+
+
+<a name="442086735"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442086735" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442086735">(Jun 02 2024 at 18:31)</a>:</h4>
+<p>Asks you for a passphrase as in ssh-keygening on the melted key to add a passphrase to the restored one</p>
+
+
+
+<a name="442091324"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Bitwarden%20for%20SSH%20authentication%20and%20git%20commit%20signing/near/442091324" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing.html#442091324">(Jun 02 2024 at 19:13)</a>:</h4>
+<p>We have a vaultwarden at work to share passwords and some keys. I would say it's not really appropriate for our usecase.</p>
+<p>It'd probably be better to use short lived ssh certs</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

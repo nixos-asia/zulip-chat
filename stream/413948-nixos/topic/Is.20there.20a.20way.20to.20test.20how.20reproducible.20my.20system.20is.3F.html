@@ -1,0 +1,39 @@
+<html>
+<head><meta charset="utf-8"><title>Is there a way to test how reproducible my system is? · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Is.20there.20a.20way.20to.20test.20how.20reproducible.20my.20system.20is.3F.html">Is there a way to test how reproducible my system is?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="440457510"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Is%20there%20a%20way%20to%20test%20how%20reproducible%20my%20system%20is%3F/near/440457510" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Muhammad Rizqi Ardiansyah <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Is.20there.20a.20way.20to.20test.20how.20reproducible.20my.20system.20is.3F.html#440457510">(May 24 2024 at 07:43)</a>:</h4>
+<p>Is any configuration.nix file _guaranteed_ to be reproducible, or is it not? Is there a best practice of testing this? Is trying to install it on VM sufficient to test this?</p>
+
+
+
+<a name="440463082"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Is%20there%20a%20way%20to%20test%20how%20reproducible%20my%20system%20is%3F/near/440463082" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Is.20there.20a.20way.20to.20test.20how.20reproducible.20my.20system.20is.3F.html#440463082">(May 24 2024 at 08:23)</a>:</h4>
+<p>What do you mean by guaranteed to be reproducible? <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="440464567"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Is%20there%20a%20way%20to%20test%20how%20reproducible%20my%20system%20is%3F/near/440464567" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Muhammad Rizqi Ardiansyah <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Is.20there.20a.20way.20to.20test.20how.20reproducible.20my.20system.20is.3F.html#440464567">(May 24 2024 at 08:33)</a>:</h4>
+<p>Well what I meant is that it's going to be the same system on every device</p>
+<p>...or is my understanding of the definition of said word incorrect?</p>
+
+
+
+<a name="440466615"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Is%20there%20a%20way%20to%20test%20how%20reproducible%20my%20system%20is%3F/near/440466615" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Is.20there.20a.20way.20to.20test.20how.20reproducible.20my.20system.20is.3F.html#440466615">(May 24 2024 at 08:47)</a>:</h4>
+<p>If its only a <code>configuration.nix</code> file, it might not be reproducible because the packages might be coming from different nixpkgs on each of those devices, based on whatever is set in <a href="https://nixos.wiki/wiki/Nix_channels">nix-channel</a>.</p>
+<p>But if you use <code>flake.nix</code>, it will be reproducible as you will be pinning the <code>nixpkgs</code> revision in <code>flake.lock</code>. See this tutorial to flakeify your existing <code>configuration.nix</code>: <a href="https://nixos.asia/en/nixos-install-flake#flakeify">https://nixos.asia/en/nixos-install-flake#flakeify</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

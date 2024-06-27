@@ -1,0 +1,512 @@
+<html>
+<head><meta charset="utf-8"><title>cabal-install ignoring user&#x27;s package set · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html">cabal-install ignoring user&#x27;s package set</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="418969697"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418969697" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418969697">(Jan 31 2024 at 05:11)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> I am trying to build <a href="https://hackage.haskell.org/package/rings">https://hackage.haskell.org/package/rings</a> on GHC 9.8.1, I have a flake set up with <code>haskell-flake</code>.  I am trying to get <code>singleton-bool</code> (used in the test suite of <code>lukko</code>, a dependency of <code>hackage-security</code>) to be version 0.1.7 (Hackage latest).  but no matter what I do, including using <code>jailbreak = true</code> for <code>lukko</code>, overriding the source of <code>singleton-bool</code> to be either github <code>master</code> or hackage 0.1.7, or <code>check = false</code> for lukko to avoid building the test suite altogether, my build fails building <code>singleton-bool-0.1.6</code></p>
+
+
+
+<a name="418970076"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970076" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970076">(Jan 31 2024 at 05:17)</a>:</h4>
+<p><a href="/user_uploads/60244/8Yd4A1aT68V6WcWYTG9XZXsG/flake.nix">flake.nix</a><br>
+here is the flake I'm using</p>
+
+
+
+<a name="418970130"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970130" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970130">(Jan 31 2024 at 05:18)</a>:</h4>
+<p>I can't figure out why version 0.1.6 is getting built at all, but <code>nix-output-monitor</code> shows it as a dependency of <code>lukko</code></p>
+
+
+
+<a name="418970184"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970184" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970184">(Jan 31 2024 at 05:19)</a>:</h4>
+<p>I know just enough nix to get myself into trouble, so I'm having trouble digging deeper into what's going on</p>
+
+
+
+<a name="418970480"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970480" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970480">(Jan 31 2024 at 05:24)</a>:</h4>
+<p>Can you paste the build log?</p>
+
+
+
+<a name="418970516"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970516" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970516">(Jan 31 2024 at 05:24)</a>:</h4>
+<p>sure, is there a way to make a collapsible text snippet in zulip?</p>
+
+
+
+<a name="418970542"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970542" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970542">(Jan 31 2024 at 05:25)</a>:</h4>
+<p>Yes, via spoilers: <a href="https://zulip.com/help/format-your-message-using-markdown#spoilers">https://zulip.com/help/format-your-message-using-markdown#spoilers</a></p>
+<p>But you can use regular Markdown code blocks as well</p>
+
+
+
+<a name="418970634"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970634" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970634">(Jan 31 2024 at 05:26)</a>:</h4>
+<p><a href="/user_uploads/60244/Xke_KYFbbFkk93l1-TAQ5saU/build.log">build.log</a><br>
+I'll just do it as a file</p>
+
+
+
+<a name="418970689"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970689" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970689">(Jan 31 2024 at 05:27)</a>:</h4>
+<p>Is that full build log? Can you paste the entire output of <code>nix develop -L</code> or <code>nix build -L</code>?</p>
+
+
+
+<a name="418970761"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970761" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970761">(Jan 31 2024 at 05:28)</a>:</h4>
+<p>it's pretty close.  let's try a spoiler block</p>
+<div class="spoiler-block"><div class="spoiler-header">
+<p>nix build -L</p>
+</div><div class="spoiler-content" aria-hidden="true">
+<p>warning: Git tree '/home/peddie/programming/rings' is dirty<br>
+singleton-bool&gt; Running phase: setupCompilerEnvironmentPhase<br>
+singleton-bool&gt; Build with /nix/store/0i135sf11k1vy8l181jkxamq18jfasjy-ghc-9.8.1.<br>
+singleton-bool&gt; Running phase: unpackPhase<br>
+singleton-bool&gt; unpacking source archive /nix/store/aya82ycp978lffwr5dhlxdikkihqjnp2-singleton-bool-0.1.6.tar.gz<br>
+singleton-bool&gt; source root is singleton-bool-0.1.6<br>
+singleton-bool&gt; setting SOURCE_DATE_EPOCH to timestamp 1000000000 of file singleton-bool-0.1.6/src/Data/Singletons/Bool.hs<br>
+singleton-bool&gt; Running phase: patchPhase<br>
+singleton-bool&gt; Replace Cabal file with edited version from mirror://hackage/singleton-bool-0.1.6/revision/2.cabal.<br>
+singleton-bool&gt; Running phase: compileBuildDriverPhase<br>
+singleton-bool&gt; setupCompileFlags: -package-db=/build/tmp.z1b55ghRmQ/setup-package.conf.d -j16 +RTS -A64M -RTS -threaded -rtsopts<br>
+singleton-bool&gt; [1 of 2] Compiling Main             ( Setup.hs, /build/tmp.z1b55ghRmQ/Main.o )<br>
+singleton-bool&gt; [2 of 2] Linking Setup<br>
+singleton-bool&gt; Running phase: updateAutotoolsGnuConfigScriptsPhase<br>
+singleton-bool&gt; Running phase: configurePhase<br>
+singleton-bool&gt; configureFlags: --verbose --prefix=/nix/store/9shs4z4ym0wyqs8dks47r40a70rvhxrl-singleton-bool-0.1.6 --libdir=$prefix/lib/$compiler/lib --libsubdir=$abi/$libname --docdir=/nix/store/6qk15snibs3b47m51xv82gws889rz54a-singleton-bool-0.1.6-doc/share/doc/singleton-bool-0.1.6 --with-gcc=gcc --package-db=/build/tmp.z1b55ghRmQ/package.conf.d --ghc-options=-j16 +RTS -A64M -RTS --disable-split-objs --enable-library-profiling --profiling-detail=exported-functions --disable-profiling --enable-shared --disable-coverage --enable-static --disable-executable-dynamic --enable-tests --disable-benchmarks --enable-library-vanilla --disable-library-for-ghci --ghc-option=-split-sections --ghc-options=-haddock --extra-lib-dirs=/nix/store/2dla9whd0hgqi4ygywrmv933bs8w8k7m-ncurses-6.4/lib --extra-lib-dirs=/nix/store/npfpil5nswlaqy7y56dwp0csj91pjiyd-libffi-3.4.4/lib --extra-lib-dirs=/nix/store/qnlgnpvh94xw2j3pm5f02iw102lx6llc-elfutils-0.190/lib --extra-lib-dirs=/nix/store/b5r5rikbdpr6qs4wfm6dxz9dbrmyvps6-gmp-with-cxx-6.3.0/lib<br>
+singleton-bool&gt; Using Parsec parser<br>
+singleton-bool&gt; Configuring singleton-bool-0.1.6...<br>
+singleton-bool&gt; CallStack (from HasCallStack):<br>
+singleton-bool&gt;   withMetadata, called at libraries/Cabal/Cabal/src/Distribution/Simple/Utils.hs:368:14 in Cabal-3.10.2.0-inplace:Distribution.Simple.Utils<br>
+singleton-bool&gt; Error: Setup: Encountered missing or private dependencies:<br>
+singleton-bool&gt; base &gt;=4.7 &amp;&amp; &lt;4.18, deepseq &gt;=1.3 &amp;&amp; &lt;1.5<br>
+error: build of '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' on 'ssh://danboduo' failed: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>
+error: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>
+error: 1 dependencies of derivation '/nix/store/jff2ylcbkn4byb32zjxagnymmb3wlqw6-lukko-0.1.1.3.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/h6w86zn4wbh60r69w6bb63jzpphcsk2p-cabal-install-3.10.2.1.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/2hpj5jfyjbm6d7fnkm29kqar2vmc2blv-source-connections-sdist.tar.gz.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/9z7krhisrzcykv08fsbnxnqnnkrm6cp9-source-rings-sdist.tar.gz.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/97z6rwvxqpm6w5dyahx7082vkg4fflg2-rings-0.2.drv' failed to build</p>
+</div></div>
+
+
+
+<a name="418970810"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970810" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970810">(Jan 31 2024 at 05:29)</a>:</h4>
+<p>I can do <code>nom build</code> if you want to see the graph I was looking at</p>
+
+
+
+<a name="418970892"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970892" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970892">(Jan 31 2024 at 05:30)</a>:</h4>
+<p>This one's better as it gives you a package stacktrace.  Look at the last few lines:</p>
+<ul>
+<li>singleton-bool</li>
+<li>lukko</li>
+<li>cabal-install</li>
+</ul>
+<p>In your flake, if you set <code>lukka.check = false;</code> it should disable building singleton-bool (assuming that's its test dependency)</p>
+
+
+
+<a name="418970913"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970913" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970913">(Jan 31 2024 at 05:30)</a>:</h4>
+<p>The flake you attached above only sets <code>lukko.jailbreak</code></p>
+
+
+
+<a name="418970929"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970929" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970929">(Jan 31 2024 at 05:30)</a>:</h4>
+<p>(All <code>jailbreak</code> does is make cabal disrespect the version constraints in dependencies)</p>
+
+
+
+<a name="418970951"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970951" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970951">(Jan 31 2024 at 05:31)</a>:</h4>
+<p>yes -- same error when setting <code>lukko.check = false</code> as I mentioned in the first message</p>
+
+
+
+<a name="418970971"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418970971" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418970971">(Jan 31 2024 at 05:31)</a>:</h4>
+<p>Are you sure it is the exact same log lines as well (not just same error message)?</p>
+
+
+
+<a name="418971020"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971020" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971020">(Jan 31 2024 at 05:32)</a>:</h4>
+<p>My guess is something else depends on singleton-bool, and you'll see this in the nix build log</p>
+
+
+
+<a name="418971053"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971053" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971053">(Jan 31 2024 at 05:32)</a>:</h4>
+<p>no, I'm not sure, here is the output with <code>lukko.check</code> set to <code>false</code></p>
+<div class="spoiler-block"><div class="spoiler-header">
+<p>nix build -L</p>
+</div><div class="spoiler-content" aria-hidden="true">
+<p>singleton-bool&gt; Running phase: setupCompilerEnvironmentPhase<br>
+singleton-bool&gt; Build with /nix/store/0i135sf11k1vy8l181jkxamq18jfasjy-ghc-9.8.1.<br>
+singleton-bool&gt; Running phase: unpackPhase<br>
+singleton-bool&gt; unpacking source archive /nix/store/aya82ycp978lffwr5dhlxdikkihqjnp2-singleton-bool-0.1.6.tar.gz<br>
+singleton-bool&gt; source root is singleton-bool-0.1.6<br>
+singleton-bool&gt; setting SOURCE_DATE_EPOCH to timestamp 1000000000 of file singleton-bool-0.1.6/src/Data/Singletons/Bool.hs<br>
+singleton-bool&gt; Running phase: patchPhase<br>
+singleton-bool&gt; Replace Cabal file with edited version from mirror://hackage/singleton-bool-0.1.6/revision/2.cabal.<br>
+singleton-bool&gt; Running phase: compileBuildDriverPhase<br>
+singleton-bool&gt; setupCompileFlags: -package-db=/build/tmp.zzip926rdA/setup-package.conf.d -j16 +RTS -A64M -RTS -threaded -rtsopts<br>
+singleton-bool&gt; [1 of 2] Compiling Main             ( Setup.hs, /build/tmp.zzip926rdA/Main.o )<br>
+singleton-bool&gt; [2 of 2] Linking Setup<br>
+singleton-bool&gt; Running phase: updateAutotoolsGnuConfigScriptsPhase<br>
+singleton-bool&gt; Running phase: configurePhase<br>
+singleton-bool&gt; configureFlags: --verbose --prefix=/nix/store/9shs4z4ym0wyqs8dks47r40a70rvhxrl-singleton-bool-0.1.6 --libdir=$prefix/lib/$compiler/lib --libsubdir=$abi/$libname --docdir=/nix/store/6qk15snibs3b47m51xv82gws889rz54a-singleton-bool-0.1.6-doc/share/doc/singleton-bool-0.1.6 --with-gcc=gcc --package-db=/build/tmp.zzip926rdA/package.conf.d --ghc-options=-j16 +RTS -A64M -RTS --disable-split-objs --enable-library-profiling --profiling-detail=exported-functions --disable-profiling --enable-shared --disable-coverage --enable-static --disable-executable-dynamic --enable-tests --disable-benchmarks --enable-library-vanilla --disable-library-for-ghci --ghc-option=-split-sections --ghc-options=-haddock --extra-lib-dirs=/nix/store/2dla9whd0hgqi4ygywrmv933bs8w8k7m-ncurses-6.4/lib --extra-lib-dirs=/nix/store/npfpil5nswlaqy7y56dwp0csj91pjiyd-libffi-3.4.4/lib --extra-lib-dirs=/nix/store/qnlgnpvh94xw2j3pm5f02iw102lx6llc-elfutils-0.190/lib --extra-lib-dirs=/nix/store/b5r5rikbdpr6qs4wfm6dxz9dbrmyvps6-gmp-with-cxx-6.3.0/lib<br>
+singleton-bool&gt; Using Parsec parser<br>
+singleton-bool&gt; Configuring singleton-bool-0.1.6...<br>
+singleton-bool&gt; CallStack (from HasCallStack):<br>
+singleton-bool&gt;   withMetadata, called at libraries/Cabal/Cabal/src/Distribution/Simple/Utils.hs:368:14 in Cabal-3.10.2.0-inplace:Distribution.Simple.Utils<br>
+singleton-bool&gt; Error: Setup: Encountered missing or private dependencies:<br>
+singleton-bool&gt; base &gt;=4.7 &amp;&amp; &lt;4.18, deepseq &gt;=1.3 &amp;&amp; &lt;1.5<br>
+error: build of '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' on 'ssh://danboduo' failed: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>
+error: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>
+error: 1 dependencies of derivation '/nix/store/jff2ylcbkn4byb32zjxagnymmb3wlqw6-lukko-0.1.1.3.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/h6w86zn4wbh60r69w6bb63jzpphcsk2p-cabal-install-3.10.2.1.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/2hpj5jfyjbm6d7fnkm29kqar2vmc2blv-source-connections-sdist.tar.gz.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/ainss91nhn73kfkdbksfk23q806nsq9v-source-rings-sdist.tar.gz.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/pfwqipvwwc2afvyxlqv6h33w50grlwqw-rings-0.2.drv' failed to build</p>
+</div></div>
+
+
+
+<a name="418971081"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971081" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971081">(Jan 31 2024 at 05:32)</a>:</h4>
+<p>to me it still looked as if it's due to <code>lukko</code></p>
+
+
+
+<a name="418971186"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971186" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971186">(Jan 31 2024 at 05:34)</a>:</h4>
+<p>Why are you jailbreaking cabal-install btw?</p>
+
+
+
+<a name="418971216"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971216" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971216">(Jan 31 2024 at 05:34)</a>:</h4>
+<p>just another random thing I tried at some point</p>
+
+
+
+<a name="418971257"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971257" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971257">(Jan 31 2024 at 05:35)</a>:</h4>
+<p>All of this happening as a result of overriding cabal-install as that. If you don't know why you did it, just remove it and try again.</p>
+
+
+
+<a name="418971266"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971266" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971266">(Jan 31 2024 at 05:35)</a>:</h4>
+<p>I did remove it, it looks like the same problem</p>
+
+
+
+<a name="418971280"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971280" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971280">(Jan 31 2024 at 05:35)</a>:</h4>
+<p>Logs?</p>
+
+
+
+<a name="418971294"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971294" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971294">(Jan 31 2024 at 05:35)</a>:</h4>
+<div class="spoiler-block"><div class="spoiler-header">
+<p>nix build -L (without cabal overridden)</p>
+</div><div class="spoiler-content" aria-hidden="true">
+<p>warning: Git tree '/home/peddie/programming/rings' is dirty<br>
+singleton-bool&gt; Running phase: setupCompilerEnvironmentPhase<br>
+singleton-bool&gt; Build with /nix/store/0i135sf11k1vy8l181jkxamq18jfasjy-ghc-9.8.1.<br>
+singleton-bool&gt; Running phase: unpackPhase<br>
+singleton-bool&gt; unpacking source archive /nix/store/aya82ycp978lffwr5dhlxdikkihqjnp2-singleton-bool-0.1.6.tar.gz<br>
+singleton-bool&gt; source root is singleton-bool-0.1.6<br>
+singleton-bool&gt; setting SOURCE_DATE_EPOCH to timestamp 1000000000 of file singleton-bool-0.1.6/src/Data/Singletons/Bool.hs<br>
+singleton-bool&gt; Running phase: patchPhase<br>
+singleton-bool&gt; Replace Cabal file with edited version from mirror://hackage/singleton-bool-0.1.6/revision/2.cabal.<br>
+singleton-bool&gt; Running phase: compileBuildDriverPhase<br>
+singleton-bool&gt; setupCompileFlags: -package-db=/build/tmp.vuGByZQCdA/setup-package.conf.d -j16 +RTS -A64M -RTS -threaded -rtsopts<br>
+singleton-bool&gt; [1 of 2] Compiling Main             ( Setup.hs, /build/tmp.vuGByZQCdA/Main.o )<br>
+singleton-bool&gt; [2 of 2] Linking Setup<br>
+singleton-bool&gt; Running phase: updateAutotoolsGnuConfigScriptsPhase<br>
+singleton-bool&gt; Running phase: configurePhase<br>
+singleton-bool&gt; configureFlags: --verbose --prefix=/nix/store/9shs4z4ym0wyqs8dks47r40a70rvhxrl-singleton-bool-0.1.6 --libdir=$prefix/lib/$compiler/lib --libsubdir=$abi/$libname --docdir=/nix/store/6qk15snibs3b47m51xv82gws889rz54a-singleton-bool-0.1.6-doc/share/doc/singleton-bool-0.1.6 --with-gcc=gcc --package-db=/build/tmp.vuGByZQCdA/package.conf.d --ghc-options=-j16 +RTS -A64M -RTS --disable-split-objs --enable-library-profiling --profiling-detail=exported-functions --disable-profiling --enable-shared --disable-coverage --enable-static --disable-executable-dynamic --enable-tests --disable-benchmarks --enable-library-vanilla --disable-library-for-ghci --ghc-option=-split-sections --ghc-options=-haddock --extra-lib-dirs=/nix/store/2dla9whd0hgqi4ygywrmv933bs8w8k7m-ncurses-6.4/lib --extra-lib-dirs=/nix/store/npfpil5nswlaqy7y56dwp0csj91pjiyd-libffi-3.4.4/lib --extra-lib-dirs=/nix/store/qnlgnpvh94xw2j3pm5f02iw102lx6llc-elfutils-0.190/lib --extra-lib-dirs=/nix/store/b5r5rikbdpr6qs4wfm6dxz9dbrmyvps6-gmp-with-cxx-6.3.0/lib<br>
+singleton-bool&gt; Using Parsec parser<br>
+singleton-bool&gt; Configuring singleton-bool-0.1.6...<br>
+singleton-bool&gt; CallStack (from HasCallStack):<br>
+singleton-bool&gt;   withMetadata, called at libraries/Cabal/Cabal/src/Distribution/Simple/Utils.hs:368:14 in Cabal-3.10.2.0-inplace:Distribution.Simple.Utils<br>
+singleton-bool&gt; Error: Setup: Encountered missing or private dependencies:<br>
+singleton-bool&gt; base &gt;=4.7 &amp;&amp; &lt;4.18, deepseq &gt;=1.3 &amp;&amp; &lt;1.5<br>
+error: build of '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' on 'ssh://danboduo' failed: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>
+error: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>
+error: 1 dependencies of derivation '/nix/store/jff2ylcbkn4byb32zjxagnymmb3wlqw6-lukko-0.1.1.3.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/h6w86zn4wbh60r69w6bb63jzpphcsk2p-cabal-install-3.10.2.1.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/2hpj5jfyjbm6d7fnkm29kqar2vmc2blv-source-connections-sdist.tar.gz.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/224qy6xglcxmzrgwd5f7x4i1faw0p4l4-source-rings-sdist.tar.gz.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/5srwd2dfdqj1rayrlbf20s2lji77bmm9-rings-0.2.drv' failed to build</p>
+</div></div>
+
+
+
+<a name="418971355"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971355" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971355">(Jan 31 2024 at 05:36)</a>:</h4>
+<p>Is this something I can reproduce locally on my machine?</p>
+
+
+
+<a name="418971401"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971401" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971401">(Jan 31 2024 at 05:37)</a>:</h4>
+<p>I would hope so, that is the idea of nix, right?  :)  I can send you my <code>flake.lock</code>, I just have the flake files inside my local checkout of <code>rings</code> with no other changes<br>
+<a href="/user_uploads/60244/FZgTZek-DVBM0xLARjem0wsa/flake.nix">flake.nix</a><br>
+<a href="/user_uploads/60244/jvZSQ-ujyIwZX3eDEKyCnK3F/flake.lock">flake.lock</a></p>
+
+
+
+<a name="418971402"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971402" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971402">(Jan 31 2024 at 05:37)</a>:</h4>
+<p>A minimal repro as git repo would be nice</p>
+
+
+
+<a name="418971497"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971497" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971497">(Jan 31 2024 at 05:38)</a>:</h4>
+<p>OK I can make my own copy of <code>rings</code> and add those files if that is that much easier</p>
+
+
+
+<a name="418971696"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971696" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971696">(Jan 31 2024 at 05:41)</a>:</h4>
+<p><a href="https://github.com/peddie/rings">https://github.com/peddie/rings</a>  branch <code>flake</code></p>
+
+
+
+<a name="418971715"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971715" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971715">(Jan 31 2024 at 05:41)</a>:</h4>
+<p>On macOS or Linux?</p>
+
+
+
+<a name="418971720"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418971720" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418971720">(Jan 31 2024 at 05:41)</a>:</h4>
+<p>linux</p>
+
+
+
+<a name="418972136"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972136" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972136">(Jan 31 2024 at 05:47)</a>:</h4>
+<p>It is building the world ...</p>
+
+
+
+<a name="418972227"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972227" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972227">(Jan 31 2024 at 05:48)</a>:</h4>
+<p>that seems like the normal process for using nix, so I'll interpret that as a good thing</p>
+
+
+
+<a name="418972249"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972249" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972249">(Jan 31 2024 at 05:48)</a>:</h4>
+<p>nixos cache caches only <code>pkgs.haskellPackages</code> I think</p>
+
+
+
+<a name="418972255"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972255" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972255">(Jan 31 2024 at 05:48)</a>:</h4>
+<p>thanks for taking a look.  I hope it's not something dumb caused by my lack of nix knowledge</p>
+
+
+
+<a name="418972278"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972278" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972278">(Jan 31 2024 at 05:49)</a>:</h4>
+<p>By the way, <span class="user-mention" data-user-id="682919">@locallycompact</span> is working on Horizon Haskell which provides package sets with caching, but there's one minor issue to resolve first: <a href="#narrow/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake">https://nixos.zulipchat.com/#narrow/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake</a></p>
+
+
+
+<a name="418972311"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972311" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972311">(Jan 31 2024 at 05:49)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="688147">Matt Peddie</span> <a href="#narrow/stream/413949-haskell-flake/topic/problem.20with.20dependency.20versions/near/418972255">said</a>:</p>
+<blockquote>
+<p>thanks for taking a look.  I hope it's not something dumb caused by my lack of nix knowledge</p>
+</blockquote>
+<p>We are actually writing a tutorial series to introduce Haskellers to Nix:</p>
+<p><a href="https://nixos.asia/en/nixify-haskell">https://nixos.asia/en/nixify-haskell</a></p>
+
+
+
+<a name="418972340"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972340" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972340">(Jan 31 2024 at 05:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/problem.20with.20dependency.20versions/near/418972249">said</a>:</p>
+<blockquote>
+<p>nixos cache caches only <code>pkgs.haskellPackages</code> I think</p>
+</blockquote>
+<p>ah, damn, OK.  I have a big remote builder under my desk and occasionally try to use CUDA with nix, so I long ago gave up paying attention to whether and how the caches were working</p>
+
+
+
+<a name="418972363"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972363" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972363">(Jan 31 2024 at 05:50)</a>:</h4>
+<p>(on top of the <a href="https://nixos.asia/en/nix-tutorial">Nix series</a>)</p>
+
+
+
+<a name="418972401"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972401" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972401">(Jan 31 2024 at 05:50)</a>:</h4>
+<p>Alright, your repo failed on Linux for me with a different error:</p>
+<p><a href="/user_uploads/60244/y9UemkKJqBzIldlG6dKrlCjS/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/y9UemkKJqBzIldlG6dKrlCjS/image.png" title="image.png"><img src="/user_uploads/60244/y9UemkKJqBzIldlG6dKrlCjS/image.png"></a></div>
+
+
+
+<a name="418972404"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972404" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972404">(Jan 31 2024 at 05:50)</a>:</h4>
+<p>very cool about the tutorial!  I'll give it a read.  I already appreciated your good <code>haskell-flake</code> docs many times</p>
+
+
+
+<a name="418972447"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972447" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972447">(Jan 31 2024 at 05:51)</a>:</h4>
+<p>I haven't seen that error.  what happened to reproducibility?</p>
+
+
+
+<a name="418972450"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972450" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972450">(Jan 31 2024 at 05:51)</a>:</h4>
+<p>That ^ was the result of running <code>nix develop -L</code>.</p>
+<p>Let me try <code>nix build -L</code> now.</p>
+
+
+
+<a name="418972475"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972475" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972475">(Jan 31 2024 at 05:51)</a>:</h4>
+<p>the shell builds more packages than the package, necessarily. like HLS</p>
+
+
+
+<a name="418972539"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972539" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972539">(Jan 31 2024 at 05:52)</a>:</h4>
+<p>Okay, I see it now: <br>
+<a href="/user_uploads/60244/EAmoxB1G_mWF1c2Lm1-EHcB7/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/EAmoxB1G_mWF1c2Lm1-EHcB7/image.png" title="image.png"><img src="/user_uploads/60244/EAmoxB1G_mWF1c2Lm1-EHcB7/image.png"></a></div>
+
+
+
+<a name="418972557"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972557" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972557">(Jan 31 2024 at 05:52)</a>:</h4>
+<p>I am guessing HLS doesn't work with 9.8.1 yet, or at least requires significant tweaking (in my experience it's a miracle when HLS runs OK)</p>
+
+
+
+<a name="418972602"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972602" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972602">(Jan 31 2024 at 05:53)</a>:</h4>
+<p>right so <code>singleton-bool-0.1.7</code> has those upper version bounds relaxed and I think should work, but I can't figure out why the package set contains <code>singleton-bool-0.1.6</code> at all . . .</p>
+
+
+
+<a name="418972736"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972736" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972736">(Jan 31 2024 at 05:54)</a>:</h4>
+<p>Regarding jailbreaking finite-typelits, you probably need latest anyway: <a href="https://github.com/mniip/finite-typelits/commit/03600fbac084e6bc6b95957665d6ceedb3722358">https://github.com/mniip/finite-typelits/commit/03600fbac084e6bc6b95957665d6ceedb3722358</a></p>
+
+
+
+<a name="418972762"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972762" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972762">(Jan 31 2024 at 05:55)</a>:</h4>
+<p>But it is just test change, so we can check=false it</p>
+
+
+
+<a name="418972781"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972781" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972781">(Jan 31 2024 at 05:55)</a>:</h4>
+<p>thanks for the tip, I'll just get that from git then</p>
+
+
+
+<a name="418972988"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418972988" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418972988">(Jan 31 2024 at 05:58)</a>:</h4>
+<p>I see what's happening. <span class="user-mention" data-user-id="688147">@Matt Peddie</span> Try the <code>no-fromSdist</code> branch of haskell-flake for now.</p>
+
+
+
+<a name="418973027"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418973027" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418973027">(Jan 31 2024 at 05:58)</a>:</h4>
+<p>And looks like we need to do this after all:</p>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake/near/416022231">said</a>:</p>
+<blockquote>
+<p>One thing we should do is allow the user to disable the use of cabalSdist (toggle on/off module option).</p>
+</blockquote>
+
+
+
+<a name="418973072"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418973072" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418973072">(Jan 31 2024 at 05:59)</a>:</h4>
+<p>trying now.  what exactly is going on, if you don't mind?  how did, for example, disabling <code>lukko</code> tests not solve the problem?</p>
+
+
+
+<a name="418973099"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418973099" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418973099">(Jan 31 2024 at 05:59)</a>:</h4>
+<p>cc <span class="user-mention" data-user-id="679956">@Robert Hensing</span> - looks like our use of fromSdist is building its own <code>cabal-install</code> ignoring what's in the user's package set. Which was causing this problem.</p>
+
+
+
+<a name="418973141"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418973141" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418973141">(Jan 31 2024 at 06:00)</a>:</h4>
+<p>This ^ was going on I think. I'll file an issue on github.</p>
+
+
+
+<a name="418973264"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/418973264" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#418973264">(Jan 31 2024 at 06:01)</a>:</h4>
+<p>cool, I appreciate you taking the time for this.  keep up the good work on <code>haskell-flake</code>.  I look forward to learning to wield it more effectively from your tutorials</p>
+
+
+
+<a name="419005309"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/419005309" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#419005309">(Jan 31 2024 at 10:07)</a>:</h4>
+<p><span class="user-mention" data-user-id="688147">@Matt Peddie</span> Can you let me know if <a href="https://github.com/srid/haskell-flake/pull/220">https://github.com/srid/haskell-flake/pull/220</a> fixes it?</p>
+
+
+
+<a name="419134097"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/419134097" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#419134097">(Jan 31 2024 at 22:23)</a>:</h4>
+<p>trying it now, but I'm not quite sure from looking at the patch and the discussion for which component I should be setting this new flag.  <code>cabal-install</code>?  at a meta-level, this confusion may be supporting evidence for </p>
+<blockquote>
+<p>Because these kinds of issues are not straightforward to debug without knowledge of the nixpkgs Haskell infrastructure.</p>
+</blockquote>
+
+
+
+<a name="419137068"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/419137068" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Matt Peddie <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#419137068">(Jan 31 2024 at 22:44)</a>:</h4>
+<p><a href="https://github.com/srid/haskell-flake/pull/221">https://github.com/srid/haskell-flake/pull/221</a> seems to work OK, though</p>
+
+
+
+<a name="419165943"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/cabal-install%20ignoring%20user%27s%20package%20set/near/419165943" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user.27s.20package.20set.html#419165943">(Feb 01 2024 at 03:25)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="688147">Matt Peddie</span> <a href="#narrow/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user's.20package.20set/near/419137068">said</a>:</p>
+<blockquote>
+<p><a href="https://github.com/srid/haskell-flake/pull/221">https://github.com/srid/haskell-flake/pull/221</a> seems to work OK, though</p>
+</blockquote>
+<p>Awesome, we are planning to merge 221 only (not 220).</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

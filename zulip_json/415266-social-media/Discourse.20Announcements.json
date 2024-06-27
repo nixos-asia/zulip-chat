@@ -1,0 +1,800 @@
+[
+    {
+        "content": "<h2>NixOS 23.11 released!</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/nixos-23-11-released/36210\">https://discourse.nixos.org/t/nixos-23-11-released/36210</a><br>\nPublished Date: Wed, 29 Nov 2023 21:03:16 +0000</p>\n<blockquote>\n<p>Hi everyone,</p>\n<p>We are very pleased to announce the public availability of NixOS 23.11 (the Linux distribution) and nixpkgs 23.11 (the package set), under the codename “Tapir”.</p>\n<p>Release Announcement</p>\n<p>Release Notes</p>\n<p>Upgrade Instructions</p>\n<p>Downloads</p>\n<p>This release was made possible by the effort of over 2100 contributors. I want to say thank you to everyone in the community for working on this.</p>\n<p>A highlight of the release is GNOME 45, which introduced a new image viewer and a new camera app. The GNOME team has been working on the update for the past 4 months, and the update was able to make the cut right before the release.</p>\n<p>Another highlight is the update of the default version of the LLVM package set from 11 to 16 on both Linux and Darwin. @reckenrode has worked hard on this to make this transition as seemingless as possible.</p>\n<p>A lot more features and improvements also made it into the release, the full list can be found in the release notes .</p>\n<p>The 23.05 “Stoat” release is now officially deprecated, and will reach its end-of-life and stop receiving security updates after 2023-12-31. Please schedule your upgrades accordingly.</p>\n<p>We are scheduling a retrospective for 2023-12-09. If you have something to contribute, please join the release management room , where the URL will be announced.</p>\n<p>I would like to thank @RaitoBezarius for guiding me through everything, the release editors (@alejandrosame and @riotbib ) for working on the release notes. And special thanks to @riotbib for taking the picture for the release artwork , and @infinisil for the clutch at the final release meeting.</p>\n<p>Enjoy the new release!</p>\n<p>17 posts - 12 participants</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 405117237,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701350742
+    },
+    {
+        "content": "<h2>The garn devlog</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/the-garn-devlog/36297\">https://discourse.nixos.org/t/the-garn-devlog/36297</a><br>\nPublished Date: Fri, 01 Dec 2023 10:50:33 +0000</p>\n<blockquote>\n<p>garn is an effort to give a Typescript-based alternative to Nix, and an easier CLI interface. It’s been discussed before , but development is happening very quickly, so I thought I’d create a devlog thread here. If you don’t want to hear more about it, you can mute it, and if you do, you can follow it.</p>\n<p>2 posts - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 405336561,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701427944
+    },
+    {
+        "content": "<h2>Alt F4 working on kickstarter</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/alt-f4-working-on-kickstarter/36360\">https://discourse.nixos.org/t/alt-f4-working-on-kickstarter/36360</a><br>\nPublished Date: Sat, 02 Dec 2023 20:10:32 +0000</p>\n<blockquote>\n<p>Twitch (live)</p>\n<p>working on</p>\n<p>GitHub</p>\n<p>GitHub - ALT-F4-LLC/kickstart.nix: Kickstart your Nix environment.</p>\n<p>Kickstart your Nix environment. Contribute to ALT-F4-LLC/kickstart.nix development by creating an account on GitHub.</p>\n<p>contribute if you want! or DONT!</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 405564003,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701548634
+    },
+    {
+        "content": "<h2>NixCon NA 2024 - Call for Proposals!</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/nixcon-na-2024-call-for-proposals/36491\">https://discourse.nixos.org/t/nixcon-na-2024-call-for-proposals/36491</a><br>\nPublished Date: Tue, 05 Dec 2023 16:36:29 +0000</p>\n<blockquote>\n<p>Hey everyone! The Call for Proposals for NixCon NA 2024 is officially open and we’re inviting you to submit proposals for talks and workshops. We’d love to provide you a platform for you to share your ideas, projects, and experiences with Nix and NixOS with the rest of the community.</p>\n<p>You can submit your proposals at the following link: NixCon NA 2024 - CFP</p>\n<p>The last day to submit proposals is December 31st, so there’s a little less than a month remaining. We know this isn’t much time, but we’re putting this together on a short timeline, so we need your help to make this event a success!</p>\n<p>The conference will consist of two days:</p>\n<p>Day 1: Workshops. We’d like this to be an opportunity for new users and the Nix-curious alike to gain valuable experience using Nix to solve their problems. This is also an opportunity to get help and advice from experienced Nix users, which can be incredibly helpful when you’re getting started with Nix. Workshops will be 90-minutes each, and we plan to have multiple workshops running in parallel so that there’s a wide variety of topics for attendees to choose from at any point in time.</p>\n<p>Day 2: Talks. What’s a conference without talks? Talks will be given in a single track, and each talk will be 25 minutes. Again, we’d like this event to be accessible for those with little or no Nix experience, so we welcome introductory level talks that teach or explain Nix concepts that new Nix users struggle with.</p>\n<p>As part of the submission process you will indicate whether you’re submitting a proposal for a talk or a workshop. Feel free to make as many submissions as you like to either or both categories.</p>\n<p>Also, even though we want to make the event beginner friendly, advanced technical talks and workshops are still welcome!</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 406100770,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701794374
+    },
+    {
+        "content": "<h2>NixOS S3 Long Term Resolution - Phase 1</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/nixos-s3-long-term-resolution-phase-1/36493\">https://discourse.nixos.org/t/nixos-s3-long-term-resolution-phase-1/36493</a><br>\nPublished Date: Tue, 05 Dec 2023 17:07:46 +0000</p>\n<blockquote>\n<p>Quick Recap:</p>\n<p>As we need to expedite our timelines in optimizing our S3 Cache, the NixOS Foundation is supporting a “Phase 1” effort via initial funding of 10,000 EUR.</p>\n<p>The total estimated project funds are 30,000 EUR and we are also announcing the Open Collective Project for those that wish to donate and support the effort!</p>\n<p>We hope that this effort also helps us learn how to go about allocating funds to the community and if you’re interested in partaking in the wider community discussion about that please do reach out and/or visit NixCon Governance Workshop - Announcements - NixOS Discourse .</p>\n<p>Initial Background &amp; Prior Recaps</p>\n<p>After we reached a short term resolution for our S3 binary cache situation (NixOS S3 Short Term Resolution! - Announcements - NixOS Discourse ), a number of awesome folks across the community stepped up to begin researching a long term solution.</p>\n<p>The community members involved have been sharing updates on progress and discussion . (add links to github repo as well)</p>\n<p>About a month ago, an ad-hoc working group was formed following the creation of the issue Garbage-collect <a href=\"http://cache.nixos.org\">cache.nixos.org</a> · Issue #282 · NixOS/nixos-org-configurations · GitHub . The first meeting happened on the 24th October (notes and further notes can be found in: 2023-10-24 re: Long-term S3 cache solutions meeting minutes #1 ).</p>\n<p>A team composed of @zimbatm , @edolstra , @RaitoBezarius , @flokli and @edef quickly formed to answer multiple questions, notably the cache’s bucket growth per year and our need to reduce our cache footprint in AWS.</p>\n<p>From this team’s activities, two solutions emerged:</p>\n<p>Garbage collection of historical data</p>\n<p>Deduplication of historical data</p>\n<p>The team found that the cache’s bucket growth per year was increasing, implying that a brutal garbage collection would be a short term solution, one that causes us to lose historical data and buys us an unknown amount of time. Our estimates suggest it would only buy us 6 months to 2 years, depending on how Nixpkgs needs evolve, with estimates suggesting roughly 1 year.</p>\n<p>After this, there was an initial agreement to prioritize the deduplication solution and only perform the garbage collection as a last-resort measure, if needed at all.</p>\n<p>During the following month, @flokli and @edef , in charge of the deduplication solution, worked in their free time to build a bespoke set of tools to analyze <a href=\"http://cache.nixos.org\">cache.nixos.org</a> . For example, they created. a fast .narinfo parser that imports all of the data into Clickhouse to perform various analytics and guide the solution. Many more examples of the team’s tooling can be found in the detailed notes.</p>\n<p>The team looked at:</p>\n<p>Fastly logs</p>\n<p>S3 bucket logs</p>\n<p>A SQLite database that @edolstra provided which contains a mapping of channel bumps to store paths (and their size)</p>\n<p>Data analysis is still ongoing and is focusing on questions like “what would be the request rate to cold paths that would be deduplicated?” that might shed light on the scalability of the reassembly component, i.e. the piece of software responsible for reassembling the deduplicated pieces into a full NAR that gets cached by the Fastly CDN.</p>\n<p>In the meantime, we discussed the potential gains might see with deduplication, and it is hard to answer. In the past, projects like nix-casync provided deduplication down to 20% of the original uncompressed size.</p>\n<p>In the past weeks, @flokli and @edef have started tuning the fast content-defined chunker parameters to determine the optimal parameters with respect to the cache data.</p>\n<p>To do so, they took multiple channel bumps, ingested them on a server in the same AWS region as our bucket, read through all NARs of a given channel bump, uncompressed and decomposed the NARs, fed all blobs into a content-defined chunker, and recorded the deduplication metadata chunk length (compressed+uncompressed) and digest. The actual chunk data itself was not stored, as this process was mostly there to find good parameters, balancing chunk size and compression possibilities (i.e. when chunks are smaller, the compression context window is smaller and compression performs worse, but we get a better chance to deduplicate).</p>\n<p>During that process, they uncovered that xz decompression is a big bottleneck while ingesting the existing NARs. After ingesting 3 channel bumps separated each by the months, the recorded total size of the data was 71% of the original compressed size (including metadata). Note that these numbers are just small samples of the entire dataset, using one picked chunk size and store paths further apart in time than we usually have in channel bumps, constructing a bad-case scenario. Adding another two channel bumps, each two weeks apart brought the recorded size down to 65% of the original compressed size. One of the next steps are to further explore the parameter space to figure out which ones make sense for <a href=\"http://cache.nixos.org\">cache.nixos.org</a> as a whole.</p>\n<p>Next Steps &amp; Initial Plan</p>\n<p>As we approach the halfway mark of our 12-month AWS funding (9,000 USD/month), the urgency for a sustainable solution is higher, especially given the significant growth in our cache expenses (November charge 13,728 USD split between S3 storage - 8,696.88 and data transfer - 4,776.67).</p>\n<p>We’re excited to announce a major step forward: an initiative led by @flokli and @edef , targeting an accelerated milestone for the long term resolution plan:</p>\n<p>Cache analytics: support technical decision-making on where to deploy things with respect to our needs for performance (latency, parallel requests, etc.)</p>\n<p>Deduplication analytics: explore the parameter space of the chunker and data structures for metadata.</p>\n<p>NAR reassembly: extend “nar-bridge” to support operating where NAR reassembly would happen (AWS Lambda or Fastly Compute@Edge), and to support the used storage model</p>\n<p>Enablement: extend Fastly 404 handler to reroute historical data to this new S3 store and delete the old data from the main S3 binary cache</p>\n<p>As timing is crucial on this project, the NixOS Foundation will fund the first 10,000 EUR to enable us to get going. In parallel, we plan to open up an Open Collective project to raise the remaining ca. 20,000 EUR for those who want to take part in helping make progress on our S3 cache needs.</p>\n<p>If you want to support the project please visit the Open Collective project page or reach out to us at the foundation (<a href=\"mailto:foundation@nixos.org\">foundation@nixos.org</a> ).</p>\n<p>Background on Funding/AWS and Additional Context</p>\n<p>As <a href=\"http://cache.nixos.org\">cache.nixos.org</a> serves as a critical resource to the community, it is essential for the Foundation to empower active contributors to expedite work on critical areas via funding. In this case, deduplication efforts can significantly enhance the efficiency of <a href=\"http://cache.nixos.org\">cache.nixos.org</a> . This, in turn, can lead to additional benefits such as supporting contributors relying more on the cache, e.g. debug symbols . This task is difficult and requires prior expertise with how Nix has been storing things in the past and knowledge of state-of-the-art solutions that are better at storing things without compromising on performance. Furthermore, all of this has to be done in a tight timeline without compromising the integrity of the data manipulated.</p>\n<p>In this instance, the Foundation will be investing into the deduplication group to provide a sustainable solution to the cache’s size. We considered multiple alternatives, such as:</p>\n<p>Performing garbage collection</p>\n<p>Removing more aggressively staging data</p>\n<p>Removing the copies of NixOS ISOs published on <a href=\"http://releases.nixos.org\">releases.nixos.org</a></p>\n<p>Using off-the-shelf community software such as GitHub - zhaofengli/attic: Multi-tenant Nix Binary Cache</p>\n<p>As mentioned above, some of those solutions may only buy us a short amount of time and will require another intervention. Other solutions may significantly degrade the contributing experience in Nixpkgs, since active contributors rely on the presence of the staging data to perform large-scale bisections and root cause analysis of the whole ecosystem ( README - hydrasect - Prioritize commits evaluated by Hydra when bisecting Nixpkgs is an example of such a tool). Finally, in regard to existing tooling, we uncovered that such tools would not necessarily have an optimal out-of-the-box performance, and we have not dug into them to gain familiarity with all the failure modes they could exhibit.</p>\n<p>Why does this matter? A wider recap can be found in the NixOS Discourse (The NixOS Foundation’s Call to Action: S3 Costs Require Community Support - Announcements - NixOS Discourse )</p>\n<p>Cost Efficiency: Reducing our cache size directly impacts our ongoing expenses, making our operations more economical.</p>\n<p>Future-Proofing: As Nix keeps growing, we need to deploy long term strategies that can keep matters as sustainable as possible. This will also help in demonstrating our commitment to sustainability which strengthens our case for continued AWS support or other potential partnerships.</p>\n<p>Community Involvement: We’re inviting more hands and minds to join in. Your participation, be it through volunteering, funding, or sharing ideas, is critical.</p>\n<p>We want to thank everyone again for rallying around the S3 and Cache needs. Please reach out, participate, and share feedback whenever you can. <a href=\"https://matrix.to/#/#binary-cache-selfhosting:nixos.org\">https://matrix.to/#/#binary-cache-selfhosting:nixos.org</a></p>\n<p>This announcement was written by @edolstra @ron and @zimbatm with the help of @RaitoBezarius and @fricklerhandwerk .</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 406107382,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701796135
+    },
+    {
+        "content": "<h2>Announcing <a href=\"http://landscape.nixlang.wiki\">landscape.nixlang.wiki</a>, a Nix equivalent of the CNCF landscape</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/announcing-landscape-nixlang-wiki-a-nix-equivalent-of-the-cncf-landscape/36532\">https://discourse.nixos.org/t/announcing-landscape-nixlang-wiki-a-nix-equivalent-of-the-cncf-landscape/36532</a><br>\nPublished Date: Wed, 06 Dec 2023 10:52:18 +0000</p>\n<blockquote>\n<p>I’m happy to announce <a href=\"https://landscape.nixlang.wiki/\">https://landscape.nixlang.wiki/</a> , a daughter project of <a href=\"https://nixlang.wiki\">https://nixlang.wiki</a> , aiming to map the various Nix and Nix adjacent projects, and make them easier for beginners to discover.</p>\n<p>The project is based on landscape2, the upcoming rust version of the CNCF landscape, of which we maintain our own fork with some changes GitHub - nixlang-wiki/landscape2: Landscape2 is a tool that generates interactive landscapes websites .</p>\n<p>While the project is still early in its development cycle, it’s no longer in its infancy, and we believe that most people should be able to contribute additions to the landscape at this point, and if not, we’ll gladly receive issues with suggestions and see what we can do at GitHub - nixlang-wiki/nixos-landscape: The Landscape of NixOS and associated projects .</p>\n<p>We hope to see your contributions, and can’t wait to see how the landscape will look once it gets filled out.</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 406280772,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701860401
+    },
+    {
+        "content": "<h2>NixThePlanet - Run macOS, Windows and more via a single Nix command + nixosModules</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/nixtheplanet-run-macos-windows-and-more-via-a-single-nix-command-nixosmodules/36634\">https://discourse.nixos.org/t/nixtheplanet-run-macos-windows-and-more-via-a-single-nix-command-nixosmodules/36634</a><br>\nPublished Date: Sat, 09 Dec 2023 03:35:51 +0000</p>\n<blockquote>\n<p>GitHub</p>\n<p>GitHub - MatthewCroughan/NixThePlanet: Run macOS, Windows and more via a...</p>\n<p>Run macOS, Windows and more via a single Nix command, or simple nixosModules - GitHub - MatthewCroughan/NixThePlanet: Run macOS, Windows and more via a single Nix command, or simple nixosModules</p>\n<p>I was nerd sniped by @Enzime at <a href=\"http://nix.camp\">nix.camp</a> into implementing this, and here it is, over two months of painstaking work and reproducibility testing. See the README.md for more details of how it works, but the TL;DR is that it uses TCL Expect and Tesseract OCR together to automate the installation of archaic operating systems and boil them down to a single Nix command, or nixosModule.</p>\n<p>The main attraction, I’m sure is going to be macOS, which you can enable from this flake with:</p>\n<p>services.macos-ventura.enable = true</p>\n<p>CI is implemented to run the macOS installer 10 times whenever it changes, catching any bugs and uploading a replay of what went wrong as screencaptures to IPFS. I’m tempted to increase that number to 100 and to start doing statistics, because VMs are tricky. But I’ve found it’s pretty reliable after 200~ runs without failure on various slow/fast hardware.</p>\n<p>NixThePlanet introduces a few image builder functions such as makeDarwinImage and makeWin30Image which can be used like this for example:</p>\n<p>makeWin30Image {</p>\n<p>dosPostInstall = ''</p>\n<p>c:</p>\n<p>echo win &gt;&gt; AUTOEXEC.BAT</p>\n<p>'';</p>\n<p>}</p>\n<p>makeDarwinImage { diskSizeBytes = 60000000000; };</p>\n<p>There’s still plenty left to do in this project as you can see by the TODOs in the README.md, which you should read if you’re interested.</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 406880736,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702093734
+    },
+    {
+        "content": "<h2>Announcing - NixOS-DNS</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/announcing-nixos-dns/36702\">https://discourse.nixos.org/t/announcing-nixos-dns/36702</a><br>\nPublished Date: Sun, 10 Dec 2023 21:46:13 +0000</p>\n<blockquote>\n<p>tldr: manage your dns deployments with nixos.</p>\n<p>I spent a lot of time documenting everything and making it so hopefully other people find it useful as well.</p>\n<p>docs: Summary - NixOS-DNS</p>\n<p>source: GitHub - Janik-Haag/NixOS-DNS: Manage your dns zones with NixOS</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 407111404,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702245520
+    },
+    {
+        "content": "<h2>Nix-community infra update</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/nix-community-infra-update/36815\">https://discourse.nixos.org/t/nix-community-infra-update/36815</a><br>\nPublished Date: Wed, 13 Dec 2023 18:38:07 +0000</p>\n<blockquote>\n<p>Nix-community infrastructure update</p>\n<p>The Nix-community GitHub organization is a central hub for a wide range of popular tools related to Nix. In addition to maintaining Continuous Integration (CI) infrastructure, we also oversee the community builder within the same organization. This includes hosting the ryantm-r bot.</p>\n<p>Recent Infrastructure Upgrades:</p>\n<p>Over the past month, we’ve made significant upgrades to our infrastructure , primarily based on Hetzner servers:</p>\n<p>CI Builder Enhancement: Our two x86_64 CI builders have been upgraded from AMD Ryzen 5 3600 (6-Core Processor, 64GB RAM) to AMD Ryzen 9 3900 (12-Core Processor, 128GB RAM). This upgrade approximately doubles our performance capabilities.</p>\n<p>New Nix-Based CI Development: We’re excited to introduce a new nix-based CI system , tailored for pull request workflows in open-source projects. Projects within the nix-community can activate this CI by adding buildbot-nix to their topic tags. Build results are then uploaded to our 1TB Cachix cache, generously sponsored.</p>\n<p>Looking Ahead</p>\n<p>Expansion to Aarch64-Linux:</p>\n<p>We’re currently supporting aarch64-linux through a virtual machine hosted on Oracle Cloud, which unfortunately lacks nested virtualization support. Our goal is to transition to an Ampera Ultra server. This would allow us to run NixOS tests. However, we’re facing a funding gap for this upgrade. To achieve this goal, we are short by 40-50 Euros per month in our nix-community collective . Any contributions towards closing this gap would be greatly appreciated and will help us continue to improve our infrastructure and support for the community.</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 407790845,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702493529
+    },
+    {
+        "content": "<h2>Hare-master-overlay: An easy way to have the latest Hare version</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/hare-master-overlay-an-easy-way-to-have-the-latest-hare-version/36826\">https://discourse.nixos.org/t/hare-master-overlay-an-easy-way-to-have-the-latest-hare-version/36826</a><br>\nPublished Date: Wed, 13 Dec 2023 19:55:53 +0000</p>\n<blockquote>\n<p>hare-master-overlay is Flake I’ve made to easily have the most recent version of Hare .</p>\n<p>It provides:</p>\n<p>overlays for hare , harec and qbe , which may be used separately or as whole through the default overlay;</p>\n<p>the overwritten versions of hare , harec and qbe through the packages attribute; and</p>\n<p>a devShells for Hare development through the default `devShell.</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 407801332,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702497913
+    },
+    {
+        "content": "<h2>Flake-Env: yet another direnv plugin for nix</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/flake-env-yet-another-direnv-plugin-for-nix/37229\">https://discourse.nixos.org/t/flake-env-yet-another-direnv-plugin-for-nix/37229</a><br>\nPublished Date: Fri, 22 Dec 2023 19:17:34 +0000</p>\n<blockquote>\n<p>Hi! Recently, nix-direnv (which I help maintain) has had a lot of issues opened because of the bash version or the core-tools dependencies we have. For instance, we recently started requiring GNU sort, but there are users out there with other sort implementations. There’s really very little that we can do to ensure the user’s experience is good in this scenario and that got me thinking about whether or not we could do better.</p>\n<p>And then I started writing a new tool. I’m not sure it’s better yet, but I think I’m ready to announce flake_env.</p>\n<p>Flake_env is a compiled version of nix-direnv. The logic is almost exactly the same, but there’s a lot less bash involved, so you can be reasonably sure that the binary will work with your setup. Overall, flake_env is much simpler than nix-direnv. It is flake-only by design and will not support legacy setups.</p>\n<p>I know that this space is crowded already, but this has been a lot of fun to write and I think the path forward is a lot simpler than competing tools. I hope it helps some of you all. Find it at flake_env: <em>experimental</em> direnv plugin for nix flakes</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 409633028,
+        "sender_full_name": "Zapier",
+        "timestamp": 1703273568
+    },
+    {
+        "content": "<h2>NixCon NA CFP deadline extended to January 7th!</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/nixcon-na-cfp-deadline-extended-to-january-7th/37268\">https://discourse.nixos.org/t/nixcon-na-cfp-deadline-extended-to-january-7th/37268</a><br>\nPublished Date: Sat, 23 Dec 2023 19:10:19 +0000</p>\n<blockquote>\n<p>Given how busy the holidays are we’ve decided to extend the CFP deadline from December 31st to January 7th. For details on the CFP you can see the original announcement , and you can make your submission on the submission site . Keep in mind you can continue to make edits to your submission until the CFP deadline.</p>\n<p>Come be a part of the very first NixCon North America!</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 409742278,
+        "sender_full_name": "Zapier",
+        "timestamp": 1703358917
+    },
+    {
+        "content": "<h2>Another Moment of Awesome 2023 - nixpkgs top 10, again!</h2>\n<p>Link: <a href=\"https://discourse.nixos.org/t/another-moment-of-awesome-2023-nixpkgs-top-10-again/37334\">https://discourse.nixos.org/t/another-moment-of-awesome-2023-nixpkgs-top-10-again/37334</a><br>\nPublished Date: Tue, 26 Dec 2023 07:16:03 +0000</p>\n<blockquote>\n<p>Quick shoutout to all the amazing folks on here if you haven’t seen the latest Github Octoverse reports for 2023!</p>\n<p>Nix is on the top charts second year in a row! (Last years post - Another Moment of Awesome - nixpkgs top 10 - NixOS Discourse )</p>\n<p>Octoverse: The state of open source and rise of AI in 2023 - The GitHub Blog</p>\n<p>Happy holidays and happy new year!</p>\n<p>1 post - 1 participant</p>\n<p>Read full topic</p>\n</blockquote>",
+        "id": 409985364,
+        "sender_full_name": "Zapier",
+        "timestamp": 1703574986
+    },
+    {
+        "content": "<h2>Contribute to the Nix 2023 Recap</h2>\n<p>December 29, 2023 at 10:20AM</p>\n<p><a href=\"https://discourse.nixos.org/t/contribute-to-the-nix-2023-recap/37484\">https://discourse.nixos.org/t/contribute-to-the-nix-2023-recap/37484</a></p>",
+        "id": 410463159,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1703874127
+    },
+    {
+        "content": "<h2>Limited cache availability for i686 (32 bits x86) architecture</h2>\n<p>January 01, 2024 at 08:37PM</p>\n<p><a href=\"https://discourse.nixos.org/t/limited-cache-availability-for-i686-32-bits-x86-architecture/37626\">https://discourse.nixos.org/t/limited-cache-availability-for-i686-32-bits-x86-architecture/37626</a></p>",
+        "id": 410793873,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704170488
+    },
+    {
+        "content": "<h2>First NixCon NA Sessions Confirmed - CFP Deadline Approaching!</h2>\n<p>January 03, 2024 at 07:31PM</p>\n<p><a href=\"https://discourse.nixos.org/t/first-nixcon-na-sessions-confirmed-cfp-deadline-approaching/37718\">https://discourse.nixos.org/t/first-nixcon-na-sessions-confirmed-cfp-deadline-approaching/37718</a></p>",
+        "id": 411120408,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704339112
+    },
+    {
+        "content": "<h2>NixCon North America - Sponsorship Tracks</h2>\n<p>January 04, 2024 at 08:46AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixcon-north-america-sponsorship-tracks/37755\">https://discourse.nixos.org/t/nixcon-north-america-sponsorship-tracks/37755</a></p>",
+        "id": 411225331,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704387108
+    },
+    {
+        "content": "<h2>Janurary Nix-community infra update</h2>\n<p>January 05, 2024 at 01:23AM</p>\n<p><a href=\"https://discourse.nixos.org/t/janurary-nix-community-infra-update/37809\">https://discourse.nixos.org/t/janurary-nix-community-infra-update/37809</a></p>",
+        "id": 411334049,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704446786
+    },
+    {
+        "content": "<h2>Zürich 23.11 ZHF Hackathon and UX workshop report</h2>\n<p>January 05, 2024 at 10:44AM</p>\n<p><a href=\"https://discourse.nixos.org/t/zurich-23-11-zhf-hackathon-and-ux-workshop-report/37848\">https://discourse.nixos.org/t/zurich-23-11-zhf-hackathon-and-ux-workshop-report/37848</a></p>",
+        "id": 411415854,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704480412
+    },
+    {
+        "content": "<h2>Pkgs/by-name for the masses</h2>\n<p>January 05, 2024 at 06:45PM</p>\n<p><a href=\"https://discourse.nixos.org/t/pkgs-by-name-for-the-masses/37858\">https://discourse.nixos.org/t/pkgs-by-name-for-the-masses/37858</a></p>",
+        "id": 411467802,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704509203
+    },
+    {
+        "content": "<h2>Nip presistent nix-shell</h2>\n<p>January 07, 2024 at 04:43AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nip-presistent-nix-shell/37920\">https://discourse.nixos.org/t/nip-presistent-nix-shell/37920</a></p>",
+        "id": 411598186,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704631605
+    },
+    {
+        "content": "<h2>Noogle release: 2024. A groundbreaking refactoring</h2>\n<p>January 07, 2024 at 08:41AM</p>\n<p><a href=\"https://discourse.nixos.org/t/noogle-release-2024-a-groundbreaking-refactoring/37925\">https://discourse.nixos.org/t/noogle-release-2024-a-groundbreaking-refactoring/37925</a></p>",
+        "id": 411613674,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704645994
+    },
+    {
+        "content": "<h2>Cachix v1.7 release</h2>\n<p>January 12, 2024 at 05:30AM</p>\n<p><a href=\"https://discourse.nixos.org/t/cachix-v1-7-release/38166\">https://discourse.nixos.org/t/cachix-v1-7-release/38166</a></p>",
+        "id": 412545339,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705066327
+    },
+    {
+        "content": "<h2>NixOS on Xilinx Zynq and ZynqMP</h2>\n<p>January 13, 2024 at 10:27AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-on-xilinx-zynq-and-zynqmp/38217\">https://discourse.nixos.org/t/nixos-on-xilinx-zynq-and-zynqmp/38217</a></p>",
+        "id": 412732013,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705170988
+    },
+    {
+        "content": "<h2>Clonix: declarative rsync deployments</h2>\n<p>January 13, 2024 at 12:40PM</p>\n<p><a href=\"https://discourse.nixos.org/t/clonix-declarative-rsync-deployments/38221\">https://discourse.nixos.org/t/clonix-declarative-rsync-deployments/38221</a></p>",
+        "id": 412740710,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705178781
+    },
+    {
+        "content": "<h2><a href=\"http://Nixpkgs.dev\">Nixpkgs.dev</a>: a link shortener for Nixpkgs</h2>\n<p>January 15, 2024 at 05:15AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixpkgs-dev-a-link-shortener-for-nixpkgs/38284\">https://discourse.nixos.org/t/nixpkgs-dev-a-link-shortener-for-nixpkgs/38284</a></p>",
+        "id": 412955445,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705324623
+    },
+    {
+        "content": "<h2>Zig2nix: Flake for packaging, building and running Zig projects</h2>\n<p>January 17, 2024 at 07:18PM</p>\n<p><a href=\"https://discourse.nixos.org/t/zig2nix-flake-for-packaging-building-and-running-zig-projects/38444\">https://discourse.nixos.org/t/zig2nix-flake-for-packaging-building-and-running-zig-projects/38444</a></p>",
+        "id": 416487934,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705548108
+    },
+    {
+        "content": "<h2>NixCon NA 2024 Schedule is Live!</h2>\n<p>January 19, 2024 at 10:32AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixcon-na-2024-schedule-is-live/38531\">https://discourse.nixos.org/t/nixcon-na-2024-schedule-is-live/38531</a></p>",
+        "id": 416844460,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705689719
+    },
+    {
+        "content": "<h2>Official NixOS Wiki</h2>\n<p>January 23, 2024 at 10:41AM</p>\n<p><a href=\"https://discourse.nixos.org/t/official-nixos-wiki/38715\">https://discourse.nixos.org/t/official-nixos-wiki/38715</a></p>",
+        "id": 417506917,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706035319
+    },
+    {
+        "content": "<h2>Drift: Update Nix Flake package sources</h2>\n<p>January 26, 2024 at 03:43PM</p>\n<p><a href=\"https://discourse.nixos.org/t/drift-update-nix-flake-package-sources/38862\">https://discourse.nixos.org/t/drift-update-nix-flake-package-sources/38862</a></p>",
+        "id": 418366809,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706312780
+    },
+    {
+        "content": "<h2>GitHub - BirdeeHub/nixCats-nvim: A Lua-natic nix user's Neovim Flake,</h2>\n<p>January 28, 2024 at 04:54PM</p>\n<p><a href=\"https://discourse.nixos.org/t/github-birdeehub-nixcats-nvim-a-lua-natic-nix-users-neovim-flake/38956\">https://discourse.nixos.org/t/github-birdeehub-nixcats-nvim-a-lua-natic-nix-users-neovim-flake/38956</a></p>",
+        "id": 418550413,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706490089
+    },
+    {
+        "content": "<h2>Geospatial NIX flake and Geospatial NIX web UI</h2>\n<p>January 29, 2024 at 02:53AM</p>\n<p><a href=\"https://discourse.nixos.org/t/geospatial-nix-flake-and-geospatial-nix-web-ui/38974\">https://discourse.nixos.org/t/geospatial-nix-flake-and-geospatial-nix-web-ui/38974</a></p>",
+        "id": 418611047,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706525772
+    },
+    {
+        "content": "<h2>Git-verify: in-band commit verification</h2>\n<p>January 29, 2024 at 09:50AM</p>\n<p><a href=\"https://discourse.nixos.org/t/git-verify-in-band-commit-verification/38991\">https://discourse.nixos.org/t/git-verify-in-band-commit-verification/38991</a></p>",
+        "id": 418690104,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706550719
+    },
+    {
+        "content": "<h2>Nix 2.20 released</h2>\n<p>January 30, 2024 at 03:38AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-2-20-released/39027\">https://discourse.nixos.org/t/nix-2-20-released/39027</a></p>",
+        "id": 418819291,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706615214
+    },
+    {
+        "content": "<h2>Call for mentors: Google Summer of Code 2024</h2>\n<p>January 30, 2024 at 05:06AM</p>\n<p><a href=\"https://discourse.nixos.org/t/call-for-mentors-google-summer-of-code-2024/39031\">https://discourse.nixos.org/t/call-for-mentors-google-summer-of-code-2024/39031</a></p>",
+        "id": 418831930,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706620053
+    },
+    {
+        "content": "<h2>Upcoming Garbage Collection for <a href=\"http://cache.nixos.org\">cache.nixos.org</a></h2>\n<p>January 31, 2024 at 05:24AM</p>\n<p><a href=\"https://discourse.nixos.org/t/upcoming-garbage-collection-for-cache-nixos-org/39078\">https://discourse.nixos.org/t/upcoming-garbage-collection-for-cache-nixos-org/39078</a></p>",
+        "id": 419038876,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706707600
+    },
+    {
+        "content": "<h2>Call for testing: Nix formatter</h2>\n<p>February 02, 2024 at 01:16AM</p>\n<p><a href=\"https://discourse.nixos.org/t/call-for-testing-nix-formatter/39179\">https://discourse.nixos.org/t/call-for-testing-nix-formatter/39179</a></p>",
+        "id": 419416131,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706865393
+    },
+    {
+        "content": "<h2>Whats-in-my-store: Match your Nix Store to packages from NixPkgs</h2>\n<p>February 03, 2024 at 04:15AM</p>\n<p><a href=\"https://discourse.nixos.org/t/whats-in-my-store-match-your-nix-store-to-packages-from-nixpkgs/39232\">https://discourse.nixos.org/t/whats-in-my-store-match-your-nix-store-to-packages-from-nixpkgs/39232</a></p>",
+        "id": 419604110,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706962598
+    },
+    {
+        "content": "<h2>Typhon: Nix-based continuous integration</h2>\n<p>February 04, 2024 at 04:23AM</p>\n<p><a href=\"https://discourse.nixos.org/t/typhon-nix-based-continuous-integration/39281\">https://discourse.nixos.org/t/typhon-nix-based-continuous-integration/39281</a></p>",
+        "id": 419695272,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707049915
+    },
+    {
+        "content": "<h2>NixVirt: manage virtual machines</h2>\n<p>February 04, 2024 at 12:47PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixvirt-manage-virtual-machines/39305\">https://discourse.nixos.org/t/nixvirt-manage-virtual-machines/39305</a></p>",
+        "id": 419730264,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707080163
+    },
+    {
+        "content": "<h2>Full Time Nix (podcast)</h2>\n<p>February 07, 2024 at 07:01AM</p>\n<p><a href=\"https://discourse.nixos.org/t/full-time-nix-podcast/39442\">https://discourse.nixos.org/t/full-time-nix-podcast/39442</a></p>",
+        "id": 420273108,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707318430
+    },
+    {
+        "content": "<h2>Umport: Automatic Import of Modules</h2>\n<p>February 07, 2024 at 11:17AM</p>\n<p><a href=\"https://discourse.nixos.org/t/umport-automatic-import-of-modules/39455\">https://discourse.nixos.org/t/umport-automatic-import-of-modules/39455</a></p>",
+        "id": 420325991,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707333684
+    },
+    {
+        "content": "<h2>Welcome Ryan Hendrickson to the Moderation Team</h2>\n<p>February 07, 2024 at 12:53PM</p>\n<p><a href=\"https://discourse.nixos.org/t/welcome-ryan-hendrickson-to-the-moderation-team/39460\">https://discourse.nixos.org/t/welcome-ryan-hendrickson-to-the-moderation-team/39460</a></p>",
+        "id": 420341183,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707339406
+    },
+    {
+        "content": "<h2>Call for testing: \"This Week in NixOS\"</h2>\n<p>February 07, 2024 at 02:03PM</p>\n<p><a href=\"https://discourse.nixos.org/t/call-for-testing-this-week-in-nixos/39465\">https://discourse.nixos.org/t/call-for-testing-this-week-in-nixos/39465</a></p>",
+        "id": 420351377,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707343634
+    },
+    {
+        "content": "<h2>Nix team report 2023-04 — 2024-01</h2>\n<p>February 08, 2024 at 11:25PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-team-report-2023-04-2024-01/39525\">https://discourse.nixos.org/t/nix-team-report-2023-04-2024-01/39525</a></p>",
+        "id": 420598242,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707463613
+    },
+    {
+        "content": "<h2>Explainix: Learn Nix syntax visually</h2>\n<p>February 13, 2024 at 02:04AM</p>\n<p><a href=\"https://discourse.nixos.org/t/explainix-learn-nix-syntax-visually/39721\">https://discourse.nixos.org/t/explainix-learn-nix-syntax-visually/39721</a></p>",
+        "id": 421212689,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707819082
+    },
+    {
+        "content": "<h2>Nixpkgs merge bot testing and plan</h2>\n<p>February 15, 2024 at 07:48AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixpkgs-merge-bot-testing-and-plan/39824\">https://discourse.nixos.org/t/nixpkgs-merge-bot-testing-and-plan/39824</a></p>",
+        "id": 421685865,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708012598
+    },
+    {
+        "content": "<h2>Nix-pkgset: Cross-compilation aware (flake) package sets</h2>\n<p>February 17, 2024 at 06:30AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-pkgset-cross-compilation-aware-flake-package-sets/39911\">https://discourse.nixos.org/t/nix-pkgset-cross-compilation-aware-flake-package-sets/39911</a></p>",
+        "id": 422015664,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708180300
+    },
+    {
+        "content": "<h2>Introduction to nixpkgs-terraform</h2>\n<p>February 20, 2024 at 06:10AM</p>\n<p><a href=\"https://discourse.nixos.org/t/introduction-to-nixpkgs-terraform/40041\">https://discourse.nixos.org/t/introduction-to-nixpkgs-terraform/40041</a></p>",
+        "id": 422426438,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708438640
+    },
+    {
+        "content": "<h2>Nix-buildproxy, reproducible HTTP/HTTPS responder in sandboxed Nix builds</h2>\n<p>February 21, 2024 at 02:14AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-buildproxy-reproducible-http-https-responder-in-sandboxed-nix-builds/40081\">https://discourse.nixos.org/t/nix-buildproxy-reproducible-http-https-responder-in-sandboxed-nix-builds/40081</a></p>",
+        "id": 422585422,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708510906
+    },
+    {
+        "content": "<h2>Nixpkgs-xr: Nightly packages for XR/AR/VR tools and apps</h2>\n<p>February 21, 2024 at 02:52AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixpkgs-xr-nightly-packages-for-xr-ar-vr-tools-and-apps/40083\">https://discourse.nixos.org/t/nixpkgs-xr-nightly-packages-for-xr-ar-vr-tools-and-apps/40083</a></p>",
+        "id": 422591180,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708512983
+    },
+    {
+        "content": "<h2>RFC 166 FCP: Nix formatting</h2>\n<p>February 21, 2024 at 06:30AM</p>\n<p><a href=\"https://discourse.nixos.org/t/rfc-166-fcp-nix-formatting/40092\">https://discourse.nixos.org/t/rfc-166-fcp-nix-formatting/40092</a></p>",
+        "id": 422630110,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708525896
+    },
+    {
+        "content": "<h2>We got accepted for Google Summer of Code <span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span></h2>\n<p>February 21, 2024 at 10:09AM</p>\n<p><a href=\"https://discourse.nixos.org/t/we-got-accepted-for-google-summer-of-code/40102\">https://discourse.nixos.org/t/we-got-accepted-for-google-summer-of-code/40102</a></p>",
+        "id": 422678749,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708539370
+    },
+    {
+        "content": "<h2>Anatomy of a NixOS config</h2>\n<p>February 24, 2024 at 12:50PM</p>\n<p><a href=\"https://discourse.nixos.org/t/anatomy-of-a-nixos-config/40252\">https://discourse.nixos.org/t/anatomy-of-a-nixos-config/40252</a></p>",
+        "id": 423203195,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708808206
+    },
+    {
+        "content": "<h2>Typix: A Nix library for compiling Typst projects</h2>\n<p>February 24, 2024 at 05:42PM</p>\n<p><a href=\"https://discourse.nixos.org/t/typix-a-nix-library-for-compiling-typst-projects/40257\">https://discourse.nixos.org/t/typix-a-nix-library-for-compiling-typst-projects/40257</a></p>",
+        "id": 423221072,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708825574
+    },
+    {
+        "content": "<h2>Community teams budget</h2>\n<p>February 25, 2024 at 11:48PM</p>\n<p><a href=\"https://discourse.nixos.org/t/community-teams-budget/40307\">https://discourse.nixos.org/t/community-teams-budget/40307</a></p>",
+        "id": 423339765,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708934190
+    },
+    {
+        "content": "<h2>Google Season of Docs 2024: Call for Proposals to Enhance Nix Documentation</h2>\n<p>February 21, 2024 at 01:39PM</p>\n<p><a href=\"https://discourse.nixos.org/t/google-season-of-docs-2024-call-for-proposals-to-enhance-nix-documentation/40107\">https://discourse.nixos.org/t/google-season-of-docs-2024-call-for-proposals-to-enhance-nix-documentation/40107</a></p>",
+        "id": 423832418,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709131302
+    },
+    {
+        "content": "<h2>Announcing Phase 1 of the Nix(OS) Website Rework</h2>\n<p>February 28, 2024 at 12:45PM</p>\n<p><a href=\"https://discourse.nixos.org/t/announcing-phase-1-of-the-nix-os-website-rework/40473\">https://discourse.nixos.org/t/announcing-phase-1-of-the-nix-os-website-rework/40473</a></p>",
+        "id": 423900096,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709153222
+    },
+    {
+        "content": "<h2>Comin: Git Push NixOS Machines</h2>\n<p>March 03, 2024 at 01:01AM</p>\n<p><a href=\"https://discourse.nixos.org/t/comin-git-push-nixos-machines/40688\">https://discourse.nixos.org/t/comin-git-push-nixos-machines/40688</a></p>",
+        "id": 424489607,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709456523
+    },
+    {
+        "content": "<h2>Nixos-needsreboot: Determine if you need to reboot your NixOS machine</h2>\n<p>March 04, 2024 at 09:32AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-needsreboot-determine-if-you-need-to-reboot-your-nixos-machine/40790\">https://discourse.nixos.org/t/nixos-needsreboot-determine-if-you-need-to-reboot-your-nixos-machine/40790</a></p>",
+        "id": 424710364,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709573799
+    },
+    {
+        "content": "<h2>macOS support for running NixOS tests</h2>\n<p>March 04, 2024 at 01:09PM</p>\n<p><a href=\"https://discourse.nixos.org/t/macos-support-for-running-nixos-tests/40801\">https://discourse.nixos.org/t/macos-support-for-running-nixos-tests/40801</a></p>",
+        "id": 424748888,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709587006
+    },
+    {
+        "content": "<h2>Security fix: Nix fixed-output derivation sandbox bypass</h2>\n<p>March 07, 2024 at 10:42AM</p>\n<p><a href=\"https://discourse.nixos.org/t/security-fix-nix-fixed-output-derivation-sandbox-bypass/40972\">https://discourse.nixos.org/t/security-fix-nix-fixed-output-derivation-sandbox-bypass/40972</a></p>",
+        "id": 425372030,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709837227
+    },
+    {
+        "content": "<h2>Crowdsec modules for NixOS</h2>\n<p>March 10, 2024 at 07:53AM</p>\n<p><a href=\"https://discourse.nixos.org/t/crowdsec-modules-for-nixos/41160\">https://discourse.nixos.org/t/crowdsec-modules-for-nixos/41160</a></p>",
+        "id": 425779748,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710082594
+    },
+    {
+        "content": "<h2>NixOS Foundation board – open board meeting – 2024-03-20</h2>\n<p>March 11, 2024 at 03:01AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-foundation-board-open-board-meeting-2024-03-20/41209\">https://discourse.nixos.org/t/nixos-foundation-board-open-board-meeting-2024-03-20/41209</a></p>",
+        "id": 425873896,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710151297
+    },
+    {
+        "content": "<h2>Nix 2.21 released</h2>\n<p>March 11, 2024 at 11:14PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-2-21-released/41300\">https://discourse.nixos.org/t/nix-2-21-released/41300</a></p>",
+        "id": 426060639,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710224173
+    },
+    {
+        "content": "<h2>Announcing services-flake</h2>\n<p>March 12, 2024 at 11:24AM</p>\n<p><a href=\"https://discourse.nixos.org/t/announcing-services-flake/41338\">https://discourse.nixos.org/t/announcing-services-flake/41338</a></p>",
+        "id": 426189496,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710268308
+    },
+    {
+        "content": "<h2>Port vscode-ide-nix to coc.nvim</h2>\n<p>March 12, 2024 at 11:41PM</p>\n<p><a href=\"https://discourse.nixos.org/t/port-vscode-ide-nix-to-coc-nvim/41364\">https://discourse.nixos.org/t/port-vscode-ide-nix-to-coc-nvim/41364</a></p>",
+        "id": 426269029,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710312110
+    },
+    {
+        "content": "<h2>Introducing FlakeHub Cache (private beta)</h2>\n<p>March 13, 2024 at 07:44AM</p>\n<p><a href=\"https://discourse.nixos.org/t/introducing-flakehub-cache-private-beta/41382\">https://discourse.nixos.org/t/introducing-flakehub-cache-private-beta/41382</a></p>",
+        "id": 426356611,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710341220
+    },
+    {
+        "content": "<h2>Introducing teraflops, an alternative to NixOps</h2>\n<p>March 17, 2024 at 06:04PM</p>\n<p><a href=\"https://discourse.nixos.org/t/introducing-teraflops-an-alternative-to-nixops/41703\">https://discourse.nixos.org/t/introducing-teraflops-an-alternative-to-nixops/41703</a></p>",
+        "id": 427276240,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710724015
+    },
+    {
+        "content": "<h2>NixCon NA Photos</h2>\n<p>March 18, 2024 at 11:42AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixcon-na-photos/41770\">https://discourse.nixos.org/t/nixcon-na-photos/41770</a></p>",
+        "id": 427553968,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710787876
+    },
+    {
+        "content": "<h2>Devenv 1.0: Rewrite in Rust</h2>\n<p>March 20, 2024 at 06:45AM</p>\n<p><a href=\"https://discourse.nixos.org/t/devenv-1-0-rewrite-in-rust/41891\">https://discourse.nixos.org/t/devenv-1-0-rewrite-in-rust/41891</a></p>",
+        "id": 427931422,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710942422
+    },
+    {
+        "content": "<h2>Opportunity: The NGIpkgs Maintenance Mob</h2>\n<p>March 22, 2024 at 12:35AM</p>\n<p><a href=\"https://discourse.nixos.org/t/opportunity-the-ngipkgs-maintenance-mob/41997\">https://discourse.nixos.org/t/opportunity-the-ngipkgs-maintenance-mob/41997</a></p>",
+        "id": 428274343,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711093023
+    },
+    {
+        "content": "<h2>NixOS Secrets Management video series and blog</h2>\n<p>March 22, 2024 at 10:49AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-secrets-management-video-series-and-blog/42020\">https://discourse.nixos.org/t/nixos-secrets-management-video-series-and-blog/42020</a></p>",
+        "id": 428383259,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711130199
+    },
+    {
+        "content": "<h2><a href=\"http://Nixpkgs.news\">Nixpkgs.news</a> - A Weekly Recap For The Nix Community</h2>\n<p>March 24, 2024 at 06:52PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixpkgs-news-a-weekly-recap-for-the-nix-community/42137\">https://discourse.nixos.org/t/nixpkgs-news-a-weekly-recap-for-the-nix-community/42137</a></p>",
+        "id": 429270972,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711331781
+    },
+    {
+        "content": "<h2>Nix-ld-rs: Testers wanted</h2>\n<p>March 24, 2024 at 11:58PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-ld-rs-testers-wanted/42145\">https://discourse.nixos.org/t/nix-ld-rs-testers-wanted/42145</a></p>",
+        "id": 429302062,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711350398
+    },
+    {
+        "content": "<h2>Darwin Updates News</h2>\n<p>March 26, 2024 at 07:02PM</p>\n<p><a href=\"https://discourse.nixos.org/t/darwin-updates-news/42249\">https://discourse.nixos.org/t/darwin-updates-news/42249</a></p>",
+        "id": 429770005,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711505202
+    },
+    {
+        "content": "<h2>Announcing rippkgs: searching nixpkgs in under 30 milliseconds</h2>\n<p>March 29, 2024 at 09:17AM</p>\n<p><a href=\"https://discourse.nixos.org/t/announcing-rippkgs-searching-nixpkgs-in-under-30-milliseconds/42381\">https://discourse.nixos.org/t/announcing-rippkgs-searching-nixpkgs-in-under-30-milliseconds/42381</a></p>",
+        "id": 430280634,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711729318
+    },
+    {
+        "content": "<h2>RFC 0173 FCP; NixOS hotline</h2>\n<p>March 31, 2024 at 03:42PM</p>\n<p><a href=\"https://discourse.nixos.org/t/rfc-0173-fcp-nixos-hotline/42536\">https://discourse.nixos.org/t/rfc-0173-fcp-nixos-hotline/42536</a></p>",
+        "id": 430513956,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711925180
+    },
+    {
+        "content": "<h2>Nix-garrys-mod - Bringing Garry's Mod dedicated servers to Nix/NixOS</h2>\n<p>April 01, 2024 at 01:32AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-garrys-mod-bringing-garrys-mod-dedicated-servers-to-nix-nixos/42553\">https://discourse.nixos.org/t/nix-garrys-mod-bringing-garrys-mod-dedicated-servers-to-nix-nixos/42553</a></p>",
+        "id": 430562464,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711960912
+    },
+    {
+        "content": "<h2><a href=\"http://Wiki.nixos.org\">Wiki.nixos.org</a> is now live</h2>\n<p>April 01, 2024 at 06:43AM</p>\n<p><a href=\"https://discourse.nixos.org/t/wiki-nixos-org-is-now-live/42570\">https://discourse.nixos.org/t/wiki-nixos-org-is-now-live/42570</a></p>",
+        "id": 430595148,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711979209
+    },
+    {
+        "content": "<h2>Shoji-Nix: SSH key management module for Nix</h2>\n<p>April 01, 2024 at 08:06AM</p>\n<p><a href=\"https://discourse.nixos.org/t/shoji-nix-ssh-key-management-module-for-nix/42576\">https://discourse.nixos.org/t/shoji-nix-ssh-key-management-module-for-nix/42576</a></p>",
+        "id": 430609267,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711984307
+    },
+    {
+        "content": "<h2>Update on Sponsorship Policy Discussion</h2>\n<p>April 03, 2024 at 06:45AM</p>\n<p><a href=\"https://discourse.nixos.org/t/update-on-sponsorship-policy-discussion/42704\">https://discourse.nixos.org/t/update-on-sponsorship-policy-discussion/42704</a></p>",
+        "id": 431007425,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712151989
+    },
+    {
+        "content": "<h2>Introducing the Clan project</h2>\n<p>April 04, 2024 at 06:31AM</p>\n<p><a href=\"https://discourse.nixos.org/t/introducing-the-clan-project/42746\">https://discourse.nixos.org/t/introducing-the-clan-project/42746</a></p>",
+        "id": 431315343,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712237799
+    },
+    {
+        "content": "<h2>Kickstart-nix.nvim - A dead simple Nix flake template repo for Neovim derivations</h2>\n<p>April 05, 2024 at 02:27AM</p>\n<p><a href=\"https://discourse.nixos.org/t/kickstart-nix-nvim-a-dead-simple-nix-flake-template-repo-for-neovim-derivations/42791\">https://discourse.nixos.org/t/kickstart-nix-nvim-a-dead-simple-nix-flake-template-repo-for-neovim-derivations/42791</a></p>",
+        "id": 431485656,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712309520
+    },
+    {
+        "content": "<h2>Catppuccin-nix: the soothing pastel theme, but for nix!</h2>\n<p>April 07, 2024 at 02:09PM</p>\n<p><a href=\"https://discourse.nixos.org/t/catppuccin-nix-the-soothing-pastel-theme-but-for-nix/42915\">https://discourse.nixos.org/t/catppuccin-nix-the-soothing-pastel-theme-but-for-nix/42915</a></p>",
+        "id": 431817023,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712524580
+    },
+    {
+        "content": "<h2>NixOS Foundation Event Sponsorship Policy</h2>\n<p>April 10, 2024 at 03:21AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-foundation-event-sponsorship-policy/43110\">https://discourse.nixos.org/t/nixos-foundation-event-sponsorship-policy/43110</a></p>",
+        "id": 432471979,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712744778
+    },
+    {
+        "content": "<h2>Nix-inspect: a TUI for browsing nix configs and other expressions</h2>\n<p>April 11, 2024 at 04:09AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-inspect-a-tui-for-browsing-nix-configs-and-other-expressions/43180\">https://discourse.nixos.org/t/nix-inspect-a-tui-for-browsing-nix-configs-and-other-expressions/43180</a></p>",
+        "id": 432681710,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712834196
+    },
+    {
+        "content": "<h2>Virus detected on NixOS VirtualBox Appliance</h2>\n<p>April 16, 2024 at 12:29PM</p>\n<p><a href=\"https://discourse.nixos.org/t/virus-detected-on-nixos-virtualbox-appliance/43534\">https://discourse.nixos.org/t/virus-detected-on-nixos-virtualbox-appliance/43534</a></p>",
+        "id": 433591425,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713295903
+    },
+    {
+        "content": "<h2>Let's have a great 24.05 release cycle!</h2>\n<p>April 17, 2024 at 06:16AM</p>\n<p><a href=\"https://discourse.nixos.org/t/lets-have-a-great-24-05-release-cycle/43564\">https://discourse.nixos.org/t/lets-have-a-great-24-05-release-cycle/43564</a></p>",
+        "id": 433754046,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713359802
+    },
+    {
+        "content": "<h2>.NET Aspire Dashboard: Local OpenTelemetry UI packaged for Nix</h2>\n<p>April 18, 2024 at 10:03AM</p>\n<p><a href=\"https://discourse.nixos.org/t/net-aspire-dashboard-local-opentelemetry-ui-packaged-for-nix/43650\">https://discourse.nixos.org/t/net-aspire-dashboard-local-opentelemetry-ui-packaged-for-nix/43650</a></p>",
+        "id": 434204599,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713460009
+    },
+    {
+        "content": "<h2>Nixd: 2.0.2 released</h2>\n<p>April 22, 2024 at 04:09AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixd-2-0-2-released/43891\">https://discourse.nixos.org/t/nixd-2-0-2-released/43891</a></p>",
+        "id": 434720838,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713784606
+    },
+    {
+        "content": "<h2>Nix 2.22 released</h2>\n<p>April 24, 2024 at 03:37AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-2-22-released/44007\">https://discourse.nixos.org/t/nix-2-22-released/44007</a></p>",
+        "id": 435161180,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713955613
+    },
+    {
+        "content": "<h2>Nixf-tidy: static linter for your nix code - alpha github actions</h2>\n<p>April 24, 2024 at 07:26PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixf-tidy-static-linter-for-your-nix-code-alpha-github-actions/44040\">https://discourse.nixos.org/t/nixf-tidy-static-linter-for-your-nix-code-alpha-github-actions/44040</a></p>",
+        "id": 435301102,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714012311
+    },
+    {
+        "content": "<h2>Earth-view: random desktop background from Google Earth View</h2>\n<p>April 26, 2024 at 12:33AM</p>\n<p><a href=\"https://discourse.nixos.org/t/earth-view-random-desktop-background-from-google-earth-view/44124\">https://discourse.nixos.org/t/earth-view-random-desktop-background-from-google-earth-view/44124</a></p>",
+        "id": 435531597,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714117005
+    },
+    {
+        "content": "<h2>Welcome lassulus to the Moderation Team</h2>\n<p>April 26, 2024 at 02:46AM</p>\n<p><a href=\"https://discourse.nixos.org/t/welcome-lassulus-to-the-moderation-team/44129\">https://discourse.nixos.org/t/welcome-lassulus-to-the-moderation-team/44129</a></p>",
+        "id": 435554022,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714125367
+    },
+    {
+        "content": "<h2>Unofficial Nix/NixOS Japanese chat for Matrix</h2>\n<p>April 27, 2024 at 07:27PM</p>\n<p><a href=\"https://discourse.nixos.org/t/unofficial-nix-nixos-japanese-chat-for-matrix/44304\">https://discourse.nixos.org/t/unofficial-nix-nixos-japanese-chat-for-matrix/44304</a></p>",
+        "id": 435809914,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714271812
+    },
+    {
+        "content": "<h2>NixOS Foundation board: Giving power to the community</h2>\n<p>April 30, 2024 at 05:36PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-foundation-board-giving-power-to-the-community/44552\">https://discourse.nixos.org/t/nixos-foundation-board-giving-power-to-the-community/44552</a></p>",
+        "id": 436375960,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714524084
+    },
+    {
+        "content": "<h2>Announcing our Google Summer of Code participants</h2>\n<p>May 01, 2024 at 11:04AM</p>\n<p><a href=\"https://discourse.nixos.org/t/announcing-our-google-summer-of-code-participants/44618\">https://discourse.nixos.org/t/announcing-our-google-summer-of-code-participants/44618</a></p>",
+        "id": 436548170,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714586824
+    },
+    {
+        "content": "<h2>Exciting Partnership Announcement: Framework Community &amp; NixOS Communities Join Forces!</h2>\n<p>May 01, 2024 at 04:55PM</p>\n<p><a href=\"https://discourse.nixos.org/t/exciting-partnership-announcement-framework-community-nixos-communities-join-forces/44640\">https://discourse.nixos.org/t/exciting-partnership-announcement-framework-community-nixos-communities-join-forces/44640</a></p>",
+        "id": 436592721,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714608093
+    },
+    {
+        "content": "<h2>Noshell: user-configurable login shell</h2>\n<p>May 02, 2024 at 08:43AM</p>\n<p><a href=\"https://discourse.nixos.org/t/noshell-user-configurable-login-shell/44703\">https://discourse.nixos.org/t/noshell-user-configurable-login-shell/44703</a></p>",
+        "id": 436723950,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714664837
+    },
+    {
+        "content": "<h2>Agenix-shell: keep secrets directly in your flake and access them from your devShell</h2>\n<p>May 02, 2024 at 12:51PM</p>\n<p><a href=\"https://discourse.nixos.org/t/agenix-shell-keep-secrets-directly-in-your-flake-and-access-them-from-your-devshell/44716\">https://discourse.nixos.org/t/agenix-shell-keep-secrets-directly-in-your-flake-and-access-them-from-your-devshell/44716</a></p>",
+        "id": 436767014,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714679813
+    },
+    {
+        "content": "<h2>Buildbot-nix now supports Gitea</h2>\n<p>May 03, 2024 at 04:43AM</p>\n<p><a href=\"https://discourse.nixos.org/t/buildbot-nix-now-supports-gitea/44789\">https://discourse.nixos.org/t/buildbot-nix-now-supports-gitea/44789</a></p>",
+        "id": 436867489,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714736815
+    },
+    {
+        "content": "<h2>Welcome endocrimes to the Moderation Team</h2>\n<p>May 03, 2024 at 05:35AM</p>\n<p><a href=\"https://discourse.nixos.org/t/welcome-endocrimes-to-the-moderation-team/44793\">https://discourse.nixos.org/t/welcome-endocrimes-to-the-moderation-team/44793</a></p>",
+        "id": 436874735,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714739809
+    },
+    {
+        "content": "<h2>Nix-inst 0.3.3 released: better imperitive package management</h2>\n<p>May 03, 2024 at 04:23PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-inst-0-3-3-released-better-imperitive-package-management/44831\">https://discourse.nixos.org/t/nix-inst-0-3-3-released-better-imperitive-package-management/44831</a></p>",
+        "id": 436973642,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714778813
+    },
+    {
+        "content": "<h2>Brew-nix: a flake automatically packaging all homebrew casks</h2>\n<p>May 04, 2024 at 10:33AM</p>\n<p><a href=\"https://discourse.nixos.org/t/brew-nix-a-flake-automatically-packaging-all-homebrew-casks/44880\">https://discourse.nixos.org/t/brew-nix-a-flake-automatically-packaging-all-homebrew-casks/44880</a></p>",
+        "id": 437037942,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714844204
+    },
+    {
+        "content": "<h2>Documentation office hours, onboarding for new maintainers</h2>\n<p>May 07, 2024 at 05:11AM</p>\n<p><a href=\"https://discourse.nixos.org/t/documentation-office-hours-onboarding-for-new-maintainers/45015\">https://discourse.nixos.org/t/documentation-office-hours-onboarding-for-new-maintainers/45015</a></p>",
+        "id": 437439971,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715084200
+    },
+    {
+        "content": "<h2>Help Wanted: Updating links to point to the new NixOS wiki</h2>\n<p>May 09, 2024 at 11:33PM</p>\n<p><a href=\"https://discourse.nixos.org/t/help-wanted-updating-links-to-point-to-the-new-nixos-wiki/45185\">https://discourse.nixos.org/t/help-wanted-updating-links-to-point-to-the-new-nixos-wiki/45185</a></p>",
+        "id": 437931874,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715323014
+    },
+    {
+        "content": "<h2>Nix Constitutional Assembly Applications open</h2>\n<p>May 09, 2024 at 11:46PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-constitutional-assembly-applications-open/45186\">https://discourse.nixos.org/t/nix-constitutional-assembly-applications-open/45186</a></p>",
+        "id": 437933263,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715323866
+    },
+    {
+        "content": "<h2>Call for volunteers: curating official projects</h2>\n<p>May 13, 2024 at 05:34PM</p>\n<p><a href=\"https://discourse.nixos.org/t/call-for-volunteers-curating-official-projects/45382\">https://discourse.nixos.org/t/call-for-volunteers-curating-official-projects/45382</a></p>",
+        "id": 438476123,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715647285
+    },
+    {
+        "content": "<h2>NixOS Foundation Board: Constitutional Assembly Appointment</h2>\n<p>May 15, 2024 at 08:18PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-foundation-board-constitutional-assembly-appointment/45504\">https://discourse.nixos.org/t/nixos-foundation-board-constitutional-assembly-appointment/45504</a></p>",
+        "id": 438922993,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715829693
+    },
+    {
+        "content": "<h2>Styx - alternate binary substitution mechanism</h2>\n<p>May 17, 2024 at 02:12AM</p>\n<p><a href=\"https://discourse.nixos.org/t/styx-alternate-binary-substitution-mechanism/45579\">https://discourse.nixos.org/t/styx-alternate-binary-substitution-mechanism/45579</a></p>",
+        "id": 439183573,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715937386
+    },
+    {
+        "content": "<h2>Assembly Q&amp;A stream</h2>\n<p>May 19, 2024 at 05:46PM</p>\n<p><a href=\"https://discourse.nixos.org/t/assembly-q-a-stream/45707\">https://discourse.nixos.org/t/assembly-q-a-stream/45707</a></p>",
+        "id": 439479574,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1716166303
+    },
+    {
+        "content": "<h2>Deps_nix: mix2nix alternative as a mix task</h2>\n<p>May 20, 2024 at 12:58PM</p>\n<p><a href=\"https://discourse.nixos.org/t/deps-nix-mix2nix-alternative-as-a-mix-task/45740\">https://discourse.nixos.org/t/deps-nix-mix2nix-alternative-as-a-mix-task/45740</a></p>",
+        "id": 439670116,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1716235288
+    },
+    {
+        "content": "<h2>Neovim's flake.nix moved to nix-community</h2>\n<p>May 23, 2024 at 03:59PM</p>\n<p><a href=\"https://discourse.nixos.org/t/neovims-flake-nix-moved-to-nix-community/45887\">https://discourse.nixos.org/t/neovims-flake-nix-moved-to-nix-community/45887</a></p>",
+        "id": 440411649,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1716505289
+    },
+    {
+        "content": "<h2>Introducing the NixOS to JSON Schema Converter</h2>\n<p>May 25, 2024 at 12:41AM</p>\n<p><a href=\"https://discourse.nixos.org/t/introducing-the-nixos-to-json-schema-converter/45948\">https://discourse.nixos.org/t/introducing-the-nixos-to-json-schema-converter/45948</a></p>",
+        "id": 440616946,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1716622899
+    },
+    {
+        "content": "<h2>buildGradleApplication – a simpler approach to packaging Gradle projects</h2>\n<p>May 26, 2024 at 06:51AM</p>\n<p><a href=\"https://discourse.nixos.org/t/buildgradleapplication-a-simpler-approach-to-packaging-gradle-projects/46012\">https://discourse.nixos.org/t/buildgradleapplication-a-simpler-approach-to-packaging-gradle-projects/46012</a></p>",
+        "id": 440714801,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1716731503
+    },
+    {
+        "content": "<h2>Gradle2nix V2: Call for testers</h2>\n<p>May 29, 2024 at 06:34PM</p>\n<p><a href=\"https://discourse.nixos.org/t/gradle2nix-v2-call-for-testers/46199\">https://discourse.nixos.org/t/gradle2nix-v2-call-for-testers/46199</a></p>",
+        "id": 441356137,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717032990
+    },
+    {
+        "content": "<h2>NixOS 24.05 released!</h2>\n<p>May 31, 2024 at 12:31PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-24-05-released/46279\">https://discourse.nixos.org/t/nixos-24-05-released/46279</a></p>",
+        "id": 441787855,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717183909
+    },
+    {
+        "content": "<h2>Introducing Brioche, a new Nix-like package manager written in Rust</h2>\n<p>June 03, 2024 at 11:35AM</p>\n<p><a href=\"https://discourse.nixos.org/t/introducing-brioche-a-new-nix-like-package-manager-written-in-rust/46447\">https://discourse.nixos.org/t/introducing-brioche-a-new-nix-like-package-manager-written-in-rust/46447</a></p>",
+        "id": 442338928,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717439815
+    },
+    {
+        "content": "<h2>[Marketing] Looking for support in the social media department</h2>\n<p>June 05, 2024 at 12:52PM</p>\n<p><a href=\"https://discourse.nixos.org/t/marketing-looking-for-support-in-the-social-media-department/46562\">https://discourse.nixos.org/t/marketing-looking-for-support-in-the-social-media-department/46562</a></p>",
+        "id": 442879003,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717617417
+    },
+    {
+        "content": "<h2>NixOS 24.05 Retrospective</h2>\n<p>June 08, 2024 at 12:13PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-24-05-retrospective/46719\">https://discourse.nixos.org/t/nixos-24-05-retrospective/46719</a></p>",
+        "id": 443513305,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717874202
+    },
+    {
+        "content": "<h2>Mk-cache-key.nix: make build-cache key for \"half board\" nix projects</h2>\n<p>June 09, 2024 at 02:08PM</p>\n<p><a href=\"https://discourse.nixos.org/t/mk-cache-key-nix-make-build-cache-key-for-half-board-nix-projects/46771\">https://discourse.nixos.org/t/mk-cache-key-nix-make-build-cache-key-for-half-board-nix-projects/46771</a></p>",
+        "id": 443642239,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717967506
+    },
+    {
+        "content": "<h2>Target date, public repo, office hours, interviews</h2>\n<p>June 10, 2024 at 11:13AM</p>\n<p><a href=\"https://discourse.nixos.org/t/target-date-public-repo-office-hours-interviews/46827\">https://discourse.nixos.org/t/target-date-public-repo-office-hours-interviews/46827</a></p>",
+        "id": 443835026,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718043408
+    },
+    {
+        "content": "<h2>Screen Time features for NixOS</h2>\n<p>June 14, 2024 at 01:31AM</p>\n<p><a href=\"https://discourse.nixos.org/t/screen-time-features-for-nixos/46996\">https://discourse.nixos.org/t/screen-time-features-for-nixos/46996</a></p>",
+        "id": 444648323,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718353887
+    },
+    {
+        "content": "<h2>Nixpkgs LLVM Workspace</h2>\n<p>June 15, 2024 at 07:46PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixpkgs-llvm-workspace/47074\">https://discourse.nixos.org/t/nixpkgs-llvm-workspace/47074</a></p>",
+        "id": 444931649,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718505994
+    },
+    {
+        "content": "<h2>Maintainers: Drop samueldr #321436</h2>\n<p>June 20, 2024 at 10:55PM</p>\n<p><a href=\"https://discourse.nixos.org/t/maintainers-drop-samueldr-321436/47354\">https://discourse.nixos.org/t/maintainers-drop-samueldr-321436/47354</a></p>",
+        "id": 446011097,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718949725
+    },
+    {
+        "content": "<h2>Constitutional Assembly Statement on Jon Ringer</h2>\n<p>June 21, 2024 at 07:45AM</p>\n<p><a href=\"https://discourse.nixos.org/t/constitutional-assembly-statement-on-jon-ringer/47393\">https://discourse.nixos.org/t/constitutional-assembly-statement-on-jon-ringer/47393</a></p>",
+        "id": 446098002,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718981173
+    },
+    {
+        "content": "<h2>What is happening with the community?</h2>\n<p>June 22, 2024 at 07:54AM</p>\n<p><a href=\"https://discourse.nixos.org/t/what-is-happening-with-the-community/47467\">https://discourse.nixos.org/t/what-is-happening-with-the-community/47467</a></p>",
+        "id": 446279980,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719068187
+    },
+    {
+        "content": "<h2>Announcing Proxmox-NixOS</h2>\n<p>June 24, 2024 at 04:38AM</p>\n<p><a href=\"https://discourse.nixos.org/t/announcing-proxmox-nixos/47579\">https://discourse.nixos.org/t/announcing-proxmox-nixos/47579</a></p>",
+        "id": 446593403,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719229598
+    },
+    {
+        "content": "<h2>Declarative Backups and Restore with NixOS</h2>\n<p>June 24, 2024 at 06:16AM</p>\n<p><a href=\"https://discourse.nixos.org/t/declarative-backups-and-restore-with-nixos/47581\">https://discourse.nixos.org/t/declarative-backups-and-restore-with-nixos/47581</a></p>",
+        "id": 446612735,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719235007
+    },
+    {
+        "content": "<h2><code>github-nix-ci</code> (for self-hosting GitHub runners on macOS/Linux)</h2>\n<p>June 25, 2024 at 07:43AM</p>\n<p><a href=\"https://discourse.nixos.org/t/github-nix-ci-for-self-hosting-github-runners-on-macos-linux/47642\">https://discourse.nixos.org/t/github-nix-ci-for-self-hosting-github-runners-on-macos-linux/47642</a></p>",
+        "id": 446904717,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719326786
+    },
+    {
+        "content": "<h2>Xonsh xontribs: Announcing xontrib NUR repository</h2>\n<p>June 26, 2024 at 06:57PM</p>\n<p><a href=\"https://discourse.nixos.org/t/xonsh-xontribs-announcing-xontrib-nur-repository/47744\">https://discourse.nixos.org/t/xonsh-xontribs-announcing-xontrib-nur-repository/47744</a></p>",
+        "id": 447370602,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719453744
+    },
+    {
+        "content": "<h2>Security fix: Nix derivation sandbox escape</h2>\n<p>June 27, 2024 at 06:45AM</p>\n<p><a href=\"https://discourse.nixos.org/t/security-fix-nix-derivation-sandbox-escape/47778\">https://discourse.nixos.org/t/security-fix-nix-derivation-sandbox-escape/47778</a></p>",
+        "id": 447482313,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719496006
+    }
+]

@@ -1,0 +1,45 @@
+<html>
+<head><meta charset="utf-8"><title>nosys `pkgs` handling · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/nosys.20.60pkgs.60.20handling.html">nosys `pkgs` handling</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="423154383"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nosys%20%60pkgs%60%20handling/near/423154383" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nosys.20.60pkgs.60.20handling.html#423154383">(Feb 24 2024 at 09:39)</a>:</h4>
+<p>Good idea?<br>
+<a href="https://github.com/divnix/nosys/pull/16">https://github.com/divnix/nosys/pull/16</a></p>
+
+
+
+<a name="423161119"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nosys%20%60pkgs%60%20handling/near/423161119" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nosys.20.60pkgs.60.20handling.html#423161119">(Feb 24 2024 at 11:08)</a>:</h4>
+<p>Context? What's 'nosys'?</p>
+
+
+
+<a name="423161180"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nosys%20%60pkgs%60%20handling/near/423161180" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nosys.20.60pkgs.60.20handling.html#423161180">(Feb 24 2024 at 11:09)</a>:</h4>
+<p>Okay, a way to deal with <code>systems</code>. Unsure what the benefit is compared to say flake-parts perSystem.</p>
+
+
+
+<a name="423195677"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nosys%20%60pkgs%60%20handling/near/423195677" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nosys.20.60pkgs.60.20handling.html#423195677">(Feb 24 2024 at 18:58)</a>:</h4>
+<p>For a while now, (mosly since working on and using std), I'm not a big fan of the module system. It's complexity get's conflating with Nix as a whole. I think using it to build flakes just gives you another onramp to infinite recursion, slow evaluation and difficult error messages that I'd rather not deal with when declaring a simple interface of inputs and outputs <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="423195890"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nosys%20%60pkgs%60%20handling/near/423195890" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nosys.20.60pkgs.60.20handling.html#423195890">(Feb 24 2024 at 19:01)</a>:</h4>
+<p>originally, nosys was just a way to start modularizing parts of <code>std</code> that could be factored out. There was a desystemetize function that I broke off here and used to essentially demonstrate the old "system as an input" idea for flakes. Showing what the flake API could be like if you didn't have to worry about system.</p>
+<p>It also doesn't do anything else, purposefully, and is as minimal and fast as possible with simple conveniences.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

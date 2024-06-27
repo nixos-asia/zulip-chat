@@ -1,0 +1,37 @@
+<html>
+<head><meta charset="utf-8"><title>Fixing what Nix did wrong · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html">Fixing what Nix did wrong</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446146257"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/446146257" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#446146257">(Jun 21 2024 at 18:38)</a>:</h4>
+<p>(copied from the matrix; this is about fixing flakes being a new concept and destroying the "everything is a derivation" concept of Nix; also see this post <a href="https://jade.fyi/blog/flakes-arent-real">https://jade.fyi/blog/flakes-arent-real</a>)</p>
+<p>The way I want to fix this in Cab is overridable expressions.</p>
+<div class="codehilite"><pre><span></span><code>{ a = 1; } ==&gt; a * a
+</code></pre></div>
+<p>assuming this is assigned to <code>b</code>, just evaluating <code>b</code> will get you <code>1</code>. But overriding it like <code>b &lt;== { a = 2; }</code> and then evaluating that expression will get you <code>4</code>. The trick here is that <code>==&gt;</code> is not a function symbol (unlike <code>:</code>, which has the same behavior in Cab as in Nix)</p>
+<p>So you will be able to do things like</p>
+<div class="codehilite"><pre><span></span><code>inputs @ {
+  packages = import &lt;github:cull-os/packages&gt; &lt;== inputs;
+} ==&gt; {
+  packages.bar = packages.buildCrate ./.;
+}
+</code></pre></div>
+<p><code>import</code> will import <code>/${&lt;github:cull-os/cab&gt;}/default.cab</code>, which is another expression like our <a href="http://default.cab">default.cab</a>. Then it will override it, with our inputs. The trick here is that our inputs were already overriden by the Cab CLI, which did <code>&lt;== { buildSystem = ...; targetSystem = ...; }</code> so the build and target systems get passed into CullOS packages. Then we get a neat attribute set packed with packages configured for our target.</p>
+
+
+
+<a name="446146808"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/446146808" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#446146808">(Jun 21 2024 at 18:42)</a>:</h4>
+<p>I also want to implement the "standard library" in Pure Rust, eagerly checking for types of things. This will also make it a part of the language instead of some unrelated repository like nixpkgs. And it will be faster, as a result.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

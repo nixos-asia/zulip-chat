@@ -1,0 +1,107 @@
+<html>
+<head><meta charset="utf-8"><title>Rust cross-compilation · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html">Rust cross-compilation</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="421381870"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421381870" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Drew Jose <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421381870">(Feb 14 2024 at 07:02)</a>:</h4>
+<p>Hello, everyone! I've been using nix mostly as a package manager with home-manager, and today I had a dillemma: cross compiling.<br>
+On trying to do so it gives you the helpful advice to do <code>rustup target add</code>, which prompted me to delete all my rust packages from home manager and just install rustup.</p>
+<p><a href="https://emacs.ch/@crmsnbleyd/111928501351116776">https://emacs.ch/@crmsnbleyd/111928501351116776</a></p>
+<p>Have any of you ever done cross compilation with rust without resorting to this?</p>
+
+
+
+<a name="421385918"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421385918" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421385918">(Feb 14 2024 at 07:37)</a>:</h4>
+<p>There is a thing called flakebox which is supposedly offering this. Maybe worth a try. They have a tutorial including cross-compilation here: <a href="https://github.com/rustshop/flakebox/blob/master/docs/building-new-project.md">https://github.com/rustshop/flakebox/blob/master/docs/building-new-project.md</a></p>
+
+
+
+<a name="421396457"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421396457" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421396457">(Feb 14 2024 at 08:46)</a>:</h4>
+<p>What are you cross-compiling to?</p>
+<p>See</p>
+<ul>
+<li><a href="https://github.com/srid/leptos-fullstack">https://github.com/srid/leptos-fullstack</a></li>
+<li><a href="https://github.com/srid/dioxus-desktop-template">https://github.com/srid/dioxus-desktop-template</a></li>
+</ul>
+<p>They both use <a href="https://crane.dev/">https://crane.dev/</a> and in the first repo you can see <code>rust-toolchain.toml</code> containing the wasm target which is what Nix uses.</p>
+
+
+
+<a name="421396581"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421396581" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421396581">(Feb 14 2024 at 08:47)</a>:</h4>
+<p><a href="https://crane.dev/examples/cross-rust-overlay.html">https://crane.dev/examples/cross-rust-overlay.html</a></p>
+
+
+
+<a name="421396883"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421396883" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421396883">(Feb 14 2024 at 08:49)</a>:</h4>
+<p>Flakebox uses crane; I'd recommend fiddling with crane first.</p>
+
+
+
+<a name="421398310"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421398310" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Drew Jose <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421398310">(Feb 14 2024 at 08:58)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Rust.20cross-compilation/near/421396457">said</a>:</p>
+<blockquote>
+<p>What are you cross-compiling to?</p>
+</blockquote>
+<p>from Darwin to x86_64-unknown-linux-gnu</p>
+
+
+
+<a name="421398425"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421398425" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421398425">(Feb 14 2024 at 08:59)</a>:</h4>
+<p>You can try it with <a href="https://crane.dev/examples/cross-rust-overlay.html">https://crane.dev/examples/cross-rust-overlay.html</a></p>
+
+
+
+<a name="421398822"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421398822" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421398822">(Feb 14 2024 at 09:01)</a>:</h4>
+<p>I also just came across this. Looks interesting, but don't know much about it:</p>
+<p><a href="https://old.reddit.com/r/rust/comments/11okj5w/rust_crosscompilation_without_struggles_by_using/">https://old.reddit.com/r/rust/comments/11okj5w/rust_crosscompilation_without_struggles_by_using/</a></p>
+
+
+
+<a name="421398919"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421398919" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421398919">(Feb 14 2024 at 09:02)</a>:</h4>
+<blockquote>
+<p>With it, you can build Linux binaries and docker images from the MacOS hosts without any virtual machines.</p>
+</blockquote>
+
+
+
+<a name="421399110"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421399110" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421399110">(Feb 14 2024 at 09:03)</a>:</h4>
+<p><a href="https://github.com/alekseysidorov/nixpkgs-rust-service-example/blob/main/flake.nix">Full flake example</a></p>
+
+
+
+<a name="421399232"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421399232" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421399232">(Feb 14 2024 at 09:03)</a>:</h4>
+<p>Unlike crane, this uses whatever build infra nixpkgs provides. As an interesting aside, the example uses <a class="stream" data-stream-id="419910" href="/#narrow/stream/419910-flake-parts">#flake-parts</a></p>
+
+
+
+<a name="421425324"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421425324" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421425324">(Feb 14 2024 at 11:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678563">Drew Jose</span> has marked this topic as resolved.</p>
+
+
+
+<a name="421425328"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Rust%20cross-compilation/near/421425328" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/Rust.20cross-compilation.html#421425328">(Feb 14 2024 at 11:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678563">Drew Jose</span> has marked this topic as unresolved.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,46 @@
+<html>
+<head><meta charset="utf-8"><title>Separating evaluation and realization · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Separating.20evaluation.20and.20realization.html">Separating evaluation and realization</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="421857227"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Separating%20evaluation%20and%20realization/near/421857227" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Separating.20evaluation.20and.20realization.html#421857227">(Feb 16 2024 at 13:22)</a>:</h4>
+<p>Just a little thing I found. You can <strong>evaluate</strong> a derivation first without building:</p>
+<div class="codehilite"><pre><span></span><code>❯ nix path-info --derivation .#default
+evaluating derivation &#39;git+file:///Users/srid/code/emanote#default&#39;
+/nix/store/sdsqgcdzzzxcc3f12gvn6i44vh0xwmnq-emanote-1.3.13.0.drv
+</code></pre></div>
+<p>And then <strong>realize</strong> (aka. 'build') the evaluated derivation,</p>
+<div class="codehilite"><pre><span></span><code>❯ nix build --no-link --print-out-paths &#39;/nix/store/sdsqgcdzzzxcc3f12gvn6i44vh0xwmnq-emanote-1.3.13.0.drv^out&#39;
+/nix/store/s79fra86jg0fxv5g084wb0dn7mp3scz8-emanote-1.3.13.0
+</code></pre></div>
+<p>As an aside, IFD involves evaluating the built path (a derivation) once again and building the resultant derivation. <a href="https://nixos.asia/en/ifd">https://nixos.asia/en/ifd</a></p>
+
+
+
+<a name="421891213"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Separating%20evaluation%20and%20realization/near/421891213" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Separating.20evaluation.20and.20realization.html#421891213">(Feb 16 2024 at 16:09)</a>:</h4>
+<p>Indeed. This is the entire premise behind std-ci as well</p>
+
+
+
+<a name="422467347"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Separating%20evaluation%20and%20realization/near/422467347" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/413950-nix/topic/Separating.20evaluation.20and.20realization.html#422467347">(Feb 20 2024 at 17:29)</a>:</h4>
+<p>oh, it just clicked to me that that's what the <code>--derivation</code> flag is attempting to describe. i think its vague hence i didn't understand it until now</p>
+
+
+
+<a name="422469094"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Separating%20evaluation%20and%20realization/near/422469094" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Separating.20evaluation.20and.20realization.html#422469094">(Feb 20 2024 at 17:39)</a>:</h4>
+<p>Honestly after designing std-action, I really got the feeling that it was a missed opportunity in Nix's design that we didn't more heavily focus on the separation of "eval time" vs "build time". There was a lot of kerfuffle about the flake cache, and how it's not super efficient. But a derivation is it's own evaluation cache, after all</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

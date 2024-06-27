@@ -1,0 +1,153 @@
+<html>
+<head><meta charset="utf-8"><title>Issues with ollama flake · nixify-llm · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/index.html">nixify-llm</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html">Issues with ollama flake</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446084604"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446084604" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ayrton Mercado <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446084604">(Jun 21 2024 at 13:33)</a>:</h4>
+<p><span class="user-mention" data-user-id="669081">@Shivaraj B H</span> <span class="user-mention" data-user-id="678574">@Andreas</span>  Thanks for the work you've put into this. I am new to Nix and trying the ollama flake that uses cuda.  From <a href="https://github.com/shivaraj-bh/ollama-flake/tree/main/example/cuda">here</a></p>
+<p><em>(I am new to both Linux and Nix, please let me know if I am running afoul of etiquette by posting the question here)</em></p>
+<p>After following the instructions:<br>
+<code>nix flake init -t github:shivaraj-bh/ollama-flake</code></p>
+<p>and </p>
+<p><code>nix run</code>                      </p>
+<p>I get:</p>
+<p>warning: Git tree '/home/ayrton/.config/nixos' is dirty<br>
+trace: warning: cudaPackages.autoAddOpenGLRunpathHook is deprecated, use pkgs.autoAddDriverRunpathHook instead<br>
+error: builder for '/nix/store/v478jqmc2cwj3jgd6iajkqf4n5apdagv-ctranslate2-4.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.drv' failed with exit code 1;<br>
+       last 2 log lines:<br>
+       &gt; Reading index <a href="https://pypi.org/simple/ctranslate2/">https://pypi.org/simple/ctranslate2/</a><br>
+       &gt; The file ctranslate2-4.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl has not be found in the index <a href="https://pypi.org/simple/ctranslate2/">https://pypi.org/simple/ctranslate2/</a><br>
+       For full logs, run 'nix log /nix/store/v478jqmc2cwj3jgd6iajkqf4n5apdagv-ctranslate2-4.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.drv'.<br>
+error: 1 dependencies of derivation '/nix/store/9kipiyyaszpb43v83jimim0mrw4k2prk-python3.10-ctranslate2-4.3.0.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/40il2v03ljm00cyqs7qzlhbjck4hd4sh-python3-3.10.14-env.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/9kdigfnxwvb617z7q6am51cw4ii0gkc9-open-webui.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/9aagb1idpyycxcjrmwrd1cvn89p5h2ca-open-webui-wrapper.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/q84rx52x11vx6m228djw4vrjlbvczdya-process-compose-default.json.drv' failed to build<br>
+error: 1 dependencies of derivation '/nix/store/vznn94a1j7vs8b14w8bmnhrs4wsfk0jx-default.drv' failed to build</p>
+<p>the nix log further states:<br>
+ nix log /nix/store/v478jqmc2cwj3jgd6iajkqf4n5apdagv-ctranslate2-4.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.drv<br>
+warning: The interpretation of store paths arguments ending in <code>.drv</code> recently changed. If this command is now failing try again with '/nix/store/v478jqmc2cwj3jgd6iajkqf4n5apdagv-ctranslate2-4.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.drv^*'<br>
+Reading index <a href="https://pypi.org/simple/ctranslate2/">https://pypi.org/simple/ctranslate2/</a><br>
+The file ctranslate2-4.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl has not be found in the index <a href="https://pypi.org/simple/ctranslate2/">https://pypi.org/simple/ctranslate2/</a></p>
+
+
+
+<a name="446084764"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446084764" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446084764">(Jun 21 2024 at 13:34)</a>:</h4>
+<p><a href="#narrow/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake/near/446084604">A message</a> was moved here from <a class="stream-topic" data-stream-id="426237" href="/#narrow/stream/426237-nixify-llm/topic/Mattermost.20plugin.20with.20local.20OpenAI.20compatible.20backend">#nixify-llm &gt; Mattermost plugin with local OpenAI compatible backend</a> by <span class="user-mention silent" data-user-id="678574">Andreas</span>.</p>
+
+
+
+<a name="446084819"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446084819" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446084819">(Jun 21 2024 at 13:34)</a>:</h4>
+<p>I moved your message to a new topic <span class="user-mention" data-user-id="730377">@Ayrton Mercado</span></p>
+
+
+
+<a name="446084886"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446084886" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ayrton Mercado <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446084886">(Jun 21 2024 at 13:35)</a>:</h4>
+<p>Thanks!</p>
+
+
+
+<a name="446086541"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446086541" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446086541">(Jun 21 2024 at 13:44)</a>:</h4>
+<p>I think I can reproduce the error on my end. I can't fix it though. But it looks like fetching something from PyPI didn't go the way it should have.</p>
+
+
+
+<a name="446087295"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446087295" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446087295">(Jun 21 2024 at 13:49)</a>:</h4>
+<p>I believe <a href="https://github.com/shivaraj-bh/ollama-flake">https://github.com/shivaraj-bh/ollama-flake</a> has been upstreamed? cc <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> </p>
+<p><span class="user-mention" data-user-id="730377">@Ayrton Mercado</span> Try </p>
+<p><a href="https://github.com/juspay/services-flake/tree/main/example/llm">https://github.com/juspay/services-flake/tree/main/example/llm</a></p>
+<p><a href="https://x.com/nixos_asia/status/1803065244568244578">https://x.com/nixos_asia/status/1803065244568244578</a></p>
+
+
+
+<a name="446087548"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446087548" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446087548">(Jun 21 2024 at 13:50)</a>:</h4>
+<p>maybe the old one might be archived then? Plus an addition to the readme?</p>
+
+
+
+<a name="446088035"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446088035" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ayrton Mercado <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446088035">(Jun 21 2024 at 13:53)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake/near/446087295">said</a>:</p>
+<blockquote>
+<p>I believe <a href="https://github.com/shivaraj-bh/ollama-flake">https://github.com/shivaraj-bh/ollama-flake</a> has been upstreamed? cc <span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> </p>
+<p><span class="user-mention silent" data-user-id="730377">Ayrton Mercado</span> Try </p>
+<p><a href="https://github.com/juspay/services-flake/tree/main/example/llm">https://github.com/juspay/services-flake/tree/main/example/llm</a></p>
+<p><a href="https://x.com/nixos_asia/status/1803065244568244578">https://x.com/nixos_asia/status/1803065244568244578</a></p>
+</blockquote>
+<p>Thanks Srid, trying now</p>
+
+
+
+<a name="446088853"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446088853" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446088853">(Jun 21 2024 at 13:57)</a>:</h4>
+<p>Just made a note about the 9GB download: <a href="https://github.com/juspay/services-flake/commit/0dc5d11cf56f4377c542c56653587225796a3416">https://github.com/juspay/services-flake/commit/0dc5d11cf56f4377c542c56653587225796a3416</a></p>
+
+
+
+<a name="446088890"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446088890" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446088890">(Jun 21 2024 at 13:57)</a>:</h4>
+<p>There's <a class="stream" data-stream-id="414011" href="/#narrow/stream/414011-services-flake">#services-flake</a> channel where you can post questions about this example as well.</p>
+
+
+
+<a name="446093132"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446093132" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ayrton Mercado <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446093132">(Jun 21 2024 at 14:20)</a>:</h4>
+<p>Worked flawlessly, thank you for your kindness. Now I need to figure out how to switch ollama to use the GPU.</p>
+<p>O/t... <br>
+Srid, do you have a suggestion as to how I can help in general?  Like I said earlier I am new to nix but feel that I need to contribute.</p>
+
+
+
+<a name="446093417"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446093417" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446093417">(Jun 21 2024 at 14:22)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="730377">Ayrton Mercado</span> <a href="#narrow/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake/near/446093132">said</a>:</p>
+<blockquote>
+<p>Now I need to figure out how to switch ollama to use the GPU.</p>
+</blockquote>
+<p>This should help? <a href="https://community.flake.parts/services-flake/ollama#acceleration">https://community.flake.parts/services-flake/ollama#acceleration</a></p>
+
+
+
+<a name="446093651"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446093651" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446093651">(Jun 21 2024 at 14:23)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="730377">Ayrton Mercado</span> <a href="#narrow/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake/near/446093132">said</a>:</p>
+<blockquote>
+<p>Srid, do you have a suggestion as to how I can help in general? Like I said earlier I am new to nix but feel that I need to contribute.</p>
+</blockquote>
+<p>You are welcome to contribute to any of our repos. <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> maintains <code>services-flake</code>.</p>
+<p>Documentation and stuff would also be useful to have -- the docs in services-flake as well as <a href="https://github.com/nixos-asia/website">https://github.com/nixos-asia/website</a></p>
+
+
+
+<a name="446094859"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446094859" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ayrton Mercado <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446094859">(Jun 21 2024 at 14:30)</a>:</h4>
+<p>Will take a look. Thanks again.</p>
+
+
+
+<a name="446266542"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Issues%20with%20ollama%20flake/near/446266542" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake.html#446266542">(Jun 22 2024 at 12:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/426237-nixify-llm/topic/Issues.20with.20ollama.20flake/near/446087548">said</a>:</p>
+<blockquote>
+<p>maybe the old one might be archived then? Plus an addition to the readme?</p>
+</blockquote>
+<p>I have archived ollama-flake:</p>
+<p><a href="https://github.com/shivaraj-bh/ollama-flake">https://github.com/shivaraj-bh/ollama-flake</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

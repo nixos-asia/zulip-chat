@@ -1,0 +1,283 @@
+<html>
+<head><meta charset="utf-8"><title>Require opinion on `example/llm` · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html">Require opinion on `example/llm`</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="444681833"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444681833" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444681833">(Jun 14 2024 at 11:41)</a>:</h4>
+<p>I just wanted to get some opinion on two different ways <code>example/llm</code> can run:</p>
+<ol>
+<li>The example will pre-load the models and start Open WebUI. This ensures the user can immediately prompt the model once the WebUI launches. But this has a one-time wait period for pulling the model.</li>
+<li>The example will immediately start Open WebUI and the user can load whatever model they want from the “Admin Panel”. </li>
+</ol>
+<p><strong>Try out example1</strong>: <code>nix run github:juspay/services-flake?dir=example/llm —override-input services-flake github:juspay/services-flake</code></p>
+<p><strong>Try out example2</strong>: <code>nix run "github:drupol/services-flake/fix-open-webui-example?dir=example/llm" --refresh --override-input services-flake github:juspay/services-flake</code></p>
+<p>PR for example2: <a href="https://github.com/juspay/services-flake/pull/227">https://github.com/juspay/services-flake/pull/227</a></p>
+
+
+
+<a name="444705489"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444705489" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444705489">(Jun 14 2024 at 13:52)</a>:</h4>
+<p>cc <span class="user-mention" data-user-id="678574">@Andreas</span> who has tried this out before.</p>
+<p>Perhaps we should invite the PR author (<code>drupol</code>) here.</p>
+
+
+
+<a name="444705643"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444705643" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444705643">(Jun 14 2024 at 13:53)</a>:</h4>
+<p>I'm fine with pre-loading it. It is just an example, but it is an unique example we are also using it for <em>demo</em> (video).</p>
+
+
+
+<a name="444705811"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444705811" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444705811">(Jun 14 2024 at 13:54)</a>:</h4>
+<p>yeah sure, why not invite Drupol!</p>
+<p>I've been debugging ollama on docker anyways the last 2 days. Because the dual GPU stack I run has issues of an unclear nature.</p>
+
+
+
+<a name="444705940"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444705940" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444705940">(Jun 14 2024 at 13:54)</a>:</h4>
+<p>I also like <code>dataDir</code> to remain <code>$HOME/.services-flake/ollama</code>, because then I can always revisit the "app" by re-runing <code>nix run ...</code> and play with the model locally. In a way, this example also demonstrates that you can use services-flake not only to run services in development project, but also as an end-user "app" (where there's no concept of flake project directory under $HOME, since <code>nix run ...</code> doesn't require it).</p>
+
+
+
+<a name="444706369"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444706369" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444706369">(Jun 14 2024 at 13:56)</a>:</h4>
+<p>Hey hi !</p>
+
+
+
+<a name="444706402"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444706402" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444706402">(Jun 14 2024 at 13:57)</a>:</h4>
+<p>I'm @drupol on Github.</p>
+
+
+
+<a name="444706411"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444706411" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444706411">(Jun 14 2024 at 13:57)</a>:</h4>
+<p>Hey <span class="user-mention" data-user-id="728730">@Pol Dellaiera</span> and welcome!</p>
+
+
+
+<a name="444706541"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444706541" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444706541">(Jun 14 2024 at 13:57)</a>:</h4>
+<p>I joined to discuss about this: <a href="https://github.com/juspay/services-flake/pull/227#issuecomment-2168096533">https://github.com/juspay/services-flake/pull/227#issuecomment-2168096533</a></p>
+
+
+
+<a name="444706643"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444706643" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444706643">(Jun 14 2024 at 13:58)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> Hey I'm here :)</p>
+
+
+
+<a name="444706855"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444706855" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444706855">(Jun 14 2024 at 13:59)</a>:</h4>
+<p>Welcome :-)</p>
+
+
+
+<a name="444706914"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444706914" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444706914">(Jun 14 2024 at 13:59)</a>:</h4>
+<p>(I posted about the formatter in <a class="stream" data-stream-id="413950" href="/#narrow/stream/413950-nix">#nix</a> )</p>
+
+
+
+<a name="444708159"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444708159" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444708159">(Jun 14 2024 at 14:05)</a>:</h4>
+<p>How about finding a compromise?</p>
+<p>services-flake is great because it can save data in the same user directory where the flake.nix belong. Maybe we should establish some kind of <code>./data</code> directory that is always there (equivalent to the <code>./state</code> directory in direnv) and add a comment explaining that user is free to change that directory?</p>
+<p>Hiding the ollama LLMs under <code>$home/.service-flake/</code> is definitely too intrusive for me already.</p>
+
+
+
+<a name="444708403"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444708403" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444708403">(Jun 14 2024 at 14:06)</a>:</h4>
+<p>How are you using <code>example/llm</code> for your use case? As an actual app seeing everyday use?</p>
+
+
+
+<a name="444708567"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444708567" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444708567">(Jun 14 2024 at 14:07)</a>:</h4>
+<p>No, I use the NixOS service on my side, but I have plenty of colleagues I wish I could show the demo. But Nix is already quite magical for a lot of people and I think it's a good idea to make things clear by not hiding where the files are going to be saved by default.</p>
+
+
+
+<a name="444708826"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444708826" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444708826">(Jun 14 2024 at 14:08)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="728730">Pol Dellaiera</span> <a href="#narrow/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60/near/444708567">said</a>:</p>
+<blockquote>
+<p>Nix is already quite magical for a lot of people and I think it's a good idea to make things clear by not hiding where the files are going to be saved by default.</p>
+</blockquote>
+<p>Okay, fair enough. I'm happy with using default <code>dataDir</code> then.</p>
+
+
+
+<a name="444708902"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444708902" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444708902">(Jun 14 2024 at 14:09)</a>:</h4>
+<p>Cool, thanks ! :) Do you want me to add a comment in the flake for <code>dataDir</code> ?</p>
+
+
+
+<a name="444709042"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709042" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709042">(Jun 14 2024 at 14:10)</a>:</h4>
+<p>Instead of removing it, you could just comment out <code># dataDir = ...</code></p>
+
+
+
+<a name="444709136"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709136" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709136">(Jun 14 2024 at 14:10)</a>:</h4>
+<p>yeah I was about to do that.</p>
+
+
+
+<a name="444709202"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709202" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709202">(Jun 14 2024 at 14:10)</a>:</h4>
+<p>Also, I still like pre-loading models, so restore <code>models = [ "llama2-uncensored" ];</code> as well.</p>
+
+
+
+<a name="444709379"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709379" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709379">(Jun 14 2024 at 14:11)</a>:</h4>
+<p>Sad. I would prefer to start with no LLM so users are free to use whatever they want.</p>
+
+
+
+<a name="444709422"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709422" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709422">(Jun 14 2024 at 14:11)</a>:</h4>
+<p>And starting with <code>llama2-uncensored</code> is... meh.</p>
+
+
+
+<a name="444709658"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709658" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709658">(Jun 14 2024 at 14:12)</a>:</h4>
+<p>I mainly want the <code>nix run ...</code> invocation for this example to work 'out of the box' (with little manual poking) as much as possible. I have no preference on the specific model (smaller is generally better)</p>
+
+
+
+<a name="444709699"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709699" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709699">(Jun 14 2024 at 14:13)</a>:</h4>
+<p>I mean nowadays we could go llama3 ... or which one would you prefer?</p>
+
+
+
+<a name="444709774"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709774" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709774">(Jun 14 2024 at 14:13)</a>:</h4>
+<p>IMHO - I would not force users to download 4+GB of models on their behalv. I would leave it empty.</p>
+
+
+
+<a name="444709948"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444709948" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444709948">(Jun 14 2024 at 14:14)</a>:</h4>
+<p>How about a middle ground? use <code>tinydolphin</code> as the default pre-loaded model, for the purpose of the user to quickly verify if they are able to prompt and get a response. After which they are free to pull whatever model they want from the Admin panel?</p>
+
+
+
+<a name="444710106"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444710106" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444710106">(Jun 14 2024 at 14:15)</a>:</h4>
+<p>How big is <code>tinydolphin</code>?</p>
+
+
+
+<a name="444710156"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444710156" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444710156">(Jun 14 2024 at 14:15)</a>:</h4>
+<p>637 MB it seems</p>
+
+
+
+<a name="444710326"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444710326" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444710326">(Jun 14 2024 at 14:16)</a>:</h4>
+<p>which means it will run on almost any GPU that is supported, which is nice</p>
+
+
+
+<a name="444710570"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444710570" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444710570">(Jun 14 2024 at 14:18)</a>:</h4>
+<p>so, <code>tinydolphin</code> ?</p>
+
+
+
+<a name="444710764"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444710764" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444710764">(Jun 14 2024 at 14:18)</a>:</h4>
+<p>I propose this then,</p>
+<p>Have two examples,</p>
+<ul>
+<li><code>examples/ollama-ui</code>: basically our current example but with all of <span class="user-mention" data-user-id="728730">@Pol Dellaiera</span> 's suggestions (no custom dataDir; no pre-loaded models)</li>
+<li><code>examples/llm</code>: a new example that <code>import</code>s the previous example (shared service) and sets the two things only -- <code>dataDir</code> and <code>models</code> (here, we can use a good model without size restriction)</li>
+</ul>
+<p>For video demo (on X and for docs), we can use the latter example.</p>
+
+
+
+<a name="444710875"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444710875" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444710875">(Jun 14 2024 at 14:19)</a>:</h4>
+<p>The later can also serve as a demonstration of sharing of services.</p>
+
+
+
+<a name="444711152"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444711152" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444711152">(Jun 14 2024 at 14:20)</a>:</h4>
+<p>As you wish guys... this is your project :)</p>
+
+
+
+<a name="444711183"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444711183" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444711183">(Jun 14 2024 at 14:20)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60/near/444710764">said</a>:</p>
+<blockquote>
+<p>For video demo (on X and for docs), we can use the latter example.</p>
+</blockquote>
+<p>And in future, we can tell people "if you want to see what services-flake can do, run <code>nix run ...</code>" (pointing to this latter example)</p>
+
+
+
+<a name="444711211"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444711211" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444711211">(Jun 14 2024 at 14:21)</a>:</h4>
+<p>perhaps choose a slightly more specific name for <code>examples/llm</code>... idk what you guys typically go for, <code>examples/ollama-preloaded</code> maybe?</p>
+
+
+
+<a name="444711261"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444711261" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444711261">(Jun 14 2024 at 14:21)</a>:</h4>
+<p>Yea, good idea</p>
+
+
+
+<a name="444711286"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444711286" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444711286">(Jun 14 2024 at 14:21)</a>:</h4>
+<p>By the way, how do you manage to not use <code>--impure</code> and write in the current directory? What's the magic trick ?</p>
+
+
+
+<a name="444712275"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444712275" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444712275">(Jun 14 2024 at 14:26)</a>:</h4>
+<p>Cool, I will merge <span class="user-mention" data-user-id="728730">@Pol Dellaiera</span> ’s PR once the <code>models</code> is removed to demonstrate only the <code>open-webui</code>. I will rename the <code>example/llm</code> to <code>example/open-webui</code> in a different PR. And then add <code>example/ollama-preloaded</code> in another one.</p>
+<p>Sounds good?</p>
+
+
+
+<a name="444712464"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444712464" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444712464">(Jun 14 2024 at 14:27)</a>:</h4>
+<p>Done.</p>
+
+
+
+<a name="444713027"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Require%20opinion%20on%20%60example/llm%60/near/444713027" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60.html#444713027">(Jun 14 2024 at 14:30)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="728730">Pol Dellaiera</span> <a href="#narrow/stream/414011-services-flake/topic/Require.20opinion.20on.20.60example.2Fllm.60/near/444711286">said</a>:</p>
+<blockquote>
+<p>By the way, how do you manage to not use <code>--impure</code> and write in the current directory? What's the magic trick ?</p>
+</blockquote>
+<p><code>nix run</code> doesn’t require pure evaluation mode</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

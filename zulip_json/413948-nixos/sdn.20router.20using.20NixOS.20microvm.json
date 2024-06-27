@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>In case anyone is interested I thought I'd share how I was able to setup a virtual router using a NixOS microvm on my build server using cloud-hypervisor. It's really quite nice, considering that most commercial routers are woefully underpowered. At some point it might be nice to try and use the XDP in eBPF to handle the firewall as efficiently as possible, but honestly this is working pretty well as is:<br>\n<a href=\"https://github.com/nrdxp/nrdos/commit/68d2d0e7b30d8dff5c2b58e3e4f6eebed74f170f\">https://github.com/nrdxp/nrdos/commit/68d2d0e7b30d8dff5c2b58e3e4f6eebed74f170f</a></p>",
+        "id": 419922078,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707164693
+    },
+    {
+        "content": "<p>Thanks for sharing, was meaning to try this in the past, but never got time. This makes it easier!</p>",
+        "id": 419970660,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1707191432
+    },
+    {
+        "content": "<p>yeah only thing not working atm is local dns resolution. I'll probably try to work that out soon, I'm sure I missed something simple. Even so, I mostly rely on nebula for private network communication so its not urgent for me.</p>\n<p>Also, I don't expose any ports to the outside world or even respond to pings.</p>",
+        "id": 420132740,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707252379
+    }
+]

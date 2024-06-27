@@ -1,0 +1,116 @@
+<html>
+<head><meta charset="utf-8"><title>Current status · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html">Current status</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446141360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446141360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446141360">(Jun 21 2024 at 18:07)</a>:</h4>
+<p>Currently, I've only completed the tokenizer. But the general way I want to continue forward is like so:</p>
+<ul>
+<li>Create AST</li>
+<li>Create the lazy interpreters</li>
+<li>At this point, the program will be able to create files similar to Nix or Guix's .drv that specify environment variables, the builder &amp; arguments to that builder and other derivations that this derivation depends on</li>
+</ul>
+<p>That will be all that's done by the <code>cab</code> CLI tool. You will be able to import code from islands (e.g <code>&lt;github:cull-os/cab&gt;</code>) and create derivations (as well as convert islands into derivations). But you won't be able to import or inspect contents of derivations as Cab doesn't know how to build them, which is IMO a feature.</p>
+
+
+
+<a name="446141844"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446141844" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446141844">(Jun 21 2024 at 18:10)</a>:</h4>
+<p>Essentially, <code>cull-os/cab</code> provides its own language (not Nix) and cross-repo abstraction (not flakes) - but using the underlying <code>.drv</code> language, right?</p>
+
+
+
+<a name="446141986"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446141986" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446141986">(Jun 21 2024 at 18:11)</a>:</h4>
+<p>And then <code>cab</code> will invoke the configured derivation builder and copy the result to the current filesystem (if the builder is remote). The builder has to adhere to the "builder protocol"; something that I want to create and write a specification for. Unlike Nix or Guix, it will be documented and will allow for custom builders that accomplish custom needs. The specification will only require the builder to return a result matching the specified derivation, making it super flexible.</p>
+
+
+
+<a name="446142002"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142002" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142002">(Jun 21 2024 at 18:11)</a>:</h4>
+<p>FTR, I am able to use the tokenizer (had to use Nix shell from a different Rust project since <code>shell.nix</code> doesn't provide cargo and friends):</p>
+<p><a href="/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png" title="image.png"><img src="/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png"></a></div>
+
+
+
+<a name="446142163"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142163" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142163">(Jun 21 2024 at 18:12)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="725711">RGBCube</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446141360">said</a>:</p>
+<blockquote>
+<ul>
+<li>similar to Nix or Guix's .drv</li>
+</ul>
+</blockquote>
+<p>Ah, wait, you said <em>similar</em> to. So nothing's shared with Nix/nixpkgs?</p>
+
+
+
+<a name="446142186"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142186" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142186">(Jun 21 2024 at 18:13)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446141844">said</a>:</p>
+<blockquote>
+<p>Essentially, <code>cull-os/cab</code> provides its own language (not Nix) and cross-repo abstraction (not flakes) - but using the underlying <code>.drv</code> language, right?</p>
+</blockquote>
+<p>Yes, it's essentially just a simple tool to compose derivation files (though, I do not think I will use Nix's .drv syntax or even the .drv extension)</p>
+
+
+
+<a name="446142299"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142299" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142299">(Jun 21 2024 at 18:14)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446142163">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="725711">RGBCube</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446141360">said</a>:</p>
+<blockquote>
+<ul>
+<li>similar to Nix or Guix's .drv</li>
+</ul>
+</blockquote>
+<p>Ah, wait, you said <em>similar</em> to. So nothing's shared with Nix/nixpkgs?</p>
+</blockquote>
+<p>Yes, I'm not planning to be compatible. What Cab essentially is is a frontend to the Builder Protocol, it creates derivation files required by the protocol and communicates with the backend (the builder server) to produce results</p>
+
+
+
+<a name="446142475"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142475" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142475">(Jun 21 2024 at 18:15)</a>:</h4>
+<p>One could even use Nix for the (currently non existent) protocol to build things, as what Nix does it also create derivation files. Like another frontend</p>
+
+
+
+<a name="446142569"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142569" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142569">(Jun 21 2024 at 18:15)</a>:</h4>
+<p>I'm specifically wondering if it would be possible to use (ie., <code>import &lt;github:NixOS/nixpkgs&gt;</code>) the existing packages from <code>nixpkgs</code> in a Cull package file.</p>
+
+
+
+<a name="446142772"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142772" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142772">(Jun 21 2024 at 18:17)</a>:</h4>
+<p>I am wondering if <span class="user-mention" data-user-id="679006">@Tim DeHerrera</span> might not be interested in this. Because he and I talked about about separating evaluation and builder functions of Nix, potentially distributing them somehow.</p>
+
+
+
+<a name="446142797"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142797" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142797">(Jun 21 2024 at 18:17)</a>:</h4>
+<p>That would require Cab to be compatible with Nix syntax, so no. But if Nix ever gets support for the builder protocol, it wouldn't be that hard to use Nix alongside Cab to build things on your system (with the same daemon managing both)</p>
+
+
+
+<a name="446151052"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446151052" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446151052">(Jun 21 2024 at 19:07)</a>:</h4>
+<p>Definitely interesting, especially the builder protocol, as that as something I've been itching to improve for years now with Nix.</p>
+<p>Have begun to wonder if a full scale rearch wasn't necessary. I've had some other more outlandish ideas like extending ELF to link dynamic libs via a content addressed URI instead of a file path </p>
+<p>That way, you could make the file system layer a virtual abstraction, and maybe even present the files as a regular FHS while still retaining the benefits of a Nix build.</p>
+<p>In any case, I'll keep a close eye on your project, and maybe even contrib at some point if it helps. Seems like you have a solid plan so far. Bravo <span aria-label="clap" class="emoji emoji-1f44f" role="img" title="clap">:clap:</span></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

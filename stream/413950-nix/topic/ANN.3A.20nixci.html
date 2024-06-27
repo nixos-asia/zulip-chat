@@ -1,0 +1,109 @@
+<html>
+<head><meta charset="utf-8"><title>ANN: nixci · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html">ANN: nixci</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="434267436"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/434267436" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#434267436">(Apr 19 2024 at 02:03)</a>:</h4>
+<p><code>0.4.0</code> released!</p>
+<ul>
+<li><a href="https://crates.io/crates/nixci">https://crates.io/crates/nixci</a></li>
+<li><a href="https://github.com/srid/nixci/releases/tag/0.4.0">https://github.com/srid/nixci/releases/tag/0.4.0</a></li>
+</ul>
+<p><span class="user-mention" data-user-id="669081">@Shivaraj B H</span> ^ another candidate for upstreaming to nixpkgs, if you would like to contribute a PR.</p>
+
+
+
+<a name="434276827"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/434276827" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#434276827">(Apr 19 2024 at 03:51)</a>:</h4>
+<p><a href="https://github.com/NixOS/nixpkgs/pull/305222">https://github.com/NixOS/nixpkgs/pull/305222</a></p>
+
+
+
+<a name="435120570"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435120570" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> GuangTao Zhang <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435120570">(Apr 24 2024 at 06:40)</a>:</h4>
+<p>Did you test the latest version with the command as follows?</p>
+<div class="codehilite" data-code-language="log"><pre><span></span><code>nixci build github:hercules-ci/hercules-ci-agent                                                                      │
+│🍏 github:hercules-ci/hercules-ci-agent                                                                                 │
+│🐚 nix --extra-experimental-features 'nix-command flakes' show-config --json                                            │
+│🐚 nix eval 'github:hercules-ci/hercules-ci-agent#nixci.default' --json                                                 │
+│🐚 nix eval --impure --json --expr 'builtins.getFlake "github:nix-systems/empty"'                                       │
+│🐚 nix eval --impure --json --expr 'import /nix/store/j0r8d7rdn4vrisl78v8ckl4hny4q9ipi-source'                          │
+│🐚 nix show-config --json                                                                                               │
+│🍎 default.&lt;root&gt;                                                                                                       │
+│🐚 nix flake lock --no-update-lock-file github:hercules-ci/hercules-ci-agent                                            │
+│🐚 nix build '/nix/store/p8vfkmfh43yy8lmz1r65dr9yq3ql7cd7-source#default' -L --no-link --print-out-paths --override-inpu│
+│t flake github:hercules-ci/hercules-ci-agent --override-input systems github:nix-systems/empty --refresh -j auto        │
+│• Updated input 'systems':                                                                                              │
+│    'github:nix-systems/default/da67096a3b9bf56a91d16901293e51ba5b49a27e?narHash=sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU│
+│309k9mBC768%3D' (2023-04-09)                                                                                            │
+│  → 'github:nix-systems/empty/23d743284b73ae69caf0cb7874edf05c0c631a1f?narHash=sha256-JeMK8G1oabQTSpqXhYaYtPRak4m6z1xxyR│
+│Kf8CvHy14%3D' (2024-02-23)                                                                                              │
+│error: flake 'path:/nix/store/p8vfkmfh43yy8lmz1r65dr9yq3ql7cd7-source' does not provide attribute 'packages.aarch64-darw│
+│in.default', 'legacyPackages.aarch64-darwin.default' or 'default'                                                       │
+│Error: devour-flake failed to run (exited: 1)
+</code></pre></div>
+
+
+
+<a name="435131355"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435131355" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435131355">(Apr 24 2024 at 07:51)</a>:</h4>
+<p><span class="user-mention" data-user-id="672761">@GuangTao Zhang</span> How did you install nixci?</p>
+
+
+
+<a name="435134908"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435134908" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435134908">(Apr 24 2024 at 08:13)</a>:</h4>
+<p>I'm unable to reproduce your error using <code>nix run github:srid/nixci build github:hercules-ci/hercules-ci-agent</code> on NixOS.</p>
+
+
+
+<a name="435135112"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435135112" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435135112">(Apr 24 2024 at 08:14)</a>:</h4>
+<p>Ah, maybe the nixpkgs one is broken. Let me try ...</p>
+
+
+
+<a name="435139688"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435139688" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435139688">(Apr 24 2024 at 08:40)</a>:</h4>
+<p>Nope, still can't reproduce it.</p>
+
+
+
+<a name="435139804"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435139804" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435139804">(Apr 24 2024 at 08:41)</a>:</h4>
+<p>But, <span class="user-mention" data-user-id="669081">@Shivaraj B H</span>, you want to update nixpkgs to use the same devour-flake rev, since it contains some fixes (like for building nixosConfigurations).</p>
+<p><a href="https://github.com/srid/nixci/blob/b247e765843762f708861ec2309ae8ca75c1de25/flake.lock#L40-L49">https://github.com/srid/nixci/blob/b247e765843762f708861ec2309ae8ca75c1de25/flake.lock#L40-L49</a></p>
+
+
+
+<a name="435139947"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435139947" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435139947">(Apr 24 2024 at 08:42)</a>:</h4>
+<p>May as well use this opportunity to add a comment next to the <code>version</code> field reminding contributors to update <code>devour-flake</code> when upgrading nixci.</p>
+
+
+
+<a name="435265301"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435265301" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> GuangTao Zhang <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435265301">(Apr 24 2024 at 20:14)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/ANN.3A.20nixci/near/435134908">said</a>:</p>
+<blockquote>
+<p>I'm unable to reproduce your error using <code>nix run github:srid/nixci build github:hercules-ci/hercules-ci-agent</code> on NixOS.</p>
+</blockquote>
+<p>From the latest nixpkgs-unstable.Yeah, I can't reproduce the issue with the command you provided as well. It seems the problem appeared in the the upstream of nixpkgs (version 0.4.0)</p>
+
+
+
+<a name="435283879"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/ANN%3A%20nixci/near/435283879" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/ANN.3A.20nixci.html#435283879">(Apr 24 2024 at 22:43)</a>:</h4>
+<p><span class="user-mention" data-user-id="669081">@Shivaraj B H</span> Another idea: add some regression tests for nixci in nixpkgs itself. Not sure what that looks like, but I'm sure some packages must have tests. We only need to run <code>nixci build</code> on some known repos. But this can happen on separate PR.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

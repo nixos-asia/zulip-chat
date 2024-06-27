@@ -1,0 +1,201 @@
+<html>
+<head><meta charset="utf-8"><title>Mapping through list of attrSets to make a complex string · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html">Mapping through list of attrSets to make a complex string</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="444716371"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444716371" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444716371">(Jun 14 2024 at 14:49)</a>:</h4>
+<p>Okay <span class="user-mention" data-user-id="679006">@Tim DeHerrera</span> I might have the next newbie question here <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span> In any other language I write that would be no problem for me, but in Nix it is somewhat weird to me. </p>
+<p>This is related to me finally doing the network config setting to have them permanently fixed. I have my list of attrsets:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="ss">networkInterfaces</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp4s0f0np0"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp4s0f1np1"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp6s0"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp7s0"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">350</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">];</span>
+</code></pre></div>
+<p>and I want to create this string</p>
+<div class="codehilite"><pre><span></span><code>networking.dhcpcd.extraConfig = &#39;&#39;
+  interface enp4s0f0np0
+  metric 200
+
+  interface enp4s0f1np1
+  metric 100
+
+  interface enp6s0
+  metric 300
+
+  interface enp7s0
+  metric 350
+&#39;&#39;;
+</code></pre></div>
+<p>I think I got a bit lost in the plethora of string concatenation functions that are available ...</p>
+
+
+
+<a name="444716739"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444716739" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444716739">(Jun 14 2024 at 14:50)</a>:</h4>
+<p>You want <code>concatStringsSep</code>. ChatGPT solution (untested):</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">networkInterfaces</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp4s0f0np0"</span><span class="p">;</span> <span class="ss">metric</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp4s0f1np1"</span><span class="p">;</span> <span class="ss">metric</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp6s0"</span><span class="p">;</span> <span class="ss">metric</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp7s0"</span><span class="p">;</span> <span class="ss">metric</span> <span class="o">=</span> <span class="mi">350</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">];</span>
+
+  networking<span class="o">.</span>dhcpcd<span class="o">.</span><span class="ss">extraConfig</span> <span class="o">=</span> <span class="k">let</span>
+    <span class="c1"># Function to transform a single attribute set to a string</span>
+    <span class="ss">formatInterface</span> <span class="o">=</span> interface<span class="p">:</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">      interface </span><span class="si">${</span>interface<span class="o">.</span>name<span class="si">}</span>
+<span class="s s-Multiline">      metric </span><span class="si">${</span><span class="nb">toString</span> interface<span class="o">.</span>metric<span class="si">}</span>
+<span class="s s-Multiline">    ''</span><span class="p">;</span>
+    <span class="c1"># Transform each attribute set and join them with newlines</span>
+    <span class="ss">formattedInterfaces</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>concatStringsSep <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="p">(</span><span class="nb">builtins</span><span class="o">.</span><span class="nb">map</span> formatInterface networkInterfaces<span class="p">);</span>
+  <span class="k">in</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">    </span><span class="si">${</span>formattedInterfaces<span class="si">}</span>
+<span class="s s-Multiline">  ''</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="444716818"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444716818" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444716818">(Jun 14 2024 at 14:51)</a>:</h4>
+<p>yeah that looks plausible, I'll test it <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="444716910"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444716910" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444716910">(Jun 14 2024 at 14:51)</a>:</h4>
+<p>Yeah, might be able to do it more "manually" with a fold. Can sometimes end up being quite elegant depending on the situation</p>
+
+
+
+<a name="444717011"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444717011" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444717011">(Jun 14 2024 at 14:52)</a>:</h4>
+<p>you have an example?</p>
+
+
+
+<a name="444717186"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444717186" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444717186">(Jun 14 2024 at 14:53)</a>:</h4>
+<p>On my phone arm, but I'll see if I can grab one</p>
+
+
+
+<a name="444717239"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444717239" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444717239">(Jun 14 2024 at 14:53)</a>:</h4>
+<p>because elegance might help here, I feel that a good old c-style for-loop is easier to read</p>
+
+
+
+<a name="444719098"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444719098" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444719098">(Jun 14 2024 at 15:02)</a>:</h4>
+<p>sure but for loops don't exist in the purely functional realm <span aria-label="grinning" class="emoji emoji-1f600" role="img" title="grinning">:grinning:</span> </p>
+<p>Here is a basic fold:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">networkInterfaces</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp4s0f0np0"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+      <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp4s0f1np1"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+      <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp6s0"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+      <span class="ss">name</span> <span class="o">=</span> <span class="s2">"enp7s0"</span><span class="p">;</span>
+      <span class="ss">metric</span> <span class="o">=</span> <span class="mi">350</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">];</span>
+<span class="k">in</span>
+  <span class="nb">builtins</span><span class="o">.</span>foldl' <span class="p">(</span>acc<span class="p">:</span> x<span class="p">:</span>
+    <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">      interface </span><span class="si">${</span>x<span class="o">.</span>name<span class="si">}</span>
+<span class="s s-Multiline">      metric </span><span class="si">${</span><span class="nb">toString</span> x<span class="o">.</span>metric<span class="si">}</span>
+<span class="s s-Multiline">    ''</span>
+    <span class="o">+</span> acc<span class="p">)</span>
+  <span class="s2">""</span>
+  networkInterfaces
+</code></pre></div>
+
+
+
+<a name="444719334"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444719334" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444719334">(Jun 14 2024 at 15:02)</a>:</h4>
+<p>ends up being fairly similar to srids version</p>
+
+
+
+<a name="444720252"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444720252" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444720252">(Jun 14 2024 at 15:06)</a>:</h4>
+<p>okay so what does <code>networkInterfaces</code> in the very last line do?</p>
+<p>But that looks a bit more concise</p>
+
+
+
+<a name="444720679"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444720679" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444720679">(Jun 14 2024 at 15:08)</a>:</h4>
+<p>That is just the list of interfaces bound to a variable name. Are you generally familiar with how folds work? Essentially its a convenient mechanism in the purely functional style of accumulating values from a list into some other kind of data structure, in this case a string.</p>
+
+
+
+<a name="444720866"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444720866" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444720866">(Jun 14 2024 at 15:09)</a>:</h4>
+<p>so <code>foldl'</code> takes 3 args, the first is a function to show how to append each value to the accumulation of values, the second is the starting data structure, in this case an empty string, and the final argument is the list to fold</p>
+
+
+
+<a name="444721200"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444721200" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444721200">(Jun 14 2024 at 15:11)</a>:</h4>
+<p>yeah now that starts making a bit more sense.</p>
+
+
+
+<a name="444721358"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444721358" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444721358">(Jun 14 2024 at 15:11)</a>:</h4>
+<p>I guess I am just not purely functional enough (yet)</p>
+
+
+
+<a name="444721424"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444721424" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444721424">(Jun 14 2024 at 15:12)</a>:</h4>
+<p>gonna try this later</p>
+
+
+
+<a name="444721545"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444721545" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444721545">(Jun 14 2024 at 15:12)</a>:</h4>
+<p>Well understand maps and folds will get you pretty far on their own, so you are off to a good start</p>
+
+
+
+<a name="444721662"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444721662" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444721662">(Jun 14 2024 at 15:13)</a>:</h4>
+<p>yeah, I mean maps I am fairly familiar with in other languages. But for some reason I find Nix always a bit more obscure to use.</p>
+
+
+
+<a name="444865737"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Mapping%20through%20list%20of%20attrSets%20to%20make%20a%20complex%20string/near/444865737" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/Mapping.20through.20list.20of.20attrSets.20to.20make.20a.20complex.20string.html#444865737">(Jun 15 2024 at 13:59)</a>:</h4>
+<p>Going back to my original problem, I figured I most likely have to go through <code>networkmanager</code> to set the metric value, using dhcpd won't do the trick.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,285 @@
+<html>
+<head><meta charset="utf-8"><title>StackOverflow · social-media · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/415266-social-media/index.html">social-media</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html">StackOverflow</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="404986967"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/404986967" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#404986967">(Nov 30 2023 at 01:55)</a>:</h4>
+<h2>Loop over a list in NixOS using the value as an identifier?</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77569447/loop-over-a-list-in-nixos-using-the-value-as-an-identifier">https://stackoverflow.com/questions/77569447/loop-over-a-list-in-nixos-using-the-value-as-an-identifier</a></p>
+<blockquote>
+<p>In vhost.nix I want to add the users in a loop like the working example in httpd.virtualHosts.</p>
+<p>This is the configuration.nix I am using in a virtual machine:</p>
+<h1>vm.nix</h1>
+<p>{ lib, config, ... }:</p>
+<p>{</p>
+<p>imports = [</p>
+<p>./vhosts.nix</p>
+<p>];</p>
+<p>services.httpd.enable = true;</p>
+<p>vhosts = {</p>
+<p>"<a href="http://test.example.de">test.example.de</a>" = {</p>
+<p>customer = "web2";</p>
+<p>phpuser = "web2www1";</p>
+<p>};</p>
+<p>"<a href="http://test2.example.de">test2.example.de</a>" = {</p>
+<p>customer = "web3";</p>
+<p>phpuser = "web3www1";</p>
+<p>};</p>
+<p>};</p>
+<p>}</p>
+<p>this my module vhost.nix</p>
+<p>{ config, pkgs, lib, ... }:</p>
+<p>with lib;</p>
+<p>let</p>
+<p>cfg = config.vhosts;</p>
+<p>in</p>
+<p>{</p>
+<p>options.vhosts = lib.mkOption {</p>
+<p>type = with lib.types; attrsOf (submodule ({domain, ... }: {</p>
+<p>options = {</p>
+<p>customer = mkOption {</p>
+<p>type = str;</p>
+<p>};</p>
+<p>phpuser = mkOption {</p>
+<p>type = str;</p>
+<p>};</p>
+<p>};</p>
+<p>}));</p>
+<p>};</p>
+<p>config = {</p>
+<p>services.httpd.virtualHosts = lib.mapAttrs (domain: cfg: {</p>
+<p>documentRoot = "/srv/www/${cfg.customer}/${domain}";</p>
+<p>}) cfg;</p>
+<h1>how do I solve this in a loop like above ?</h1>
+<p>users.users.web2www1.isNormalUser = true;</p>
+<p>users.users.web3www1.isNormalUser = true;</p>
+<p>};</p>
+<p>}</p>
+<p>how do I solve this in a loop like above ?</p>
+</blockquote>
+<p>Published Date: 2023-11-29T08:06:37Z</p>
+
+
+
+<a name="405354061"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/405354061" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#405354061">(Dec 01 2023 at 12:37)</a>:</h4>
+<h2>How to allow "unfree" packages in Nix, for each situation?: {NixOS, Nix, Nix with Flakes, Nix with Flakes and Home Manager}</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77585228/how-to-allow-unfree-packages-in-nix-for-each-situation-nixos-nix-nix-wit">https://stackoverflow.com/questions/77585228/how-to-allow-unfree-packages-in-nix-for-each-situation-nixos-nix-nix-wit</a></p>
+<blockquote>
+<p>I'm trying to enable allow "unfree" packages, either globally or per-package, when using MyNixOS (excellent Flake configuration app for Nix) with Nix Flakes on Mac OS.</p>
+<p>When trying to install any unfree package after the following Flake update and Darwin rebuild command:</p>
+<p>cd ~/.nix/mynixos-nix-darwin-loader;</p>
+<p>nix flake update;</p>
+<p>darwin-rebuild switch --show-trace --flake .#name_of_my_config'</p>
+<p>I get the following help message, which isn't very helpful because it doesn't consider the Flake scenario:</p>
+<p>error: Package ‘ec2-api-tools-1.7.5.1’ in /nix/store/${hash}-source/pkgs/tools/virtualization/e</p>
+<p>c2-api-tools/default.nix:36 has an unfree license (‘amazonsl’), refusing to evaluate.</p>
+<p>a) To temporarily allow unfree packages, you can use an environment variable</p>
+<p>for a single invocation of the nix tools.</p>
+<p>$ export NIXPKGS_ALLOW_UNFREE=1</p>
+<p>Note: For <code>nix shell</code>, <code>nix build</code>, <code>nix develop</code> or any other Nix 2.4+</p>
+<p>(Flake) command, <code>--impure</code> must be passed in order to read this</p>
+<p>environment variable.</p>
+<p>b) For <code>nixos-rebuild</code> you can set</p>
+<p>{ nixpkgs.config.allowUnfree = true; }</p>
+<p>in configuration.nix to override this.</p>
+<p>Alternatively you can configure a predicate to allow specific packages:</p>
+<p>{ nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [</p>
+<p>"ec2-api-tools"</p>
+<p>];</p>
+<p>}</p>
+<p>c) For <code>nix-env</code>, <code>nix-build</code>, <code>nix-shell</code> or any other Nix command you can add</p>
+<p>{ allowUnfree = true; }</p>
+<p>to ~/.config/nixpkgs/config.nix.</p>
+<p>Using MyNixOS downloads the following Flake file, and</p>
+<p>/nix/store/${hash}-source/homeConfigurations/my_flake_name.nix :</p>
+<p>{ inputs, ... }@flakeContext:</p>
+<p>let</p>
+<p>homeModule = { config, lib, pkgs, ... }: {</p>
+<p>config = {</p>
+<p>home = {</p>
+<p>packages = [</p>
+<p>ec2-api-tools</p>
+<h1>... more packages</h1>
+<p>];</p>
+<p>stateVersion = "23.11";</p>
+<p>};</p>
+<p>nixpkgs = {</p>
+<p>config = {</p>
+<p>allowUnfree = true;</p>
+<h1>allowUnfreePredicate = (_: true);</h1>
+<p>allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [</p>
+<p>"ec2-api-tools"</p>
+<p>];</p>
+<p>};</p>
+<p>};</p>
+<p>Which results in a configuration path for the allowUnfreePredicate setting: homeModule.config.nixpkgs.config.allowUnfreePredicate . Does that seem correct?</p>
+<p>This configuration seems to make no difference, and installing unfree packages always results in the same error.</p>
+<p>Exactly what needs to be done to allow unfree packages in each of these distinct scenarios?</p>
+<p>NixOS</p>
+<p>Nix</p>
+<p>Nix with Flakes</p>
+<p>Nix with Flakes and Home Manager</p>
+<p>(Please edit the list or let me know if it doesn't make sense)</p>
+<p>The advice from the following web pages didn't seem to apply, or I couldn't figure out how to apply it:</p>
+<p>NixOS Discourse: Allow unfree in flakes</p>
+<p>GitHub: nix-community/home-manager: #2942: bug: Flake config cannot use unfree packages despite nixpkgs.config.allowUnfree = true</p>
+<p>GitHub: nix-community/home-manager: #2720: modules/default.nix: Add useNixpkgsModule parameter</p>
+<p>Abandoned merge request</p>
+</blockquote>
+<p>Published Date: 2023-12-01T12:21:17Z</p>
+
+
+
+<a name="407089423"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/407089423" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#407089423">(Dec 10 2023 at 17:32)</a>:</h4>
+<h2>How to override packages in a nix derivation?</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77635748/how-to-override-packages-in-a-nix-derivation">https://stackoverflow.com/questions/77635748/how-to-override-packages-in-a-nix-derivation</a></p>
+<blockquote>
+<p>While developing a nix package, my default.nix looks like this:</p>
+<p>let</p>
+<p>pkgs = import &lt;nixpkgs&gt; {</p>
+<p>config = { ... }</p>
+<p>}</p>
+<p>in pkgs.path.to.derivation</p>
+<p>But when turning that into an actual package, the pkgs comes in as an argument. But adding a config to that doesn't seem to work:</p>
+<p>{ pkgs, ... }:</p>
+<p>let</p>
+<p>pkgs_ = pkgs // { config = { ... } };</p>
+<p>in pkgs_.path.to.derivation</p>
+<p>How do I add the same config to an already existing package set?</p>
+</blockquote>
+<p>Published Date: 2023-12-10T17:30:37Z</p>
+
+
+
+<a name="407176910"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/407176910" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#407176910">(Dec 11 2023 at 07:11)</a>:</h4>
+<h2>How to setup zsh-users/antigen with nix-env (non NixOS)?</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77637908/how-to-setup-zsh-users-antigen-with-nix-env-non-nixos">https://stackoverflow.com/questions/77637908/how-to-setup-zsh-users-antigen-with-nix-env-non-nixos</a></p>
+<blockquote>
+<p>I installed antigen with nix-env -iA nixpkgs.antigen . After that, I have to source the antigen.zsh file into .zshrc but how do I get this file path from nix? Note that I am using macOS with nix-env . One way that I found is to get it from .nix-profile/shared/antigen/antigen.zsh but is it the best way to do it; if so, does it have any cons? Also, is there a $(brew --prefix) version for nix?</p>
+</blockquote>
+<p>Published Date: 2023-12-11T06:58:55Z</p>
+
+
+
+<a name="407821851"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/407821851" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#407821851">(Dec 13 2023 at 22:31)</a>:</h4>
+<h2>How can I make a shell.nix that runs some code, only using inbuilt derivation function?</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77656854/how-can-i-make-a-shell-nix-that-runs-some-code-only-using-inbuilt-derivation-fu">https://stackoverflow.com/questions/77656854/how-can-i-make-a-shell-nix-that-runs-some-code-only-using-inbuilt-derivation-fu</a></p>
+<blockquote>
+<p>I basically want to create my own simple version of mkShell , so now I'm trying to understand how it would even be possible to execute some code before the shell actually pops up. I googled for a bit, and came up with this:</p>
+<p>let pkgs = import &lt;nixpkgs&gt; {}; in</p>
+<p>derivation {</p>
+<p>name = "hello";</p>
+<p>shellHook = ''</p>
+<p>echo "hello world!"</p>
+<p>'';</p>
+<p>system = builtins.currentSystem;</p>
+<p>builder = "${pkgs.bash}/bin/bash";</p>
+<p>args = [ ./setup.sh ];</p>
+<p>}</p>
+<p>From nix-shell documentation:</p>
+<p>If the derivation defines the variable shellHook, it will be run after $stdenv/setup has been sourced. Since this hook is not executed by regular Nix builds, it allows you to perform initialisation specific to nix-shell. For example, the derivation attribute</p>
+<p>shellHook =</p>
+<p>''</p>
+<p>echo "Hello shell"</p>
+<p>export SOME_API_TOKEN="$(cat ~/.config/some-app/api-token)"</p>
+<p>'';</p>
+<p>But that doesn't output anything, although if I replace derivation {} with pkgs.mkShell {} , then it does. How can I make this behaviour work without actually using pkgs.mkShell ?</p>
+</blockquote>
+<p>Published Date: 2023-12-13T22:25:51Z</p>
+
+
+
+<a name="407994107"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/407994107" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#407994107">(Dec 14 2023 at 16:11)</a>:</h4>
+<h2>How can I make home-manager use nixpkgs-23.11 in flake system configuration?</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77661475/how-can-i-make-home-manager-use-nixpkgs-23-11-in-flake-system-configuration">https://stackoverflow.com/questions/77661475/how-can-i-make-home-manager-use-nixpkgs-23-11-in-flake-system-configuration</a></p>
+<blockquote>
+<p>My flake.nix in /etc/nixos directory:</p>
+<p>{</p>
+<p>description = "A very basic flake";</p>
+<p>inputs = {</p>
+<p>nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";</p>
+<p>home-manager = {</p>
+<p>url = "github:nix-community/home-manager";</p>
+<p>inputs.nixpkgs.follows = "nixpkgs";</p>
+<p>};</p>
+<p>};</p>
+<p>outputs = { self, nixpkgs, home-manager, ... }@inputs:</p>
+<p>let</p>
+<p>system = "x86_64-linux";</p>
+<p>pkgs = import nixpkgs {</p>
+<p>inherit system;</p>
+<p>config.allowUnfree = true;</p>
+<p>};</p>
+<p>in {</p>
+<p>nixosConfigurations = rec {</p>
+<p>default = nixpkgs.lib.nixosSystem {</p>
+<p>specialArgs = { inherit inputs system; };</p>
+<p>modules = [ ./configuration.nix home-manager.nixosModules.home-manager ];</p>
+<p>};</p>
+<p>nixos = default;</p>
+<p>};</p>
+<p>};</p>
+<p>}</p>
+<p>When I run it (installing home-manager for the first time), I get this log:</p>
+<p>warning: creating lock file '/etc/nixos/flake.lock'</p>
+<p>building the system configuration...</p>
+<p>trace: warning: monkpatch profile: You are using</p>
+<p>Home Manager version 24.05 and</p>
+<p>Nixpkgs version 23.11.</p>
+<p>Using mismatched versions is likely to cause errors and unexpected</p>
+<p>behavior. It is therefore highly recommended to use a release of Home</p>
+<p>Manager that corresponds with your chosen release of Nixpkgs.</p>
+<p>If you insist then you can disable this warning by adding</p>
+<p>home.enableNixpkgsReleaseCheck = false;</p>
+<p>to your configuration.</p>
+<p>And if I replace nixos-23.11 with nixos-unstable in nixpkgs.url (line 5), then the error disappears. But what if I want to use nixos-23.11 ? What do I do?</p>
+</blockquote>
+<p>Published Date: 2023-12-14T15:58:41Z</p>
+
+
+
+<a name="408028352"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/408028352" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#408028352">(Dec 14 2023 at 19:23)</a>:</h4>
+<h2>How can I write a shell.nix for a Python environment that uses a custom PyPi location?</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77662568/how-can-i-write-a-shell-nix-for-a-python-environment-that-uses-a-custom-pypi-loc">https://stackoverflow.com/questions/77662568/how-can-i-write-a-shell-nix-for-a-python-environment-that-uses-a-custom-pypi-loc</a></p>
+<blockquote>
+<p>I have a project that includes Python packages from a custom PyPi. How can I write a Nix shell.nix to use those packages, alongside others which are in the standard PyPi?</p>
+</blockquote>
+<p>Published Date: 2023-12-14T19:11:11Z</p>
+
+
+
+<a name="408941788"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415266-social-media/topic/StackOverflow/near/408941788" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Zapier <a href="http://chat.nixos.asia/stream/415266-social-media/topic/StackOverflow.html#408941788">(Dec 19 2023 at 14:10)</a>:</h4>
+<h2>How can I change group of /dev/usb on NixOs?</h2>
+<p>Link: <a href="https://stackoverflow.com/questions/77685716/how-can-i-change-group-of-dev-usb-on-nixos">https://stackoverflow.com/questions/77685716/how-can-i-change-group-of-dev-usb-on-nixos</a></p>
+<blockquote>
+<p>I can't seem to change the group of /dev/usb on nixos. It remains root no matter what I try. I can change the mode though and that has an effect. Here is my configuration for this.</p>
+<p>Configuration.nix:</p>
+<p>services.udev.extraRules = ''</p>
+<p>SUBSYSTEMS=="usb", MODE="0660", GROUP="plugdev" # Not working</p>
+<h1>SUBSYSTEM=="usb", MODE="0666" # Tested and has an effect</h1>
+<p>'';</p>
+<p>users.groups.plugdev.members = [ "mcmah309" ];</p>
+<p>cat /etc/group shows plugdev is created and my user is assigned.</p>
+<p>ls -l /dev is still showing usb is in the root group.</p>
+<p>I expect the group of /dev/usb to be plugdev .</p>
+</blockquote>
+<p>Published Date: 2023-12-19T13:58:03Z</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

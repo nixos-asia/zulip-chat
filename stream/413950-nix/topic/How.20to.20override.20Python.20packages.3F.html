@@ -1,0 +1,36 @@
+<html>
+<head><meta charset="utf-8"><title>How to override Python packages? · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20override.20Python.20packages.3F.html">How to override Python packages?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="407297024"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20override%20Python%20packages%3F/near/407297024" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Rohit Singh <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20override.20Python.20packages.3F.html#407297024">(Dec 11 2023 at 18:27)</a>:</h4>
+<p>In a project we are using boto3 package which is imported from python3. Our requirement is to update the boto3 package without updating nixpkgs version, basically we wanted to override only boto3 package. How can we do that ?   </p>
+<p>This is how we are importing the package boto3 with other packages from python3 using nixpkgs</p>
+<p><code>infra-env = pkgs.python3.withPackages (ps: with ps; [ boto3 kubernetes requests schema python-jenkins croniter validators]);</code></p>
+
+
+
+<a name="407297368"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20override%20Python%20packages%3F/near/407297368" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20override.20Python.20packages.3F.html#407297368">(Dec 11 2023 at 18:29)</a>:</h4>
+<p>Looks like you want <code>overridePythonAttrs</code>, it is documented here:</p>
+<p><a href="https://nixos.org/manual/nixpkgs/stable/#overridePythonAttrs">https://nixos.org/manual/nixpkgs/stable/#overridePythonAttrs</a></p>
+<p><a href="/user_uploads/60244/bpf0Hfb36deIvy2--qxto2mG/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/bpf0Hfb36deIvy2--qxto2mG/image.png" title="image.png"><img src="/user_uploads/60244/bpf0Hfb36deIvy2--qxto2mG/image.png"></a></div>
+
+
+
+<a name="407297939"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20override%20Python%20packages%3F/near/407297939" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Rohit Singh <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20override.20Python.20packages.3F.html#407297939">(Dec 11 2023 at 18:33)</a>:</h4>
+<p>Sure. Let me try that.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

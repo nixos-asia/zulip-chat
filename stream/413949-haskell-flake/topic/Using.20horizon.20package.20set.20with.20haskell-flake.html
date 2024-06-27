@@ -1,0 +1,55 @@
+<html>
+<head><meta charset="utf-8"><title>Using horizon package set with haskell-flake · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake.html">Using horizon package set with haskell-flake</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="416021495"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20horizon%20package%20set%20with%20haskell-flake/near/416021495" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake.html#416021495">(Jan 17 2024 at 13:01)</a>:</h4>
+<p>After talking to <span class="user-mention" data-user-id="682919">@locallycompact</span> , it seems that using <a href="https://horizon-haskell.net/">horizon-haskell</a> package set with haskell-flake is a matter of setting <code>basePackages</code>.</p>
+<p>Though there are some issues to iron out. /thread for it.</p>
+
+
+
+<a name="416021709"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20horizon%20package%20set%20with%20haskell-flake/near/416021709" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake.html#416021709">(Jan 17 2024 at 13:02)</a>:</h4>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="682919">locallycompact</span> Can we factor out cabalSdist and use it from another location?</p>
+</blockquote>
+<p>What do you mean? </p>
+<p>It is used <a href="https://github.com/srid/haskell-flake/blob/55efd0cbf1b5b4a402dc88c3c962c24e13f0fd8b/nix/build-haskell-package.nix#L15">here</a>, btw. Line 15 and 42.</p>
+
+
+
+<a name="416022231"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20horizon%20package%20set%20with%20haskell-flake/near/416022231" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake.html#416022231">(Jan 17 2024 at 13:04)</a>:</h4>
+<p>One thing we should do is allow the user to disable the use of cabalSdist (toggle on/off module option).</p>
+
+
+
+<a name="419005350"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20horizon%20package%20set%20with%20haskell-flake/near/419005350" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake.html#419005350">(Jan 31 2024 at 10:07)</a>:</h4>
+<p><span class="user-mention" data-user-id="682919">@locallycompact</span> Could you try <a href="https://github.com/srid/haskell-flake/pull/220">https://github.com/srid/haskell-flake/pull/220</a> and see if that works?</p>
+
+
+
+<a name="419165964"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20horizon%20package%20set%20with%20haskell-flake/near/419165964" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake.html#419165964">(Feb 01 2024 at 03:25)</a>:</h4>
+<p><a href="https://github.com/srid/haskell-flake/pull/221">https://github.com/srid/haskell-flake/pull/221</a> in fact</p>
+
+
+
+<a name="420191600"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20horizon%20package%20set%20with%20haskell-flake/near/420191600" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake.html#420191600">(Feb 07 2024 at 07:02)</a>:</h4>
+<p>Proof of concept that works on Linux (not yet on macOS), thanks to <span class="user-mention" data-user-id="682919">@locallycompact</span> </p>
+<p><a href="https://github.com/srid/haskell-template/pull/123">https://github.com/srid/haskell-template/pull/123</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

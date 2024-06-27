@@ -1,0 +1,431 @@
+<html>
+<head><meta charset="utf-8"><title>Self-hosted GitHub runners · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html">Self-hosted GitHub runners</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="418314629"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/418314629" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#418314629">(Jan 26 2024 at 16:56)</a>:</h4>
+<p>Have anyone managed to do this on a personal account (not org)? To let a NixOS machine (ideally using containers) act as self-hosted runner for many personal repositories. </p>
+<p>For a single repository, I added a runner with config like this:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span> pkgs<span class="p">,</span> config<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="p">{</span>
+  <span class="c1"># TODO: Run inside container</span>
+  services<span class="o">.</span><span class="ss">github-runners</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">emanote-runner</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="ss">name</span> <span class="o">=</span> <span class="s2">"emanote-runner"</span><span class="p">;</span>
+      <span class="c1"># TODO: use sops-nix</span>
+      <span class="ss">tokenFile</span> <span class="o">=</span> <span class="s2">"/home/srid/runner.token"</span><span class="p">;</span>
+      <span class="ss">url</span> <span class="o">=</span> <span class="s2">"https://github.com/srid/emanote"</span><span class="p">;</span>
+      <span class="ss">extraPackages</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>cachix pkgs<span class="o">.</span>nixci <span class="p">];</span>
+      <span class="ss">extraLabels</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"nixos"</span> <span class="p">];</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+  nix<span class="o">.</span>settings<span class="o">.</span><span class="ss">trusted-users</span> <span class="o">=</span>
+    <span class="nb">builtins</span><span class="o">.</span><span class="nb">map</span>
+      <span class="p">(</span>runner<span class="p">:</span> runner<span class="o">.</span>user<span class="p">)</span>
+      config<span class="o">.</span>services<span class="o">.</span>github-runners<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>However, it appears you can't share a runner with other personal repos.</p>
+
+
+
+<a name="418340635"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/418340635" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#418340635">(Jan 26 2024 at 19:41)</a>:</h4>
+<p>Apparently it is possible to share a runner across an organizations repositories. I'm not sure if this applies to user repos though</p>
+
+
+
+<a name="418340788"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/418340788" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#418340788">(Jan 26 2024 at 19:42)</a>:</h4>
+<p><a href="https://github.blog/2020-04-22-github-actions-community-momentum-enterprise-capabilities-and-developer-improvements/#share-self-hosted-runners-across-an-organization">https://github.blog/2020-04-22-github-actions-community-momentum-enterprise-capabilities-and-developer-improvements/#share-self-hosted-runners-across-an-organization</a></p>
+
+
+
+<a name="418392967"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/418392967" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#418392967">(Jan 27 2024 at 06:31)</a>:</h4>
+<p>Looks like you can only share across org, but not personal repos. Sad.</p>
+
+
+
+<a name="418392971"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/418392971" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#418392971">(Jan 27 2024 at 06:31)</a>:</h4>
+<p>So I decided to write a small module to help with that,</p>
+<p><a href="https://github.com/srid/nixos-config/pull/40">https://github.com/srid/nixos-config/pull/40</a></p>
+
+
+
+<a name="418393035"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/418393035" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#418393035">(Jan 27 2024 at 06:32)</a>:</h4>
+<p>You still have to manually create the runner in Settings for each repository. And then copy paste the token into the config for immediate deployment (if it not be immediate the token gets invalidated).</p>
+
+
+
+<a name="418413607"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/418413607" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#418413607">(Jan 27 2024 at 12:17)</a>:</h4>
+<p>Runners in containers: <a href="https://github.com/srid/nixos-config/pull/41">https://github.com/srid/nixos-config/pull/41</a></p>
+
+
+
+<a name="419068187"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419068187" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419068187">(Jan 31 2024 at 15:43)</a>:</h4>
+<p>Yeah, so on my nrdxp/nrdos repo I setup 16 runners to avoid the one job at a time bottleneck. Each one is in a nixos-container for a layer of isolation, but has the nix store and daemon socket mounted so that the host daemon can manage and coordinate all the jobs, respecting its configured limits.</p>
+<p>This is coupled with divnix/std-action, which I designed to do one eval up front and distribute the derivations to multiple build matrices after, which worked great since they are all on the same disk. One of the biggest bottlenecks in the past was the network cost of transferring the evaled derivations around.</p>
+
+
+
+<a name="419069555"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419069555" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419069555">(Jan 31 2024 at 15:49)</a>:</h4>
+<p>You can see a sample run here:<br>
+<a href="https://github.com/nrdxp/nrdos/actions/runs/7719678719">https://github.com/nrdxp/nrdos/actions/runs/7719678719</a></p>
+<p>Discovery is the only bottleneck, but once that's done all the builds can kick off in parallel each in its own runner.</p>
+
+
+
+<a name="419165886"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419165886" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419165886">(Feb 01 2024 at 03:24)</a>:</h4>
+<p>Oh the discovery-&gt;matrix part is interesting. Is std-action really required here? I wonder how I can do the same from scratch.</p>
+
+
+
+<a name="419168358"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419168358" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419168358">(Feb 01 2024 at 03:48)</a>:</h4>
+<p>It was originally designed to consume Standard's API, but it's fairly simple in practice. It should be fairly simple to port to the regular flake API if desired. The core idea is to <code>nix eval</code> a single json file containing a list of all the Nix derivations you plan to build. I came to this because Nix's eval cache is subpar at best, and because I noticed that multiple runners were evaling the same things over and over.</p>
+<p>The real trouble I came upon is that the cost of evaluation in that context (of multiple runners building from a shared flake) is unknowable, especially since Nix has a severe lack of any real profiling tooling (for the language itself at least). Better then, to consolidate all evaluation up front, where the single threaded Nix evaluator can share any state between derivations in a single pass, and where the cost can at least become linear and predictable.</p>
+
+
+
+<a name="419187019"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419187019" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419187019">(Feb 01 2024 at 07:24)</a>:</h4>
+<p>I've observed that running <code>nix build</code> separately for each output (whether it is specified in same CLI invocation or not) would slow down evaluation by O(n),</p>
+<p><a href="https://github.com/srid/devour-flake?tab=readme-ov-file#why">https://github.com/srid/devour-flake?tab=readme-ov-file#why</a></p>
+<p>Which is how I came up with <a href="https://github.com/srid/nixci">https://github.com/srid/nixci</a> and use that in CI. But it doesn't have the nice per-output build status.</p>
+
+
+
+<a name="419187245"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419187245" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419187245">(Feb 01 2024 at 07:27)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="679006">Tim DeHerrera</span> <a href="#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners/near/419068187">said</a>:</p>
+<blockquote>
+<p>Yeah, so on my nrdxp/nrdos repo I setup 16 runners to avoid the one job at a time bottleneck. [..]</p>
+</blockquote>
+<p>Was this fully automated? Or, like me, did you have to manually create the token for each of those runners?</p>
+
+
+
+<a name="419187401"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419187401" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419187401">(Feb 01 2024 at 07:28)</a>:</h4>
+<p>Oh wait, you are using <a href="https://github.com/nrdxp/nrdos/blob/df7dcf4a3c8796692b7718616f0427e495c39bd8/src/nrdxp/hosts/micro/runners.nix#L12C5-L12C44">the same token</a> for all runners?</p>
+
+
+
+<a name="419190444"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419190444" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419190444">(Feb 01 2024 at 07:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners/near/419187401">said</a>:</p>
+<blockquote>
+<p>Oh wait, you are using <a href="https://github.com/nrdxp/nrdos/blob/df7dcf4a3c8796692b7718616f0427e495c39bd8/src/nrdxp/hosts/micro/runners.nix#L12C5-L12C44">the same token</a> for all runners?</p>
+</blockquote>
+<p>Assuming this token was created from nrdxp/nrdos repository, your 16 runners can run <strong>only</strong> jobs from that repo, and not from elsewhere, such as nrdxp/foo</p>
+
+
+
+<a name="419253651"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419253651" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419253651">(Feb 01 2024 at 14:09)</a>:</h4>
+<p>For now yes, they are only setup for that repo. I can set up more for others repo if when needed. They have almost no overhead unless/until they start building anyway.</p>
+
+
+
+<a name="419287805"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419287805" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419287805">(Feb 01 2024 at 16:44)</a>:</h4>
+<p>Actually, now that I think about it, I wonder if I even need to mount the /nix/store at all inside these containers. Since the host daemon will be the one to do the actual building it might not be necessary. I already have <code>nix.enable = false</code> in their configs. I was wondering if I should actually make these VMs instead of containers for added security isolation.</p>
+
+
+
+<a name="419376688"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419376688" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419376688">(Feb 02 2024 at 03:18)</a>:</h4>
+<p>Only the token needs to be bind mounted. I didn't have to mount /nix/store</p>
+
+
+
+<a name="419387058"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419387058" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419387058">(Feb 02 2024 at 05:31)</a>:</h4>
+<p>Do you pass through the socket? In my case, for the sake of avoiding repeated work, I want the builds to all work from the same store, since they share dependencies.</p>
+<p>But I think bind mounting the host daemon socket is enough to accomplish that.</p>
+
+
+
+<a name="419458716"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419458716" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419458716">(Feb 02 2024 at 13:35)</a>:</h4>
+<p>Nope, I bind mount only the token. </p>
+<p><a href="https://github.com/srid/nixos-config/blob/9c392f468f2b341af8a83e8061ff1a92face28f5/nixos/github-runner.nix#L110-L131">https://github.com/srid/nixos-config/blob/9c392f468f2b341af8a83e8061ff1a92face28f5/nixos/github-runner.nix#L110-L131</a></p>
+
+
+
+<a name="419461875"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419461875" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419461875">(Feb 02 2024 at 13:54)</a>:</h4>
+<p>It seems to automatically use the host nix store,</p>
+<div class="codehilite"><pre><span></span><code>[root@github-runner-emanote:~]# mount| grep store
+/dev/md/nixos on /nix/store type ext4 (ro,relatime,stripe=32)
+</code></pre></div>
+
+
+
+<a name="419464233"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419464233" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419464233">(Feb 02 2024 at 14:07)</a>:</h4>
+<p>I still want them all to speak to the same daemon, so that the set limits on jobs and cores are globally respected between them</p>
+
+
+
+<a name="419467430"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419467430" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419467430">(Feb 02 2024 at 14:24)</a>:</h4>
+<p>I have two runners, and I see this:</p>
+<div class="codehilite"><pre><span></span><code>❯ ps -ef | grep nix-daemon
+root        1459       1  0 Jan29 ?        00:00:00 nix-daemon --daemon
+root      132628    1459  0 Jan30 ?        00:00:00 nix-daemon 132605
+root      132971    1459  0 Jan30 ?        00:00:00 nix-daemon 132948
+</code></pre></div>
+<p>Are these child daemons spawned for each container? And if so, do they inherit jobs/cores limits automatically?</p>
+
+
+
+<a name="419468266"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419468266" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419468266">(Feb 02 2024 at 14:28)</a>:</h4>
+<p>The daemon does spawn child procs for each build, but if the hosts socket is not available then they could be independent instances.</p>
+<p>If the /nix/store is auto mounted though, perhaps the socket is as well. Not sure (not at my desk to check ATM)</p>
+
+
+
+<a name="419468571"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419468571" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419468571">(Feb 02 2024 at 14:30)</a>:</h4>
+<p>Oh yea,</p>
+<div class="codehilite"><pre><span></span><code>[root@github-runner-emanote:~]# mount| grep socket
+/dev/md/nixos on /nix/var/nix/daemon-socket type ext4 (ro,relatime,stripe=32)
+</code></pre></div>
+
+
+
+<a name="419468680"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/419468680" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#419468680">(Feb 02 2024 at 14:30)</a>:</h4>
+<p>It mounts quite a few things,</p>
+<div class="codehilite"><pre><span></span><code>[root@github-runner-emanote:~]# mount| grep /dev/md/nixos
+/dev/md/nixos on / type ext4 (rw,relatime,stripe=32)
+/dev/md/nixos on /run/host/os-release type ext4 (ro,nosuid,nodev,noexec,relatime,stripe=32)
+/dev/md/nixos on /nix/store type ext4 (ro,relatime,stripe=32)
+/dev/md/nixos on /nix/var/nix/daemon-socket type ext4 (ro,relatime,stripe=32)
+/dev/md/nixos on /nix/var/nix/db type ext4 (ro,relatime,stripe=32)
+/dev/md/nixos on /nix/var/nix/gcroots type ext4 (rw,relatime,stripe=32)
+/dev/md/nixos on /nix/var/nix/profiles type ext4 (rw,relatime,stripe=32)
+/dev/md/nixos on /etc/localtime type ext4 (ro,nosuid,nodev,relatime,stripe=32)
+</code></pre></div>
+
+
+
+<a name="421222981"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/421222981" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#421222981">(Feb 13 2024 at 11:17)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>error (ignored): error: reached end of FramedSource
+[..]
+error: opening file &#39;/nix/store/i8jjpg7im5jgr6dvr9ikylpa1szx1kpi-treefmt-check.lock&#39;: Permission denied
+</code></pre></div>
+<p><a href="https://github.com/srid/haskell-flake/actions/runs/7885297185/job/21516934365">https://github.com/srid/haskell-flake/actions/runs/7885297185/job/21516934365</a></p>
+<p>And this is happening only in Github Runner inside containers. I wonder if this is to do with the mounted nix-store access from the container.</p>
+<p>Have you seen this? <span class="user-mention" data-user-id="679006">@Tim DeHerrera</span></p>
+
+
+
+<a name="421243990"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/421243990" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#421243990">(Feb 13 2024 at 13:30)</a>:</h4>
+<p>I had to run the following to fix this:</p>
+<div class="codehilite"><pre><span></span><code>nix-store --verify --repair --check-contents
+</code></pre></div>
+<p>But the problem reappears when doing the CI build again.</p>
+
+
+
+<a name="421257120"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/421257120" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#421257120">(Feb 13 2024 at 14:42)</a>:</h4>
+<p>hmm, haven't seen that one yet, have you tried making the daemon socket writable (mine is)?</p>
+
+
+
+<a name="421257483"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/421257483" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#421257483">(Feb 13 2024 at 14:44)</a>:</h4>
+<p>Nope, but I'll <a href="https://github.com/nrdxp/nrdos/blob/63b56c718cc69e883a1ff15c5aeae0720ae64c21/src/ci/modules/runners/default.nix#L63-L70">try that</a> if this happens again.</p>
+
+
+
+<a name="421407504"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/421407504" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#421407504">(Feb 14 2024 at 09:47)</a>:</h4>
+<p>TIL that you can just use a single personal access token (with 'repo' scope) for all runners across one's personal repositories.</p>
+
+
+
+<a name="421418385"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/421418385" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#421418385">(Feb 14 2024 at 10:46)</a>:</h4>
+<h2>easy-github-runners.nix</h2>
+<p>Now supports organizations:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>            services<span class="o">.</span><span class="ss">easy-github-runners</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="s2">"srid/emanote"</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
+              <span class="s2">"srid/haskell-flake"</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
+              <span class="s2">"srid/nixos-config"</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
+              <span class="s2">"srid/ema"</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
+              <span class="s2">"EmaApps/orgself"</span><span class="o">.</span><span class="ss">owner</span> <span class="o">=</span> <span class="s2">"srid"</span><span class="p">;</span>
+            <span class="p">};</span>
+</code></pre></div>
+<p><a href="https://github.com/srid/nixos-config/blob/master/nixos/easy-github-runners.nix">https://github.com/srid/nixos-config/blob/master/nixos/easy-github-runners.nix</a></p>
+
+
+
+<a name="422030412"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422030412" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422030412">(Feb 17 2024 at 17:47)</a>:</h4>
+<p>Just a heads up, I tried updating my nixos-unstable pin and somebody has modified the github runners in a way that my configuration now totally breaks. I cannot get the nix client to talk to the daemon and I am unsure why. I'll keep you posted if I figure it out</p>
+
+
+
+<a name="422034536"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422034536" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422034536">(Feb 17 2024 at 18:51)</a>:</h4>
+<p>Alright so two things:</p>
+<p>Firstly, they appear to have removed the old <code>services.github-runner</code> option and only have the newer <code>services.github-runners</code> option now, which led to a reorganization of the code, which means my snippet to import the options and use them in containers broke. So that's the first thing.</p>
+<p>Even taking them out of the container and just running them directly on the host I was still failing to communicate with the daemon. This appears to be because the dynamically created users created by systemd were not trusted users. I thought I had already addressed that, but apparently not or I reverted it or something.</p>
+<p>In any case, I was able to add the dynamic users to the trusted users list like so:<br>
+<code>nix.settings.trusted-users = lib.genList (i: "github-runner-nrdos-${i}") 16</code></p>
+<p>To match the names of the dynamically allocated users. I may swing back around and configure each runner in a minimal microvm for added isolation with just the host daemon socket mounted. But for now this is fine since I only have them configured for a private repository at this point.</p>
+
+
+
+<a name="422040602"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422040602" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422040602">(Feb 17 2024 at 20:30)</a>:</h4>
+<p>seems kind of presumptuous to assume all runners should have Nix. Hopefully we can get this reviewed and merged quickly, cause I need it <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span> <br>
+<a href="https://github.com/NixOS/nixpkgs/pull/289607">https://github.com/NixOS/nixpkgs/pull/289607</a></p>
+
+
+
+<a name="422103256"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422103256" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422103256">(Feb 18 2024 at 14:51)</a>:</h4>
+<p>I believe my module has always been using the new <code>github-runners</code> service. </p>
+<p>By the way, nix-darwin PR just got merged: <a href="https://github.com/LnL7/nix-darwin/pull/859">https://github.com/LnL7/nix-darwin/pull/859</a></p>
+<p>I'll play with macOS support.</p>
+
+
+
+<a name="422112804"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422112804" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422112804">(Feb 18 2024 at 17:11)</a>:</h4>
+<p>The service is not new, what's new is that the code has been restructured and my previous code broke.</p>
+
+
+
+<a name="422613996"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422613996" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422613996">(Feb 21 2024 at 13:10)</a>:</h4>
+<h3>Parallels VM</h3>
+<p>The runner failed with a new error,</p>
+<div class="codehilite"><pre><span></span><code>The local machine&#39;s clock may be out of sync with the server time by more than five minutes. Please sync your clock with your domain or internet time and try again.
+</code></pre></div>
+<p>The local time on the container and host is incorrect, though. Wonder how that happened ... I'm running this in Parallels.</p>
+
+
+
+<a name="422614526"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422614526" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422614526">(Feb 21 2024 at 13:13)</a>:</h4>
+<p>Yup, it was Parallels. Rebooting the VM fixed it.</p>
+
+
+
+<a name="422614966"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422614966" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422614966">(Feb 21 2024 at 13:15)</a>:</h4>
+<p>Let's see if disabling <a href="https://kb.parallels.com/en/113271">automatic time sync</a> fixes it long-term,</p>
+<p><a href="/user_uploads/60244/YQZT9sJD40W7FpiNSLDmoSYT/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/YQZT9sJD40W7FpiNSLDmoSYT/image.png" title="image.png"><img src="/user_uploads/60244/YQZT9sJD40W7FpiNSLDmoSYT/image.png"></a></div>
+
+
+
+<a name="422659473"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/422659473" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#422659473">(Feb 21 2024 at 16:34)</a>:</h4>
+<p>I made the mistake of not setting a good disk size. 60GB (the default) quickly ran out in CI. Neither <code>boot.growPartition</code> nor systemd repart worked to repartition root on boot,  after I resized the disk image in Parallels.</p>
+
+
+
+<a name="429370734"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/429370734" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#429370734">(Mar 25 2024 at 12:03)</a>:</h4>
+<h3>New nix-darwin module</h3>
+<p>I upgraded <code>nix-darwin</code> which has a revamped <code>github-runners</code> module that explicitly writes the log files.</p>
+<p>Which allowed me to actually observe crash logs like this:</p>
+<div class="codehilite"><pre><span></span><code>-bash-3.2$ pwd
+/var/lib/github-runners
+-bash-3.2$ tail -5 nixci-1/_diag/Runner_20240325-120051-utc.log
+[2024-03-25 12:00:53Z ERR  Runner] GitHub.DistributedTask.WebApi.TaskAgentExistsException: A runner exists with the same name nixci-1.
+   at GitHub.Runner.Listener.Configuration.ConfigurationManager.ConfigureAsync(CommandSettings command) in /private/tmp/nix-build-github-runner-2.314.1.drv-0/src/src/Runner.Listener/Configuration/ConfigurationManager.cs:line 306
+   at GitHub.Runner.Listener.Runner.ExecuteCommand(CommandSettings command) in /private/tmp/nix-build-github-runner-2.314.1.drv-0/src/src/Runner.Listener/Runner.cs:line 126
+[2024-03-25 12:00:53Z ERR  Terminal] WRITE ERROR: A runner exists with the same name nixci-1.
+[2024-03-25 12:00:53Z INFO Listener] Runner execution has finished with return code 1
+-bash-3.2$
+</code></pre></div>
+
+
+
+<a name="429370976"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/429370976" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#429370976">(Mar 25 2024 at 12:03)</a>:</h4>
+<p><a href="https://github.com/LnL7/nix-darwin/pull/893">https://github.com/LnL7/nix-darwin/pull/893</a></p>
+
+
+
+<a name="429371408"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/429371408" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#429371408">(Mar 25 2024 at 12:04)</a>:</h4>
+<p>As for this particular problem, there is <a href="https://github.com/LnL7/nix-darwin/blob/bcc8afd06e237df060c85bad6af7128e05fd61a3/modules/services/github-runner/options.nix#L165-L173"><code>replace = true;</code></a> which solves the issue.</p>
+
+
+
+<a name="429371860"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/429371860" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#429371860">(Mar 25 2024 at 12:06)</a>:</h4>
+<p>3 messages were moved here from <a class="stream-topic" data-stream-id="413950" href="/#narrow/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service">#nix &gt; Darwin: launchctl logs for a service</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="429740801"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/429740801" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#429740801">(Mar 26 2024 at 21:12)</a>:</h4>
+<p>I decided to do this the other way. Setup runners on the NixOS VM, and do remote build on macOS as necessary.</p>
+<p>Rough notes: <a href="https://github.com/srid/nixos-config/tree/master/clusters/github-runner">https://github.com/srid/nixos-config/tree/master/clusters/github-runner</a></p>
+
+
+
+<a name="446194989"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/446194989" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#446194989">(Jun 21 2024 at 23:38)</a>:</h4>
+<p>Alright, based on how I'm setting CI for Juspay Github, the new approach is not to use distributed builds, but just dedicate runners to each host. </p>
+<p>Module &amp; tutorial incoming, but here's a sneak preview:</p>
+<p><a href="https://x.com/sridca/status/1804286220304028106">https://x.com/sridca/status/1804286220304028106</a></p>
+
+
+
+<a name="446239113"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/446239113" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#446239113">(Jun 22 2024 at 07:37)</a>:</h4>
+<p>Awesome, I will look at this, once I am out of drama mindset thanks to the ongoing legacy NixOS community.</p>
+
+
+
+<a name="446703689"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/446703689" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#446703689">(Jun 24 2024 at 19:52)</a>:</h4>
+<p>Here it is:</p>
+<p><a href="https://github.com/juspay/github-nix-ci">https://github.com/juspay/github-nix-ci</a></p>
+<p>I'll announce it in a bit, after some final polish, and feedback (if any).</p>
+
+
+
+<a name="446903186"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/446903186" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#446903186">(Jun 25 2024 at 14:40)</a>:</h4>
+<p><a href="https://x.com/nixos_asia/status/1805609192843014276">https://x.com/nixos_asia/status/1805609192843014276</a></p>
+
+
+
+<a name="446904139"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosted%20GitHub%20runners/near/446904139" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners.html#446904139">(Jun 25 2024 at 14:44)</a>:</h4>
+<p><a href="https://discourse.nixos.org/t/github-nix-ci-for-self-hosting-github-runners-on-macos-linux/47642">https://discourse.nixos.org/t/github-nix-ci-for-self-hosting-github-runners-on-macos-linux/47642</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

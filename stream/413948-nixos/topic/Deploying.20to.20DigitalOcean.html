@@ -1,0 +1,109 @@
+<html>
+<head><meta charset="utf-8"><title>Deploying to DigitalOcean · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html">Deploying to DigitalOcean</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="405388696"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Deploying%20to%20DigitalOcean/near/405388696" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html#405388696">(Dec 01 2023 at 15:40)</a>:</h4>
+<p>I'm trying to find the best way to deploy NixOS to DigitalOcean.</p>
+<h3>Traditional way</h3>
+<ul>
+<li>Create a Ubuntu 22.04 droplet</li>
+<li>Install NixOS atop using <a href="https://github.com/elitak/nixos-infect">nixos-infect</a></li>
+<li>Enable flakes, copy hardware configuration to Git repo, refactor the flake</li>
+</ul>
+<h3>New way</h3>
+<p>In particular, can all of this be automated by directly installing from a Git flake input? Similar to <code>nixos-anywhere</code>.</p>
+<p>(Will update this topic based on what I find out)</p>
+
+
+
+<a name="405409825"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Deploying%20to%20DigitalOcean/near/405409825" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html#405409825">(Dec 01 2023 at 17:38)</a>:</h4>
+<h2>Building DigitalOcean NixOS Image</h2>
+<p>In <code>flake.nix</code>,</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>      <span class="ss">perSystem =</span> <span class="p">{</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+        packages<span class="o">.</span><span class="ss">doImage =</span>
+          <span class="k">let</span>
+            <span class="ss">config =</span> <span class="p">{</span>
+              <span class="ss">imports =</span> <span class="p">[</span>
+                <span class="s2">"</span><span class="si">${</span>pkgs<span class="o">.</span>path<span class="si">}</span><span class="s2">/nixos/modules/virtualisation/digital-ocean-image.nix"</span>
+              <span class="p">];</span>
+              nix<span class="o">.</span>settings<span class="o">.</span><span class="ss">experimental-features =</span> <span class="p">[</span> <span class="s2">"nix-command"</span> <span class="s2">"flakes"</span> <span class="p">];</span>
+              users<span class="o">.</span>users<span class="o">.</span><span class="ss">admin =</span> <span class="p">{</span>
+                <span class="ss">isNormalUser =</span> <span class="no">true</span><span class="p">;</span>
+                openssh<span class="o">.</span>authorizedKeys<span class="o">.</span><span class="ss">keys =</span> <span class="p">[</span>
+                  <span class="c1"># Srid's public key</span>
+                  <span class="s2">"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQRxPoqlThDrkR58pKnJgmeWPY9/wleReRbZ2MOZRyd"</span>
+                <span class="p">];</span>
+              <span class="p">};</span>
+              system<span class="o">.</span><span class="ss">stateVersion =</span> <span class="s2">"23.11"</span><span class="p">;</span>
+            <span class="p">};</span>
+          <span class="k">in</span>
+          <span class="p">(</span>pkgs<span class="o">.</span>nixos config<span class="p">)</span><span class="o">.</span>digitalOceanImage<span class="p">;</span>
+      <span class="p">};</span>
+</code></pre></div>
+<p><code>nix build .#doImage</code> =&gt; <code>./result/nixos.qcow2.gz</code></p>
+<p><a href="/user_uploads/60244/3gsDCMmR3WujGxyEHDr64_2n/image.png">Then you upload it to DO console</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/3gsDCMmR3WujGxyEHDr64_2n/image.png" title="Then you upload it to DO console"><img src="/user_uploads/60244/3gsDCMmR3WujGxyEHDr64_2n/image.png"></a></div>
+
+
+
+<a name="405419902"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Deploying%20to%20DigitalOcean/near/405419902" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html#405419902">(Dec 01 2023 at 18:49)</a>:</h4>
+<p>Needs a <code>services.openssh.enable = true;</code> in the config, but yes - that works to one-click install the latest NixOS with flakes enabled.</p>
+<p><a href="/user_uploads/60244/4sNuvRFpj1UvnTEqI1-Wurp7/image.png">SSH session on droplet</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/4sNuvRFpj1UvnTEqI1-Wurp7/image.png" title="SSH session on droplet"><img src="/user_uploads/60244/4sNuvRFpj1UvnTEqI1-Wurp7/image.png"></a></div>
+
+
+
+<a name="405421361"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Deploying%20to%20DigitalOcean/near/405421361" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html#405421361">(Dec 01 2023 at 18:59)</a>:</h4>
+<h2>Deployment</h2>
+<p>Next, need to figure out deployment ...</p>
+<p>Gonna try colmena, rather than deploy-rs, this time because it has built-in support for secrets: <a href="https://colmena.cli.rs/unstable/features/keys.html">https://colmena.cli.rs/unstable/features/keys.html</a></p>
+
+
+
+<a name="405429704"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Deploying%20to%20DigitalOcean/near/405429704" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html#405429704">(Dec 01 2023 at 19:59)</a>:</h4>
+<p>Needed to add <code>admin</code> to Nix's trusted-users in the DO image. Then deployment works. </p>
+<p>Proof of concept: <a href="https://github.com/fpindia/fpindia-chat/pull/1">https://github.com/fpindia/fpindia-chat/pull/1</a></p>
+<p><a href="/user_uploads/60244/6ZUJeW9qAd51ynKVvOzZ1wvL/image.png">colmena deployment</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/6ZUJeW9qAd51ynKVvOzZ1wvL/image.png" title="colmena deployment"><img src="/user_uploads/60244/6ZUJeW9qAd51ynKVvOzZ1wvL/image.png"></a></div>
+
+
+
+<a name="405432026"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Deploying%20to%20DigitalOcean/near/405432026" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html#405432026">(Dec 01 2023 at 20:16)</a>:</h4>
+<p>Two potential shortcomings of colmena, per <a href="https://lobste.rs/s/pka4na/nixops_is_easier_than_i_thought">https://lobste.rs/s/pka4na/nixops_is_easier_than_i_thought</a></p>
+<ul>
+<li>No automatic rollbacks</li>
+<li>Doesn't recognize <code>nixosConfigurations</code> output like deploy-rs does</li>
+</ul>
+
+
+
+<a name="405440088"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Deploying%20to%20DigitalOcean/near/405440088" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Deploying.20to.20DigitalOcean.html#405440088">(Dec 01 2023 at 21:23)</a>:</h4>
+<h2>Secrets</h2>
+<p><a href="https://colmena.cli.rs/unstable/features/keys.html">https://colmena.cli.rs/unstable/features/keys.html</a></p>
+<p>colmena configured to read secrets form 1Password during deployment:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  deployment<span class="o">.</span>keys<span class="o">.</span><span class="s2">"matrix-shared-secret.secret"</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">keyCommand =</span> <span class="p">[</span> <span class="s2">"op"</span> <span class="s2">"read"</span> <span class="s2">"op://Juspay/fpindia-chat secrets/matrix-shared-secret"</span> <span class="p">];</span>
+    <span class="ss">user =</span> config<span class="o">.</span>systemd<span class="o">.</span>services<span class="o">.</span>matrix-synapse<span class="o">.</span>serviceConfig<span class="o">.</span>User<span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div>
+<p>(This could be any secret manager of course; in 1Password's case I get prompted to use TouchID)</p>
+<p>We don't really need the complexity of sops-nix!</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

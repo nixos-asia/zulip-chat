@@ -1,0 +1,27 @@
+<html>
+<head><meta charset="utf-8"><title>Does it make sense to add `open-browser` as a service? · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Does.20it.20make.20sense.20to.20add.20.60open-browser.60.20as.20a.20service.3F.html">Does it make sense to add `open-browser` as a service?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="444388542"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Does%20it%20make%20sense%20to%20add%20%60open-browser%60%20as%20a%20service%3F/near/444388542" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Does.20it.20make.20sense.20to.20add.20.60open-browser.60.20as.20a.20service.3F.html#444388542">(Jun 13 2024 at 05:55)</a>:</h4>
+<p><code>open-browser</code> will use <code>xdg-open</code> on Linux and <code>open</code> on macOS to open the browser once the website is up. This is useful to ensure the user doesn’t have to go through the logs/option definitions. See a case where this can be used: <a href="https://github.com/juspay/services-flake/pull/219#issue-2345406734">https://github.com/juspay/services-flake/pull/219#issue-2345406734</a></p>
+<p>I think that it doesn’t make sense to add it as a service but instead just document how to create such a process using <code>settings.processes</code>, similar to pgweb example <a href="https://github.com/juspay/services-flake/blob/82ff0e98761facd66de04672adb731e3f2d2d627/example/simple/flake.nix#L42-L61">here</a>. </p>
+<p>Any thoughts?</p>
+
+
+
+<a name="444475100"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Does%20it%20make%20sense%20to%20add%20%60open-browser%60%20as%20a%20service%3F/near/444475100" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Does.20it.20make.20sense.20to.20add.20.60open-browser.60.20as.20a.20service.3F.html#444475100">(Jun 13 2024 at 14:10)</a>:</h4>
+<p>Let's not prematurely add trivial services. Let's start by documenting them, even using them in <em>examples</em>. And later down the lines we can add them to the official list of services if there's clear value.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

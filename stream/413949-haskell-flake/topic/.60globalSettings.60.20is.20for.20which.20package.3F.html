@@ -1,0 +1,127 @@
+<html>
+<head><meta charset="utf-8"><title>`globalSettings` is for which package? · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html">`globalSettings` is for which package?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="424220209"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424220209" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424220209">(Mar 01 2024 at 12:02)</a>:</h4>
+<p>Does <a href="https://github.com/srid/haskell-flake/blob/d128c7329bfc73c3eeef90f6d215d0ccd7baf78c/nix/modules/project/defaults.nix#L87-L91">globalSettings</a> apply to all the packages in <code>basePackages</code>?</p>
+
+
+
+<a name="424223495"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424223495" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424223495">(Mar 01 2024 at 12:21)</a>:</h4>
+<p>No, just the ones specified in <code>packages</code> attrset.</p>
+
+
+
+<a name="424223534"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424223534" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424223534">(Mar 01 2024 at 12:21)</a>:</h4>
+<p>It is badly named. Certainly not 'global'.</p>
+
+
+
+<a name="424223684"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424223684" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424223684">(Mar 01 2024 at 12:22)</a>:</h4>
+<p>Can be fixed along with this: <a href="https://github.com/srid/haskell-flake/issues/261">https://github.com/srid/haskell-flake/issues/261</a></p>
+
+
+
+<a name="424223905"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424223905" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424223905">(Mar 01 2024 at 12:24)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424223495">said</a>:</p>
+<blockquote>
+<p>No, just the ones specified in <code>packages</code> attrset.</p>
+</blockquote>
+<p>Wait. Hmm. Let's confirm that first. Because line 83 <a href="https://github.com/srid/haskell-flake/blob/d128c7329bfc73c3eeef90f6d215d0ccd7baf78c/nix/modules/project/settings/default.nix#L59-L83">here</a> suggests it only applies if you have <code>settings.&lt;foo&gt;</code>.</p>
+
+
+
+<a name="424224025"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424224025" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424224025">(Mar 01 2024 at 12:25)</a>:</h4>
+<p>Jesus, that code (I've written) is not super clear to read. <span aria-label="face palm" class="emoji emoji-1f926" role="img" title="face palm">:face_palm:</span></p>
+
+
+
+<a name="424224656"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424224656" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424224656">(Mar 01 2024 at 12:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424223905">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424223495">said</a>:</p>
+<blockquote>
+<p>No, just the ones specified in <code>packages</code> attrset.</p>
+</blockquote>
+<p>Wait. Hmm. Let's confirm that first. Because line 83 <a href="https://github.com/srid/haskell-flake/blob/d128c7329bfc73c3eeef90f6d215d0ccd7baf78c/nix/modules/project/settings/default.nix#L59-L83">here</a> suggests it only applies if you have <code>settings.&lt;foo&gt;</code>.</p>
+</blockquote>
+<p>This is probably the case</p>
+
+
+
+<a name="424224965"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424224965" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424224965">(Mar 01 2024 at 12:31)</a>:</h4>
+<p>shouldn’t it <code>mapAttrs</code> on <code>config.packages</code> and use <code>config.settings.${name}</code> to get the <code>mod</code> for a given package</p>
+
+
+
+<a name="424225214"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424225214" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424225214">(Mar 01 2024 at 12:32)</a>:</h4>
+<p>There can be a case where you have a package in <code>settings</code> attrset, but not in <code>packages</code>.</p>
+
+
+
+<a name="424225240"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424225240" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424225240">(Mar 01 2024 at 12:33)</a>:</h4>
+<p>Also, when we introduce different settings default <a href="https://github.com/srid/haskell-flake/issues/261">here</a>, we might need a way to test if the setting is actually applied.</p>
+
+
+
+<a name="424225319"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424225319" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424225319">(Mar 01 2024 at 12:33)</a>:</h4>
+<p>Right. We want to add a dedicated <code>test/???</code> for this, to check all cases.</p>
+
+
+
+<a name="424225458"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424225458" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424225458">(Mar 01 2024 at 12:34)</a>:</h4>
+<p>Incidentally, as of yesterday, <code>haskell-flake</code> master uses Nix (flake checks) for tests. No more bash scripts. <a href="https://twitter.com/sridca/status/1763528379188265314">https://twitter.com/sridca/status/1763528379188265314</a></p>
+<p><code>example/flake.nix</code>, <code>test/*/flake.nix</code> are all candidates for defining these tests.</p>
+
+
+
+<a name="424225530"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424225530" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424225530">(Mar 01 2024 at 12:34)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424225214">said</a>:</p>
+<blockquote>
+<p>There can be a case where you have a package in <code>settings</code> attrset, but not in <code>packages</code>.</p>
+</blockquote>
+<p>Right, so merging the attribute names looks like what we need</p>
+
+
+
+<a name="424225577"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424225577" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424225577">(Mar 01 2024 at 12:35)</a>:</h4>
+<p>Possibly. In any case, having clear tests cases should also be self-documenting in a way.</p>
+
+
+
+<a name="424225623"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424225623" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424225623">(Mar 01 2024 at 12:35)</a>:</h4>
+<p>And allow us to freely refactor things without fear of breaking semantics (because the tests, which encode these semantics, will catch them).</p>
+
+
+
+<a name="424281174"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60globalSettings%60%20is%20for%20which%20package%3F/near/424281174" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F.html#424281174">(Mar 01 2024 at 16:25)</a>:</h4>
+<p>FYI: <a href="https://github.com/srid/haskell-flake/commit/307961a20136dd75b761fa0e47b947a6fed757a8">https://github.com/srid/haskell-flake/commit/307961a20136dd75b761fa0e47b947a6fed757a8</a></p>
+<p><code>haskellProjectTests</code> is pretty nascent right now, but we can improve it to accommodate our future tests.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<head><meta charset="utf-8"><title>✔ Weird behavior in socat · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html">✔ Weird behavior in socat</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="424475558"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20Weird%20behavior%20in%20socat/near/424475558" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html#424475558">(Mar 03 2024 at 05:21)</a>:</h4>
+<p>I started  <code>python -m http.server -b 127.0.0.1 8193</code><br>
+and ran <code>socat TCP6-LISTEN:8192,reuseaddr,fork TCP:127.0.0.1:8193</code> to forward all IPv6 incoming traffic at [::1]:8192 to 127.0.0.1:8193<br>
+But I can even get the data using  <code>curl 127.0.0.1:8192</code></p>
+<p>Can someone please explain? I tried asking GPT-3.5 and Gemini, but didn't get any satisfactory answer.<br>
+<code>netstat -tulpn</code> output</p>
+<div class="codehilite"><pre><span></span><code>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp6       0      0 :::8192                 :::*                    LISTEN      7448/socat
+</code></pre></div>
+
+
+
+<a name="424475637"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20Weird%20behavior%20in%20socat/near/424475637" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html#424475637">(Mar 03 2024 at 05:22)</a>:</h4>
+<p>My final goal is to use this to allow playing games which support IPv4 over IPv6.</p>
+
+
+
+<a name="424928777"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20Weird%20behavior%20in%20socat/near/424928777" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html#424928777">(Mar 05 2024 at 18:07)</a>:</h4>
+<p>What’s the result of running curl on your ipv6 loopback on port 8192? Do you still get the response?</p>
+
+
+
+<a name="425041261"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20Weird%20behavior%20in%20socat/near/425041261" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html#425041261">(Mar 06 2024 at 09:33)</a>:</h4>
+<p>Yeah, <code>curl http://[::1]:8192</code> works as expected.</p>
+
+
+
+<a name="425042246"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20Weird%20behavior%20in%20socat/near/425042246" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html#425042246">(Mar 06 2024 at 09:37)</a>:</h4>
+<p>Ah nvm, figured it out on RTFM.<br>
+<code>socat TCP6-LISTEN:8192,reuseaddr,fork,ipv6only TCP:127.0.0.1:8193</code> works as expected in IPv6 only mode<br>
+<a href="/user_uploads/60244/Xm27HTET6jLQ4K0nGuOMr7Qv/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/Xm27HTET6jLQ4K0nGuOMr7Qv/image.png" title="image.png"><img src="/user_uploads/60244/Xm27HTET6jLQ4K0nGuOMr7Qv/image.png"></a></div>
+
+
+
+<a name="426939751"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20Weird%20behavior%20in%20socat/near/426939751" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html#426939751">(Mar 16 2024 at 23:38)</a>:</h4>
+<p><del>trying to mark the stream resolved</del></p>
+<p>Please resolve this stream.</p>
+<ul>
+<li>I cannot click resolve without having a recent message.</li>
+<li>I don't have permission if it's older than 7 days.</li>
+</ul>
+
+
+
+<a name="427087664"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20Weird%20behavior%20in%20socat/near/427087664" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20Weird.20behavior.20in.20socat.html#427087664">(Mar 17 2024 at 11:06)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

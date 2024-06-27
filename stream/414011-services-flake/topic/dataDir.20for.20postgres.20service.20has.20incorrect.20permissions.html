@@ -1,0 +1,240 @@
+<html>
+<head><meta charset="utf-8"><title>dataDir for postgres service has incorrect permissions · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html">dataDir for postgres service has incorrect permissions</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="405175107"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405175107" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405175107">(Nov 30 2023 at 18:25)</a>:</h4>
+<p>I'm running into the local run directory for process-compose that I set with <code>dataDir</code> having the wrong permissions and its unable to initialize the database. Its possible the system has auto new directories having specific permissions, but I think we should check for that?</p>
+
+
+
+<a name="405175502"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405175502" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405175502">(Nov 30 2023 at 18:27)</a>:</h4>
+<p>Maybe something here: <a href="https://github.com/juspay/services-flake/blob/main/nix/postgres.nix#L354-L357">https://github.com/juspay/services-flake/blob/main/nix/postgres.nix#L354-L357</a></p>
+
+
+
+<a name="405175860"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405175860" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405175860">(Nov 30 2023 at 18:29)</a>:</h4>
+<p>What do you mean by "wrong permissions"? For reference, this is what I see on my local machine (which happens to be a mac) when I <code>nix run</code> the example in the repo,</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>❯<span class="w"> </span>ls<span class="w"> </span>-ld<span class="w"> </span>data/
+drwxr-xr-x<span class="w"> </span><span class="m">4</span><span class="w"> </span>srid<span class="w"> </span>staff<span class="w"> </span><span class="m">128</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">13</span>:28<span class="w"> </span>data/
+
+❯<span class="w"> </span>ls<span class="w"> </span>-ld<span class="w"> </span>data/pg1/global
+drwx------<span class="w"> </span><span class="m">63</span><span class="w"> </span>srid<span class="w"> </span>staff<span class="w"> </span><span class="m">2016</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">13</span>:28<span class="w"> </span>data/pg1/global
+</code></pre></div>
+
+
+
+<a name="405176418"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405176418" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405176418">(Nov 30 2023 at 18:33)</a>:</h4>
+<p>And</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>❯<span class="w"> </span>ls<span class="w"> </span>-dl<span class="w"> </span>data/pg1
+drwx------<span class="w"> </span><span class="m">25</span><span class="w"> </span>srid<span class="w"> </span>staff<span class="w"> </span><span class="m">800</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">13</span>:28<span class="w"> </span>data/pg1
+</code></pre></div>
+<blockquote>
+<p>its unable to initialize the database</p>
+</blockquote>
+<p>Could you post the error? Maybe <code>initdb</code> requires data directory to not be world-readable.</p>
+
+
+
+<a name="405176659"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405176659" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405176659">(Nov 30 2023 at 18:34)</a>:</h4>
+<p><a href="/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png">image-4.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png" title="image-4.png"><img src="/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png"></a></div>
+
+
+
+<a name="405177040"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405177040" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405177040">(Nov 30 2023 at 18:36)</a>:</h4>
+<p>Oh it is a locale related issue?</p>
+
+
+
+<a name="405177133"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405177133" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405177133">(Nov 30 2023 at 18:37)</a>:</h4>
+<p>sorry, looks unrelated <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span>  but this is the start of it. I am troubleshooting someone elses environment. when he goes to run the postgres init again, then its a permissions issue</p>
+
+
+
+<a name="405177397"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405177397" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405177397">(Nov 30 2023 at 18:39)</a>:</h4>
+<p>By the way, you can also pass <code>-t=false</code> arguments to get flat interleaved log output that is easier to copy-paste.</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="c1"># Example</span>
+nix<span class="w"> </span>run<span class="w"> </span>.<span class="w"> </span>--<span class="w"> </span>-t<span class="o">=</span><span class="nb">false</span><span class="w"> </span>up
+</code></pre></div>
+
+
+
+<a name="405177499"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405177499" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405177499">(Nov 30 2023 at 18:39)</a>:</h4>
+<p>good to know. seems the selection mode in process-compose doesn't work well</p>
+
+
+
+<a name="405177649"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405177649" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405177649">(Nov 30 2023 at 18:40)</a>:</h4>
+<p>There is also the <code>log_location</code> (in <a class="stream" data-stream-id="414022" href="/#narrow/stream/414022-process-compose-flake">#process-compose-flake</a>) option to have it write to a log file</p>
+
+
+
+<a name="405177957"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405177957" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405177957">(Nov 30 2023 at 18:42)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="671017">tgunnoe</span> <a href="#narrow/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions/near/405176659">said</a>:</p>
+<blockquote>
+<p><a href="/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png">image-4.png</a></p>
+</blockquote>
+<p>Error in screenshot:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>initdb:<span class="w"> </span>error:<span class="w"> </span>invalid<span class="w"> </span>locale<span class="w"> </span>settings:<span class="w"> </span>check<span class="w"> </span>LANG<span class="w"> </span>and<span class="w"> </span>LC_*<span class="w"> </span>environment<span class="w"> </span>variables
+</code></pre></div>
+<p>Perhaps <code>services-flake</code> should explicitly set this env. cc <span class="user-mention" data-user-id="669081">@Shivaraj B H</span></p>
+<p>Ref: <a href="https://stackoverflow.com/a/42111789/55246">https://stackoverflow.com/a/42111789/55246</a></p>
+
+
+
+<a name="405178113"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405178113" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405178113">(Nov 30 2023 at 18:43)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="671017">tgunnoe</span> <a href="#narrow/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions/near/405177133">said</a>:</p>
+<blockquote>
+<p>sorry, looks unrelated <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span>  but this is the start of it. I am troubleshooting someone elses environment. when he goes to run the postgres init again, <strong>then its a permissions issue</strong></p>
+</blockquote>
+<p>What's the permission issue in particular?</p>
+
+
+
+<a name="405178181"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405178181" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405178181">(Nov 30 2023 at 18:43)</a>:</h4>
+<p>Can this problem be reproduced in another system? Then we have a bug report as well.</p>
+
+
+
+<a name="405178957"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405178957" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405178957">(Nov 30 2023 at 18:48)</a>:</h4>
+<p>What should services-flake set those vars to?</p>
+
+
+
+<a name="405179341"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405179341" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405179341">(Nov 30 2023 at 18:50)</a>:</h4>
+<p>Probably the same as those in StackOverflow answer, so:</p>
+<div class="codehilite"><pre><span></span><code>export LC_ALL=&quot;en_US.UTF-8&quot;
+export LC_CTYPE=&quot;en_US.UTF-8&quot;
+</code></pre></div>
+
+
+
+<a name="405179518"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405179518" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405179518">(Nov 30 2023 at 18:51)</a>:</h4>
+<p>would setting them in the shell before running process compose not be the same result?</p>
+
+
+
+<a name="405179616"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405179616" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405179616">(Nov 30 2023 at 18:51)</a>:</h4>
+<p>I'd think so, yes.</p>
+
+
+
+<a name="405179637"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405179637" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405179637">(Nov 30 2023 at 18:52)</a>:</h4>
+<p><a href="https://stackoverflow.com/a/68425342/55246">Here's another answer from Nix context</a> which suggests adding the <code>glibcLocales</code> package to the environment.</p>
+
+
+
+<a name="405179818"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405179818" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405179818">(Nov 30 2023 at 18:53)</a>:</h4>
+<p>that's a good bet</p>
+
+
+
+<a name="405182280"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405182280" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405182280">(Nov 30 2023 at 19:06)</a>:</h4>
+<p><a href="/user_uploads/60244/HywdvbrjxyzmxnEujyQdba6j/image-6.png">image-6.png</a><br>
+well more logs in the latest, but still the same. i need to mess up my locales to solve this</p>
+<div class="message_inline_image"><a href="/user_uploads/60244/HywdvbrjxyzmxnEujyQdba6j/image-6.png" title="image-6.png"><img src="/user_uploads/60244/HywdvbrjxyzmxnEujyQdba6j/image-6.png"></a></div>
+
+
+
+<a name="405182448"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405182448" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405182448">(Nov 30 2023 at 19:07)</a>:</h4>
+<p>because its using the nix devshell, something needs to be set properly there. ah</p>
+
+
+
+<a name="405182721"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405182721" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405182721">(Nov 30 2023 at 19:08)</a>:</h4>
+<p>The "cannot change locale" warnings are concerning.</p>
+
+
+
+<a name="405183337"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405183337" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405183337">(Nov 30 2023 at 19:11)</a>:</h4>
+<p>yeah. its trying to setlocale from within process compose in a nix shell <span aria-label="melting face" class="emoji emoji-1fae0" role="img" title="melting face">:melting_face:</span></p>
+
+
+
+<a name="405184275"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405184275" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405184275">(Nov 30 2023 at 19:17)</a>:</h4>
+<p><a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/build-managers/msbuild/default.nix#L49-L52">https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/build-managers/msbuild/default.nix#L49-L52</a></p>
+<div class="codehilite"><pre><span></span><code># https://github.com/NixOS/nixpkgs/issues/38991
+  # bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  env.LOCALE_ARCHIVE = lib.optionalString stdenv.hostPlatform.isLinux &quot;${glibcLocales}/lib/locale/locale-archive&quot;;
+</code></pre></div>
+
+
+
+<a name="405184836"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405184836" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405184836">(Nov 30 2023 at 19:21)</a>:</h4>
+<p>would this be enough as an env in the shell? or i wonder, does nixpkgs glibc have a general issue</p>
+
+
+
+<a name="405185063"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405185063" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405185063">(Nov 30 2023 at 19:22)</a>:</h4>
+<blockquote>
+<p>would this be enough as an env in the shell? </p>
+</blockquote>
+<p>Probably. </p>
+<p>We might even want to add this to service-flake.</p>
+
+
+
+<a name="405185181"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405185181" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405185181">(Nov 30 2023 at 19:23)</a>:</h4>
+<p>I've had locale issues on emanote (which too uses Nix) as well: </p>
+<p><a href="https://github.com/srid/emanote/issues/125">https://github.com/srid/emanote/issues/125</a></p>
+<p>So, certainly not limited to postgres here.</p>
+
+
+
+<a name="405191751"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405191751" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405191751">(Nov 30 2023 at 20:01)</a>:</h4>
+<p><span class="user-mention" data-user-id="671017">@tgunnoe</span> Perhaps you can create an issue in services-flake and we can track it there?</p>
+
+
+
+<a name="405223660"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405223660" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405223660">(Nov 30 2023 at 23:02)</a>:</h4>
+<p>I will. could it be something with lib.getExe?</p>
+
+
+
+<a name="405346315"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/dataDir%20for%20postgres%20service%20has%20incorrect%20permissions/near/405346315" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions.html#405346315">(Dec 01 2023 at 11:58)</a>:</h4>
+<blockquote>
+<p>could it be something with lib.getExe?</p>
+</blockquote>
+<p>Not sure, but a way to reproduce would be great to debug</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,95 @@
+<html>
+<head><meta charset="utf-8"><title>Overriding flake inputs from CLI · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html">Overriding flake inputs from CLI</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="442809486"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Overriding%20flake%20inputs%20from%20CLI/near/442809486" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html#442809486">(Jun 05 2024 at 14:52)</a>:</h4>
+<p>I looked and there doesn't seem to be a straightforward way to override flake inputs from the CLI. But I was wondering what method(s) you have employed to do so? I'm looking for opinions on how to do this with minimal changes.</p>
+<p>At the moment, I have this:</p>
+<div class="codehilite"><pre><span></span><code>  inputs = {
+    nixpkgs-1stable.url = &quot;github:NixOS/nixpkgs/nixos-24.05&quot;;
+    home-manager-1stable.url = &quot;github:nix-community/home-manager/release-24.05&quot;;
+    home-manager-1stable.inputs.nixpkgs.follows = &quot;nixpkgs-1stable&quot;;
+
+    nixpkgs-1stable-small.url = &quot;github:NixOS/nixpkgs/nixos-24.05-small&quot;;
+    home-manager-1stable-small.url = &quot;github:nix-community/home-manager/release-24.05&quot;;
+    home-manager-1stable-small.inputs.nixpkgs.follows = &quot;nixpkgs-1stable-small&quot;;
+
+    nixpkgs-0unstable.url = &quot;github:NixOS/nixpkgs/nixos-unstable&quot;;
+    home-manager-0unstable.url = &quot;github:nix-community/home-manager/master&quot;;
+    home-manager-0unstable.inputs.nixpkgs.follows = &quot;nixpkgs-0unstable&quot;;
+
+    nixpkgs-0unstable-small.url = &quot;github:NixOS/nixpkgs/nixos-unstable-small&quot;;
+    home-manager-0unstable-small.url = &quot;github:nix-community/home-manager/master&quot;;
+    home-manager-0unstable-small.inputs.nixpkgs.follows = &quot;nixpkgs-0unstable-small&quot;;
+  };
+
+  outputs = { self,
+    nixpkgs-1stable,         home-manager-1stable,
+    nixpkgs-1stable-small,   home-manager-1stable-small,
+    nixpkgs-0unstable,       home-manager-0unstable,
+    nixpkgs-0unstable-small, home-manager-0unstable-small,
+    ... }:
+    let
+      nixpkgsRelease = &quot;24.05&quot;;
+      nixpkgs = nixpkgs-1stable;
+      home-manager = home-manager-1stable;
+      #nixpkgs = nixpkgs-1stable-small;
+      #home-manager = home-manager-1stable-small;
+      #nixpkgs = nixpkgs-0unstable;
+      #home-manager = home-manager-0unstable;
+      #nixpkgs = nixpkgs-0unstable-small;
+      #home-manager = home-manager-0unstable-small;
+
+# --- [ snip ] ---
+</code></pre></div>
+<p>I don't see a "clean" way (tbh, I don't see _any way_ lol) to override <code>nixpkgs</code> to be, say, <code>nixpkgs-0unstable-small</code> from the CLI without a tech-debt of changes.</p>
+
+
+
+<a name="442809855"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Overriding%20flake%20inputs%20from%20CLI/near/442809855" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html#442809855">(Jun 05 2024 at 14:54)</a>:</h4>
+<p>Had <code>inputs</code> not been "static", I could have provided <code>nixos-unstable-small</code> for <code>nixpkgs</code> and <code>master</code> for <code>home-manager</code>'s channels respectively. But alas, I'm stuck here :)</p>
+
+
+
+<a name="442810151"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Overriding%20flake%20inputs%20from%20CLI/near/442810151" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html#442810151">(Jun 05 2024 at 14:55)</a>:</h4>
+<p>("Static" as in a <code>let..in</code> block in <code>inputs</code> such that I could use <code>github:NixOS/nixpkgs/${nixpkgsChannel}</code>.)</p>
+
+
+
+<a name="442812573"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Overriding%20flake%20inputs%20from%20CLI/near/442812573" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html#442812573">(Jun 05 2024 at 15:04)</a>:</h4>
+<p><code>--override-input</code>?</p>
+
+
+
+<a name="442829958"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Overriding%20flake%20inputs%20from%20CLI/near/442829958" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html#442829958">(Jun 05 2024 at 16:09)</a>:</h4>
+<p>Oh wow, that worked. I should read the manual instead of user comments <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span> <br>
+Thank you <span class="user-mention" data-user-id="667408">@Srid</span></p>
+
+
+
+<a name="442846865"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Overriding%20flake%20inputs%20from%20CLI/near/442846865" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html#442846865">(Jun 05 2024 at 17:12)</a>:</h4>
+<p><span class="user-mention" data-user-id="696416">@Pratham Patel</span> By the way, is what you are trying to do here similar to <a href="https://github.com/srid/nixos-flake/issues/51">this request</a>?</p>
+
+
+
+<a name="442851031"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Overriding%20flake%20inputs%20from%20CLI/near/442851031" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Overriding.20flake.20inputs.20from.20CLI.html#442851031">(Jun 05 2024 at 17:32)</a>:</h4>
+<p>Kind of. I want to use a different channel of nixpkgs/home-manager to test if the the future (nixos-unstable/master) branches introduce a breaking change or not. This runs in a local CI server I have at my home. :)</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

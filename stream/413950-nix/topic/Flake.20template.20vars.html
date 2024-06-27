@@ -1,0 +1,42 @@
+<html>
+<head><meta charset="utf-8"><title>Flake template vars · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Flake.20template.20vars.html">Flake template vars</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="424704186"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Flake%20template%20vars/near/424704186" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Flake.20template.20vars.html#424704186">(Mar 04 2024 at 17:05)</a>:</h4>
+<p><a href="https://github.com/NixOS/nix/issues/4017">https://github.com/NixOS/nix/issues/4017</a></p>
+<p>Has anyone written a dumb solution to extend <code>nix flake ..</code> with basic template vars support?</p>
+
+
+
+<a name="424704651"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Flake%20template%20vars/near/424704651" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Flake.20template.20vars.html#424704651">(Mar 04 2024 at 17:08)</a>:</h4>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nix<span class="w"> </span>flake<span class="w"> </span>init<span class="w"> </span>-t<span class="w"> </span>github:juspay/nix-dev-home<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--override-input<span class="w"> </span>username<span class="w"> </span><span class="s2">"https://nixid.page/str/srid"</span>
+</code></pre></div>
+<p>Where <code>nixid.page/&lt;type&gt;/&lt;val&gt;</code> will dynamically serve a flake outputting that expression. <span aria-label="open mouth" class="emoji emoji-1f62e" role="img" title="open mouth">:open_mouth:</span></p>
+<p>As a bandaid for <a href="https://github.com/NixOS/nix/issues/5663">https://github.com/NixOS/nix/issues/5663</a></p>
+
+
+
+<a name="424704935"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Flake%20template%20vars/near/424704935" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Flake.20template.20vars.html#424704935">(Mar 04 2024 at 17:09)</a>:</h4>
+<p>Grr, <code>--override-input</code> is unsupported for this subcommand.</p>
+
+
+
+<a name="424705288"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Flake%20template%20vars/near/424705288" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Flake.20template.20vars.html#424705288">(Mar 04 2024 at 17:11)</a>:</h4>
+<p>There's <code>--override-flake</code>, though.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

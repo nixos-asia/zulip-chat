@@ -1,0 +1,104 @@
+<html>
+<head><meta charset="utf-8"><title>Nixifying the vlang dev environment · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html">Nixifying the vlang dev environment</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="406822539"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406822539" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406822539">(Dec 08 2023 at 19:10)</a>:</h4>
+<p><a href="https://github.com/vlang/v">https://github.com/vlang/v</a></p>
+<p>I see that <a href="https://github.com/NixOS/nixpkgs/blob/54e675973270853217447973ab1d80efe318b195/pkgs/development/compilers/vlang/default.nix#L14">vlang is already in nixpkgs</a>. That is, it has been <strong>packaged</strong> in nixpkgs. But the repository itself doesn't have Nix-based <strong>development</strong> environment.</p>
+<p>Nix is used not only for packaging, but also for development: <a href="https://nixos.asia/en/dev">https://nixos.asia/en/dev</a></p>
+<p><span class="user-mention" data-user-id="673288">@Swastik Baranwal</span> So I'd propose that we create a <code>flake.nix</code> file in this repo, so that anyone can just <code>git clone</code> it and run <code>nix develop</code> to be dropped in a shell where they build the project, etc. They don't have to install anything on their computer, other than Nix itself.</p>
+<p>The README says the Makefile does some magical things, including:</p>
+<blockquote>
+<p>The Tiny C Compiler (tcc) is downloaded for you by make if there is a compatible version for your system, and installed under the V thirdparty directory.</p>
+</blockquote>
+<p>When using Nix, none of this need to happen, for the devShell can include the same Tiny C Compiler which is <a href="https://github.com/NixOS/nixpkgs/blob/54e675973270853217447973ab1d80efe318b195/pkgs/development/compilers/tinycc/default.nix#L47">in fact available in nixpkgs</a>.</p>
+
+
+
+<a name="406822981"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406822981" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Swastik Baranwal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406822981">(Dec 08 2023 at 19:13)</a>:</h4>
+<p>We have our own TCC with our own patches afaik</p>
+
+
+
+<a name="406823027"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823027" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823027">(Dec 08 2023 at 19:13)</a>:</h4>
+<p>Nixifying that patched TCC would be the first step I'd think</p>
+
+
+
+<a name="406823139"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823139" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Swastik Baranwal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823139">(Dec 08 2023 at 19:14)</a>:</h4>
+<p>I see</p>
+
+
+
+<a name="406823150"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823150" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Swastik Baranwal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823150">(Dec 08 2023 at 19:14)</a>:</h4>
+<p>Let me see how I can do it</p>
+
+
+
+<a name="406823196"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823196" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823196">(Dec 08 2023 at 19:15)</a>:</h4>
+<p>Write a <code>flake.nix</code> in that TCC repo, then if I run <code>nix run</code> in that repo it should run the compiler.</p>
+
+
+
+<a name="406823340"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823340" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Swastik Baranwal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823340">(Dec 08 2023 at 19:16)</a>:</h4>
+<p>Are there any guides on how to write a <code>flake.nix</code></p>
+
+
+
+<a name="406823400"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823400" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Swastik Baranwal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823400">(Dec 08 2023 at 19:16)</a>:</h4>
+<p>This is for non-windows <a href="https://github.com/vlang/tccbin">https://github.com/vlang/tccbin</a></p>
+
+
+
+<a name="406823419"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823419" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823419">(Dec 08 2023 at 19:17)</a>:</h4>
+<p>I could use this opportunity to see how useful <a href="https://nixos.asia/en/blog/nix-rapid">https://nixos.asia/en/blog/nix-rapid</a> is</p>
+<p>Can you try that and let me know if there's anything you don't understand, as far as introduction goes?</p>
+
+
+
+<a name="406823433"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823433" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Swastik Baranwal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823433">(Dec 08 2023 at 19:17)</a>:</h4>
+<p>This is for windows <a href="https://github.com/vlang/tccbin_win">https://github.com/vlang/tccbin_win</a></p>
+
+
+
+<a name="406823475"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823475" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823475">(Dec 08 2023 at 19:17)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment/near/406823419">said</a>:</p>
+<blockquote>
+<p>I could use this opportunity to see how useful <a href="https://nixos.asia/en/blog/nix-rapid">https://nixos.asia/en/blog/nix-rapid</a> is</p>
+<p>Can you try that and let me know if there's anything you don't understand, as far as introduction goes?</p>
+</blockquote>
+<p>This post actually introduces flakes</p>
+
+
+
+<a name="406823525"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Nixifying%20the%20vlang%20dev%20environment/near/406823525" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Swastik Baranwal <a href="http://chat.nixos.asia/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment.html#406823525">(Dec 08 2023 at 19:17)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment/near/406823419">said</a>:</p>
+<blockquote>
+<p>I could use this opportunity to see how useful <a href="https://nixos.asia/en/blog/nix-rapid">https://nixos.asia/en/blog/nix-rapid</a> is</p>
+<p>Can you try that and let me know if there's anything you don't understand, as far as introduction goes?</p>
+</blockquote>
+<p>Sure, I will work on it tomorrow. It is mid night here.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

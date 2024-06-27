@@ -1,0 +1,202 @@
+<html>
+<head><meta charset="utf-8"><title>home-manager without admin access · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html">home-manager without admin access</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="424190025"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424190025" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Krishnakumar Gopalakrishnan <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424190025">(Mar 01 2024 at 09:24)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Nix.20events.20in.20India/near/423809735">said</a>:</p>
+<blockquote>
+<h2>home-manager online event</h2>
+<p><a href="https://nixos.asia/en/event/nix-dev-home">https://nixos.asia/en/event/nix-dev-home</a></p>
+<blockquote>
+<p>We will demonstrate using Nix to declaratively manage your dotfiles, programs and services using home-manager, thus replacing the likes of legacy software like homebrew. The goal is to create an one-click environment to setup an user environment on any system, be it a Macbook or a Linux machine.</p>
+</blockquote>
+</blockquote>
+<p>Highly interested in using home-manager with a non-root install of nix. I work on multiple remote servers for HPC development (where I don't have admin priveleges), and would like to have an identical dev environment everywhere with modern tools etc available in my $PATH. Would be nice if the talk will cover this aspect.</p>
+
+
+
+<a name="424224194"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424224194" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424224194">(Mar 01 2024 at 12:26)</a>:</h4>
+<p><a href="#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424190025">A message</a> was moved here from <a class="stream-topic" data-stream-id="413950" href="/#narrow/stream/413950-nix/topic/Nix.20events.20in.20India">#nix &gt; Nix events in India</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="424224265"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424224265" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424224265">(Mar 01 2024 at 12:26)</a>:</h4>
+<p><span class="user-mention" data-user-id="696247">@Krishnakumar Gopalakrishnan</span> Welcome!</p>
+<p>I'm pretty sure home-manager on itself shouldn't require root access. </p>
+<p>It is Nix installation that normally does, but I think there's a way to install it without requiring it.</p>
+
+
+
+<a name="424225861"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424225861" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424225861">(Mar 01 2024 at 12:37)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424224265">said</a>:</p>
+<blockquote>
+<p>[...] I think there's a way to install it without requiring it.</p>
+</blockquote>
+<p>You can try this: <a href="https://nixos.wiki/wiki/Nix_Installation_Guide#Installing_without_root_permissions">https://nixos.wiki/wiki/Nix_Installation_Guide#Installing_without_root_permissions</a></p>
+
+
+
+<a name="424290182"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424290182" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424290182">(Mar 01 2024 at 17:05)</a>:</h4>
+<p>Also <a href="https://github.com/DavHau/nix-portable">https://github.com/DavHau/nix-portable</a></p>
+<p>But has performance drawbacks,</p>
+<blockquote>
+<p>If user namespaces are not available on a system, nix-portable will fall back to using proot instead of bubblewrap. Proot's virtualization can have a significant performance overhead depending on the workload. In that situation, it might be beneficial to use a remote builder or alternatively build the derivations on another host and sync them via a cache like <a href="http://cachix.org">cachix.org</a>.</p>
+</blockquote>
+
+
+
+<a name="424290654"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424290654" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424290654">(Mar 01 2024 at 17:08)</a>:</h4>
+<p>Nix only needs root if using the daemon. You can still run Nix in "single-user" daemonless mode, and the only requirement is that the user calling the binary own the /nix dir</p>
+
+
+
+<a name="424290836"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424290836" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424290836">(Mar 01 2024 at 17:08)</a>:</h4>
+<p>Little known fact that a static nix binary will create its own chroot store automatically for the current user of called and no /nix dir exists as well</p>
+
+
+
+<a name="424290931"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424290931" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424290931">(Mar 01 2024 at 17:09)</a>:</h4>
+<p>(making nix-portable somewhat obsolete)</p>
+
+
+
+<a name="424293435"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424293435" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424293435">(Mar 01 2024 at 17:22)</a>:</h4>
+<p>Okay, so basically <span class="user-mention" data-user-id="696247">@Krishnakumar Gopalakrishnan</span> can follow the "Single user" instructions here <a href="https://nixos.org/manual/nix/stable/installation/#single-user">https://nixos.org/manual/nix/stable/installation/#single-user</a></p>
+
+
+
+<a name="424296773"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424296773" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424296773">(Mar 01 2024 at 17:42)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="679006">Tim DeHerrera</span> <a href="#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/424290836">said</a>:</p>
+<blockquote>
+<p>Little known fact that a static nix binary will create its own chroot store automatically for the current user of called and no /nix dir exists as well</p>
+</blockquote>
+<p>now all we need is for that to work on macos as it does on linux and and something like <code>nix bundle</code> for distributing runtimes with guis much like the other pack formats on linux</p>
+
+
+
+<a name="424297481"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/424297481" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#424297481">(Mar 01 2024 at 17:46)</a>:</h4>
+<p>Problem is, mac's kernel doesn't have the same namespace capabilities of Linux <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="437573504"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437573504" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437573504">(May 08 2024 at 04:16)</a>:</h4>
+<p>Related: <a href="https://x.com/matthewcroughan/status/1787886356762382563?s=46">https://x.com/matthewcroughan/status/1787886356762382563?s=46</a></p>
+
+
+
+<a name="437573564"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437573564" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437573564">(May 08 2024 at 04:17)</a>:</h4>
+<p>Probably a good candidate for a blog at <a href="http://nixos.asia">nixos.asia</a>?</p>
+
+
+
+<a name="437573643"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437573643" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437573643">(May 08 2024 at 04:18)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access/near/437573564">said</a>:</p>
+<blockquote>
+<p>Probably a good candidate for a blog at <a href="http://nixos.asia">nixos.asia</a>?</p>
+</blockquote>
+<p>Sure, or a tutorial.</p>
+
+
+
+<a name="437573664"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437573664" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437573664">(May 08 2024 at 04:18)</a>:</h4>
+<p>Create an issue on GitHub so we don't forget.</p>
+
+
+
+<a name="437580409"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437580409" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Krishnakumar Gopalakrishnan <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437580409">(May 08 2024 at 05:42)</a>:</h4>
+<p>The static version of nix can't install binary executables and needs to<br>
+build every single package from source.</p>
+
+
+
+<a name="437582923"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437582923" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437582923">(May 08 2024 at 06:06)</a>:</h4>
+<p><span class="user-mention" data-user-id="696247">@Krishnakumar Gopalakrishnan</span> you mean to say that binary cache, such as <a href="http://cache.nixos.org">cache.nixos.org</a> isn’t used to fetch the packages in a single user installation?</p>
+
+
+
+<a name="437583208"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437583208" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437583208">(May 08 2024 at 06:07)</a>:</h4>
+<p>Anyways, I will check this out, here’s the issue to track progress: <a href="https://github.com/nixos-asia/website/issues/35">https://github.com/nixos-asia/website/issues/35</a></p>
+
+
+
+<a name="437630495"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437630495" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Krishnakumar Gopalakrishnan <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437630495">(May 08 2024 at 11:30)</a>:</h4>
+<p>That's right. Without root access, static nix will have to build every<br>
+single package declared in the home.nix file from scratch.</p>
+<p>This is because the cached versions of the pre built binaries have<br>
+hardcoded locations that expect certain dynamic libraries to be loaded from<br>
+certain standard library paths in the user's system (which requires root<br>
+access typically eg. /usr/local/lib). The HPC package manager Spack from<br>
+Lawrence Livermore National Laboratories addresses this exact problem<br>
+(relocatable binary issue) by using clever RPATH redirection mechanism<br>
+embedded into the binary and by explicitly providing binary caches that<br>
+target user-space installs.</p>
+<p>Most HPC and shared scientific computing clusters don't allow any kind of<br>
+write access to the /nix directory. In fact sysadmins don't even create<br>
+this directory.</p>
+
+
+
+<a name="437819752"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437819752" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437819752">(May 09 2024 at 13:33)</a>:</h4>
+<p>Hey so, this isn't true unless you globally change the location of the /nix/store, which isn't necessary. The static version of Nix will automatically use a user namespace store in the users home directory if it doesn't have permission to write to /nix, which still uses /nix/store in the namespace, so the cache will work.</p>
+<p>You can also just give your user ownership of the /nix directory in single-user mode. Also, you don't need a static Nix to run in single-user mode. Two different things</p>
+
+
+
+<a name="437837238"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437837238" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Krishnakumar Gopalakrishnan <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437837238">(May 09 2024 at 15:18)</a>:</h4>
+<p>Hmm. Interesting. When I tried static nix, it appeared to be building my<br>
+home-manager configured packages from source.</p>
+<p>I think readers will benefit from a detailed study and writeup of how to<br>
+get a static version of nix without sudo privileges or ownership of /nix,<br>
+and still make it use pre-built binaries.</p>
+
+
+
+<a name="437913798"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437913798" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437913798">(May 10 2024 at 02:11)</a>:</h4>
+<p>Did you check to make sure the cache was properly configured?</p>
+
+
+
+<a name="437913861"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437913861" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437913861">(May 10 2024 at 02:12)</a>:</h4>
+<p>It should be as simple as "download static nix, excute a build", if that's not working something else has gone wrong.</p>
+<p>I've done it several times</p>
+
+
+
+<a name="437913877"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/home-manager%20without%20admin%20access/near/437913877" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413950-nix/topic/home-manager.20without.20admin.20access.html#437913877">(May 10 2024 at 02:12)</a>:</h4>
+<p>(on Linux anyway)</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>Hello,</p>\n<p>My ticket <a href=\"https://github.com/srid/devour-flake/issues/21#issue-2063364563\">here</a> got closed, which I understand. But now I wonder if there is any way to make it more flake compliant? I have no problem running my flake at the moment (only <code>nix flake show</code> gives a <code>error: expected a derivation</code> around the <code>pythonPackages</code> as it expects a derivation, but I can build packages fine).</p>\n<p>Let me explain the background behind this. I'm in a situation where I sometimes have the same package name for a python library and for its associated CLI.<br>\nSo I want the CLI tool to stay in <code>packages.${system}.*</code> and the library to go in <code>packages.${system}.pythonPackages.*</code>.</p>\n<p>What would be a better way to handle this? Should I have derivations with multiple outputs or something?</p>\n<p>Note: I'm using <code>flake-utils.lib.eachDefaultSystem</code>, which is why you don't see the <code>${system}</code> in the code pasted in the ticket.</p>",
+        "id": 411119683,
+        "sender_full_name": "pcboy",
+        "timestamp": 1704338668
+    },
+    {
+        "content": "<p>Does your package build when you run <code>nix build .#&lt;package-name&gt;</code>?</p>",
+        "id": 411162679,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704363716
+    },
+    {
+        "content": "<p>From what I interpret from the logs, it looks more of a type issue which is breaking while <code>devour-flake</code> is trying to evaluate the derivation given by <code>nix build .#default</code></p>",
+        "id": 411163480,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704364044
+    },
+    {
+        "content": "<p>Yes I have no problem building all my packages. But of course, doing <code>nix build .\\#pythonPackages</code> will not work (as it's not a derivation), <code>nix build.\\#pythonPackages.package1</code> will work (as it's a derivation).<br>\nWhat's happening, as far as I understand, is that devour-flake does not like the fact that <code>packages.${system}.pythonPackages</code> is not a derivation, because in a flake it seems it's not authorized/standard to have more than one level deep packages... This could  I guess be solved if devour-flake had some sort of recursive way of finding derivations inside <code>packages.**</code>, instead it seems it stops at one level deep (e.g packages.${system}.app1). But at the same time I understand that devour-flake does not want to support something not deemed standard.<br>\nHere what I'm wondering more then is what would be the recommend way?<br>\nIt seems in nixpkgs, they are putting the packages into <code>legacyPackages</code> instead of <code>packages</code>, and in there they do have multiple levels of packages. But devour-flake would not work with that either I suppose?</p>\n<p>Here is a flake example of what I'm talking about:  </p>\n<div class=\"codehilite\"><pre><span></span><code>{\n{\n  description = &quot;A basic flake with a shell&quot;;\n  inputs.nixpkgs.url = &quot;github:NixOS/nixpkgs/nixpkgs-unstable&quot;;\n  inputs.flake-utils.url = &quot;github:numtide/flake-utils&quot;;\n\n  outputs = {\n    nixpkgs,\n    flake-utils,\n    ...\n  }:\n    flake-utils.lib.eachDefaultSystem (system: let\n      pkgs = nixpkgs.legacyPackages.${system};\n    in {\n      packages.app1 = pkgs.stdenv.mkDerivation {\n        name = &quot;app1&quot;;\n        src = pkgs.hello;\n        installPhase = &quot;mkdir -p $out/bin &amp;&amp; install -m755 $src/bin/hello $out/bin/hello&quot;;\n      };\n\n      packages.app2 = pkgs.stdenv.mkDerivation {\n        name = &quot;app2&quot;;\n        src = pkgs.hello;\n        installPhase = &quot;mkdir -p $out/bin &amp;&amp; install -m755 $src/bin/hello $out/bin/hello&quot;;\n      };\n\n      packages.pythonPackages = {\n        app3 = pkgs.stdenv.mkDerivation {\n          name = &quot;app3&quot;;\n          src = pkgs.hello;\n          installPhase = &quot;mkdir -p $out/bin &amp;&amp; install -m755 $src/bin/hello $out/bin/hello&quot;;\n        };\n      };\n    });\n}\n</code></pre></div>",
+        "id": 411174118,
+        "sender_full_name": "pcboy",
+        "timestamp": 1704368411
+    },
+    {
+        "content": "<blockquote>\n<p><code>nix build.\\#pythonPackages.package1</code> will work (as it's a derivation).</p>\n</blockquote>\n<p>Ah, I understand the issue now. Interesting.</p>",
+        "id": 411186656,
+        "sender_full_name": "Srid",
+        "timestamp": 1704373788
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"678102\">@pcboy</span> I think the solution here is to make devour-flake use flake-schemas. Basically this PR needs to be completed and merged: <a href=\"https://github.com/srid/devour-flake/pull/11\">https://github.com/srid/devour-flake/pull/11</a></p>",
+        "id": 411186790,
+        "sender_full_name": "Srid",
+        "timestamp": 1704373834
+    },
+    {
+        "content": "<p>Because, once we start using flake-schemas - if for some reason your flake doesn't adhere to the standard schema, you can always define your own schema, and devour-flake (thus nixci) can use that.</p>",
+        "id": 411187027,
+        "sender_full_name": "Srid",
+        "timestamp": 1704373940
+    }
+]

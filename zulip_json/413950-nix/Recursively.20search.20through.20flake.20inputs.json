@@ -1,0 +1,92 @@
+[
+    {
+        "content": "<p>I recall <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> mentioning this before, but I don’t seem to recollect. For example, if I have a flake in <code>project-a</code> and this has <code>project-b</code> in its <code>inputs</code>, <code>project-b</code> in turn depends on <code>project-c</code> in its flake. My question is, how can I find if <code>project-a</code> depends on <code>project-c</code> without having to go through each of the flake. I want something like <code>nix why-depends</code> but for flake inputs.</p>",
+        "id": 410985088,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704275398
+    },
+    {
+        "content": "<p>Unsure, but there is <code>nix flake metadata</code> which dumps the tree of inputs. It takes <code>--json</code> to produce a JSON output, so something can be built off it. Also nix-browser can (be made to) do this too, but a CLI would be nice.</p>",
+        "id": 411013853,
+        "sender_full_name": "Srid",
+        "timestamp": 1704288226
+    },
+    {
+        "content": "<p>fwiw, for quickly traversing inputs in the flake you can simply load the flake in a repl, and a top-level <code>inputs</code> attribute exists for quickly traversing the inputs of a flake</p>",
+        "id": 411642027,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1704670482
+    },
+    {
+        "content": "<p>Hey Tim, thanks for that, I am aware that I can traverse through the entire graph of the inputs, i.e if I know the path to whatever input I am looking for. I was looking for a solution, that given an input, gives me the pinned version for that input in the dependency graph and the path to reach to that node in the graph.</p>\n<p>This is what worked for me:<br>\nTo find the pinned revision:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>$<span class=\"w\"> </span>nix<span class=\"w\"> </span>flake<span class=\"w\"> </span>metadata<span class=\"w\"> </span>--json<span class=\"w\"> </span><span class=\"p\">|</span><span class=\"w\"> </span>jq<span class=\"w\"> </span><span class=\"s1\">'.. | .\"hedis\"? | select( . != null )'</span>\n</code></pre></div>\n<p>Which gives me the following output:</p>\n<div class=\"codehilite\" data-code-language=\"JSON\"><pre><span></span><code><span class=\"p\">{</span>\n<span class=\"w\">  </span><span class=\"nt\">\"flake\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"kc\">false</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"nt\">\"locked\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">    </span><span class=\"nt\">\"lastModified\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"mi\">1689234100</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"narHash\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"sha256-J4mqtraMzLJguL0BwMUETeBpNJXRf86E2ZaP9xx+4tY=\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"owner\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"juspay\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"repo\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"hedis\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"rev\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"77bf501da57639a60728b577e1c3780f70ddb418\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"type\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"github\"</span>\n<span class=\"w\">  </span><span class=\"p\">},</span>\n<span class=\"w\">  </span><span class=\"nt\">\"original\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">    </span><span class=\"nt\">\"owner\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"juspay\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"repo\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"hedis\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"rev\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"77bf501da57639a60728b577e1c3780f70ddb418\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"nt\">\"type\"</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"s2\">\"github\"</span>\n<span class=\"w\">  </span><span class=\"p\">}</span>\n<span class=\"p\">}</span>\n<span class=\"s2\">\"hedis\"</span>\n</code></pre></div>\n<p>Now, what if I want to get the path to reach this node, I can still use jq to do this, thanks to <a href=\"https://stackoverflow.com/questions/39800718/how-to-use-jq-to-find-all-paths-to-a-certain-key\">this</a> solution from stackoverflow:</p>\n<div class=\"codehilite\"><pre><span></span><code>nix flake metadata --json | jq -c &#39;paths | select(.[-1] == &quot;hedis&quot;)&#39;\n</code></pre></div>\n<p>This gives me the output:</p>\n<div class=\"codehilite\"><pre><span></span><code>[&quot;locks&quot;,&quot;nodes&quot;,&quot;euler-hs&quot;,&quot;inputs&quot;,&quot;hedis&quot;]\n[&quot;locks&quot;,&quot;nodes&quot;,&quot;hedis&quot;]\n</code></pre></div>\n<p>Now I know hedis comes from <a href=\"https://github.com/juspay/euler-hs\">euler-hs</a>’s flake.</p>",
+        "id": 411740218,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704721339
+    },
+    {
+        "content": "<p>Nice one; here's another example (shared-kernel is transitively used by two other flakes, in addition to direct reference by the root flake; though the output doesn't say whether they all are pinned at same rev):</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>❯<span class=\"w\"> </span>nix<span class=\"w\"> </span>flake<span class=\"w\"> </span>metadata<span class=\"w\"> </span>--json<span class=\"w\"> </span>github:nammayatri/nammayatri<span class=\"w\"> </span><span class=\"p\">|</span><span class=\"w\"> </span>jq<span class=\"w\"> </span>-c<span class=\"w\"> </span><span class=\"s1\">'paths | select(.[-1] == \"shared-kernel\")'</span>\n<span class=\"o\">[</span><span class=\"s2\">\"locks\"</span>,<span class=\"s2\">\"nodes\"</span>,<span class=\"s2\">\"beckn-gateway\"</span>,<span class=\"s2\">\"inputs\"</span>,<span class=\"s2\">\"shared-kernel\"</span><span class=\"o\">]</span>\n<span class=\"o\">[</span><span class=\"s2\">\"locks\"</span>,<span class=\"s2\">\"nodes\"</span>,<span class=\"s2\">\"namma-dsl\"</span>,<span class=\"s2\">\"inputs\"</span>,<span class=\"s2\">\"shared-kernel\"</span><span class=\"o\">]</span>\n<span class=\"o\">[</span><span class=\"s2\">\"locks\"</span>,<span class=\"s2\">\"nodes\"</span>,<span class=\"s2\">\"root\"</span>,<span class=\"s2\">\"inputs\"</span>,<span class=\"s2\">\"shared-kernel\"</span><span class=\"o\">]</span>\n<span class=\"o\">[</span><span class=\"s2\">\"locks\"</span>,<span class=\"s2\">\"nodes\"</span>,<span class=\"s2\">\"shared-kernel\"</span><span class=\"o\">]</span>\n</code></pre></div>",
+        "id": 411781061,
+        "sender_full_name": "Srid",
+        "timestamp": 1704733966
+    },
+    {
+        "content": "<p>That shouldn’t be hard to solve, I will have a look tomorrow</p>",
+        "id": 411782003,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704734163
+    },
+    {
+        "content": "<p>You could wrap all of this in a <code>pkgs.writeShellApplication</code> and make it a flake-app runnable as, for instance, <code>nix run github:shivaraj-bh/search-flake-inputs github:nammayatri/nammayatri shared-kernel</code></p>",
+        "id": 411782731,
+        "sender_full_name": "Srid",
+        "timestamp": 1704734308
+    },
+    {
+        "content": "<p>Probably an overkill, unless it is going to do more / act general.</p>",
+        "id": 411782937,
+        "sender_full_name": "Srid",
+        "timestamp": 1704734356
+    },
+    {
+        "content": "<p>I will probably come up with a more prettified output for this along with displaying a correspond short rev for the node in question, then making a flake-app around it would make sense</p>",
+        "id": 411786359,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704735171
+    },
+    {
+        "content": "<p>Stretch goal: can it also search flake <em>output</em> tree?</p>",
+        "id": 411786474,
+        "sender_full_name": "Srid",
+        "timestamp": 1704735210
+    },
+    {
+        "content": "<p><a href=\"https://github.com/shivaraj-bh/search-flake-inputs\">https://github.com/shivaraj-bh/search-flake-inputs</a></p>\n<p><a href=\"/user_uploads/60244/H6QpQAQrmtkxcHtj83FhU_GE/Screenshot-2024-01-15-at-7.58.02PM.png\">Screenshot-2024-01-15-at-7.58.02PM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/H6QpQAQrmtkxcHtj83FhU_GE/Screenshot-2024-01-15-at-7.58.02PM.png\" title=\"Screenshot-2024-01-15-at-7.58.02PM.png\"><img src=\"/user_uploads/60244/H6QpQAQrmtkxcHtj83FhU_GE/Screenshot-2024-01-15-at-7.58.02PM.png\"></a></div>",
+        "id": 412968894,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1705328941
+    },
+    {
+        "content": "<p>announce it!</p>",
+        "id": 413083649,
+        "sender_full_name": "Srid",
+        "timestamp": 1705383158
+    },
+    {
+        "content": "<p>this is really useful. thanks</p>",
+        "id": 419927886,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1707167076
+    },
+    {
+        "content": "<p>I was planning to announce it but was wondering if I could make a general purpose search application in rust. It will be able to search outputs, inputs and can be made extensible to search much more.</p>",
+        "id": 419970206,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1707191119
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"671017\">tgunnoe</span> <a href=\"#narrow/stream/413950-nix/topic/Recursively.20search.20through.20flake.20inputs/near/419927886\">said</a>:</p>\n<blockquote>\n<p>this is really useful. thanks</p>\n</blockquote>\n<p>Maybe I should announce it at its current state and then later launch a successor that will deprecate this.</p>",
+        "id": 419970331,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1707191198
+    }
+]

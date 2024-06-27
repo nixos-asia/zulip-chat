@@ -1,0 +1,92 @@
+<html>
+<head><meta charset="utf-8"><title>Expressions in flake inputs · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html">Expressions in flake inputs</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="427917042"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/427917042" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#427917042">(Mar 20 2024 at 12:34)</a>:</h4>
+<p>Yes, this is a known limitation: <a href="https://github.com/NixOS/nix/issues/5663">https://github.com/NixOS/nix/issues/5663</a></p>
+<p>What kind of expressions are planning to use <span class="user-mention" data-user-id="702616">@Tamil Selvan</span> ?</p>
+
+
+
+<a name="428236360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/428236360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tamil Selvan <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#428236360">(Mar 21 2024 at 23:47)</a>:</h4>
+<p>(deleted)</p>
+
+
+
+<a name="428236471"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/428236471" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tamil Selvan <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#428236471">(Mar 21 2024 at 23:48)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Expressions.20in.20flake.20inputs/near/427917042">said</a>:</p>
+<blockquote>
+<p>Yes, this is a known limitation: <a href="https://github.com/NixOS/nix/issues/5663">https://github.com/NixOS/nix/issues/5663</a></p>
+<p>What kind of expressions are planning to use <span class="user-mention silent" data-user-id="702616">Tamil Selvan</span> ?</p>
+</blockquote>
+<p>I was trying to tinker around refactoring the flake.<br>
+<span class="user-mention" data-user-id="667408">@Srid</span>  as you may know we were referring to a local repo in the flake inputs during our discussion<br>
+I tried to move the local repo's path to a different file and refer it from there</p>
+<div class="codehilite"><pre><span></span><code>inputs = {
+       repo.url = &quot;path:&quot; + builtins.readFile &quot;&lt;file path that contains the local repo&#39;s absolute path&gt;&quot;;
+}
+</code></pre></div>
+
+
+
+<a name="428236523"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/428236523" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#428236523">(Mar 21 2024 at 23:49)</a>:</h4>
+<p>Why does <code>repo</code> here need to be dynamically specified? Is there a use-case you are trying to solve here? If the above is Y, <a href="https://xyproblem.info/">what is X</a>?</p>
+
+
+
+<a name="429289530"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/429289530" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tamil Selvan <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#429289530">(Mar 25 2024 at 05:21)</a>:</h4>
+<p>(deleted)</p>
+
+
+
+<a name="429289646"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/429289646" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tamil Selvan <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#429289646">(Mar 25 2024 at 05:22)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Expressions.20in.20flake.20inputs/near/428236523">said</a>:</p>
+<blockquote>
+<p>Why does <code>repo</code> here need to be dynamically specified? Is there a use-case you are trying to solve here? If the above is Y, <a href="https://xyproblem.info/">what is X</a>?</p>
+</blockquote>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> that was because I thought of keeping the flake file fixed and let people make changes i.e. add their own local repo path in a separate file rather than making changes in flake.</p>
+
+
+
+<a name="429360778"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/429360778" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#429360778">(Mar 25 2024 at 11:30)</a>:</h4>
+<p>Why do you want people to be making changes to a separate file rather than on <code>flake.nix</code> itself? Just trying to understand the motivation here -- why not just have them edit the <code>flake.nix</code> file?</p>
+
+
+
+<a name="429543689"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/429543689" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tamil Selvan <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#429543689">(Mar 26 2024 at 02:32)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/Expressions.20in.20flake.20inputs/near/429360778">said</a>:</p>
+<blockquote>
+<p>Why do you want people to be making changes to a separate file rather than on <code>flake.nix</code> itself? Just trying to understand the motivation here -- why not just have them edit the <code>flake.nix</code> file?</p>
+</blockquote>
+<p>We can do that too. I was just trying to get to a one click dev environment setup where users don't have to edit the flake to get the setup running as majority of the folks in our team have not been introduced to nix yet. <br>
+What you are telling makes sense tho. Let people get their hands dirty in nix this way.</p>
+
+
+
+<a name="429698535"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Expressions%20in%20flake%20inputs/near/429698535" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Expressions.20in.20flake.20inputs.html#429698535">(Mar 26 2024 at 16:51)</a>:</h4>
+<blockquote>
+<p>Let people get their hands dirty in nix this way.</p>
+</blockquote>
+<p>For now, this is a wise approach. </p>
+<p>But down the like, I do like to create something with improved DX (on top of flakes/flake-parts).</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<head><meta charset="utf-8"><title>Unable to select text in the tui · process-compose-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/index.html">process-compose-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/Unable.20to.20select.20text.20in.20the.20tui.html">Unable to select text in the tui</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="406595030"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/Unable%20to%20select%20text%20in%20the%20tui/near/406595030" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/Unable.20to.20select.20text.20in.20the.20tui.html#406595030">(Dec 07 2023 at 18:04)</a>:</h4>
+<p>Is this something within this implementation, or something upstream? Even after going into select mode using Ctrl+S, you can highlight the text but no normal copy operations will save to the clipboard. in any other tui, I can copy things to the clipboard</p>
+
+
+
+<a name="406595604"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/Unable%20to%20select%20text%20in%20the%20tui/near/406595604" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/Unable.20to.20select.20text.20in.20the.20tui.html#406595604">(Dec 07 2023 at 18:08)</a>:</h4>
+<p>It has to be an upstream issue. We just shell out to <code>process-compose</code> command, passing it the arguments passed by the user:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>srid<span class="w"> </span>on<span class="w"> </span>appreciate<span class="w"> </span>process-compose-flake/example<span class="w"> </span>on<span class="w"> </span><span class="w"> </span>main<span class="w"> </span>via<span class="w"> </span>❄️<span class="w">  </span>impure<span class="w"> </span><span class="o">(</span>nix-shell-env<span class="o">)</span>
+❯<span class="w"> </span>cat<span class="w"> </span><span class="k">$(</span>nix<span class="w"> </span>build<span class="w"> </span>--print-out-paths<span class="k">)</span>/bin/*
+<span class="c1">#!/nix/store/rz0xwswp80pjyn8sf2vz3xlv67sfiyns-bash-5.2-p15/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-o<span class="w"> </span>errexit
+<span class="nb">set</span><span class="w"> </span>-o<span class="w"> </span>nounset
+<span class="nb">set</span><span class="w"> </span>-o<span class="w"> </span>pipefail
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"/nix/store/srqqppq5zbn41dlpb87si0rw947d00w2-process-compose-0.60.0/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">PC_CONFIG_FILES</span><span class="o">=</span>/nix/store/8j1rnipbcmcyqg6md3mdizx6i4qwagdl-default.yaml
+
+<span class="nb">exec</span><span class="w"> </span>process-compose<span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</code></pre></div>
+
+
+
+<a name="406595924"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/Unable%20to%20select%20text%20in%20the%20tui/near/406595924" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/Unable.20to.20select.20text.20in.20the.20tui.html#406595924">(Dec 07 2023 at 18:10)</a>:</h4>
+<p>Note again, you can use the <code>log_location</code> option to have it write the process output to a log file, which should be straightforward to copy.</p>
+<p><a href="https://github.com/nammayatri/nammayatri/blob/7203bc29d5c2bf30e1e96582af2d3604915a5a97/Backend/nix/run-mobility-stack.nix#L13">https://github.com/nammayatri/nammayatri/blob/7203bc29d5c2bf30e1e96582af2d3604915a5a97/Backend/nix/run-mobility-stack.nix#L13</a></p>
+
+
+
+<a name="406596016"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/Unable%20to%20select%20text%20in%20the%20tui/near/406596016" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tgunnoe <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/Unable.20to.20select.20text.20in.20the.20tui.html#406596016">(Dec 07 2023 at 18:10)</a>:</h4>
+<p>yes, I am using that. thanks</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

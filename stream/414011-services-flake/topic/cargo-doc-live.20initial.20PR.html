@@ -1,0 +1,317 @@
+<html>
+<head><meta charset="utf-8"><title>cargo-doc-live initial PR · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html">cargo-doc-live initial PR</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446489275"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446489275" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446489275">(Jun 23 2024 at 23:59)</a>:</h4>
+<p>I am trying to integrate cargo-doc-live into services-flake,  I added <code>cargo-doc-live</code> for nixci <a href="https://github.com/juspay/services-flake/pull/246/commits/7877ddc635eb45ebe0b71f02bc529065f06b6c5f#diff-206b9ce276ab5971a2489d75eb1b12999d4bf3843b7988cbe8d687cfde61dea0R31-R34">https://github.com/juspay/services-flake/pull/246/commits/7877ddc635eb45ebe0b71f02bc529065f06b6c5f#diff-206b9ce276ab5971a2489d75eb1b12999d4bf3843b7988cbe8d687cfde61dea0R31-R34</a>, it errors out since it's not running the build in the <code>example/cargo-doc-live</code> directory</p>
+<p>the error says:</p>
+<div class="codehilite"><pre><span></span><code>cargo-doc-live-test&gt; + process-compose --no-server -t=false
+cargo-doc-live-test&gt; [cargo-doc-live1-cargo-doc ] error: project root does not exist
+</code></pre></div>
+<p>any way I could run the nixci in the specified directory instead of top directory of <code>services-flake</code>?</p>
+
+
+
+<a name="446491401"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446491401" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446491401">(Jun 24 2024 at 00:26)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> has marked this topic as unresolved.</p>
+
+
+
+<a name="446493416"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446493416" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446493416">(Jun 24 2024 at 00:52)</a>:</h4>
+<p><span class="user-mention" data-user-id="723441">@Hao Liu</span> It should not matter <em>from which directory</em> you run <code>nix build &lt;flake-url&gt;</code> (which is what <code>nixci build</code> does essentially) on, because nix builds are pure anyway.</p>
+
+
+
+<a name="446493576"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446493576" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446493576">(Jun 24 2024 at 00:53)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>error: project root does not exist
+</code></pre></div>
+<p>Where's this error originating from?</p>
+<p>Take a look at how we set project root to the repo root in other places, e.g.: <a href="https://github.com/juspay/services-flake/blob/641937bc0f523405fbac4bb89c074de613dcee4d/dev/flake.nix#L26">https://github.com/juspay/services-flake/blob/641937bc0f523405fbac4bb89c074de613dcee4d/dev/flake.nix#L26</a></p>
+
+
+
+<a name="446493896"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446493896" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446493896">(Jun 24 2024 at 00:54)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> this is how I set the <code>projectRoot</code> in example <a href="https://github.com/juspay/services-flake/pull/246/files#diff-1cb9f37420e339a53fbd8b86243c074e2c4a3c93072a31a5ca73133054a63572R26">https://github.com/juspay/services-flake/pull/246/files#diff-1cb9f37420e339a53fbd8b86243c074e2c4a3c93072a31a5ca73133054a63572R26</a></p>
+
+
+
+<a name="446494015"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446494015" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446494015">(Jun 24 2024 at 00:55)</a>:</h4>
+<p>the error  <code>error: project root does not exist</code> is from cargo-watch when it could find a Rust project to watch on</p>
+
+
+
+<a name="446494275"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446494275" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446494275">(Jun 24 2024 at 00:56)</a>:</h4>
+<p>This is where the flake check is defined: <a href="https://github.com/Platonic-Systems/process-compose-flake/blob/main/nix/process-compose/test.nix">https://github.com/Platonic-Systems/process-compose-flake/blob/main/nix/process-compose/test.nix</a></p>
+
+
+
+<a name="446494292"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446494292" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446494292">(Jun 24 2024 at 00:56)</a>:</h4>
+<p>Looks we need a <code>cd</code> there before running pc</p>
+
+
+
+<a name="446494341"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446494341" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446494341">(Jun 24 2024 at 00:57)</a>:</h4>
+<p>More generally, what if our process-compose <code>test</code> depends on $PWD being set to something? That sounds like a feature request to <a href="https://github.com/Platonic-Systems/process-compose-flake">https://github.com/Platonic-Systems/process-compose-flake</a> repo</p>
+
+
+
+<a name="446494463"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446494463" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446494463">(Jun 24 2024 at 00:58)</a>:</h4>
+<p>you mean instead of hardcoded <code>cd $HOME</code>, introduce an option to enter a different directory like <code>$PWD</code>?</p>
+
+
+
+<a name="446494646"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446494646" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446494646">(Jun 24 2024 at 01:00)</a>:</h4>
+<p>Haven't fully thought about it, but yes maybe something like that.</p>
+
+
+
+<a name="446494672"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446494672" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446494672">(Jun 24 2024 at 01:00)</a>:</h4>
+<p>Or it could be something like <code>preHook</code> option we already have</p>
+
+
+
+<a name="446495870"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446495870" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446495870">(Jun 24 2024 at 01:08)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>preHook = &#39;&#39;
+  cd ${inputs.self}
+&#39;&#39;;
+</code></pre></div>
+<p>won't work due to permission issue, </p>
+<div class="codehilite"><pre><span></span><code>✔ ~/services-flake/example/cargo-doc-live [add-cargo-doc-live|✚ 1…1]
+11:07 $ result/bin/cargo-doc-live
++ process-compose --no-server
+[cargo-doc-live1-cargo-doc  ] [Running &#39;run-cargo-doc&#39;]
+[cargo-doc-live1-cargo-doc  ] error: Permission denied (os error 13) at path &quot;/nix/store/a0vgclrrfn2svimc56k96m0nm0xvlndi-source/example/cargo-doc-live/targetwM02VI&quot;
+</code></pre></div>
+
+
+
+<a name="446496590"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446496590" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446496590">(Jun 24 2024 at 01:11)</a>:</h4>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="ss">preHook</span> <span class="o">=</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">  cp -r </span><span class="si">${</span>inputs<span class="o">.</span>self<span class="si">}</span><span class="s s-Multiline"> $HOME/project</span>
+<span class="s s-Multiline">  cd ~/project</span>
+<span class="s s-Multiline">''</span><span class="p">;</span>
+</code></pre></div>
+
+
+
+<a name="446496934"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446496934" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446496934">(Jun 24 2024 at 01:15)</a>:</h4>
+<p><a href="/user_uploads/60244/GNuFbrTIBwMLFhHwr6GpA9rb/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/GNuFbrTIBwMLFhHwr6GpA9rb/image.png" title="image.png"><img src="/user_uploads/60244/GNuFbrTIBwMLFhHwr6GpA9rb/image.png"></a></div>
+
+
+
+<a name="446497348"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446497348" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446497348">(Jun 24 2024 at 01:20)</a>:</h4>
+<p>Yes, <a href="https://nixos.asia/en/writeShellApplication"><code>writeShellApplication</code></a> uses shellcheck, so the script should conform to it.</p>
+
+
+
+<a name="446497360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446497360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446497360">(Jun 24 2024 at 01:20)</a>:</h4>
+<p>ahh, no wonder :)</p>
+
+
+
+<a name="446497418"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446497418" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446497418">(Jun 24 2024 at 01:21)</a>:</h4>
+<p>the same permission issue after copying to my home dir</p>
+<div class="codehilite"><pre><span></span><code>11:21 $ result/bin/cargo-doc-live
++ process-compose --no-server
+[cargo-doc-live1-cargo-doc  ] [Running &#39;run-cargo-doc&#39;]
+[cargo-doc-live1-cargo-doc  ] error: Permission denied (os error 13) at path &quot;/home/hao/project/targetuijuhb&quot;
+[cargo-doc-live1-cargo-doc  ] Browsersync not running at http://localhost:8009
+</code></pre></div>
+
+
+
+<a name="446497514"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446497514" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446497514">(Jun 24 2024 at 01:22)</a>:</h4>
+<p>should I introduce a <code>chown</code>?</p>
+
+
+
+<a name="446497675"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446497675" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446497675">(Jun 24 2024 at 01:25)</a>:</h4>
+<p>Yes.</p>
+
+
+
+<a name="446498000"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446498000" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446498000">(Jun 24 2024 at 01:29)</a>:</h4>
+<p><code>chown $USER $HOME/project</code> won't work ...</p>
+
+
+
+<a name="446498036"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446498036" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446498036">(Jun 24 2024 at 01:29)</a>:</h4>
+<p>and putting <code>preHook</code> in <code>example/cargo-doc-live/flake.nix</code> doesn't feel right since the user of the service should not bother to know that :D</p>
+
+
+
+<a name="446498685"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446498685" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446498685">(Jun 24 2024 at 01:38)</a>:</h4>
+<p><code>chmod -R a+...</code></p>
+
+
+
+<a name="446498703"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446498703" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446498703">(Jun 24 2024 at 01:38)</a>:</h4>
+<p><a href="https://github.com/srid/haskell-flake/blob/3f76199d42d55e3a36bf8e8e0544e715d6a3f007/nix/modules/project/hls-check.nix#L23-L24">https://github.com/srid/haskell-flake/blob/3f76199d42d55e3a36bf8e8e0544e715d6a3f007/nix/modules/project/hls-check.nix#L23-L24</a></p>
+
+
+
+<a name="446498755"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446498755" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446498755">(Jun 24 2024 at 01:39)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="723441">Hao Liu</span> <a href="#narrow/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR/near/446498036">said</a>:</p>
+<blockquote>
+<p>and putting <code>preHook</code> in <code>example/cargo-doc-live/flake.nix</code> doesn't feel right since the user of the service should not bother to know that :D</p>
+</blockquote>
+<p>I suggest doing this by hand then - i.e., write the flake check yourself, and then we can see how it can be abstracted out.</p>
+
+
+
+<a name="446500938"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446500938" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446500938">(Jun 24 2024 at 02:07)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> copying the project to HOME will stop the realtime update from happening since the user is updating the doc in <code>example/cargo-doc-live</code> while the BrowserSync is watching the folder in HOME</p>
+
+
+
+<a name="446501060"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446501060" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446501060">(Jun 24 2024 at 02:08)</a>:</h4>
+<p>When the flake check is built, where is the user involved?</p>
+
+
+
+<a name="446501131"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446501131" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446501131">(Jun 24 2024 at 02:09)</a>:</h4>
+<p>ahh, indeed, no user will involve at the testing stage</p>
+
+
+
+<a name="446501575"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446501575" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446501575">(Jun 24 2024 at 02:15)</a>:</h4>
+<p><span class="user-mention" data-user-id="723441">@Hao Liu</span> This <code>preHook</code> stuff should be added to the test only, of course.</p>
+
+
+
+<a name="446501684"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446501684" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446501684">(Jun 24 2024 at 02:16)</a>:</h4>
+<p>Which is why I suggested further above as to how this may well be a PR to <code>process-compose-flake</code></p>
+
+
+
+<a name="446501708"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446501708" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446501708">(Jun 24 2024 at 02:17)</a>:</h4>
+<p>But better to add flake check manually, because we don't know yet what the best API design here is.</p>
+
+
+
+<a name="446501730"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446501730" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446501730">(Jun 24 2024 at 02:17)</a>:</h4>
+<p>indeed</p>
+
+
+
+<a name="446502610"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446502610" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446502610">(Jun 24 2024 at 02:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="723441">Hao Liu</span> <a href="#narrow/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR/near/446501730">said</a>:</p>
+<blockquote>
+<p>indeed</p>
+</blockquote>
+<p>You realize, <a href="https://github.com/juspay/services-flake/commit/6de6f59f7773bc7852d9737c49c3b09ea5b11e48">this commit</a> adds the <code>preHook</code> stuff to more than the test, right?</p>
+
+
+
+<a name="446502619"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446502619" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446502619">(Jun 24 2024 at 02:28)</a>:</h4>
+<p>i.e., <code>nix run</code> is impacted too.</p>
+
+
+
+<a name="446502742"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446502742" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446502742">(Jun 24 2024 at 02:30)</a>:</h4>
+<p>yes, should only the <code>checks</code> to be impacted, right?</p>
+
+
+
+<a name="446502778"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446502778" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446502778">(Jun 24 2024 at 02:31)</a>:</h4>
+<p>The whole point is to fix this test failure, is it not? </p>
+<div class="codehilite"><pre><span></span><code>error: project root does not exist
+</code></pre></div>
+<p>This error occurs only in tests, does it not?</p>
+
+
+
+<a name="446502792"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446502792" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446502792">(Jun 24 2024 at 02:31)</a>:</h4>
+<p>yes, it's only there for test</p>
+
+
+
+<a name="446502870"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446502870" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446502870">(Jun 24 2024 at 02:32)</a>:</h4>
+<p>So, do you see how <a href="https://github.com/juspay/services-flake/commit/6de6f59f7773bc7852d9737c49c3b09ea5b11e48">that commit</a> is not doing it only for test?</p>
+
+
+
+<a name="446502895"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446502895" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446502895">(Jun 24 2024 at 02:33)</a>:</h4>
+<p>I reckon I will move this under test package, will read process-compose-flake for how to</p>
+
+
+
+<a name="446503555"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446503555" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446503555">(Jun 24 2024 at 02:43)</a>:</h4>
+<p>I am trying to move it under <code>settings.processes.test</code></p>
+
+
+
+<a name="446503910"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446503910" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446503910">(Jun 24 2024 at 02:46)</a>:</h4>
+<p>(deleted)</p>
+
+
+
+<a name="446513517"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446513517" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446513517">(Jun 24 2024 at 04:10)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> there doesn't seem to be a way to have a <code>preHook</code> specifically for test process</p>
+
+
+
+<a name="446516152"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446516152" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446516152">(Jun 24 2024 at 04:35)</a>:</h4>
+<p>Ya, as I said above.</p>
+
+
+
+<a name="446516277"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/cargo-doc-live%20initial%20PR/near/446516277" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR.html#446516277">(Jun 24 2024 at 04:36)</a>:</h4>
+<p>a feature request to process-compose-flake?</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

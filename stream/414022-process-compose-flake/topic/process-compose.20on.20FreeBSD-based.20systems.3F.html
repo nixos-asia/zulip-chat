@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>process-compose on FreeBSD-based systems? · process-compose-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/index.html">process-compose-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20on.20FreeBSD-based.20systems.3F.html">process-compose on FreeBSD-based systems?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="430953986"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20on%20FreeBSD-based%20systems%3F/near/430953986" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20on.20FreeBSD-based.20systems.3F.html#430953986">(Apr 03 2024 at 09:03)</a>:</h4>
+<p>As mentioned in the NixOS stream, there is now a project trying to get more serious about building something like NixOS on FreeBSD.</p>
+<p>I was wondering, what would it take to run process-compose flakes on FreeBSD via Nix? OPNsense and PFsense would be my targets essentially. </p>
+<p>Does process-compose itself support FreeBSD?</p>
+
+
+
+<a name="430960193"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20on%20FreeBSD-based%20systems%3F/near/430960193" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20on.20FreeBSD-based.20systems.3F.html#430960193">(Apr 03 2024 at 09:32)</a>:</h4>
+<p>Apparently it's a simple go binary without any dependencies... so it should compile on FreeBSD, I guess?</p>
+
+
+
+<a name="431158164"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20on%20FreeBSD-based%20systems%3F/near/431158164" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20on.20FreeBSD-based.20systems.3F.html#431158164">(Apr 03 2024 at 19:13)</a>:</h4>
+<p>I'd think so, yes. It even runs on macOS (doesn't use any platform specific runner)</p>
+
+
+
+<a name="431160855"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20on%20FreeBSD-based%20systems%3F/near/431160855" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20on.20FreeBSD-based.20systems.3F.html#431160855">(Apr 03 2024 at 19:30)</a>:</h4>
+<p>yeah, maybe I should start up a FreeBSD VM and compile it...</p>
+<p>More interesting question perhaps: Can one use Nix with process-compose flake to define services for FreeBSD?</p>
+
+
+
+<a name="431160930"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20on%20FreeBSD-based%20systems%3F/near/431160930" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20on.20FreeBSD-based.20systems.3F.html#431160930">(Apr 03 2024 at 19:30)</a>:</h4>
+<p>because that would be really neat I'd say, if you could extend the functionality of pfsense and opnsense in that way.</p>
+
+
+
+<a name="431162841"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20on%20FreeBSD-based%20systems%3F/near/431162841" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20on.20FreeBSD-based.20systems.3F.html#431162841">(Apr 03 2024 at 19:41)</a>:</h4>
+<p>And as I said here <a href="#narrow/stream/413948-nixos/topic/NixBSD.2C.20it's.20NixOS.20on.20FreeBSD">https://nixos.zulipchat.com/#narrow/stream/413948-nixos/topic/NixBSD.2C.20it's.20NixOS.20on.20FreeBSD</a></p>
+<p>there is now a fork of nixpkgs one might try to use...</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

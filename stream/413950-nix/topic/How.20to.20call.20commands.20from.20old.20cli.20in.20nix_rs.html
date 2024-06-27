@@ -1,0 +1,62 @@
+<html>
+<head><meta charset="utf-8"><title>How to call commands from old cli in nix_rs · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html">How to call commands from old cli in nix_rs</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="436660646"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436660646" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436660646">(May 02 2024 at 10:17)</a>:</h4>
+<p>I would like to call nix-store.</p>
+<p>The full command goes like <code>nix-store -qR —include-outputs &lt;drv&gt;</code>. I am aware that in the new-cli there is a command equivalent to this and it is <code>nix path-info —recursive &lt;drv&gt;</code>, but there is no <code>—include-outputs</code> equivalent. Neither can I iterate over all the drv’s generated using <code>nix path-info —recursive &lt;drv&gt;</code> to get the outPath, see: <a href="https://github.com/NixOS/nix/issues/5895">https://github.com/NixOS/nix/issues/5895</a></p>
+
+
+
+<a name="436671109"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436671109" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436671109">(May 02 2024 at 11:24)</a>:</h4>
+<p>We could also add a <code>pub struct NixStoreCmd</code> to <code>nix-rs</code></p>
+
+
+
+<a name="436673018"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436673018" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436673018">(May 02 2024 at 11:35)</a>:</h4>
+<p>Just now discovering <code>juspay/nix-rs</code>. Does this have all/most of the "bindings" to nix/nix-v3?</p>
+
+
+
+<a name="436673162"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436673162" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436673162">(May 02 2024 at 11:36)</a>:</h4>
+<p>What's nix-v3?</p>
+
+
+
+<a name="436673348"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436673348" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436673348">(May 02 2024 at 11:37)</a>:</h4>
+<p><code>nix-build</code> are the "old" (non-flake) commands while <code>nix build</code> is part of the v3 of Nix's CLI</p>
+
+
+
+<a name="436674318"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436674318" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436674318">(May 02 2024 at 11:43)</a>:</h4>
+<p><code>nix-rs</code> uses new-style Nix commands (what you call v3 Nix's CLI), yes ... but it only has those things we use in other projects (nix-browser, nix-health) right now. We should add the rest as needed, or as people contribute.</p>
+
+
+
+<a name="436674542"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436674542" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436674542">(May 02 2024 at 11:44)</a>:</h4>
+<p>ack, I don't really have much use for a "Rust wrapper" but it sounds like something I might toy with sometime soon :D</p>
+
+
+
+<a name="436747438"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20call%20commands%20from%20old%20cli%20in%20nix_rs/near/436747438" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20call.20commands.20from.20old.20cli.20in.20nix_rs.html#436747438">(May 02 2024 at 17:56)</a>:</h4>
+<p><a href="https://github.com/juspay/nix-rs/pull/6">https://github.com/juspay/nix-rs/pull/6</a></p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

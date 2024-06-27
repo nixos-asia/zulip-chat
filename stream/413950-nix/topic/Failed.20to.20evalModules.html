@@ -1,0 +1,48 @@
+<html>
+<head><meta charset="utf-8"><title>Failed to evalModules · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Failed.20to.20evalModules.html">Failed to evalModules</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="442019242"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Failed%20to%20evalModules/near/442019242" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/413950-nix/topic/Failed.20to.20evalModules.html#442019242">(Jun 02 2024 at 07:45)</a>:</h4>
+<p>I am trying to run <code>lib.evalModules</code> in service-flake, it gives out an error, any idea why that's the case? cheers</p>
+<div class="codehilite"><pre><span></span><code>nix-repl&gt; lib.evalModules { modules = [(import ./nix/lib.nix).multiService ./nix/postgres]; specialArgs = {inherit pkgs;};}
+{
+  _module = «error: module &lt;unknown-file&gt; (:anon-1) does not look like a module.»;
+  _type = &quot;configuration&quot;;
+  class = null;
+  config = «error: module &lt;unknown-file&gt; (:anon-1) does not look like a module.»;
+  extendModules = «lambda extendModules @ /nix/store/l4wskml8vcs49mg6w9la715cx10sviwh-source/lib/modules.nix:303:23»;
+  options = «error: module &lt;unknown-file&gt; (:anon-1) does not look like a module.»;
+  type = { ... };
+}
+</code></pre></div>
+
+
+
+<a name="442019364"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Failed%20to%20evalModules/near/442019364" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hao Liu <a href="http://chat.nixos.asia/stream/413950-nix/topic/Failed.20to.20evalModules.html#442019364">(Jun 02 2024 at 07:46)</a>:</h4>
+<p>it seems the <code>multiService</code> function will take a module and return a module <a href="https://github.com/juspay/services-flake/blob/main/nix/lib.nix#L7">https://github.com/juspay/services-flake/blob/main/nix/lib.nix#L7</a></p>
+
+
+
+<a name="442121020"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Failed%20to%20evalModules/near/442121020" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/Failed.20to.20evalModules.html#442121020">(Jun 03 2024 at 00:12)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="723441">Hao Liu</span> has marked this topic as resolved.</p>
+
+
+
+<a name="442121035"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Failed%20to%20evalModules/near/442121035" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/Failed.20to.20evalModules.html#442121035">(Jun 03 2024 at 00:12)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="723441">Hao Liu</span> has marked this topic as unresolved.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>

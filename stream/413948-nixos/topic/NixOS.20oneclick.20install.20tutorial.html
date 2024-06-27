@@ -1,0 +1,295 @@
+<html>
+<head><meta charset="utf-8"><title>NixOS oneclick install tutorial · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html">NixOS oneclick install tutorial</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="444066472"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444066472" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444066472">(Jun 11 2024 at 18:01)</a>:</h4>
+<p><a href="https://github.com/lvnilesh/nix-one-click">https://github.com/lvnilesh/nix-one-click</a></p>
+<p>is this enough? will it autogenerate the lock file?</p>
+
+
+
+<a name="444067012"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444067012" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444067012">(Jun 11 2024 at 18:04)</a>:</h4>
+<p>You should generate the lock file by running <code>nix flake lock</code>, and commit that to the repo.</p>
+
+
+
+<a name="444067058"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444067058" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444067058">(Jun 11 2024 at 18:04)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>nixpkgs.url = &quot;github:NixOS/nixpkgs/nixos-23.11&quot;;
+</code></pre></div>
+<p>Also, 24.05 was recently released.</p>
+
+
+
+<a name="444067146"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444067146" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444067146">(Jun 11 2024 at 18:05)</a>:</h4>
+<p>Don't forget to add your ssh key to <code>rootAuthorizedKeys</code></p>
+
+
+
+<a name="444067228"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444067228" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444067228">(Jun 11 2024 at 18:05)</a>:</h4>
+<p>Assuming this is for <a href="https://nixos.asia/en/nixos-install-oneclick">https://nixos.asia/en/nixos-install-oneclick</a></p>
+
+
+
+<a name="444068238"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444068238" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444068238">(Jun 11 2024 at 18:10)</a>:</h4>
+<p>I added my pubkey.<br>
+I did not generate lock. I could not generate lock because the git repo is remote. <br>
+Install finished when I used my README in my git repo <a href="https://github.com/lvnilesh/nix-one-click">https://github.com/lvnilesh/nix-one-click</a><br>
+Then the new nix machine wont boot after a power cycle.</p>
+<p>I am now debugging.</p>
+<p>Thanks for your help.</p>
+
+
+
+<a name="444070058"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444070058" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444070058">(Jun 11 2024 at 18:20)</a>:</h4>
+<p><span class="user-mention" data-user-id="728037">@LV Nilesh</span> It is not advisable to ignore generating the lock file. You won't get the reproducibility benefits of NixOS.</p>
+
+
+
+<a name="444070086"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444070086" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444070086">(Jun 11 2024 at 18:20)</a>:</h4>
+<p>Just clone the git repo and add it</p>
+
+
+
+<a name="444075089"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444075089" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444075089">(Jun 11 2024 at 18:48)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="728037">LV Nilesh</span> <a href="#narrow/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial/near/444068238">said</a>:</p>
+<blockquote>
+<p>Then the new nix machine wont boot after a power cycle.</p>
+<p>I am now debugging.</p>
+</blockquote>
+<p>Let me know how that goes. Probably something to do with boot loader configuration. I've tested that flake only on Parallels VM on mac.</p>
+
+
+
+<a name="444078380"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444078380" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444078380">(Jun 11 2024 at 19:07)</a>:</h4>
+<p>can’t clone without git</p>
+
+
+
+<a name="444078573"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444078573" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444078573">(Jun 11 2024 at 19:08)</a>:</h4>
+<p>Newbie does not know how to get git in a USB booted live nix environment</p>
+
+
+
+<a name="444078642"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444078642" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444078642">(Jun 11 2024 at 19:08)</a>:</h4>
+<p><code>nix run nixpkgs#git clone &lt;url&gt;</code></p>
+
+
+
+<a name="444078759"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444078759" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444078759">(Jun 11 2024 at 19:09)</a>:</h4>
+<p>(For more on that nifty <code>nix run</code> command, see <a href="https://nixos.asia/en/nix-first">https://nixos.asia/en/nix-first</a>)</p>
+
+
+
+<a name="444078898"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444078898" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444078898">(Jun 11 2024 at 19:10)</a>:</h4>
+<p><span aria-label="+1" class="emoji emoji-1f44d" role="img" title="+1">:+1:</span></p>
+
+
+
+<a name="444080588"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444080588" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444080588">(Jun 11 2024 at 19:19)</a>:</h4>
+<p>nix --extra-experimental-features "nix-command flakes" run nixpkgs#git clone git@github:lvnilesh/nix-one-click</p>
+<p>Thanks.</p>
+
+
+
+<a name="444081951"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444081951" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444081951">(Jun 11 2024 at 19:26)</a>:</h4>
+<p>nix --extra-experimental-features "nix-command flakes" run nix flake lock <br>
+nix --extra-experimental-features "nix-command flakes" run flake lock <br>
+nix --extra-experimental-features "nix-command flakes" flake lock </p>
+<p>all fail LOL</p>
+
+
+
+<a name="444082153"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444082153" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444082153">(Jun 11 2024 at 19:27)</a>:</h4>
+<p>I cloned git - then CD into it and then don't yet know how to <code>nix flake lock</code></p>
+
+
+
+<a name="444083915"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444083915" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444083915">(Jun 11 2024 at 19:37)</a>:</h4>
+<blockquote>
+<p>all fail LOL</p>
+</blockquote>
+<p>Post the error message. Your 3rd command is correct.</p>
+
+
+
+<a name="444086188"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444086188" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444086188">(Jun 11 2024 at 19:49)</a>:</h4>
+<p>git cloned <a href="https://github.com/lvnilesh/nix-one-click">https://github.com/lvnilesh/nix-one-click</a>  /tmp/nix-one-click<br>
+cd /tmp/nix-one-click<br>
+nix --extra-experimental-features "nix-command flakes" flake lock</p>
+<p>error: while fetching the input git+file://tmp/nix-one-click<br>
+error: getting the HEAD of the git tree /tmp/nix-one-click failed with exit code 1<br>
+error executing git: no such file or directory</p>
+
+
+
+<a name="444089646"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444089646" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444089646">(Jun 11 2024 at 20:09)</a>:</h4>
+<p><a href="/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png" title="image.png"><img src="/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png"></a></div>
+
+
+
+<a name="444089876"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444089876" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444089876">(Jun 11 2024 at 20:11)</a>:</h4>
+<p>this screenshot when I try UEFI</p>
+
+
+
+<a name="444089925"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444089925" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444089925">(Jun 11 2024 at 20:11)</a>:</h4>
+<p>and <br>
+<a href="/user_uploads/60244/A2XLfjR1gSjMEkHelTOP2XHi/image.png">image.png</a><br>
+this screenshot when I try SeaBIOS</p>
+<div class="message_inline_image"><a href="/user_uploads/60244/A2XLfjR1gSjMEkHelTOP2XHi/image.png" title="image.png"><img src="/user_uploads/60244/A2XLfjR1gSjMEkHelTOP2XHi/image.png"></a></div>
+
+
+
+<a name="444093574"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444093574" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444093574">(Jun 11 2024 at 20:24)</a>:</h4>
+<p>Ah, try this.</p>
+<p>First, run <code>nix shell nixpkgs#git</code> to enter a shell with <code>git</code> on PATH.</p>
+<p>Then, you can run <code>nix flake lock</code>, etc. normally.</p>
+
+
+
+<a name="444096472"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444096472" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444096472">(Jun 11 2024 at 20:38)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>nix --extra-experimental-features &quot;nix-command flakes&quot; run nixpkgs#git clone git@github.com:lvnilesh/nix-one-click
+
+cd nix-one-click
+
+nix --extra-experimental-features &quot;nix-command flakes&quot;  shell nixpkgs#git
+nix --extra-experimental-features &quot;nix-command flakes&quot; flake lock
+
+git status
+git add flake.lock
+git commit -am &quot;add flake lock&quot;
+git push
+
+bash README.md
+</code></pre></div>
+<p>power off and reboot from disk and be greeted by <br>
+<a href="/user_uploads/60244/n1nMQdcwLKAeuVpN1ER4o7P8/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/n1nMQdcwLKAeuVpN1ER4o7P8/image.png" title="image.png"><img src="/user_uploads/60244/n1nMQdcwLKAeuVpN1ER4o7P8/image.png"></a></div>
+
+
+
+<a name="444099387"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444099387" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444099387">(Jun 11 2024 at 20:57)</a>:</h4>
+<p>README.md contains</p>
+<div class="codehilite"><pre><span></span><code># Assuming
+# - your system is x86_64-linux
+# - your harddrive device is /dev/sda
+FLAKE=&quot;github:lvnilesh/nix-one-click#nixoneclick&quot;
+DISK_DEVICE=/dev/sda
+sudo nix \
+    --extra-experimental-features &#39;flakes nix-command&#39; \
+    run github:nix-community/disko#disko-install -- \
+    --flake &quot;$FLAKE&quot; \
+    --write-efi-boot-entries \
+    --disk main &quot;$DISK_DEVICE&quot;
+</code></pre></div>
+
+
+
+<a name="444106524"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444106524" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444106524">(Jun 11 2024 at 21:49)</a>:</h4>
+<p>Can you say more about the machine you are installing to?</p>
+
+
+
+<a name="444118646"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444118646" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444118646">(Jun 11 2024 at 23:30)</a>:</h4>
+<p><a href="/user_uploads/60244/avS26MH7GYSJVeLDzIwrmhu8/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/avS26MH7GYSJVeLDzIwrmhu8/image.png" title="image.png"><img src="/user_uploads/60244/avS26MH7GYSJVeLDzIwrmhu8/image.png"></a></div>
+
+
+
+<a name="444120400"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444120400" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444120400">(Jun 11 2024 at 23:50)</a>:</h4>
+<p>Was <code>/dev/sda</code> the right disk ?</p>
+
+
+
+<a name="444127104"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444127104" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444127104">(Jun 12 2024 at 01:11)</a>:</h4>
+<p>yes</p>
+
+
+
+<a name="444136019"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444136019" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444136019">(Jun 12 2024 at 02:51)</a>:</h4>
+<p>Try the graphical installer, and see what configuration.nix it generates. Then adopt that config into your flake:</p>
+<p><a href="https://nixos.asia/en/nixos-install-flake">https://nixos.asia/en/nixos-install-flake</a></p>
+
+
+
+<a name="444139775"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444139775" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LV Nilesh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444139775">(Jun 12 2024 at 03:37)</a>:</h4>
+<p>Did that. It created <a href="https://github.com/lvnilesh/nixos-config/blob/master/configuration.nix">https://github.com/lvnilesh/nixos-config/blob/master/configuration.nix</a></p>
+<p>How would I add that to this <a href="https://github.com/lvnilesh/nix-one-click/blob/master/flake.nix">https://github.com/lvnilesh/nix-one-click/blob/master/flake.nix</a></p>
+
+
+
+<a name="444141176"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444141176" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444141176">(Jun 12 2024 at 03:52)</a>:</h4>
+<p>Add it to <a href="https://github.com/lvnilesh/nix-one-click/blob/d2ae0985386a61add52cb48b6c4a928719b423cd/flake.nix#L20">the <code>modules</code> list</a></p>
+
+
+
+<a name="444141191"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444141191" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444141191">(Jun 12 2024 at 03:52)</a>:</h4>
+<p>Just like how you are importing <code>./disk-config.nix</code></p>
+
+
+
+<a name="444141201"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444141201" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444141201">(Jun 12 2024 at 03:52)</a>:</h4>
+<p>Make sure to <code>git add</code> the new file (Nix won't see it otherwise)</p>
+
+
+
+<a name="444141259"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/444141259" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#444141259">(Jun 12 2024 at 03:53)</a>:</h4>
+<p>Though at this point you can get rid of <code>./disk-config.nix</code>, and the existing boot config from flake.</p>
+
+
+
+<a name="445164540"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20oneclick%20install%20tutorial/near/445164540" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial.html#445164540">(Jun 17 2024 at 15:43)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="728037">LV Nilesh</span> <a href="#narrow/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial/near/444089646">said</a>:</p>
+<blockquote>
+<p><a href="/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png">image.png</a></p>
+</blockquote>
+<p>I recall facing this while setting up a server at Juspay. It is most likely due to Intel VMD being enabled in your BIOS, which would require the proprietary intel drivers to get it working in NixOS. I recommend just disabling it if that’s the case and you can use <code>mdadm</code> for raid configuration instead.</p>
+
+
+
+<hr><p>Last updated: Jun 27 2024 at 18:45 UTC</p>
+</html>
