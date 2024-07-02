@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Srid told mit that you <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> are having some kind of NixOS datacenter project going? Care to tell me more about that?</p>",
+        "id": 448127623,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719760987
+    },
+    {
+        "content": "<p>I have it in mind, yes. But haven’t had the chance to do anything about it unfortunately. I was thinking of providing Hetzner like services here in India. It is especially important considering how expensive AWS, GCP and azure can get and their vendor lock-in strategies (these strategies might be less now, but it does exist). I don’t own racks in any datacenters, but I could either rent a few racks to start with and manage them using NixOS. All this will not matter if I don’t have clients to use this new cloud-service provider in the market. I am hoping a few clients might be ready to use it for their non-critical tasks just because of the lower price. Once the financials add up, could dream bigger and have DCs like Hetzner.</p>",
+        "id": 448156269,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719772902
+    }
+]

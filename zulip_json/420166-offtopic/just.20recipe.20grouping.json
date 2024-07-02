@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p><code>just</code> recipes can now be grouped.</p>\n<ul>\n<li><a href=\"https://github.com/casey/just/pull/1842\">https://github.com/casey/just/pull/1842</a></li>\n<li><a href=\"https://just.systems/man/en/chapter_35.html\">https://just.systems/man/en/chapter_35.html</a></li>\n</ul>\n<p>Requires <a href=\"https://github.com/casey/just/releases/tag/1.27.0\">1.27.0</a> which was released yesterday.</p>",
+        "id": 440732100,
+        "sender_full_name": "Srid",
+        "timestamp": 1716749233
+    },
+    {
+        "content": "<p><a href=\"https://nixos.asia/en/buildRustPackage#override\">https://nixos.asia/en/buildRustPackage#override</a></p>",
+        "id": 440734639,
+        "sender_full_name": "Srid",
+        "timestamp": 1716751973
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png\"></a></div>",
+        "id": 440734675,
+        "sender_full_name": "Srid",
+        "timestamp": 1716752030
+    }
+]
