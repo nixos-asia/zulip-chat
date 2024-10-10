@@ -1,0 +1,64 @@
+<html>
+<head><meta charset="utf-8"><title>Derivation storing service · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html">Derivation storing service</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="475240565"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/475240565" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#475240565">(Oct 07 2024 at 08:22)</a>:</h4>
+<p>I've been thinking about this for a bit, but what if we had a thing to store all versions of a certain derivation and its outputs, while making it possible for people to query them with names and versions? This is not so different from the current nix package management commands with added version storage.</p>
+<p>But what I had in mind was letting people patch these derivations. By default, if you want to install a package X, which depends on package <a href="mailto:Y@3.2">Y@3.2</a>, but you have Y version 3.3 on your system, the tool could trivially pull X, rename it to a different drv path (calculated with the new Y version) and patch it. This would be done for any backwards compatible version upgrade, or hash mismatch for when the versions match</p>
+
+
+
+<a name="475240731"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/475240731" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#475240731">(Oct 07 2024 at 08:23)</a>:</h4>
+<p>This would make the tool useful for casual efficient package management</p>
+
+
+
+<a name="475297297"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/475297297" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#475297297">(Oct 07 2024 at 13:27)</a>:</h4>
+<p>This would be a completely different thing from Cab (built on top of it; very optional) and I'm thinking of calling it the "Cab Package Registry" (cli tool would be aptly named <code>cpr</code>)</p>
+
+
+
+<a name="476205193"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/476205193" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#476205193">(Oct 10 2024 at 19:08)</a>:</h4>
+<p>I think Tim might have some comments on that one as well. I'll let him know so that he gets back to you.</p>
+
+
+
+<a name="476216831"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/476216831" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#476216831">(Oct 10 2024 at 20:15)</a>:</h4>
+<p>I have already spent some months working on just such a format, and I think you may appreciate some of its novelties. So far I already have the publishing code and a convenient URI syntax for addressing them. I can open up the codebase to you if you'd like to take a look. Also happen to maybe introduce the concept in an meeting if you prefer</p>
+
+
+
+<a name="476217190"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/476217190" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#476217190">(Oct 10 2024 at 20:17)</a>:</h4>
+<p>However, I'm not sure if what I am working on is exactly what you are looking for here. What I am working on is a sort of decentralized publishing mechanism for Nix (or Nix like, could easily work with Cab) code that would alleviate the growing burden of fetching an ever growing nixpkgs <em>n</em> times, along with some other nice properties, such as efficient and decentralized querying, and I also have plans for a full version resolution scheme for efficient dependency management</p>
+
+
+
+<a name="476217592"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/476217592" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#476217592">(Oct 10 2024 at 20:20)</a>:</h4>
+<p>We also have a private mattermost instance for discussing the project and some other random stuff as well</p>
+
+
+
+<a name="476218477"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Derivation%20storing%20service/near/476218477" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Derivation.20storing.20service.html#476218477">(Oct 10 2024 at 20:26)</a>:</h4>
+<p>One thing I am particularly proud of is a novel identifcation format which allows us to track a large number of these "atoms" as I call them across repositories without collisions, which will be extremely useful for efficiently caching them and returning results without any evaluation necessary (assuming its been cached).</p>
+<p>Perhaps this will give you a hint:<br>
+<a href="https://github.com/Byron/gitoxide/pull/1610">https://github.com/Byron/gitoxide/pull/1610</a></p>
+
+
+
+<hr><p>Last updated: Oct 10 2024 at 21:45 UTC</p>
+</html>

@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>Doing some research I came across this product:</p>\n<p><a href=\"https://pinokio.computer/\">https://pinokio.computer/</a><br>\n<a href=\"https://github.com/pinokiocomputer/pinokio/releases/tag/1.3.4\">https://github.com/pinokiocomputer/pinokio/releases/tag/1.3.4</a></p>\n<h2><a href=\"https://program.pinokio.computer/#/?id=architecture\">Architecture</a></h2>\n<p>Pinokio takes inspiration from how traditional computers work.</p>\n<p>Just like how a computer can do all kinds of things thanks to its comprehensive architecture, Pinokio as a virtual computer is a comprehensive platform for running and automating anything you can imagine with AI.</p>\n<ol>\n<li><a href=\"https://program.pinokio.computer/#/?id=file-system\">File System</a>: Where and how Pinokio stores files.</li>\n<li><a href=\"https://program.pinokio.computer/#/?id=processor\">Processor</a>: How pinokio runs tasks.</li>\n<li><a href=\"https://program.pinokio.computer/#/?id=memory\">Memory</a>: How pinokio implements a state machine using its built-in native memory.</li>\n<li><a href=\"https://program.pinokio.computer/#/?id=script\">Script</a>: The programming language that operates pinokio.</li>\n<li><a href=\"https://program.pinokio.computer/#/?id=ui\">UI</a>: The UI (user interface) through which users access apps.</li>\n</ol>\n<p>How would I go about packaging this for Nix?</p>",
+        "id": 446979822,
+        "sender_full_name": "Ayrton Mercado",
+        "timestamp": 1719344745
+    },
+    {
+        "content": "<p>yeah I think I found this before. I don't know why I wasn't super interested in it actually. It actually quite interesting <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 446983675,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719345977
+    },
+    {
+        "content": "<p>from what I can see, it comes in the form of an electron app, right?</p>",
+        "id": 446985160,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719346428
+    },
+    {
+        "content": "<p>I think so, but haven't tried installing it, wanted to get your collective opinion</p>",
+        "id": 447013264,
+        "sender_full_name": "Ayrton Mercado",
+        "timestamp": 1719355563
+    },
+    {
+        "content": "<p>It has that nix feeling to it</p>",
+        "id": 447013381,
+        "sender_full_name": "Ayrton Mercado",
+        "timestamp": 1719355622
+    }
+]

@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>I've been thinking about this for a bit, but what if we had a thing to store all versions of a certain derivation and its outputs, while making it possible for people to query them with names and versions? This is not so different from the current nix package management commands with added version storage.</p>\n<p>But what I had in mind was letting people patch these derivations. By default, if you want to install a package X, which depends on package <a href=\"mailto:Y@3.2\">Y@3.2</a>, but you have Y version 3.3 on your system, the tool could trivially pull X, rename it to a different drv path (calculated with the new Y version) and patch it. This would be done for any backwards compatible version upgrade, or hash mismatch for when the versions match</p>",
+        "id": 475240565,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728289341
+    },
+    {
+        "content": "<p>This would make the tool useful for casual efficient package management</p>",
+        "id": 475240731,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728289400
+    },
+    {
+        "content": "<p>This would be a completely different thing from Cab (built on top of it; very optional) and I'm thinking of calling it the \"Cab Package Registry\" (cli tool would be aptly named <code>cpr</code>)</p>",
+        "id": 475297297,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728307631
+    },
+    {
+        "content": "<p>I think Tim might have some comments on that one as well. I'll let him know so that he gets back to you.</p>",
+        "id": 476205193,
+        "sender_full_name": "Andreas",
+        "timestamp": 1728587309
+    },
+    {
+        "content": "<p>I have already spent some months working on just such a format, and I think you may appreciate some of its novelties. So far I already have the publishing code and a convenient URI syntax for addressing them. I can open up the codebase to you if you'd like to take a look. Also happen to maybe introduce the concept in an meeting if you prefer</p>",
+        "id": 476216831,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591326
+    },
+    {
+        "content": "<p>However, I'm not sure if what I am working on is exactly what you are looking for here. What I am working on is a sort of decentralized publishing mechanism for Nix (or Nix like, could easily work with Cab) code that would alleviate the growing burden of fetching an ever growing nixpkgs <em>n</em> times, along with some other nice properties, such as efficient and decentralized querying, and I also have plans for a full version resolution scheme for efficient dependency management</p>",
+        "id": 476217190,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591460
+    },
+    {
+        "content": "<p>We also have a private mattermost instance for discussing the project and some other random stuff as well</p>",
+        "id": 476217592,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591608
+    },
+    {
+        "content": "<p>One thing I am particularly proud of is a novel identifcation format which allows us to track a large number of these \"atoms\" as I call them across repositories without collisions, which will be extremely useful for efficiently caching them and returning results without any evaluation necessary (assuming its been cached).</p>\n<p>Perhaps this will give you a hint:<br>\n<a href=\"https://github.com/Byron/gitoxide/pull/1610\">https://github.com/Byron/gitoxide/pull/1610</a></p>",
+        "id": 476218477,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591982
+    }
+]
