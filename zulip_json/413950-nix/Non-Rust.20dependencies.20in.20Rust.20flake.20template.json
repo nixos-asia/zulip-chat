@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Hey just stumbled about your <a href=\"https://github.com/srid/rust-nix-template\">template for rust projects</a>. i was wondering where i would pass non rust dependencies when i want to run <code>nix build</code>? my project needs <code>openssl</code> and <code>pkg-config</code>.</p>",
+        "id": 418318413,
+        "sender_full_name": "xqtc",
+        "timestamp": 1706289572
+    },
+    {
+        "content": "<p><code>buildInputs</code></p>\n<p><a href=\"https://github.com/search?q=repo%3ANixOS%2Fnixpkgs%20buildRustPackage%20buildInputs&amp;type=code\">examples</a></p>",
+        "id": 418318895,
+        "sender_full_name": "Srid",
+        "timestamp": 1706289730
+    },
+    {
+        "content": "<p>Already tried that. Build still fails, saying it can't find <code>pkgconfig</code>. Here's how i defined it:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>          <span class=\"c1\"># Rust package</span>\n          packages<span class=\"o\">.</span><span class=\"ss\">default</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>rustPlatform<span class=\"o\">.</span>buildRustPackage <span class=\"p\">{</span>\n            <span class=\"k\">inherit</span> <span class=\"p\">(</span>cargoToml<span class=\"o\">.</span>package<span class=\"p\">)</span> name version<span class=\"p\">;</span>\n            <span class=\"ss\">buildInputs</span> <span class=\"o\">=</span> <span class=\"p\">[</span>\n              pkgs<span class=\"o\">.</span>pkg-config\n              pkgs<span class=\"o\">.</span>openssl\n            <span class=\"p\">];</span>\n            <span class=\"ss\">src</span> <span class=\"o\">=</span> <span class=\"l\">./.</span><span class=\"p\">;</span>\n            cargoLock<span class=\"o\">.</span><span class=\"ss\">lockFile</span> <span class=\"o\">=</span> <span class=\"l\">./Cargo.lock</span><span class=\"p\">;</span>\n          <span class=\"p\">};</span>\n</code></pre></div>",
+        "id": 418320215,
+        "sender_full_name": "xqtc",
+        "timestamp": 1706290209
+    },
+    {
+        "content": "<p>I believe you are looking for nativeBuildInputs</p>",
+        "id": 418380067,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1706323713
+    }
+]

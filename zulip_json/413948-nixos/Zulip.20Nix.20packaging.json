@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Welcome <span class=\"user-mention\" data-user-id=\"670182\">@Stephen</span> </p>\n<p>In regards to nixifying Zulip, it looks like <a href=\"https://chat.zulip.org/#narrow/stream/137-feedback/topic/Zulip.20is.20awkward.20to.20host/near/1639675\">this comment</a> suggests that the upstream project (Zulip software) will need to clean up a bunch of things first,</p>\n<blockquote>\n<p>Zulip was originally designed to take over the entire system, and the path to correcting that mistake has been very slow. [..] I believe the process of porting Zulip to Nix will force us to clean this all up, but it’s going to take a while.</p>\n</blockquote>\n<p>(This was posted about 2 months ago)</p>",
+        "id": 404122250,
+        "sender_full_name": "Srid",
+        "timestamp": 1700927994
+    },
+    {
+        "content": "<p>So I believe it will be a while before we get a Zulip module in NixOS</p>",
+        "id": 404122376,
+        "sender_full_name": "Srid",
+        "timestamp": 1700928064
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413948-nixos/topic/Zulip.20Nix.20packaging/near/404122250\">said</a>:</p>\n<blockquote>\n<p>Welcome <span class=\"user-mention silent\" data-user-id=\"670182\">Stephen</span> </p>\n<p>In regards to nixifying Zulip, it looks <a href=\"https://chat.zulip.org/#narrow/stream/137-feedback/topic/Zulip.20is.20awkward.20to.20host/near/1639675\">this comment</a> suggests that the upstream will need to clean up a bunch of things first,</p>\n<blockquote>\n<p>Zulip was originally designed to take over the entire system, and the path to correcting that mistake has been very slow. [..] I believe the process of porting Zulip to Nix will force us to clean this all up, but it’s going to take a while.</p>\n</blockquote>\n<p>(This was posted about 2 months ago)</p>\n</blockquote>\n<p>At least it seems like it is on roadmap! Thank you <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span>. I am loving Nix haha.</p>",
+        "id": 404122381,
+        "sender_full_name": "Stephen",
+        "timestamp": 1700928065
+    }
+]
