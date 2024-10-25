@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<h1>Converting Islands To Derivations</h1>\n<p>Fetching entire source trees using islands will be very inefficient. Say when we're doing:</p>\n<div class=\"codehilite\"><pre><span></span><code>packages.cargoBuild {\n  source = &lt;github:cull-os/cab&gt;,\n}\n</code></pre></div>\n<p>The build derivation will depend on the source derivation. But we don't have a derivation, we only have an island.</p>\n<p>Then what will we do? We will have to fetch it all and reupload it to our realizer, as a derivation (via toDerivation).</p>\n<p>This could be fixed with fixed output derivations, but specifying hashes manually is cumbersome.</p>\n<p>Instead of that, the implementation of <code>toDerivation island</code> will output a super tiny program (ideally written in Zig with -Osmall) that fetches the island and places the contents in a fixed output derivation.</p>\n<p>There is one minor issue. There is no way to do <code>cab build --update</code> without instructing the realizer to re-run the fetcher program with the found hash instead of expected one. This will be terrible for huge downloads.</p>\n<p>The fix is to have \"self-fixing\" derivations where the derivation will set its own fixed hash itself. Then we can have our \"updating\" program set its fixed hash and exit.</p>\n<p>This will be done with a fifo in the programs working directory where it will write the final hash right before exiting.</p>",
+        "id": 478760391,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729788874
+    }
+]
