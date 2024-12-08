@@ -1,0 +1,39 @@
+<html>
+<head><meta charset="utf-8"><title>✔ Using non-haskell dependencies · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html">✔ Using non-haskell dependencies</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="484907946"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484907946" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484907946">(Nov 28 2024 at 12:15)</a>:</h4>
+<p>Haven’t used pkgconfig-depends before, doesn’t using extra-libraries work?</p>
+
+
+
+<a name="484908483"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484908483" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484908483">(Nov 28 2024 at 12:19)</a>:</h4>
+<p>here’s an example cabal and nix configuration respectively, might be helpful:<br>
+<a href="https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/hs-exp-client/hs-exp-client.cabal#L114-L115">https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/hs-exp-client/hs-exp-client.cabal#L114-L115</a><br>
+<a href="https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/default.nix#L8">https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/default.nix#L8</a></p>
+
+
+
+<a name="484910479"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484910479" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Perigord <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484910479">(Nov 28 2024 at 12:30)</a>:</h4>
+<p>yeah  just adding<code>libavcodec.custom = _: pkgs.ffmpeg.lib;</code> to <code>settings</code> worked</p>
+
+
+
+<a name="484910493"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484910493" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484910493">(Nov 28 2024 at 12:30)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="783564">Perigord</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Dec 08 2024 at 22:34 UTC</p>
+</html>

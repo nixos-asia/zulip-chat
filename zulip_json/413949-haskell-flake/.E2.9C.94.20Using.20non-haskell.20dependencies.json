@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Haven’t used pkgconfig-depends before, doesn’t using extra-libraries work?</p>",
+        "id": 484907946,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1732796158
+    },
+    {
+        "content": "<p>here’s an example cabal and nix configuration respectively, might be helpful:<br>\n<a href=\"https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/hs-exp-client/hs-exp-client.cabal#L114-L115\">https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/hs-exp-client/hs-exp-client.cabal#L114-L115</a><br>\n<a href=\"https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/default.nix#L8\">https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/default.nix#L8</a></p>",
+        "id": 484908483,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1732796346
+    },
+    {
+        "content": "<p>yeah  just adding<code>libavcodec.custom = _: pkgs.ffmpeg.lib;</code> to <code>settings</code> worked</p>",
+        "id": 484910479,
+        "sender_full_name": "Perigord",
+        "timestamp": 1732797013
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"783564\">Perigord</span> has marked this topic as resolved.</p>",
+        "id": 484910493,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1732797018
+    }
+]
