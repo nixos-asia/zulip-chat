@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p><a href=\"/user_uploads/60244/fUlea3Axidr0RbTc16q6n23z/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/fUlea3Axidr0RbTc16q6n23z/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/fUlea3Axidr0RbTc16q6n23z/image.png\"></a></div><p><span class=\"user-mention\" data-user-id=\"671300\">@Aravind Gopal</span> You were talking about this -- telling the user to display a nix-friendly message when they try to run something that's not already (thus not encouraging them towards of homebrew and the like).</p>\n<p>Let me find the config I have for this.</p>",
+        "id": 416719213,
+        "sender_full_name": "Srid",
+        "timestamp": 1705647592
+    },
+    {
+        "content": "<p>This uses a program called <code>nix-index</code>, which uses old-style commands unfortunately: <a href=\"https://github.com/nix-community/nix-index/issues/191\">https://github.com/nix-community/nix-index/issues/191</a></p>",
+        "id": 416719331,
+        "sender_full_name": "Srid",
+        "timestamp": 1705647641
+    },
+    {
+        "content": "<p>^ Potential OSS contribution here</p>",
+        "id": 416719451,
+        "sender_full_name": "Srid",
+        "timestamp": 1705647720
+    },
+    {
+        "content": "<p>Here's the home-manager config for enabling this:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>  <span class=\"ss\">programs</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">nix-index</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n      <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n      <span class=\"ss\">enableZshIntegration</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n    <span class=\"p\">};</span>\n  <span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 416719579,
+        "sender_full_name": "Srid",
+        "timestamp": 1705647785
+    },
+    {
+        "content": "<p><a href=\"https://github.com/juspay/nix-dev-home/commit/4f4ab11b5f76c054289969d3927e6bbc31e2d981\">https://github.com/juspay/nix-dev-home/commit/4f4ab11b5f76c054289969d3927e6bbc31e2d981</a></p>",
+        "id": 416719761,
+        "sender_full_name": "Srid",
+        "timestamp": 1705647889
+    },
+    {
+        "content": "<p>Oh, nix-index does use new style commands but only if <code>~/.nix-profile/manifest.json</code> exists:</p>\n<p><a href=\"https://github.com/nix-community/nix-index/commit/cd7cdcb06f3552fc55cf0cded66de90461006c00\">https://github.com/nix-community/nix-index/commit/cd7cdcb06f3552fc55cf0cded66de90461006c00</a></p>",
+        "id": 416719968,
+        "sender_full_name": "Srid",
+        "timestamp": 1705647995
+    },
+    {
+        "content": "<p>I did <code>nix profile install nixpkgs#hello</code> just to populate this manifest, and now it shows the right thing:</p>\n<p><a href=\"/user_uploads/60244/aKjxWo0ZGVck8b7ELbQx1WqY/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/aKjxWo0ZGVck8b7ELbQx1WqY/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/aKjxWo0ZGVck8b7ELbQx1WqY/image.png\"></a></div>",
+        "id": 416720171,
+        "sender_full_name": "Srid",
+        "timestamp": 1705648101
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>$ cat .nix-profile/manifest.json\n{&quot;elements&quot;:[],&quot;version&quot;:2}\n</code></pre></div>",
+        "id": 416720707,
+        "sender_full_name": "Srid",
+        "timestamp": 1705648368
+    },
+    {
+        "content": "<p>This is a good tool to motivate users towards full nix.</p>",
+        "id": 416730211,
+        "sender_full_name": "Aravind Gopal",
+        "timestamp": 1705653105
+    },
+    {
+        "content": "<p>One glitch. The installation is not seamless. You need to generate the index manually the first time,</p>\n<p><a href=\"/user_uploads/60244/gqkOc9u_PuTou8P485u-uW7l/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/gqkOc9u_PuTou8P485u-uW7l/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/gqkOc9u_PuTou8P485u-uW7l/image.png\"></a></div>",
+        "id": 416731700,
+        "sender_full_name": "Srid",
+        "timestamp": 1705653765
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"671300\">@Aravind Gopal</span> We've automated the nix-index DB generation part,</p>\n<p><a href=\"https://github.com/juspay/nix-dev-home/pull/14\">https://github.com/juspay/nix-dev-home/pull/14</a></p>",
+        "id": 420778862,
+        "sender_full_name": "Srid",
+        "timestamp": 1707549982
+    }
+]
