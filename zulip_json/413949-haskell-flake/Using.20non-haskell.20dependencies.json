@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p><code>sandbox.cabal</code></p>\n<div class=\"codehilite\" data-code-language=\"cabal\"><pre><span></span><code>pkgconfig-depends: libavcodec\n</code></pre></div>\n<p><code>Main.hs</code></p>\n<div class=\"codehilite\" data-code-language=\"Haskell\"><pre><span></span><code><span class=\"nf\">foreign</span><span class=\"w\"> </span><span class=\"kr\">import</span><span class=\"w\"> </span><span class=\"nn\">capi</span><span class=\"w\"> </span><span class=\"s\">\"libavcodec/avcodec.h avcodec_version\"</span>\n<span class=\"w\">  </span><span class=\"n\">c_avcodecVersion</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"kt\">CInt</span>\n</code></pre></div>\n<p>Just wanted to know how I would be able to add C libraries especially using the <code>pkgconfig-depends</code> in cabal.  Currently lost on where to add <code>pkgs.ffmpeg.lib</code> and <code>pkgs.ffmpeg.dev</code>.</p>",
+        "id": 484863718,
+        "sender_full_name": "Perigord",
+        "timestamp": 1732782563
+    }
+]
