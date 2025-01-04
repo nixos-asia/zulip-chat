@@ -1,0 +1,39 @@
+<html>
+<head><meta charset="utf-8"><title>Impure Derivations · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Impure.20Derivations.html">Impure Derivations</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="491768852"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Impure%20Derivations/near/491768852" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nithin <a href="http://chat.nixos.asia/stream/413950-nix/topic/Impure.20Derivations.html#491768852">(Jan 03 2025 at 14:57)</a>:</h4>
+<p>What makes a derivation impure ? Say for example i source the contents of a file from my filesystem and use it inside of my .nix files, is that an impure derivation?</p>
+<p>I'm confused about this, because I'm trying to read my secrets that are decrypted by agenix into /etc/secrets. The agenix github already says this is an anti pattern and must not be used <a href="https://github.com/ryantm/agenix?tab=readme-ov-file#builtinsreadfile-anti-pattern">here</a> , but certain services only have a option that is <br>
+password = ""; (a string) <br>
+and not an equivalent<br>
+passwordFile = "&lt;path&gt;";</p>
+<p>Is the correct way just make a module that implements the option to read the path? ( also need help understanding  how nixos packages are built.) </p>
+<p>or is there a easier way to go about this?</p>
+
+
+
+<a name="491769005"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Impure%20Derivations/near/491769005" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nithin <a href="http://chat.nixos.asia/stream/413950-nix/topic/Impure.20Derivations.html#491769005">(Jan 03 2025 at 14:59)</a>:</h4>
+<p>So far, <span class="user-mention" data-user-id="667408">@Srid</span> has clarified that anything that is not in my "inputs" are impure, and must not be used in derivations. (ideally, at least)</p>
+
+
+
+<a name="491770777"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Impure%20Derivations/near/491770777" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Impure.20Derivations.html#491770777">(Jan 03 2025 at 15:10)</a>:</h4>
+<p>What is the type of <code>passwordFile</code>? Is it <code>type.path</code> or <code>types.string</code>.</p>
+<p>The later is most suitable here, because the former will have your derivation depend on an absolute path. The use of absolute paths will make it impure because they cannot be part of a derivation's inputs. </p>
+<p>Just like how a pure function can only depend on its inputs and not global variables.</p>
+
+
+
+<hr><p>Last updated: Jan 04 2025 at 05:45 UTC</p>
+</html>

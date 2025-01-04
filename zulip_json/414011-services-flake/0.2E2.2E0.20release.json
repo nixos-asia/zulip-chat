@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>I think it’s a good time to go for 0.2: <a href=\"https://github.com/juspay/services-flake/blob/main/CHANGELOG.md\">https://github.com/juspay/services-flake/blob/main/CHANGELOG.md</a></p>\n<p>This release has also seen contributions from external contributors, it would be nice to tag the user beside the feat/fix (not sure if that’s possible with commitizen).</p>\n<p>Also there is another open question: how would I go about linking the PRs in the CHANGELOG automatically; wherever there is (#&lt;pr-number&gt;)?</p>",
+        "id": 435830157,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714282052
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/414011-services-flake/topic/0.2E2.2E0.20release/near/435830157\">said</a>:</p>\n<blockquote>\n<p>Also there is another open question: how would I go about linking the PRs in the CHANGELOG automatically; wherever there is (#&lt;pr-number&gt;)?</p>\n</blockquote>\n<p><a href=\"https://github.com/commitizen-tools/commitizen/issues/396\">https://github.com/commitizen-tools/commitizen/issues/396</a> ?</p>",
+        "id": 435830576,
+        "sender_full_name": "Srid",
+        "timestamp": 1714282162
+    },
+    {
+        "content": "<p>Don't forget to make a release tag (through GitHub release). </p>\n<p>You can mention those users in when you create a GitHub release here: <a href=\"https://github.com/juspay/services-flake/releases\">https://github.com/juspay/services-flake/releases</a> though it'd be a manual process. Maybe there's a feature request for it already in commitizen.</p>\n<p>(FTR, I've been using convco in other repos)</p>",
+        "id": 435830837,
+        "sender_full_name": "Srid",
+        "timestamp": 1714282223
+    },
+    {
+        "content": "<p>I did try convco, I wasn’t able to get the “just changelog” command auto-generate unreleased changes starting from previous release. It worked nicely with commitizen</p>",
+        "id": 435833680,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714282960
+    }
+]
