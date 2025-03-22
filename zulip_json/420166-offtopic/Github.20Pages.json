@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>Small tip. You don't need the <code>gh-pages</code> branch anymore. CI automates the deployment directly. </p>\n<p>Demo: <a href=\"https://github.com/srid/emanote-template/pull/81/files\">https://github.com/srid/emanote-template/pull/81/files</a></p>",
+        "id": 425770762,
+        "sender_full_name": "Srid",
+        "timestamp": 1710074914
+    }
+]
