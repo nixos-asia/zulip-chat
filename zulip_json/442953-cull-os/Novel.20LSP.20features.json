@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>You know how it's really cumbersome to provide patch files for derivations in nixpkgs? I thought I could do something with islands where when in the LSP, the action menu (of the island) has the option \"Patch island\" which preemptively clones it (or maybe lazily clones it, anything is possible with FUSE) and sends you to that directory. And when you save your changes in there and open the action menu (while on the files in the island) and select \"Save patches\", it edits your code so that it turns into:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>patch <span class=\"o\">&lt;</span><span class=\"l\">github:cull-os/cab</span><span class=\"o\">&gt;</span> <span class=\"l\">./promptedname.patch</span>\n</code></pre></div>",
+        "id": 479328304,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730136923
+    },
+    {
+        "content": "<p>I think this would be <em>really</em> neat for quick patching of software</p>",
+        "id": 479328569,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730137007
+    },
+    {
+        "content": "<p>And when you bump a git island and try to edit it, it would query saved edits' remotes to see if it could just pull instead of cloning the whole thing again.</p>",
+        "id": 479328773,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730137097
+    }
+]
