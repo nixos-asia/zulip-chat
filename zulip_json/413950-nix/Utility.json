@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/3timeslazy/nix-search-tv\"><code>3timeslazy/nix-search-tv</code></a> is a very nice CLI-based tool for searching <code>nixpkgs</code>, <code>nixos-options</code>, <code>home-manager</code> options, and more.</p>\n<p>I’ve grabbed their <code>nixpkgs.sh</code> script — if anyone wants to try it:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>run<span class=\"w\"> </span>github:niksingh710/nsearch#nsearch-adv\n</code></pre></div>",
+        "id": 528466820,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1752334666
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"871998\">@Nikhil Singh</span> Create a small video demo (&lt;1 min), and we'll post it to <a href=\"https://x.com/nixos_asia\">https://x.com/nixos_asia</a></p>",
+        "id": 528566009,
+        "sender_full_name": "Srid",
+        "timestamp": 1752450277
+    }
+]
