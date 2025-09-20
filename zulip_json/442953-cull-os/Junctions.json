@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"err\">\\</span><span class=\"ss\">xs</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">,</span> <span class=\"mi\">2</span><span class=\"p\">,</span> <span class=\"mi\">3</span><span class=\"p\">];</span>\n\n<span class=\"c1\"># 1 | 2 | 3</span>\n<span class=\"err\">\\</span><span class=\"ss\">anyXs</span> <span class=\"o\">=</span> foldLeft <span class=\"p\">(</span><span class=\"err\">|</span><span class=\"p\">)</span> <span class=\"p\">(</span>head xs<span class=\"p\">)</span> <span class=\"p\">(</span>tail xs<span class=\"p\">);</span>\n\n<span class=\"c1\"># 1 &amp; 2 &amp; 3</span>\n<span class=\"err\">\\</span><span class=\"ss\">allXs</span> <span class=\"o\">=</span> foldLeft <span class=\"p\">(</span><span class=\"err\">&amp;</span><span class=\"p\">)</span> <span class=\"p\">(</span>head xs<span class=\"p\">)</span> <span class=\"p\">(</span>tail xs<span class=\"p\">);</span>\n\n<span class=\"c1\"># Applies it to each element.</span>\n<span class=\"c1\">#   false | true | false</span>\n<span class=\"c1\"># becomes true.</span>\n<span class=\"err\">\\</span><span class=\"ss\">anyEven</span> <span class=\"o\">=</span> allXs <span class=\"err\">%</span> <span class=\"mi\">2</span> <span class=\"o\">==</span> <span class=\"mi\">1</span><span class=\"p\">;</span>\n\n<span class=\"c1\"># Same for anyEven.</span>\n</code></pre></div>\n<p>Where this is actually useful it type checking:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"err\">\\</span><span class=\"ss\">juncType</span> <span class=\"o\">=</span> string <span class=\"err\">|</span> number<span class=\"p\">;</span>\n\n<span class=\"c1\"># `string` is just an attribute set.</span>\n<span class=\"c1\"># So is `numbee`, and `check` is a child of both.</span>\n<span class=\"c1\"># So we lazily apply each one and when we reach the first true, we collapse our junction.</span>\n<span class=\"err\">\\</span><span class=\"ss\">isAnyOfTheseTypes</span> <span class=\"o\">=</span> juncType<span class=\"o\">.</span>check <span class=\"mi\">123</span><span class=\"p\">;</span>\n</code></pre></div>",
+        "id": 482787906,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1731778164
+    },
+    {
+        "content": "<p>This exists in Raku and I think it's really cool.</p>",
+        "id": 482787920,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1731778181
+    }
+]
