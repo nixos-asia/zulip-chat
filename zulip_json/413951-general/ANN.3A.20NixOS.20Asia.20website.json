@@ -1,0 +1,104 @@
+[
+    {
+        "content": "<p>Our community now has a website: </p>\n<p><a href=\"https://nixos.asia/en\">https://nixos.asia/en</a></p>\n<p>The plan is to make this act also like a documentation / wiki of some sort over time.</p>",
+        "id": 406803508,
+        "sender_full_name": "Srid",
+        "timestamp": 1702055404
+    },
+    {
+        "content": "<p>I want to help too</p>",
+        "id": 406803612,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055445
+    },
+    {
+        "content": "<p>Welcome <span class=\"user-mention\" data-user-id=\"673288\">@Swastik Baranwal</span> ! Do you use Nix already?</p>",
+        "id": 406803660,
+        "sender_full_name": "Srid",
+        "timestamp": 1702055467
+    },
+    {
+        "content": "<p>I am a nixpkg contributor</p>",
+        "id": 406803732,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055498
+    },
+    {
+        "content": "<p>Ah, nice.</p>",
+        "id": 406803768,
+        "sender_full_name": "Srid",
+        "timestamp": 1702055515
+    },
+    {
+        "content": "<p>So the website is kind of a like a wiki, but based on interlinked atomic notes. There's a lot to write and improve.</p>",
+        "id": 406803884,
+        "sender_full_name": "Srid",
+        "timestamp": 1702055540
+    },
+    {
+        "content": "<p>I am based from Delhi</p>",
+        "id": 406803897,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055547
+    },
+    {
+        "content": "<p><a href=\"https://github.com/Delta456\">https://github.com/Delta456</a></p>",
+        "id": 406803924,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055562
+    },
+    {
+        "content": "<p>What do you use Nix for? We are looking to host meetups in Bangalore starting January.</p>",
+        "id": 406803965,
+        "sender_full_name": "Srid",
+        "timestamp": 1702055575
+    },
+    {
+        "content": "<p>I am just exploring nix and maintain the vlang package</p>",
+        "id": 406804035,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055599
+    },
+    {
+        "content": "<p>what about you?</p>",
+        "id": 406804171,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055656
+    },
+    {
+        "content": "<p>I use Nix, Haskell and Rust: <a href=\"https://github.com/srid\">https://github.com/srid</a></p>\n<p>If there's anything Nix related you'd like explained/ written about on the website, let me know. I'm planning to improve the content to that end.</p>",
+        "id": 406804300,
+        "sender_full_name": "Srid",
+        "timestamp": 1702055707
+    },
+    {
+        "content": "<p>Sure</p>",
+        "id": 406804473,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055766
+    },
+    {
+        "content": "<p>Damn you look really experieneced</p>",
+        "id": 406804733,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702055863
+    },
+    {
+        "content": "<p>Let's just say we used to download Linux distros overnight using dial-up internet and burn them to CD's for sharing with friends. :-) I used be part of Chennai ILUGC group, etc.</p>",
+        "id": 406804961,
+        "sender_full_name": "Srid",
+        "timestamp": 1702055915
+    },
+    {
+        "content": "<p>Truly the OGs</p>",
+        "id": 406805198,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702056000
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413951-general/topic/ANN.3A.20NixOS.20Asia.20website/near/406804961\">said</a>:</p>\n<blockquote>\n<p>Let's just say we used to download Linux distros overnight using dial-up internet and burn them to CD's for sharing with friends. :-) I used be part of Chennai ILUGC group, etc.</p>\n</blockquote>\n<p>I did that too! Though I had no friends.</p>",
+        "id": 408650425,
+        "sender_full_name": "John Bargman",
+        "timestamp": 1702918472
+    }
+]
