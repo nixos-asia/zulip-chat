@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>alright, so I might just map over the list then and get all the items (in my case it's a list of attribue sets and I need the attributes)?</p>",
+        "id": 444704125,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718372752
+    },
+    {
+        "content": "<p>it's just that i know in advance how many items there are going to be, so I didn't think of mapping immediately</p>",
+        "id": 444704244,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718372778
+    },
+    {
+        "content": "<p>okay so there is <code>lib.lists.imap0</code> and <code>lib.lists.imap1</code> and <code>builtins.map</code>... usually I'd just grab the last, but is there a major difference?</p>",
+        "id": 444704651,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718372910
+    },
+    {
+        "content": "<p>Well what's the specific problem? Maybe I can give you a more specific example.</p>\n<p>imap0 iterates a list with an additional index starting at 0, imap1 is same but starting at 1.</p>\n<p>If you don't need an index to keep track of them map is fine, as is always in scope so you can just type <code>map</code> instead of <code>builtins.map</code></p>",
+        "id": 444705176,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1718373066
+    },
+    {
+        "content": "<p>I do think that answers the problem <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 444705430,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718373142
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> has marked this topic as resolved.</p>",
+        "id": 444705457,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1718373150
+    }
+]
