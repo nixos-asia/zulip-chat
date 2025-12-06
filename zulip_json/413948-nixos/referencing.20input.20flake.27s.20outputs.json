@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>Hi all, I've been trying to get a simple setup to work: I have a flake that builds emacs from source and I wanted to use the <code>nix-treesitter</code> flake to equip emacs with treesitter grammars. I cannot seem to find a way to actually link the built grammars to emacs, I tried adding <code>nix-treesitter</code> to  <code>propagatedBuildInputs</code> or linking it manually in a <code>postInstall</code> script but neither worked. Any help is appreciated <span aria-label=\"folded hands\" class=\"emoji emoji-1f64f\" role=\"img\" title=\"folded hands\">:folded_hands:</span></p>",
+        "id": 558903204,
+        "sender_full_name": "Kalin Petkov",
+        "timestamp": 1763912439
+    }
+]
