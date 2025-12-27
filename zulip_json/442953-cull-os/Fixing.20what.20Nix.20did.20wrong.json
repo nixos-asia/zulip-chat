@@ -1,0 +1,104 @@
+[
+    {
+        "content": "<p>(copied from the matrix; this is about fixing flakes being a new concept and destroying the \"everything is a derivation\" concept of Nix; also see this post <a href=\"https://jade.fyi/blog/flakes-arent-real\">https://jade.fyi/blog/flakes-arent-real</a>)</p>\n<p>The way I want to fix this in Cab is overridable expressions.</p>\n<div class=\"codehilite\"><pre><span></span><code>{ a = 1; } ==&gt; a * a\n</code></pre></div>\n<p>assuming this is assigned to <code>b</code>, just evaluating <code>b</code> will get you <code>1</code>. But overriding it like <code>b &lt;== { a = 2; }</code> and then evaluating that expression will get you <code>4</code>. The trick here is that <code>==&gt;</code> is not a function symbol (unlike <code>:</code>, which has the same behavior in Cab as in Nix)</p>\n<p>So you will be able to do things like</p>\n<div class=\"codehilite\"><pre><span></span><code>inputs @ {\n  packages = import &lt;github:cull-os/packages&gt; &lt;== inputs;\n} ==&gt; {\n  packages.bar = packages.buildCrate ./.;\n}\n</code></pre></div>\n<p><code>import</code> will import <code>/${&lt;github:cull-os/cab&gt;}/default.cab</code>, which is another expression like our <a href=\"http://default.cab\">default.cab</a>. Then it will override it, with our inputs. The trick here is that our inputs were already overriden by the Cab CLI, which did <code>&lt;== { buildSystem = ...; targetSystem = ...; }</code> so the build and target systems get passed into CullOS packages. Then we get a neat attribute set packed with packages configured for our target.</p>",
+        "id": 446146257,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718995133
+    },
+    {
+        "content": "<p>I also want to implement the \"standard library\" in Pure Rust, eagerly checking for types of things. This will also make it a part of the language instead of some unrelated repository like nixpkgs. And it will be faster, as a result.</p>",
+        "id": 446146808,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718995339
+    },
+    {
+        "content": "<p>cc <span class=\"user-mention\" data-user-id=\"679505\">@Jonathan Ringer</span></p>",
+        "id": 451226761,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720905053
+    },
+    {
+        "content": "<p>this would work without \"overrideable expressions\" in Nix too. But it would require you to call everything, which is fine I guess</p>",
+        "id": 451226787,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720905102
+    },
+    {
+        "content": "<h1>Don't Do The Mistakes Of Nix</h1>\n<p>Link: &lt;<a href=\"https://md.darmstadt.ccc.de/nix2\">https://md.darmstadt.ccc.de/nix2</a>&gt;</p>\n<p>Notable stuff:</p>\n<ul>\n<li>Don't use <code>?</code> for attribute bind defaults and attribute existence checking at the same time. Very unsure about the syntax for both of these things.</li>\n<li>Support tabs in indented strings, but error out when they are mixed with spaces. We can't know the width of a tab, after all.</li>\n<li>Remove <code>.4</code> float syntax. Make <code>0x.3</code> invalid, too.</li>\n<li>Line endings in strings will get normalized to <code>\\n</code> no matter what. People can do <code>string.replace \"\\n\" \"\\r\\n\"</code> if they desire.</li>\n<li>Make multiline string normalization sane &amp; add HUNDREDS of tests.</li>\n</ul>",
+        "id": 479074990,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729972219
+    },
+    {
+        "content": "<p>it might ne nice, although I'm not sure how feasible, if all functions can have default args, not just functions that take a set</p>",
+        "id": 479079831,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1729977385
+    },
+    {
+        "content": "<p>Hmm, would be interesting. So you're saying</p>\n<p><code>&lt;pat&gt; ? \"default here\"</code> will default to <code>\"default here\"</code> if <code>&lt;pat&gt;</code> fails to match, ensuring the whole pattern always does?</p>",
+        "id": 479121939,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730024284
+    },
+    {
+        "content": "<p>This is actually pretty generic, I like it.</p>",
+        "id": 479121948,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730024293
+    },
+    {
+        "content": "<p>Though, you can't really use this to implement defaulting functions. How would you do <code>first [1, 2, 3]</code> and <code>first 2 [1, 2, 3]</code> with this? (not with type checking of the value, like <code>\\nOrXs :: list | number: if type nOrXs == number ...</code>)</p>",
+        "id": 479122086,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730024432
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"err\">\\</span><span class=\"ss\">first</span> <span class=\"o\">=</span> <span class=\"err\">\\</span>n <span class=\"p\">::</span> number <span class=\"o\">?</span> <span class=\"no\">null</span><span class=\"p\">:</span>\n  <span class=\"k\">if</span> <span class=\"ss\">n</span> <span class=\"o\">==</span> <span class=\"no\">null</span> <span class=\"k\">then</span> <span class=\"c1\"># didn't match, but we can't access the list either... it's totally ignored</span>\n    <span class=\"err\">\\</span><span class=\"p\">[</span>x<span class=\"p\">,</span> <span class=\"o\">...</span><span class=\"p\">]:</span> x <span class=\"c1\"># now the user has to do `first [] [1, 2, 3]</span>\n  <span class=\"k\">else</span>\n    getFirstN n<span class=\"p\">;</span>\n</code></pre></div>",
+        "id": 479122216,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730024568
+    },
+    {
+        "content": "<p>Huh, this actually doesn't make sense at all</p>",
+        "id": 479122740,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730025125
+    },
+    {
+        "content": "<p><code>(n :: number) ? \"foo\"</code> what the hell are you even binding \"foo\" to?</p>",
+        "id": 479122762,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730025157
+    },
+    {
+        "content": "<p>You can't possibly know, unless you invent extremely weird semantics</p>",
+        "id": 479122777,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730025175
+    },
+    {
+        "content": "<p>Even then, what happens when you match this and it fails: <code>[1, ..., 99] ? \"bar\"</code></p>",
+        "id": 479122800,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730025203
+    },
+    {
+        "content": "<p>I'll think about this more today, but this concept I thought of doesn't work</p>",
+        "id": 479122819,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730025223
+    },
+    {
+        "content": "<p>Currently Cab lacks these things that are in Nix:</p>\n<ul>\n<li>attribute check <code>car ? headlight.lightbulb</code></li>\n<li>attribute default in lambda parameters <code>{ n ? 0 }: n ** n</code></li>\n<li>attribute default expressions <code>car.headlight.lightbulb or \"nope\"</code></li>\n</ul>",
+        "id": 479123093,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730025494
+    },
+    {
+        "content": "<p>To avoid:</p>\n<h1>Funky semantics of <code>or</code> defaults</h1>\n<p><a href=\"/user_uploads/60244/d8STkj2lA-2dt3Tqp-6gpIr7/9ecca769-ccd8-4983-ab88-99fea13a2ef3.png\">9ecca769-ccd8-4983-ab88-99fea13a2ef3.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/d8STkj2lA-2dt3Tqp-6gpIr7/9ecca769-ccd8-4983-ab88-99fea13a2ef3.png\" title=\"9ecca769-ccd8-4983-ab88-99fea13a2ef3.png\"><img data-original-dimensions=\"525x178\" src=\"/user_uploads/thumbnail/60244/d8STkj2lA-2dt3Tqp-6gpIr7/9ecca769-ccd8-4983-ab88-99fea13a2ef3.png/840x560.webp\"></a></div><p>Attribute select is not individual, which is wack. I don't want this behavior, I want the semantic equivalent of <code>(a.b).c or 1</code>.</p>\n<h1>Strings in attribute-check</h1>\n<p>Since strings are never used for identifiers in Cab, this isn't an issue. But might as well say this won't be a thing:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>myset <span class=\"o\">?</span> <span class=\"s2\">\"attra\"</span><span class=\"o\">.</span>attrb<span class=\"o\">.</span><span class=\"s2\">\"attrc\"</span>\n</code></pre></div>",
+        "id": 479123240,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1730025664
+    }
+]
