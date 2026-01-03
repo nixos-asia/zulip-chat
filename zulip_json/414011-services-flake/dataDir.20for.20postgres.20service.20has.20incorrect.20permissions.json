@@ -1,0 +1,182 @@
+[
+    {
+        "content": "<p>I'm running into the local run directory for process-compose that I set with <code>dataDir</code> having the wrong permissions and its unable to initialize the database. Its possible the system has auto new directories having specific permissions, but I think we should check for that?</p>",
+        "id": 405175107,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701368721
+    },
+    {
+        "content": "<p>Maybe something here: <a href=\"https://github.com/juspay/services-flake/blob/main/nix/postgres.nix#L354-L357\">https://github.com/juspay/services-flake/blob/main/nix/postgres.nix#L354-L357</a></p>",
+        "id": 405175502,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701368866
+    },
+    {
+        "content": "<p>What do you mean by \"wrong permissions\"? For reference, this is what I see on my local machine (which happens to be a mac) when I <code>nix run</code> the example in the repo,</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>❯<span class=\"w\"> </span>ls<span class=\"w\"> </span>-ld<span class=\"w\"> </span>data/\ndrwxr-xr-x<span class=\"w\"> </span><span class=\"m\">4</span><span class=\"w\"> </span>srid<span class=\"w\"> </span>staff<span class=\"w\"> </span><span class=\"m\">128</span><span class=\"w\"> </span>Nov<span class=\"w\"> </span><span class=\"m\">30</span><span class=\"w\"> </span><span class=\"m\">13</span>:28<span class=\"w\"> </span>data/\n\n❯<span class=\"w\"> </span>ls<span class=\"w\"> </span>-ld<span class=\"w\"> </span>data/pg1/global\ndrwx------<span class=\"w\"> </span><span class=\"m\">63</span><span class=\"w\"> </span>srid<span class=\"w\"> </span>staff<span class=\"w\"> </span><span class=\"m\">2016</span><span class=\"w\"> </span>Nov<span class=\"w\"> </span><span class=\"m\">30</span><span class=\"w\"> </span><span class=\"m\">13</span>:28<span class=\"w\"> </span>data/pg1/global\n</code></pre></div>",
+        "id": 405175860,
+        "sender_full_name": "Srid",
+        "timestamp": 1701368996
+    },
+    {
+        "content": "<p>And</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>❯<span class=\"w\"> </span>ls<span class=\"w\"> </span>-dl<span class=\"w\"> </span>data/pg1\ndrwx------<span class=\"w\"> </span><span class=\"m\">25</span><span class=\"w\"> </span>srid<span class=\"w\"> </span>staff<span class=\"w\"> </span><span class=\"m\">800</span><span class=\"w\"> </span>Nov<span class=\"w\"> </span><span class=\"m\">30</span><span class=\"w\"> </span><span class=\"m\">13</span>:28<span class=\"w\"> </span>data/pg1\n</code></pre></div>\n<blockquote>\n<p>its unable to initialize the database</p>\n</blockquote>\n<p>Could you post the error? Maybe <code>initdb</code> requires data directory to not be world-readable.</p>",
+        "id": 405176418,
+        "sender_full_name": "Srid",
+        "timestamp": 1701369181
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png\">image-4.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png\" title=\"image-4.png\"><img src=\"/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png\"></a></div>",
+        "id": 405176659,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701369266
+    },
+    {
+        "content": "<p>Oh it is a locale related issue?</p>",
+        "id": 405177040,
+        "sender_full_name": "Srid",
+        "timestamp": 1701369413
+    },
+    {
+        "content": "<p>sorry, looks unrelated <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span>  but this is the start of it. I am troubleshooting someone elses environment. when he goes to run the postgres init again, then its a permissions issue</p>",
+        "id": 405177133,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701369456
+    },
+    {
+        "content": "<p>By the way, you can also pass <code>-t=false</code> arguments to get flat interleaved log output that is easier to copy-paste.</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code><span class=\"c1\"># Example</span>\nnix<span class=\"w\"> </span>run<span class=\"w\"> </span>.<span class=\"w\"> </span>--<span class=\"w\"> </span>-t<span class=\"o\">=</span><span class=\"nb\">false</span><span class=\"w\"> </span>up\n</code></pre></div>",
+        "id": 405177397,
+        "sender_full_name": "Srid",
+        "timestamp": 1701369556
+    },
+    {
+        "content": "<p>good to know. seems the selection mode in process-compose doesn't work well</p>",
+        "id": 405177499,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701369591
+    },
+    {
+        "content": "<p>There is also the <code>log_location</code> (in <a class=\"stream\" data-stream-id=\"414022\" href=\"/#narrow/stream/414022-process-compose-flake\">#process-compose-flake</a>) option to have it write to a log file</p>",
+        "id": 405177649,
+        "sender_full_name": "Srid",
+        "timestamp": 1701369638
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"671017\">tgunnoe</span> <a href=\"#narrow/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions/near/405176659\">said</a>:</p>\n<blockquote>\n<p><a href=\"/user_uploads/60244/4XStlZgffBMtQd54nmepa9op/image-4.png\">image-4.png</a></p>\n</blockquote>\n<p>Error in screenshot:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>initdb:<span class=\"w\"> </span>error:<span class=\"w\"> </span>invalid<span class=\"w\"> </span>locale<span class=\"w\"> </span>settings:<span class=\"w\"> </span>check<span class=\"w\"> </span>LANG<span class=\"w\"> </span>and<span class=\"w\"> </span>LC_*<span class=\"w\"> </span>environment<span class=\"w\"> </span>variables\n</code></pre></div>\n<p>Perhaps <code>services-flake</code> should explicitly set this env. cc <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span></p>\n<p>Ref: <a href=\"https://stackoverflow.com/a/42111789/55246\">https://stackoverflow.com/a/42111789/55246</a></p>",
+        "id": 405177957,
+        "sender_full_name": "Srid",
+        "timestamp": 1701369740
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"671017\">tgunnoe</span> <a href=\"#narrow/stream/414011-services-flake/topic/dataDir.20for.20postgres.20service.20has.20incorrect.20permissions/near/405177133\">said</a>:</p>\n<blockquote>\n<p>sorry, looks unrelated <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span>  but this is the start of it. I am troubleshooting someone elses environment. when he goes to run the postgres init again, <strong>then its a permissions issue</strong></p>\n</blockquote>\n<p>What's the permission issue in particular?</p>",
+        "id": 405178113,
+        "sender_full_name": "Srid",
+        "timestamp": 1701369811
+    },
+    {
+        "content": "<p>Can this problem be reproduced in another system? Then we have a bug report as well.</p>",
+        "id": 405178181,
+        "sender_full_name": "Srid",
+        "timestamp": 1701369838
+    },
+    {
+        "content": "<p>What should services-flake set those vars to?</p>",
+        "id": 405178957,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701370105
+    },
+    {
+        "content": "<p>Probably the same as those in StackOverflow answer, so:</p>\n<div class=\"codehilite\"><pre><span></span><code>export LC_ALL=&quot;en_US.UTF-8&quot;\nexport LC_CTYPE=&quot;en_US.UTF-8&quot;\n</code></pre></div>",
+        "id": 405179341,
+        "sender_full_name": "Srid",
+        "timestamp": 1701370224
+    },
+    {
+        "content": "<p>would setting them in the shell before running process compose not be the same result?</p>",
+        "id": 405179518,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701370283
+    },
+    {
+        "content": "<p>I'd think so, yes.</p>",
+        "id": 405179616,
+        "sender_full_name": "Srid",
+        "timestamp": 1701370316
+    },
+    {
+        "content": "<p><a href=\"https://stackoverflow.com/a/68425342/55246\">Here's another answer from Nix context</a> which suggests adding the <code>glibcLocales</code> package to the environment.</p>",
+        "id": 405179637,
+        "sender_full_name": "Srid",
+        "timestamp": 1701370322
+    },
+    {
+        "content": "<p>that's a good bet</p>",
+        "id": 405179818,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701370385
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/HywdvbrjxyzmxnEujyQdba6j/image-6.png\">image-6.png</a><br>\nwell more logs in the latest, but still the same. i need to mess up my locales to solve this</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/HywdvbrjxyzmxnEujyQdba6j/image-6.png\" title=\"image-6.png\"><img src=\"/user_uploads/60244/HywdvbrjxyzmxnEujyQdba6j/image-6.png\"></a></div>",
+        "id": 405182280,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701371174
+    },
+    {
+        "content": "<p>because its using the nix devshell, something needs to be set properly there. ah</p>",
+        "id": 405182448,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701371234
+    },
+    {
+        "content": "<p>The \"cannot change locale\" warnings are concerning.</p>",
+        "id": 405182721,
+        "sender_full_name": "Srid",
+        "timestamp": 1701371316
+    },
+    {
+        "content": "<p>yeah. its trying to setlocale from within process compose in a nix shell <span aria-label=\"melting face\" class=\"emoji emoji-1fae0\" role=\"img\" title=\"melting face\">:melting_face:</span></p>",
+        "id": 405183337,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701371505
+    },
+    {
+        "content": "<p><a href=\"https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/build-managers/msbuild/default.nix#L49-L52\">https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/build-managers/msbuild/default.nix#L49-L52</a></p>\n<div class=\"codehilite\"><pre><span></span><code># https://github.com/NixOS/nixpkgs/issues/38991\n  # bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)\n  env.LOCALE_ARCHIVE = lib.optionalString stdenv.hostPlatform.isLinux &quot;${glibcLocales}/lib/locale/locale-archive&quot;;\n</code></pre></div>",
+        "id": 405184275,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701371848
+    },
+    {
+        "content": "<p>would this be enough as an env in the shell? or i wonder, does nixpkgs glibc have a general issue</p>",
+        "id": 405184836,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701372080
+    },
+    {
+        "content": "<blockquote>\n<p>would this be enough as an env in the shell? </p>\n</blockquote>\n<p>Probably. </p>\n<p>We might even want to add this to service-flake.</p>",
+        "id": 405185063,
+        "sender_full_name": "Srid",
+        "timestamp": 1701372177
+    },
+    {
+        "content": "<p>I've had locale issues on emanote (which too uses Nix) as well: </p>\n<p><a href=\"https://github.com/srid/emanote/issues/125\">https://github.com/srid/emanote/issues/125</a></p>\n<p>So, certainly not limited to postgres here.</p>",
+        "id": 405185181,
+        "sender_full_name": "Srid",
+        "timestamp": 1701372228
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"671017\">@tgunnoe</span> Perhaps you can create an issue in services-flake and we can track it there?</p>",
+        "id": 405191751,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1701374506
+    },
+    {
+        "content": "<p>I will. could it be something with lib.getExe?</p>",
+        "id": 405223660,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701385351
+    },
+    {
+        "content": "<blockquote>\n<p>could it be something with lib.getExe?</p>\n</blockquote>\n<p>Not sure, but a way to reproduce would be great to debug</p>",
+        "id": 405346315,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1701431905
+    }
+]
