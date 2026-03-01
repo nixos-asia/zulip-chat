@@ -1,0 +1,261 @@
+<html>
+<head><meta charset="utf-8"><title>Trunk + Wasm · rust-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/446608-rust-flake/index.html">rust-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html">Trunk + Wasm</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="451203521"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/451203521" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Quinn <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#451203521">(Jul 13 2024 at 17:41)</a>:</h4>
+<p>oh cool. NCI is frustrating me with wasm and trunk right now. so if you have an example for wasm and trunk, that might get me to switch</p>
+
+
+
+<a name="451235367"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/451235367" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#451235367">(Jul 13 2024 at 22:45)</a>:</h4>
+<p><span class="user-mention" data-user-id="734332">@Quinn</span> <code>rust-flake</code> is designed to be basically a (flake-parts) wrapper over <a href="https://crane.dev/">https://crane.dev/</a> - so if you can get something working with crane, it should map straightforwardly to <code>rust-flake</code>.</p>
+
+
+
+<a name="452163350"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452163350" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452163350">(Jul 17 2024 at 19:03)</a>:</h4>
+<blockquote>
+<p>oh cool. NCI is frustrating me with wasm and trunk right now. so if you have an example for wasm and trunk, that might get me to switch</p>
+</blockquote>
+<p>Do you have an existing repo with wasm and trunk? I could try to package it using <code>rust-flake</code></p>
+
+
+
+<a name="452163872"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452163872" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Quinn <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452163872">(Jul 17 2024 at 19:05)</a>:</h4>
+<p>this is the current deal <a href="https://github.com/quinn-dougherty/gatekept-traffic-PoC/tree/master/src.rs">https://github.com/quinn-dougherty/gatekept-traffic-PoC/tree/master/src.rs</a> i haven't done a ton of debugging as to why its not working. I will say my emacs lsp is jank in that it works when i <code>direnv</code> to an NCI full rust environment of the project, but it all depends on rustup not being installed. it all comes crashing down if emacs finds a rustup. that's a separate issue tho-- it'd be dope if it even built in CI.</p>
+
+
+
+<a name="452164321"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452164321" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452164321">(Jul 17 2024 at 19:07)</a>:</h4>
+<p>Alright, I will give it a try tomorrow, its almost bed time here.</p>
+
+
+
+<a name="452303633"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452303633" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452303633">(Jul 18 2024 at 10:03)</a>:</h4>
+<p><span class="user-mention" data-user-id="734332">@Quinn</span> it should be simple with crane: <a href="https://crane.dev/examples/trunk-workspace.html?highlight=trunk-work">https://crane.dev/examples/trunk-workspace.html?highlight=trunk-work#</a></p>
+<p>I used the same flake in your <code>src.rs</code> dir and it worked fine. There are some unrelated code errors, which you will have to fix, here’s the tail of it:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>error<span class="o">[</span>E0599<span class="o">]</span>:<span class="w"> </span>no<span class="w"> </span><span class="k">function</span><span class="w"> </span>or<span class="w"> </span>associated<span class="w"> </span>item<span class="w"> </span>named<span class="w"> </span><span class="sb">`</span>new<span class="sb">`</span><span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>struct<span class="w"> </span><span class="sb">`</span>Pixels<span class="sb">`</span><span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>scope
+<span class="w">  </span>--&gt;<span class="w"> </span>site/src/components/pixels.rs:54:34
+<span class="w">   </span><span class="p">|</span>
+<span class="m">54</span><span class="w"> </span><span class="p">|</span><span class="w">             </span><span class="nb">let</span><span class="w"> </span><span class="nv">pixels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Pixels::new<span class="o">(</span>width,<span class="w"> </span>height,<span class="w"> </span>gl_context<span class="o">)</span>.unwrap<span class="o">()</span><span class="p">;</span>
+<span class="w">   </span><span class="p">|</span><span class="w">                                  </span>^^^<span class="w"> </span><span class="k">function</span><span class="w"> </span>or<span class="w"> </span>associated<span class="w"> </span>item<span class="w"> </span>not<span class="w"> </span>found<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>Pixels<span class="sb">`</span>
+</code></pre></div>
+
+
+
+<a name="452303889"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452303889" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452303889">(Jul 18 2024 at 10:04)</a>:</h4>
+<p>Here’s the file (<code>src.rs/flake.nix</code>) that worked for me:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">"Build a cargo project"</span><span class="p">;</span>
+
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:NixOS/nixpkgs/nixpkgs-unstable"</span><span class="p">;</span>
+
+    <span class="c1"># The version of wasm-bindgen-cli needs to match the version in Cargo.lock</span>
+    <span class="c1"># Update this to include the version you need</span>
+    nixpkgs-for-wasm-bindgen<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:NixOS/nixpkgs/4e6868b1aa3766ab1de169922bb3826143941973"</span><span class="p">;</span>
+
+    <span class="ss">crane</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:ipetkov/crane"</span><span class="p">;</span>
+      inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">follows</span> <span class="o">=</span> <span class="s2">"nixpkgs"</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    flake-utils<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:numtide/flake-utils"</span><span class="p">;</span>
+
+    <span class="ss">rust-overlay</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:oxalica/rust-overlay"</span><span class="p">;</span>
+      inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">follows</span> <span class="o">=</span> <span class="s2">"nixpkgs"</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> crane<span class="p">,</span> flake-utils<span class="p">,</span> rust-overlay<span class="p">,</span> nixpkgs-for-wasm-bindgen<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+    flake-utils<span class="o">.</span>lib<span class="o">.</span>eachDefaultSystem <span class="p">(</span>system<span class="p">:</span>
+      <span class="k">let</span>
+        <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span>
+          <span class="k">inherit</span> system<span class="p">;</span>
+          <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="nb">import</span> rust-overlay<span class="p">)</span> <span class="p">];</span>
+        <span class="p">};</span>
+
+        <span class="k">inherit</span> <span class="p">(</span>pkgs<span class="p">)</span> lib<span class="p">;</span>
+
+        <span class="ss">rustToolchainFor</span> <span class="o">=</span> p<span class="p">:</span> p<span class="o">.</span>rust-bin<span class="o">.</span>stable<span class="o">.</span>latest<span class="o">.</span>default<span class="o">.</span>override <span class="p">{</span>
+          <span class="c1"># Set the build targets supported by the toolchain,</span>
+          <span class="c1"># wasm32-unknown-unknown is required for trunk.</span>
+          <span class="ss">targets</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"wasm32-unknown-unknown"</span> <span class="p">];</span>
+        <span class="p">};</span>
+        <span class="ss">craneLib</span> <span class="o">=</span> <span class="p">((</span>crane<span class="o">.</span>mkLib pkgs<span class="p">)</span><span class="o">.</span>overrideToolchain rustToolchainFor<span class="p">)</span><span class="o">.</span>overrideScope <span class="p">(</span>_final<span class="p">:</span> _prev<span class="p">:</span> <span class="p">{</span>
+          <span class="c1"># The version of wasm-bindgen-cli needs to match the version in Cargo.lock. You</span>
+          <span class="c1"># can unpin this if your nixpkgs commit contains the appropriate wasm-bindgen-cli version</span>
+          <span class="k">inherit</span> <span class="p">(</span><span class="nb">import</span> nixpkgs-for-wasm-bindgen <span class="p">{</span> <span class="k">inherit</span> system<span class="p">;</span> <span class="p">})</span> wasm-bindgen-cli<span class="p">;</span>
+        <span class="p">});</span>
+
+        <span class="c1"># When filtering sources, we want to allow assets other than .rs files</span>
+        <span class="ss">src</span> <span class="o">=</span> lib<span class="o">.</span>cleanSourceWith <span class="p">{</span>
+          <span class="ss">src</span> <span class="o">=</span> <span class="l">./.</span><span class="p">;</span> <span class="c1"># The original, unfiltered source</span>
+          <span class="ss">filter</span> <span class="o">=</span> path<span class="p">:</span> type<span class="p">:</span>
+            <span class="p">(</span>lib<span class="o">.</span>hasSuffix <span class="s2">"\.html"</span> path<span class="p">)</span> <span class="o">||</span>
+            <span class="p">(</span>lib<span class="o">.</span>hasSuffix <span class="s2">"\.scss"</span> path<span class="p">)</span> <span class="o">||</span>
+            <span class="c1"># Example of a folder for images, icons, etc</span>
+            <span class="p">(</span>lib<span class="o">.</span>hasInfix <span class="s2">"/assets/"</span> path<span class="p">)</span> <span class="o">||</span>
+            <span class="c1"># Default filter from crane (allow .rs files)</span>
+            <span class="p">(</span>craneLib<span class="o">.</span>filterCargoSources path type<span class="p">)</span>
+          <span class="p">;</span>
+        <span class="p">};</span>
+
+        <span class="ss">commonArgs</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="k">inherit</span> src<span class="p">;</span>
+          <span class="ss">strictDeps</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+          <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Add additional build inputs here</span>
+          <span class="p">]</span> <span class="o">++</span> lib<span class="o">.</span>optionals pkgs<span class="o">.</span>stdenv<span class="o">.</span>isDarwin <span class="p">[</span>
+            <span class="c1"># Additional darwin specific inputs can be set here</span>
+            pkgs<span class="o">.</span>libiconv
+          <span class="p">];</span>
+        <span class="p">};</span>
+
+        <span class="c1"># Wasm packages</span>
+
+        <span class="ss">wasmArgs</span> <span class="o">=</span> commonArgs <span class="o">//</span> <span class="p">{</span>
+          <span class="ss">pname</span> <span class="o">=</span> <span class="s2">"trunk-workspace-wasm"</span><span class="p">;</span>
+          <span class="ss">cargoExtraArgs</span> <span class="o">=</span> <span class="s2">"--package=site"</span><span class="p">;</span>
+          <span class="ss">CARGO_BUILD_TARGET</span> <span class="o">=</span> <span class="s2">"wasm32-unknown-unknown"</span><span class="p">;</span>
+        <span class="p">};</span>
+
+        <span class="ss">cargoArtifactsWasm</span> <span class="o">=</span> craneLib<span class="o">.</span>buildDepsOnly <span class="p">(</span>wasmArgs <span class="o">//</span> <span class="p">{</span>
+          <span class="ss">doCheck</span> <span class="o">=</span> <span class="no">false</span><span class="p">;</span>
+        <span class="p">});</span>
+
+        <span class="ss">mySite</span> <span class="o">=</span> craneLib<span class="o">.</span>buildTrunkPackage <span class="p">(</span>wasmArgs <span class="o">//</span> <span class="p">{</span>
+          <span class="ss">pname</span> <span class="o">=</span> <span class="s2">"trunk-workspace-site"</span><span class="p">;</span>
+          <span class="ss">cargoArtifacts</span> <span class="o">=</span> cargoArtifactsWasm<span class="p">;</span>
+          <span class="ss">trunkIndexPath</span> <span class="o">=</span> <span class="s2">"site/index.html"</span><span class="p">;</span>
+          <span class="c1"># The version of wasm-bindgen-cli here must match the one from Cargo.lock.</span>
+          <span class="ss">wasm-bindgen-cli</span> <span class="o">=</span> pkgs<span class="o">.</span>wasm-bindgen-cli<span class="o">.</span>override <span class="p">{</span>
+            <span class="ss">version</span> <span class="o">=</span> <span class="s2">"0.2.92"</span><span class="p">;</span>
+            <span class="ss">hash</span> <span class="o">=</span> <span class="s2">"sha256-1VwY8vQy7soKEgbki4LD+v259751kKxSxmo/gqE6yV0="</span><span class="p">;</span>
+            <span class="ss">cargoHash</span> <span class="o">=</span> <span class="s2">"sha256-aACJ+lYNEU8FFBs158G1/JG8sc6Rq080PeKCMnwdpH0="</span><span class="p">;</span>
+          <span class="p">};</span>
+        <span class="p">});</span>
+        <span class="ss">serve-app</span> <span class="o">=</span> pkgs<span class="o">.</span>writeShellScriptBin <span class="s2">"serve-app"</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">          </span><span class="si">${</span>pkgs<span class="o">.</span>python3Minimal<span class="si">}</span><span class="s s-Multiline">/bin/python3 -m http.server --directory </span><span class="si">${</span>mySite<span class="si">}</span><span class="s s-Multiline"> 8000</span>
+<span class="s s-Multiline">        ''</span><span class="p">;</span>
+      <span class="k">in</span>
+      <span class="p">{</span>
+        <span class="ss">checks</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="k">inherit</span> mySite<span class="p">;</span>
+        <span class="p">};</span>
+        packages<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> mySite<span class="p">;</span>
+
+        apps<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> flake-utils<span class="o">.</span>lib<span class="o">.</span>mkApp <span class="p">{</span>
+          <span class="ss">name</span> <span class="o">=</span> <span class="s2">"server"</span><span class="p">;</span>
+          <span class="ss">drv</span> <span class="o">=</span> serve-app<span class="p">;</span>
+        <span class="p">};</span>
+
+        devShells<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> craneLib<span class="o">.</span>devShell <span class="p">{</span>
+          <span class="c1"># Inherit inputs from checks.</span>
+          <span class="ss">checks</span> <span class="o">=</span> self<span class="o">.</span>checks<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="p">;</span>
+
+          <span class="c1"># Extra inputs can be added here; cargo and rustc are provided by default.</span>
+          <span class="ss">packages</span> <span class="o">=</span> <span class="p">[</span>
+            pkgs<span class="o">.</span>trunk
+          <span class="p">];</span>
+        <span class="p">};</span>
+      <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="452304428"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452304428" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452304428">(Jul 18 2024 at 10:07)</a>:</h4>
+<p>7 messages were moved here from <a class="stream-topic" data-stream-id="413950" href="/#narrow/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29">#nix &gt; rust-flake (Nixify Rust projects)</a> by <span class="user-mention silent" data-user-id="669081">Shivaraj B H</span>.</p>
+
+
+
+<a name="452307899"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452307899" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452307899">(Jul 18 2024 at 10:27)</a>:</h4>
+<p>It should not be hard to support this in <code>rust-flake</code>. The only difference is the usage of <code>buildTrunkPackage</code> in place of <a href="https://github.com/juspay/rust-flake/blob/658edce0b6bb521f1f54957ddbfab80f73066bee/nix/modules/crate.nix#L94">buildPackage</a>. <br>
+This is a schema I propose:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">rust-project</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">crates</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">"site"</span> <span class="o">=</span> <span class="p">{</span>
+           <span class="ss">isTrunkPackage</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+           <span class="ss">extraBuildArgs</span> <span class="o">=</span> <span class="p">{</span>
+             <span class="ss">wasm-bindgen-cli</span> <span class="o">=</span> <span class="err">…</span>
+             <span class="ss">trunkIndexPath</span> <span class="o">=</span> <span class="s2">"site/index.html"</span><span class="p">;</span>
+       <span class="p">};</span>
+      <span class="s2">"cli"</span> <span class="o">=</span> <span class="p">{</span> <span class="err">…</span> <span class="p">};</span>
+      <span class="s2">"holodeck"</span> <span class="o">=</span> <span class="p">{</span> <span class="err">…</span> <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This would replace the 100+ line of flake.nix from above</p>
+
+
+
+<a name="452364816"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452364816" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452364816">(Jul 18 2024 at 14:50)</a>:</h4>
+<p>Perhaps we should have a freeform type that can build all types of derivations, using:</p>
+<ul>
+<li><code>buildPackage</code></li>
+<li><code>buidTrunkPackage</code></li>
+<li><code>cargoClippy</code></li>
+<li><code>cargoDoc</code></li>
+<li><code>cargoFmt</code></li>
+<li><code>cargoLlvmCov</code></li>
+<li><code>cargoNextest</code></li>
+<li>etc.</li>
+</ul>
+<p>(Search for <code>-&gt; drv</code> in <a href="https://crane.dev/API.html">https://crane.dev/API.html</a> to find these)</p>
+<p>For e.g.,</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  rust-project<span class="o">.</span>crates<span class="o">.</span><span class="s2">"foo"</span> <span class="o">=</span> <span class="p">{</span>
+    packages<span class="o">.</span><span class="ss">trunk</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">extraBuildArgs</span> <span class="o">=</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span> <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="452364900"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452364900" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452364900">(Jul 18 2024 at 14:51)</a>:</h4>
+<p>Eventually, we can even allow the user to build a custom package.</p>
+
+
+
+<a name="452364977"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452364977" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452364977">(Jul 18 2024 at 14:51)</a>:</h4>
+<p><code>packages.NAME</code> maps to a known builder if <code>NAME</code> is known (eg: <code>trunk</code> maps to <code>buildTrunkPackage</code>). The user can define their own builders.</p>
+
+
+
+<a name="452365297"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452365297" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452365297">(Jul 18 2024 at 14:53)</a>:</h4>
+<p>In the meanwhile, <span class="user-mention" data-user-id="734332">@Quinn</span> can already use rust-flake to call <code>buildTrunkPackage</code> because we expose <code>crane-lib</code> anyway.</p>
+
+
+
+<a name="452365408"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/Trunk%20%2B%20Wasm/near/452365408" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/Trunk.20.2B.20Wasm.html#452365408">(Jul 18 2024 at 14:53)</a>:</h4>
+<p>As an aside, it would be good to have a template for Trunk projects, especially as part of <a href="https://github.com/juspay/rust-flake/issues/15">https://github.com/juspay/rust-flake/issues/15</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

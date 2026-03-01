@@ -1,0 +1,59 @@
+<html>
+<head><meta charset="utf-8"><title>Bind expressions · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Bind.20expressions.html">Bind expressions</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="453401045"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Bind%20expressions/near/453401045" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Bind.20expressions.html#453401045">(Jul 23 2024 at 12:21)</a>:</h4>
+<p>I wanted to make <code>fix</code> and <code>makeScope</code> a built in operator in my language and this is the way I'm going to do it:</p>
+
+
+
+<a name="453401134"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Bind%20expressions/near/453401134" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Bind.20expressions.html#453401134">(Jul 23 2024 at 12:21)</a>:</h4>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>myident <span class="p">@</span> <span class="p">{</span>
+  <span class="ss">foo</span> <span class="o">=</span> <span class="mi">132</span><span class="p">;</span>
+  <span class="ss">bar</span> <span class="o">=</span> myident<span class="o">.</span>foo<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="453401609"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Bind%20expressions/near/453401609" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Bind.20expressions.html#453401609">(Jul 23 2024 at 12:23)</a>:</h4>
+<p>This behaves the way you expect it to, just like <code>fix</code>. But you can also override the bind:</p>
+<div class="codehilite"><pre><span></span><code>{
+  needsBaz = self @ { bar = self.baz; };
+} ==&gt; {
+  bazzed = setMeta { bind = (getMeta needsBaz).bind // { baz = 123; } needsBaz;
+}
+</code></pre></div>
+
+
+
+<a name="453401849"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Bind%20expressions/near/453401849" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Bind.20expressions.html#453401849">(Jul 23 2024 at 12:24)</a>:</h4>
+<p>So you can leverage this to implement anything, basically. Also the bind in <code>foo @ { pattern, here }:  here</code> will act specially and bind to the argument instead of the lambda itself. So it is basically identical to the Nix version here.</p>
+
+
+
+<a name="453402340"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Bind%20expressions/near/453402340" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Bind.20expressions.html#453402340">(Jul 23 2024 at 12:27)</a>:</h4>
+<p>Further, when you do <code>inputs @ { ... } ==&gt; ...</code>, the bind <code>inputs</code> will bind to the "use"d attribute set, and it will get overriden by the language itself when the "use"d attribute set gets overriden. So it will all work magically.</p>
+
+
+
+<a name="479074831"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Bind%20expressions/near/479074831" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Bind.20expressions.html#479074831">(Oct 26 2024 at 19:47)</a>:</h4>
+<p>Going to rethink the "bind can be overriden" stuff</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

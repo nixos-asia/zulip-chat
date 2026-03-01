@@ -1,0 +1,27 @@
+<html>
+<head><meta charset="utf-8"><title>using the LLVM backend · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/using.20the.20LLVM.20backend.html">using the LLVM backend</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="564842532"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/using%20the%20LLVM%20backend/near/564842532" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jack <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/using.20the.20LLVM.20backend.html#564842532">(Dec 20 2025 at 17:25)</a>:</h4>
+<p>Hi everyone. This is a fantastic tool, thank you for making it.</p>
+<p>I've seen a couple references to llvm in github but I'm having trouble compiling with llvm normally.  if I just add <code>-fllvm</code> to my GHC options in my .cabal file it says GHC isn't configured for llvm use. If I set <code>basePackages = pkgs.pkgsLLVM.haskell.packages.ghc912;</code> then all my settings overrides in <code>perSystem.haskellProjects.default.settings</code> stop working. Any advice? Thank you.</p>
+
+
+
+<a name="564926155"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/using%20the%20LLVM%20backend/near/564926155" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jack <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/using.20the.20LLVM.20backend.html#564926155">(Dec 22 2025 at 01:33)</a>:</h4>
+<p>actually hold that thought, this problem seem to only happen when using something unusual for inputs.source or &gt;= ghc.9.10.</p>
+<p>maybe also only on aarch-64-linux</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

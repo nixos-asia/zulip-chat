@@ -1,0 +1,74 @@
+<html>
+<head><meta charset="utf-8"><title>Self-hosting email · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html">Self-hosting email</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="425148136"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425148136" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425148136">(Mar 06 2024 at 18:07)</a>:</h4>
+<p>What does it take to self-host email in NixOS?</p>
+<p>Pros and cons? Why would someone not want to do it?</p>
+
+
+
+<a name="425159531"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425159531" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425159531">(Mar 06 2024 at 19:11)</a>:</h4>
+<p>I guess generally email is one of the more challenging things to self-host because of all the trust issues involved for getting your little server accepted by big mail mammoths such as gmail or microsoft.</p>
+
+
+
+<a name="425159606"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425159606" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425159606">(Mar 06 2024 at 19:11)</a>:</h4>
+<p>That being said, having something like Mail-in-a-NixBox would be a nice thing</p>
+
+
+
+<a name="425161272"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425161272" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425161272">(Mar 06 2024 at 19:21)</a>:</h4>
+<p>If you check Mail-in-a-Box's Github </p>
+<p><a href="https://github.com/mail-in-a-box/mailinabox">https://github.com/mail-in-a-box/mailinabox</a></p>
+<p>you can see the main components are:</p>
+<p>postfix for SMTP, Dovecot or IMAP, z-push for Exchange ActiveSync, Roundcube (if you want webmail), spamassassin and postgrey for getting rid of some stuff, then a lot of automated DNS stuff plus Let's Encrypt, and finally some backups via duplicity, some fail2ban and some monitoring via munin.</p>
+
+
+
+<a name="425164697"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425164697" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425164697">(Mar 06 2024 at 19:40)</a>:</h4>
+<p>I'd use <a href="http://stalw.art">stalw.art</a> - I'm playing with the idea for a while now. It is really well designed, however, the archiving of emails is hard to audit due to content hashing... a plain file backend would be desirable... Other than that, a premier choice.</p>
+
+
+
+<a name="425167327"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425167327" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425167327">(Mar 06 2024 at 19:55)</a>:</h4>
+<p>Yes, stalwart looks interesting. And more modern than the Ubuntu-based thingy that is Mail-in-a-Box. Even though I had this running once with a friend of mine. But it appears with stalwart you can run that with a single database backend such as PostgreSQL? Why would you say plain files is more desirable <span class="user-mention" data-user-id="678738">@David Arnold</span> ?</p>
+
+
+
+<a name="425168069"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425168069" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425168069">(Mar 06 2024 at 20:00)</a>:</h4>
+<p>This is just motivated by GAAP / Local-GAAP requirements which state that its first visual representation received by the counter party of any receipt underlying a business event must be stored for 10 years.</p>
+<p>That's just best done by "tapping the wire", and with a file baked email, referencing and archiving becomes easy. Having a schema-bound storage mechanism is a significant accessibility hurdle over 10 years and for a smaller team.</p>
+
+
+
+<a name="425169212"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425169212" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425169212">(Mar 06 2024 at 20:07)</a>:</h4>
+<p>ah okay, so you would want to keep these for your business records essentially? I can't imagine there aren't some best practices for complying with these requirements. Maybe asking stalwart directly would be an idea how they'd handle this?</p>
+
+
+
+<a name="425170355"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Self-hosting%20email/near/425170355" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Self-hosting.20email.html#425170355">(Mar 06 2024 at 20:15)</a>:</h4>
+<p>Yes, the easiest way to do this is to "tap" the wire: store everything that comes in and out. Using the FS as a backend has the advantage that its the oldest simplest and most stable storage metadata there is and therefore has very low maintenance burdon.</p>
+<p>Obviously with many emails, the performance burdon becomes prohibitive and that's why the hash and shard them with blake..</p>
+<p>It's still recoverable, but it immediatly and essentiatlly forces you to provision a kv store for the same ten years on a rolling basis.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

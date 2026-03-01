@@ -1,0 +1,97 @@
+<html>
+<head><meta charset="utf-8"><title>Multiuser and multihost configuration · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Multiuser.20and.20multihost.20configuration.html">Multiuser and multihost configuration</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="498612959"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Multiuser%20and%20multihost%20configuration/near/498612959" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Eelco van Vliet <a href="http://chat.nixos.asia/stream/413950-nix/topic/Multiuser.20and.20multihost.20configuration.html#498612959">(Feb 09 2025 at 16:23)</a>:</h4>
+<p>I have created a fork of the configuration by srid here <a href="https://github.com/eelcovv/nixos-config">https://github.com/eelcovv/nixos-config</a> . I'm pretty satisfied because I can create a setup for different computers. </p>
+<p>However, today I am trying to do something which is almost complete. I have a configuration for an external program called ptgui which I want to load for only one hostname name. Therefore, in the file modules/home/default.nix i am trying to added a filtrer on what to import based on the username and hostname. For some reason this does seem to work . I have now:</p>
+<div class="codehilite"><pre><span></span><code>let
+  hostName = builtins.getEnv &quot;HOST&quot;;
+  userName = builtins.getEnv &quot;USER&quot;;
+  isEelco = ((builtins.match &quot;.*eelco.*&quot; userName) != null);
+  isTongfang = ((builtins.match &quot;.*tongfang.*&quot; hostName) != null); # userName == &quot;eelco&quot;;
+in
+{
+
+  home.stateVersion = &quot;22.11&quot;;
+  imports =
+    (
+      if true then [
+        ./profiles/development.nix
+        ./profiles/datascience.nix
+        ./profiles/engingeering.nix
+      ] else [ ]
+    )
+    ++
+    (
+      if isTongfang then [
+        ./all/ptgui
+      ] else [ ]
+    )
+    ++
+    [
+      ./profiles/graphics.nix
+      ./profiles/internet.nix
+      ./profiles/multimedia.nix
+      ./profiles/officetools.nix
+      ./profiles/publishing.nix
+      ./profiles/security.nix
+      ./profiles/socialmedia.nix
+      ./profiles/systemtools.nix
+      ./all/tmux.nix
+      ./all/neovim
+      # ./helix.nix
+      ./all/ssh.nix
+      ./all/starship.nix
+      ./all/terminal.nix
+      ./all/nix.nix
+      ./all/git.nix
+      ./all/direnv.nix
+      ./all/zellij.nix
+      # ./nushell.nix
+      ./all/just.nix
+      ./all/powershell.nix
+      ./all/juspay.nix
+      # conditional imports
+
+      # Comment out because of annoying password prompts
+      # ./all/_1password.nix
+    ];
+
+}
+</code></pre></div>
+<p>the idea is that i only want to load ptgui when the hostname is tongfang. But this does seem to work. Anybody has any suggestion what i can do? I dont get an error, i only dont include ptgui. If i set the logicatl expression hard to true it does work. Can i filter on hostname and username in this way? Any hints appreciated</p>
+
+
+
+<a name="498760738"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Multiuser%20and%20multihost%20configuration/near/498760738" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Multiuser.20and.20multihost.20configuration.html#498760738">(Feb 10 2025 at 13:26)</a>:</h4>
+<p>Flakes are pure, so I don't think the likes of  <code>builtins.getEnv</code> will work.</p>
+
+
+
+<a name="498761121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Multiuser%20and%20multihost%20configuration/near/498761121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Multiuser.20and.20multihost.20configuration.html#498761121">(Feb 10 2025 at 13:28)</a>:</h4>
+<p>Username should be available from home-manager config or your custom config (e.g.: <a href="https://github.com/juspay/nixos-unified-template/pull/129">https://github.com/juspay/nixos-unified-template/pull/129</a> )</p>
+<p>Hostname and other stuff you can pass in <code>specialArgs</code>, unless you are on NixOS, then it is <code>config.networking.hostName</code></p>
+
+
+
+<a name="498761455"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Multiuser%20and%20multihost%20configuration/near/498761455" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Multiuser.20and.20multihost.20configuration.html#498761455">(Feb 10 2025 at 13:29)</a>:</h4>
+<p>Note that here,</p>
+<p><a href="https://github.com/srid/nixos-unified/blob/be4ce51cae1dda99e8fd57036215b19ef37bd7fd/examples/home/flake.nix#L24">https://github.com/srid/nixos-unified/blob/be4ce51cae1dda99e8fd57036215b19ef37bd7fd/examples/home/flake.nix#L24</a></p>
+<p>You can also say <code>legacyPackages.homeConfigurations."${myUserName}@${myHostname}"</code> (the activate app will recognize that). And perhaps you can pass that as <code>specialArg</code> or something, from toplevel.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

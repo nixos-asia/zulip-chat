@@ -1,0 +1,72 @@
+<html>
+<head><meta charset="utf-8"><title>✔ Using psql command instead of postgres in initialScript · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html">✔ Using psql command instead of postgres in initialScript</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="409529102"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409529102" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409529102">(Dec 22 2023 at 06:17)</a>:</h4>
+<p><span class="user-mention" data-user-id="669112">@Rohit Singh</span> Now that the <code>&lt;name&gt;-init</code> process doesn't run before <code>&lt;name&gt;</code> process (here <code>&lt;name&gt;</code> is a postgres server), i.e after this <a href="https://github.com/juspay/services-flake/pull/66">PR</a>, we have to rename <code>&lt;name&gt;-init</code> to something more appropriate. What can this be? I am thinking <code>&lt;name&gt;-postStart</code>, but that doesn't capture the essence of its task, which is running a bunch of <code>.sql</code> dumps or plain text SQL scripts given by <code>initialScript</code> option.</p>
+
+
+
+<a name="409529413"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409529413" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409529413">(Dec 22 2023 at 06:20)</a>:</h4>
+<p>How about <code>&lt;name&gt;-postScript</code>?</p>
+
+
+
+<a name="409530261"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409530261" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Rohit Singh <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409530261">(Dec 22 2023 at 06:30)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/414011-services-flake/topic/Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript/near/409529413">said</a>:</p>
+<blockquote>
+<p>How about <code>&lt;name&gt;-postScript</code>?</p>
+</blockquote>
+<p>How about <code>&lt;name&gt;-postStartScript </code>?</p>
+<p>Because post does not actually describes post what ? So if we keep postStartScript that would mean post starting the postgres server.</p>
+
+
+
+<a name="409531274"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409531274" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409531274">(Dec 22 2023 at 06:41)</a>:</h4>
+<p>Let's go with <code>postStartScript</code> for now. Let's wait until tomorrow for any suggestions and merge it.</p>
+
+
+
+<a name="409538317"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409538317" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409538317">(Dec 22 2023 at 07:51)</a>:</h4>
+<p>Let’s not forget the fact that the script only runs once, i.e if the dataDir is not already present, so we could consider initialPostStartScript too</p>
+
+
+
+<a name="409729831"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409729831" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409729831">(Dec 23 2023 at 16:17)</a>:</h4>
+<p>I think it would be better if we stick to <code>init</code> process running before the postgres server process, we can use <code>pg_ctl</code> to start and stop the server during initialisation as does <a href="https://github.com/cachix/devenv/blob/405a4c6a3fecfd2a7fb37cc13f4e760658e522e6/src/modules/services/postgres.nix#L111-L115">devenv</a>.</p>
+
+
+
+<a name="409729900"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409729900" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409729900">(Dec 23 2023 at 16:18)</a>:</h4>
+<p>I have updated the PR, check the link in the first message of this topic.</p>
+
+
+
+<a name="409777205"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/409777205" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#409777205">(Dec 24 2023 at 03:14)</a>:</h4>
+<p>Also see the updated description of the <a href="https://github.com/juspay/services-flake/pull/66">PR</a> for the key changes.</p>
+
+
+
+<a name="410339167"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/%E2%9C%94%20Using%20psql%20command%20instead%20of%20postgres%20in%20initialScript/near/410339167" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/.E2.9C.94.20Using.20psql.20command.20instead.20of.20postgres.20in.20initialScript.html#410339167">(Dec 28 2023 at 20:32)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

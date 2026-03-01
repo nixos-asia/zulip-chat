@@ -1,0 +1,36 @@
+<html>
+<head><meta charset="utf-8"><title>haskell-language-server dropped support for ghc 8.10 · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/haskell-language-server.20dropped.20support.20for.20ghc.208.2E10.html">haskell-language-server dropped support for ghc 8.10</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422779918"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/haskell-language-server%20dropped%20support%20for%20ghc%208.10/near/422779918" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Neeraj <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/haskell-language-server.20dropped.20support.20for.20ghc.208.2E10.html#422779918">(Feb 22 2024 at 09:42)</a>:</h4>
+<p>failed with</p>
+<div class="codehilite"><pre><span></span><code>error: haskell-language-server dropped support for ghc 8.10 in version 2.3.0.0
+please use a newer ghc version or an older nixpkgs version
+</code></pre></div>
+
+
+
+<a name="422788213"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/haskell-language-server%20dropped%20support%20for%20ghc%208.10/near/422788213" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/haskell-language-server.20dropped.20support.20for.20ghc.208.2E10.html#422788213">(Feb 22 2024 at 10:33)</a>:</h4>
+<p>You may have to downgrade your nixpkgs then.</p>
+<p>Try perhaps <code>96ba1c52e54e74c3197f4d43026b3f3d92e83ff9</code> from when nammayatri was using it before this PR:</p>
+<p><a href="https://github.com/nammayatri/common/pull/18/files#diff-216b2b7bfde9416c79d133bacb031e95702a20bdedb548c0b055c837aa4f6a9c">https://github.com/nammayatri/common/pull/18/files#diff-216b2b7bfde9416c79d133bacb031e95702a20bdedb548c0b055c837aa4f6a9c</a></p>
+
+
+
+<a name="422788263"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/haskell-language-server%20dropped%20support%20for%20ghc%208.10/near/422788263" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/haskell-language-server.20dropped.20support.20for.20ghc.208.2E10.html#422788263">(Feb 22 2024 at 10:33)</a>:</h4>
+<p><code>nixpkgs.url = "github:nixos/nixpkgs/96ba1c52e54e74c3197f4d43026b3f3d92e83ff9</code></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

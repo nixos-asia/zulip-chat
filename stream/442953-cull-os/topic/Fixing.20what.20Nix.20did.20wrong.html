@@ -1,0 +1,154 @@
+<html>
+<head><meta charset="utf-8"><title>Fixing what Nix did wrong · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html">Fixing what Nix did wrong</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446146257"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/446146257" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#446146257">(Jun 21 2024 at 18:38)</a>:</h4>
+<p>(copied from the matrix; this is about fixing flakes being a new concept and destroying the "everything is a derivation" concept of Nix; also see this post <a href="https://jade.fyi/blog/flakes-arent-real">https://jade.fyi/blog/flakes-arent-real</a>)</p>
+<p>The way I want to fix this in Cab is overridable expressions.</p>
+<div class="codehilite"><pre><span></span><code>{ a = 1; } ==&gt; a * a
+</code></pre></div>
+<p>assuming this is assigned to <code>b</code>, just evaluating <code>b</code> will get you <code>1</code>. But overriding it like <code>b &lt;== { a = 2; }</code> and then evaluating that expression will get you <code>4</code>. The trick here is that <code>==&gt;</code> is not a function symbol (unlike <code>:</code>, which has the same behavior in Cab as in Nix)</p>
+<p>So you will be able to do things like</p>
+<div class="codehilite"><pre><span></span><code>inputs @ {
+  packages = import &lt;github:cull-os/packages&gt; &lt;== inputs;
+} ==&gt; {
+  packages.bar = packages.buildCrate ./.;
+}
+</code></pre></div>
+<p><code>import</code> will import <code>/${&lt;github:cull-os/cab&gt;}/default.cab</code>, which is another expression like our <a href="http://default.cab">default.cab</a>. Then it will override it, with our inputs. The trick here is that our inputs were already overriden by the Cab CLI, which did <code>&lt;== { buildSystem = ...; targetSystem = ...; }</code> so the build and target systems get passed into CullOS packages. Then we get a neat attribute set packed with packages configured for our target.</p>
+
+
+
+<a name="446146808"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/446146808" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#446146808">(Jun 21 2024 at 18:42)</a>:</h4>
+<p>I also want to implement the "standard library" in Pure Rust, eagerly checking for types of things. This will also make it a part of the language instead of some unrelated repository like nixpkgs. And it will be faster, as a result.</p>
+
+
+
+<a name="451226761"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/451226761" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#451226761">(Jul 13 2024 at 21:10)</a>:</h4>
+<p>cc <span class="user-mention" data-user-id="679505">@Jonathan Ringer</span></p>
+
+
+
+<a name="451226787"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/451226787" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#451226787">(Jul 13 2024 at 21:11)</a>:</h4>
+<p>this would work without "overrideable expressions" in Nix too. But it would require you to call everything, which is fine I guess</p>
+
+
+
+<a name="479074990"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479074990" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479074990">(Oct 26 2024 at 19:50)</a>:</h4>
+<h1>Don't Do The Mistakes Of Nix</h1>
+<p>Link: &lt;<a href="https://md.darmstadt.ccc.de/nix2">https://md.darmstadt.ccc.de/nix2</a>&gt;</p>
+<p>Notable stuff:</p>
+<ul>
+<li>Don't use <code>?</code> for attribute bind defaults and attribute existence checking at the same time. Very unsure about the syntax for both of these things.</li>
+<li>Support tabs in indented strings, but error out when they are mixed with spaces. We can't know the width of a tab, after all.</li>
+<li>Remove <code>.4</code> float syntax. Make <code>0x.3</code> invalid, too.</li>
+<li>Line endings in strings will get normalized to <code>\n</code> no matter what. People can do <code>string.replace "\n" "\r\n"</code> if they desire.</li>
+<li>Make multiline string normalization sane &amp; add HUNDREDS of tests.</li>
+</ul>
+
+
+
+<a name="479079831"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479079831" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479079831">(Oct 26 2024 at 21:16)</a>:</h4>
+<p>it might ne nice, although I'm not sure how feasible, if all functions can have default args, not just functions that take a set</p>
+
+
+
+<a name="479121939"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479121939" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479121939">(Oct 27 2024 at 10:18)</a>:</h4>
+<p>Hmm, would be interesting. So you're saying</p>
+<p><code>&lt;pat&gt; ? "default here"</code> will default to <code>"default here"</code> if <code>&lt;pat&gt;</code> fails to match, ensuring the whole pattern always does?</p>
+
+
+
+<a name="479121948"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479121948" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479121948">(Oct 27 2024 at 10:18)</a>:</h4>
+<p>This is actually pretty generic, I like it.</p>
+
+
+
+<a name="479122086"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479122086" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479122086">(Oct 27 2024 at 10:20)</a>:</h4>
+<p>Though, you can't really use this to implement defaulting functions. How would you do <code>first [1, 2, 3]</code> and <code>first 2 [1, 2, 3]</code> with this? (not with type checking of the value, like <code>\nOrXs :: list | number: if type nOrXs == number ...</code>)</p>
+
+
+
+<a name="479122216"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479122216" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479122216">(Oct 27 2024 at 10:22)</a>:</h4>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="err">\</span><span class="ss">first</span> <span class="o">=</span> <span class="err">\</span>n <span class="p">::</span> number <span class="o">?</span> <span class="no">null</span><span class="p">:</span>
+  <span class="k">if</span> <span class="ss">n</span> <span class="o">==</span> <span class="no">null</span> <span class="k">then</span> <span class="c1"># didn't match, but we can't access the list either... it's totally ignored</span>
+    <span class="err">\</span><span class="p">[</span>x<span class="p">,</span> <span class="o">...</span><span class="p">]:</span> x <span class="c1"># now the user has to do `first [] [1, 2, 3]</span>
+  <span class="k">else</span>
+    getFirstN n<span class="p">;</span>
+</code></pre></div>
+
+
+
+<a name="479122740"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479122740" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479122740">(Oct 27 2024 at 10:32)</a>:</h4>
+<p>Huh, this actually doesn't make sense at all</p>
+
+
+
+<a name="479122762"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479122762" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479122762">(Oct 27 2024 at 10:32)</a>:</h4>
+<p><code>(n :: number) ? "foo"</code> what the hell are you even binding "foo" to?</p>
+
+
+
+<a name="479122777"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479122777" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479122777">(Oct 27 2024 at 10:32)</a>:</h4>
+<p>You can't possibly know, unless you invent extremely weird semantics</p>
+
+
+
+<a name="479122800"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479122800" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479122800">(Oct 27 2024 at 10:33)</a>:</h4>
+<p>Even then, what happens when you match this and it fails: <code>[1, ..., 99] ? "bar"</code></p>
+
+
+
+<a name="479122819"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479122819" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479122819">(Oct 27 2024 at 10:33)</a>:</h4>
+<p>I'll think about this more today, but this concept I thought of doesn't work</p>
+
+
+
+<a name="479123093"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479123093" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479123093">(Oct 27 2024 at 10:38)</a>:</h4>
+<p>Currently Cab lacks these things that are in Nix:</p>
+<ul>
+<li>attribute check <code>car ? headlight.lightbulb</code></li>
+<li>attribute default in lambda parameters <code>{ n ? 0 }: n ** n</code></li>
+<li>attribute default expressions <code>car.headlight.lightbulb or "nope"</code></li>
+</ul>
+
+
+
+<a name="479123240"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Fixing%20what%20Nix%20did%20wrong/near/479123240" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Fixing.20what.20Nix.20did.20wrong.html#479123240">(Oct 27 2024 at 10:41)</a>:</h4>
+<p>To avoid:</p>
+<h1>Funky semantics of <code>or</code> defaults</h1>
+<p><a href="/user_uploads/60244/d8STkj2lA-2dt3Tqp-6gpIr7/9ecca769-ccd8-4983-ab88-99fea13a2ef3.png">9ecca769-ccd8-4983-ab88-99fea13a2ef3.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/d8STkj2lA-2dt3Tqp-6gpIr7/9ecca769-ccd8-4983-ab88-99fea13a2ef3.png" title="9ecca769-ccd8-4983-ab88-99fea13a2ef3.png"><img data-original-dimensions="525x178" src="/user_uploads/thumbnail/60244/d8STkj2lA-2dt3Tqp-6gpIr7/9ecca769-ccd8-4983-ab88-99fea13a2ef3.png/840x560.webp"></a></div><p>Attribute select is not individual, which is wack. I don't want this behavior, I want the semantic equivalent of <code>(a.b).c or 1</code>.</p>
+<h1>Strings in attribute-check</h1>
+<p>Since strings are never used for identifiers in Cab, this isn't an issue. But might as well say this won't be a thing:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>myset <span class="o">?</span> <span class="s2">"attra"</span><span class="o">.</span>attrb<span class="o">.</span><span class="s2">"attrc"</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

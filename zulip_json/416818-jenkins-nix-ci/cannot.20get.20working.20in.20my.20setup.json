@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I'm trying to figure out how to use this within my own NixOS setup, but I'm having difficulties.  I am not using nix-parts or any of the other stuff.  I have a fairly simple flake and have added the  <code>inputs.jenkins-nix-ci.nixosModules.default</code> block to imports.   However, I'm getting errors.</p>",
+        "id": 421500232,
+        "sender_full_name": "shaun smiley",
+        "timestamp": 1707933087
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"error\"><pre><span></span><code>       … while calling the 'seq' builtin\n\n         at /nix/store/l6ymqz1y4fiy57xh6f3y23zwp0i9lr4f-source/lib/modules.nix:320:18:\n\n          319|         options = checked options;\n          320|         config = checked (removeAttrs config [ \"_module\" ]);\n             |                  ^\n          321|         _module = checked (config._module);\n\n       … while evaluating a branch condition\n\n         at /nix/store/l6ymqz1y4fiy57xh6f3y23zwp0i9lr4f-source/lib/modules.nix:261:9:\n\n          260|       checkUnmatched =\n          261|         if config._module.check &amp;&amp; config._module.freeformType == null &amp;&amp; merged.unmatchedDefns != [] then\n             |         ^\n          262|           let\n\n       (stack trace truncated; use '--show-trace' to show the full trace)\n\n       error: infinite recursion encountered\n\n       at /nix/store/l6ymqz1y4fiy57xh6f3y23zwp0i9lr4f-source/lib/modules.nix:506:28:\n\n          505|         builtins.addErrorContext (context name)\n          506|           (args.${name} or config._module.args.${name})\n             |                            ^\n          507|       ) (lib.functionArgs f);\n</code></pre></div>",
+        "id": 421500326,
+        "sender_full_name": "shaun smiley",
+        "timestamp": 1707933121
+    },
+    {
+        "content": "<p>Ah, I need to remove the <code>inputs.</code> within the imports block since I already pass that above. That was likely giving me the recursion error.</p>",
+        "id": 421502895,
+        "sender_full_name": "shaun smiley",
+        "timestamp": 1707933918
+    },
+    {
+        "content": "<p>Was it though?</p>",
+        "id": 421528363,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1707942965
+    },
+    {
+        "content": "<p>I also had to add sops as that seems to be a hard requirement. <br>\nBut, I am still getting strange errors.</p>",
+        "id": 421530287,
+        "sender_full_name": "shaun smiley",
+        "timestamp": 1707943780
+    },
+    {
+        "content": "<p><code>       error: attribute 'flake' missing\n</code></p>",
+        "id": 421530432,
+        "sender_full_name": "shaun smiley",
+        "timestamp": 1707943830
+    },
+    {
+        "content": "<p><code>flake</code> is passed by the <code>nixos-flake</code> module, so as to make the caller flake available to all modules.</p>\n<p><a href=\"https://github.com/srid/nixos-flake/blob/3891b2030114f8661402991eac9be0ed59f786ae/flake-module.nix#L9\">https://github.com/srid/nixos-flake/blob/3891b2030114f8661402991eac9be0ed59f786ae/flake-module.nix#L9</a></p>\n<p>If you are not using <code>flake-parts</code> (thus not using <code>nixos-flake</code>), you will have to manually pass these (via <code>specialArgs</code> or <code>_module.args.flake</code>).</p>",
+        "id": 421630600,
+        "sender_full_name": "Srid",
+        "timestamp": 1707995310
+    }
+]

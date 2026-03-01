@@ -1,0 +1,146 @@
+<html>
+<head><meta charset="utf-8"><title>Plan on integrating photoprism based on services-flake · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html">Plan on integrating photoprism based on services-flake</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="450102341"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450102341" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450102341">(Jul 09 2024 at 08:43)</a>:</h4>
+<p>Hello, <br>
+first of all, thanks for sharing an awesome project !</p>
+<p>I'm <a href="https://gist.github.com/573/8a2ccd5f1434866a73b8b858448479ae">curious</a> and <a href="https://github.com/573/services-flake/tree/photoprism">in the very process</a> of getting a photoprism service running.</p>
+<p>Currently I'm using <a href="https://github.com/GTrunSec/photoprism2nix/blob/main/flake.nix">this fine flake</a> of someone, with workarounds not worth detailling, but significantly enough to progress.</p>
+<p>So my question ought to be how I would model the mysql setup elaborated <a href="https://github.com/GTrunSec/photoprism2nix/blob/12addf3/flake.nix#L137">back there</a> using services flake ?</p>
+<p>Is <a href="https://github.com/nammayatri/location-tracking-service/blob/7b0de6de0a7e9960d75f125bca8e325182d74d85/nix/services.nix">process-compose</a> the right tool for me then ?</p>
+
+
+
+<a name="450204958"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450204958" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450204958">(Jul 09 2024 at 15:39)</a>:</h4>
+<p>process-compose is useful to manage services that run in foreground and mainly as a replacement for dev containers, to test your projects' integration with external services (during local development and CI). And also, you needn’t have to be on NixOS to run these services. </p>
+<p><code>photoprism</code> is a service that you will most likely host with an init system (like <code>systemd</code> or <code>launchd</code>) that runs in background. This should work nicely once we have <a href="https://github.com/juspay/services-flake/issues/239">https://github.com/juspay/services-flake/issues/239</a></p>
+
+
+
+<a name="450283169"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450283169" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450283169">(Jul 09 2024 at 20:49)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake/near/450204958">schrieb</a>:</p>
+<blockquote>
+<p>process-compose is useful to manage services that run in foreground and mainly as a replacement for dev containers, to test your projects' integration with external services (during local development and CI). And also, you needn’t have to be on NixOS to run these services. </p>
+<p><code>photoprism</code> is a service that you will most likely host with an init system (like <code>systemd</code> or <code>launchd</code>) that runs in background. This should work nicely once we have <a href="https://github.com/juspay/services-flake/issues/239">https://github.com/juspay/services-flake/issues/239</a></p>
+</blockquote>
+<p>I want to be able to run that on non-NixOS, that the involved services run in foreground is not an obstacle for me, so let's call it an exercise rather than an enhancement of services-flake.</p>
+
+
+
+<a name="450379745"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450379745" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450379745">(Jul 10 2024 at 08:14)</a>:</h4>
+<p>I don't know how production-ready that is, but this might be worth looking at: <a href="https://github.com/numtide/system-manager">https://github.com/numtide/system-manager</a></p>
+
+
+
+<a name="450379864"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450379864" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450379864">(Jul 10 2024 at 08:15)</a>:</h4>
+<p>Works on any non-NixOS distro as long as it is called Ubuntu they say <span aria-label="grinning face with smiling eyes" class="emoji emoji-1f601" role="img" title="grinning face with smiling eyes">:grinning_face_with_smiling_eyes:</span></p>
+
+
+
+<a name="450381121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450381121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450381121">(Jul 10 2024 at 08:21)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake/near/450379745">schrieb</a>:</p>
+<blockquote>
+<p>I don't know how production-ready that is, but this might be worth looking at: <a href="https://github.com/numtide/system-manager">https://github.com/numtide/system-manager</a></p>
+</blockquote>
+<p>Thanks for that link, I consider adding that to my exercise list than. That's actually systemd <code>--user</code>, why not ?<br>
+I have at least one use in the flake I use for my systems where that might work pretty well (using systemd-tmpfiles on I dare say Archlinux).</p>
+
+
+
+<a name="450384135"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450384135" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450384135">(Jul 10 2024 at 08:36)</a>:</h4>
+<blockquote>
+<p>That's actually systemd <code>--user</code></p>
+</blockquote>
+<p>Is it? Where did you get that from?</p>
+
+
+
+<a name="450385090"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450385090" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450385090">(Jul 10 2024 at 08:40)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake/near/450384135">schrieb</a>:</p>
+<blockquote>
+<blockquote>
+<p>That's actually systemd <code>--user</code></p>
+</blockquote>
+<p>Is it? Where did you get that from?</p>
+</blockquote>
+<p>Let's say I just very much hoped so from a glance at their <a href="https://github.com/numtide/system-manager/blob/4d33bfa43cc067dd6ea6a0e41115f27b50cd5a35/README.md?plain=1#L75">https://github.com/numtide/system-manager/blob/4d33bfa43cc067dd6ea6a0e41115f27b50cd5a35/README.md?plain=1#L75</a> ?</p>
+<p>How dare they set up non-user services when not on non-NixOS <span aria-label="rolling on the floor laughing" class="emoji emoji-1f923" role="img" title="rolling on the floor laughing">:rolling_on_the_floor_laughing:</span> ?</p>
+
+
+
+<a name="450385286"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450385286" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450385286">(Jul 10 2024 at 08:41)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake/near/450384135">schrieb</a>:</p>
+<blockquote>
+<blockquote>
+<p>That's actually systemd <code>--user</code></p>
+</blockquote>
+<p>Is it? Where did you get that from?</p>
+</blockquote>
+<p>but please you know more, tell me.</p>
+
+
+
+<a name="450385618"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450385618" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450385618">(Jul 10 2024 at 08:43)</a>:</h4>
+<p>I don't know, I haven't tried that thing. But it appears to need root permissions, so I'd guess is manages normal systemd services on Ubuntu?</p>
+
+
+
+<a name="450388376"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450388376" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450388376">(Jul 10 2024 at 08:59)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake/near/450385618">schrieb</a>:</p>
+<blockquote>
+<p>I don't know, I haven't tried that thing. But it appears to need root permissions, so I'd guess is manages normal systemd services on Ubuntu?</p>
+</blockquote>
+<p>Ah ok, then I can strike that from my list immediately, good to know. I was assuming your Ubuntu-remark fun, but with that information makes sense to me too.</p>
+
+
+
+<a name="450388779"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450388779" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450388779">(Jul 10 2024 at 09:00)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake/near/450385618">schrieb</a>:</p>
+<blockquote>
+<p>I don't know, I haven't tried that thing. But it appears to need root permissions, so I'd guess is manages normal systemd services on Ubuntu?</p>
+</blockquote>
+<p><a href="https://github.com/numtide/system-manager/blob/4d33bfa43cc067dd6ea6a0e41115f27b50cd5a35/src/main.rs#L438">https://github.com/numtide/system-manager/blob/4d33bfa43cc067dd6ea6a0e41115f27b50cd5a35/src/main.rs#L438</a> proof</p>
+
+
+
+<a name="450389869"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450389869" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> corocoton <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450389869">(Jul 10 2024 at 09:04)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake/near/450385618">schrieb</a>:</p>
+<blockquote>
+<p>I don't know, I haven't tried that thing. But it appears to need root permissions, so I'd guess is manages normal systemd services on Ubuntu?</p>
+</blockquote>
+<p>thx for the nitpick.</p>
+
+
+
+<a name="450449598"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Plan%20on%20integrating%20photoprism%20based%20on%20services-flake/near/450449598" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Plan.20on.20integrating.20photoprism.20based.20on.20services-flake.html#450449598">(Jul 10 2024 at 13:16)</a>:</h4>
+<blockquote>
+<p>I want to be able to run that on non-NixOS, that the involved services run in foreground is not an obstacle for me, so let's call it an exercise rather than an enhancement of services-flake.</p>
+</blockquote>
+<p><span class="user-mention" data-user-id="734915">@corocoton</span>  In that case, you can open an issue in <code>services-flake</code> to add the service and I can check it out when I get sometime.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

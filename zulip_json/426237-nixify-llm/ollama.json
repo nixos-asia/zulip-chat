@@ -1,0 +1,1712 @@
+[
+    {
+        "content": "<p><a href=\"/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/6Yx9iL-zo2-F6QebyZ9Dgcnv/image.png\"></a></div><p><a href=\"https://github.com/ollama/ollama\">https://github.com/ollama/ollama</a></p>\n<p>You can run it from nixpkgs. Run these two commands in separate terminals:</p>\n<div class=\"codehilite\"><pre><span></span><code>nix run nixpkgs#ollama serve\n</code></pre></div>\n<div class=\"codehilite\"><pre><span></span><code>nix run nixpkgs#ollama run llama2-uncensored\n</code></pre></div>\n<p>Works on macOS, at least.</p>\n<p>(The query I used to test the model is inspired by the one Musk used to demonstrate Grok)</p>",
+        "id": 422467380,
+        "sender_full_name": "Srid",
+        "timestamp": 1708450185
+    },
+    {
+        "content": "<p>Well it might work if ROCm works. Which it doesn't if I try. So I would probably have to build a shell for ROCm or something. Otherwise I will be using CPU...</p>",
+        "id": 422471452,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708451653
+    },
+    {
+        "content": "<p>In case anyone likes to try this on AMD, here is the command to create a nice running docker container on Linux: </p>\n<div class=\"codehilite\"><pre><span></span><code>docker run -d --privileged --device /dev/kfd -v ollama:/root/.ollama -p 11434:11434 -e OLLAMA_DEBUG=1 -e ROCR_VISIBLE_DEVICES=&quot;0&quot; -e HSA_OVERRIDE_GFX_VERSION=10.3.0 --name ollama ollama/ollama:0.1.24-rocm\n</code></pre></div>\n<p>The HSA_OVERRIDE_GFX_VERSION=10.3.0 environment variable is only needed if your GPU is not offically supported by ROCm. Which is most consumer and workstation GPUs actually, except a handful. Depending on the GPU it might or might not work.</p>\n<p>And then you can do a </p>\n<div class=\"codehilite\"><pre><span></span><code>docker exec -it ollama ollama run llama2\n</code></pre></div>\n<p>Or whatever model you want to run</p>",
+        "id": 422472224,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708451938
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> Does the docker container run do anything special compared to pure Nix instance (<code>nix run ..</code>) above?</p>",
+        "id": 422472882,
+        "sender_full_name": "Srid",
+        "timestamp": 1708452165
+    },
+    {
+        "content": "<p>well it has ROCm installed obviously so that the GPU can use it. However that is just the container for ROCm they provide. Juding from the dockerfile in the ollama GitHub repo, they build them on the basis of some CentOS images provides by AMD. </p>\n<p>These in turn have their own repo, which I presume to be this one: <a href=\"https://github.com/ROCm/ROCm-docker\">https://github.com/ROCm/ROCm-docker</a></p>",
+        "id": 422474015,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708452560
+    },
+    {
+        "content": "<p>This here might be the dockerfile for the base image on top of which ollama is compiling their GO binary:</p>\n<p><a href=\"https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete\">https://github.com/ROCm/ROCm-docker/blob/master/dev/Dockerfile-centos-7-complete</a></p>",
+        "id": 422474741,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708452808
+    },
+    {
+        "content": "<p>I created a <code>process-compose-flake-module</code> for <code>ollama</code>, this is for a personal project that I am working on and here’s how easy it is to setup:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  services<span class=\"o\">.</span><span class=\"ss\">ollama</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n      <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n      <span class=\"ss\">host</span> <span class=\"o\">=</span> <span class=\"s2\">\"100.71.49.133\"</span><span class=\"p\">;</span>\n      <span class=\"c1\"># TODO: adding more than one model breaks in shellcheck</span>\n      <span class=\"ss\">models</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"llama2-uncensored\"</span> <span class=\"p\">];</span>\n   <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 429110544,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711224021
+    },
+    {
+        "content": "<p><code>nix run ...</code> cmd?</p>",
+        "id": 429110618,
+        "sender_full_name": "Srid",
+        "timestamp": 1711224067
+    },
+    {
+        "content": "<p>I will upstream this to services-flake, it is right now in the private repo as a module. </p>\n<p>More about the project soon.</p>",
+        "id": 429110791,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711224195
+    },
+    {
+        "content": "<p>Here it is: <a href=\"https://github.com/juspay/services-flake/pull/137\">https://github.com/juspay/services-flake/pull/137</a></p>",
+        "id": 429112943,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711225844
+    },
+    {
+        "content": "<p>The nix run command is a bit long though:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code><span class=\"w\"> </span>nix<span class=\"w\"> </span>run<span class=\"w\"> </span><span class=\"s2\">\"github:juspay/services-flake/ollama?dir=test\"</span><span class=\"c1\">#ollama --override-input services-flake github:juspay/services-flake/ollama</span>\n</code></pre></div>\n<p>This starts up ollama server with no models though, let me use a smaller sample model in test.</p>",
+        "id": 429113137,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711225956
+    },
+    {
+        "content": "<p><a href=\"https://ollama.com/library/tinyllama\">https://ollama.com/library/tinyllama</a> looks like a good candidate</p>",
+        "id": 429113264,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711226078
+    },
+    {
+        "content": "<p>Oh wait, I can’t really pull models in flake check because of sandbox mode. I think these models will have to be pre-fetched by another derivation.</p>",
+        "id": 429113642,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711226409
+    },
+    {
+        "content": "<p>A separate repo, that uses services-flake module, to provide a single <code>nix run ..</code> to get some of these models up running, including a chat interface even, would be cool.</p>",
+        "id": 429113660,
+        "sender_full_name": "Srid",
+        "timestamp": 1711226446
+    },
+    {
+        "content": "<p><a href=\"https://github.com/F1bonacc1/process-compose/issues/64\">https://github.com/F1bonacc1/process-compose/issues/64</a> I can provide a single nix run command this, basically allowing users to interact with the chat process in the process-compose window</p>",
+        "id": 429115404,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711227772
+    },
+    {
+        "content": "<p><a href=\"https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517\">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>\n<p>I will try it out with 0.88.0</p>",
+        "id": 429115425,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711227796
+    },
+    {
+        "content": "<p>Curious if there's a chat bot web app that can interact with ollama</p>",
+        "id": 429115680,
+        "sender_full_name": "Srid",
+        "timestamp": 1711228041
+    },
+    {
+        "content": "<p>There is this on top of search result: <a href=\"https://github.com/HelgeSverre/ollama-gui\">https://github.com/HelgeSverre/ollama-gui</a></p>",
+        "id": 429115894,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228192
+    },
+    {
+        "content": "<p>Let's ship it. Gonna be a rad demo of services-flake.</p>",
+        "id": 429115972,
+        "sender_full_name": "Srid",
+        "timestamp": 1711228243
+    },
+    {
+        "content": "<p><a href=\"https://github.com/open-webui/open-webui\">https://github.com/open-webui/open-webui</a> there’s also this (much more popular), but looks like it is bloated with a lot of features.</p>",
+        "id": 429116013,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228296
+    },
+    {
+        "content": "<p>I will give both the UIs a shot though</p>",
+        "id": 429116121,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228381
+    },
+    {
+        "content": "<p>I will try this tomorrow, going to get some sleep now</p>",
+        "id": 429116433,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711228566
+    },
+    {
+        "content": "<p><a href=\"https://github.com/NixOS/nixpkgs/pull/275448\">https://github.com/NixOS/nixpkgs/pull/275448</a></p>",
+        "id": 429116456,
+        "sender_full_name": "Srid",
+        "timestamp": 1711228597
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/429115425\">said</a>:</p>\n<blockquote>\n<p><a href=\"https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517\">https://github.com/F1bonacc1/process-compose/issues/64#issuecomment-1974895517</a></p>\n<p>I will try it out with 0.88.0</p>\n</blockquote>\n<p>Update: I didn’t notice that the STDIN support is not there, so even with the current PTY support, this isn’t possible in the process-compose window. Gotta take the WebUI route, anyways, the webui demo will be much cooler.</p>",
+        "id": 429117121,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711229050
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png\">Screenshot-2024-03-25-at-11.47.58PM.png</a><br>\nI have the UI running, it involved a lot of hacks to get it running because of the way open-webui uses the python backend.</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png\" title=\"Screenshot-2024-03-25-at-11.47.58PM.png\"><img src=\"/user_uploads/60244/Lf4TeQpHpBqZT3qPMXF709ZJ/Screenshot-2024-03-25-at-11.47.58PM.png\"></a></div>",
+        "id": 429590092,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711433921
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>run<span class=\"w\"> </span>github:shivaraj-bh/nixify-ollama\n</code></pre></div>",
+        "id": 430517242,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711928750
+    },
+    {
+        "content": "<p>Unsurprisingly it does not use the GPU on my machine. We'd probably have to add all the ROCm related components.</p>",
+        "id": 430565055,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711962355
+    },
+    {
+        "content": "<p>But other than that, nice work!</p>",
+        "id": 430565113,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711962369
+    },
+    {
+        "content": "<p>oh I was a bit too quick: webui cannot find any models on my end...</p>",
+        "id": 430565685,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711962659
+    },
+    {
+        "content": "<p>I faced this problem, I had to manually change the ollama server url and press on the refresh button. Will look for a way to fix this</p>",
+        "id": 430578950,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711970488
+    },
+    {
+        "content": "<p>Anyways, open-webui is a bit too much, I am looking for a simper UI, which is easier to setup</p>",
+        "id": 430578983,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711970512
+    },
+    {
+        "content": "<p>open-webui actually looks quite nice. I personally use my containerized ollama with other clients though.</p>",
+        "id": 430579062,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711970544
+    },
+    {
+        "content": "<p>maybe we can work at making this ollama flake compatible with ROCm at some point. Did you test it with CUDA?</p>",
+        "id": 430579092,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711970567
+    },
+    {
+        "content": "<p>GPU acceleration is next on my list after I get this UI to work out of the box.</p>",
+        "id": 430579227,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711970653
+    },
+    {
+        "content": "<p>I mean it should just pick up the GPU if available. It's just that I don't keep the ROCm libraries on my system if I don't need them specifically. So there is not much to be found.</p>",
+        "id": 430579298,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711970714
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430579062\">said</a>:</p>\n<blockquote>\n<p>open-webui actually looks quite nice. I personally use my containerized ollama with other clients though.</p>\n</blockquote>\n<p>Yes, it does. I only hate how I can’t configure things like disabling web auth. When I am using it in my private network, or for development, I don’t really need it.</p>",
+        "id": 430579311,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711970724
+    },
+    {
+        "content": "<blockquote>\n<p>I only hate how I can’t configure things like disabling web auth</p>\n</blockquote>\n<p>Yes, it appears to have feature you might rather want for a somewhat larger deployment, like load balancing and such</p>",
+        "id": 430579735,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711970994
+    },
+    {
+        "content": "<blockquote>\n<p>oh I was a bit too quick: webui cannot find any models on my end…</p>\n</blockquote>\n<p><a href=\"/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png\">Screenshot-2024-04-01-at-4.58.42PM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png\" title=\"Screenshot-2024-04-01-at-4.58.42PM.png\"><img src=\"/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png\"></a></div><p>The problem appears to be that I am not prefixing the protocol before the IP, as soon as i do that, it starts working. I will fix it</p>",
+        "id": 430579873,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711971087
+    },
+    {
+        "content": "<p>I have also included an <code>Up Next</code> section in README: <a href=\"https://github.com/shivaraj-bh/nixify-ollama/blob/main/README.md\">https://github.com/shivaraj-bh/nixify-ollama/blob/main/README.md</a></p>\n<p>To track what I will be doing next</p>",
+        "id": 430580414,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711971467
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430579873\">said</a>:</p>\n<blockquote>\n<blockquote>\n<p>oh I was a bit too quick: webui cannot find any models on my end…</p>\n</blockquote>\n<p><a href=\"/user_uploads/60244/cly4hObi5VcjXtZPwOeJPv4n/Screenshot-2024-04-01-at-4.58.42PM.png\">Screenshot-2024-04-01-at-4.58.42PM.png</a></p>\n<p>The problem appears to be that I am not prefixing the protocol before the IP, as soon as i do that, it starts working. I will fix it</p>\n</blockquote>\n<p>I have <a href=\"https://github.com/shivaraj-bh/nixify-ollama/commit/11f598a6ea40bb136ceaf58efdef242b58faebe6\">fixed it</a>, select model should now work without requiring any hacks</p>",
+        "id": 430583672,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711973524
+    },
+    {
+        "content": "<p>Yes, it's working now. Just a bit slow for my taste on CPU.</p>",
+        "id": 430622206,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711988670
+    },
+    {
+        "content": "<p>but we are getting there</p>",
+        "id": 430622248,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711988682
+    },
+    {
+        "content": "<p>I might look and see if I can get it to run with ROCm. So far I am only using containers for ROCm. But the stuff should all be in nixpkgs.</p>",
+        "id": 430622368,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711988715
+    },
+    {
+        "content": "<p>Yes, I will continue working tomorrow. I am going to hit the sack for the day</p>",
+        "id": 430624923,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711989469
+    },
+    {
+        "content": "<p>yeah it's somewhat late already where you are <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 430625130,
+        "sender_full_name": "Andreas",
+        "timestamp": 1711989519
+    },
+    {
+        "content": "<p>I decided to create an issue on your repo for ROCm support <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span></p>",
+        "id": 430838740,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712078512
+    },
+    {
+        "content": "<p>Yup, I was checking out macOS support today, while I was in parallel setting up my new machine with Nvidia drivers to try out GPU acceleration</p>",
+        "id": 430839409,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712078778
+    },
+    {
+        "content": "<p>I don’t have AMD hardware to test out ROCm, but I suppose I can test it on some cheap cloud instances</p>",
+        "id": 430839881,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712078956
+    },
+    {
+        "content": "<p>that is nice, maybe we can adapt the Nvidia settings to run AMD stuff. Nice thing about ROCm is that it's just running on top of the AMDGPU kernel drivers.</p>",
+        "id": 430839892,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712078962
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430839881\">said</a>:</p>\n<blockquote>\n<p>I don’t have AMD hardware to test out ROCm, but I suppose I can test it on some cheap cloud instances</p>\n</blockquote>\n<p>Or I'd be the one testing it.</p>",
+        "id": 430839941,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712078984
+    },
+    {
+        "content": "<p>Is there an easy way to export an environment variable depending on the user's GPU architecture?</p>",
+        "id": 430841267,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712079459
+    },
+    {
+        "content": "<p>Also, since I am on a multi GPU system, I'd need a way to set the GPU that ollama is to be using. In docker that is fairly easy to do. I wonder how to do this here.</p>",
+        "id": 430841420,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712079505
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430841267\">said</a>:</p>\n<blockquote>\n<p>Is there an easy way to export an environment variable depending on the user's GPU architecture?</p>\n</blockquote>\n<p>What would this environment variable be used for?</p>",
+        "id": 430843692,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712080327
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430841420\">said</a>:</p>\n<blockquote>\n<p>Also, since I am on a multi GPU system, I'd need a way to set the GPU that ollama is to be using. In docker that is fairly easy to do. I wonder how to do this here.</p>\n</blockquote>\n<p>How does one do this in docker? Multi-gpu scenario is new to me as well, so gotta play around with it a bit</p>",
+        "id": 430843858,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712080399
+    },
+    {
+        "content": "<p>Yes, so on the env variable front most user will have to set <code>HSA_OVERRIDE_GFX_VERSION=10.3.0</code> if they are on RDNA2 or RDNA arch GPUs. On RDNA3 this will be a different value. And it might not be needed if the GPU is officially supported by ROCm (which only very few are outside the data center).</p>\n<p>For selecting the second GPU in my machine, I pass <code>--device /dev/kfd</code> and <code>--device /dev/dri/renderD129</code> to the container. While <code>--device /dev/dri/renderD128</code> would select the first GPU.</p>\n<p>In addition I set the <code>ROCR_VISIBLE_DEVICES</code> to either <code>0</code> or <code>1</code>, which, I think, is there for isolating the GPUs.</p>",
+        "id": 430844580,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712080666
+    },
+    {
+        "content": "<p>Does ollama detect the GPU correctly inside a docker container?</p>",
+        "id": 430846206,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712081197
+    },
+    {
+        "content": "<p>yes, no issues. I am using ollama's own container images. They are probably built on top of AMD's official images for ROCm.</p>",
+        "id": 430848989,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712082233
+    },
+    {
+        "content": "<p>I think a big benefit of having this running via Nix would be a reduced footprint compared to these somewhat massive ROCm container images.</p>",
+        "id": 430849559,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712082450
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>ollama/ollama   0.1.24-rocm  9d567aacf463   7 weeks ago    20.9GB\n</code></pre></div>\n<p>That is the last image I pulled. Smaller might be better <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span></p>",
+        "id": 430849761,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712082520
+    },
+    {
+        "content": "<p>I might have to look at how the container images are built, but I am quite certain it should be possible on native as well.</p>",
+        "id": 430849925,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712082579
+    },
+    {
+        "content": "<p>it should be, yes</p>\n<p>I have just seen that they added a bit more documentation to their images:</p>\n<p><a href=\"https://hub.docker.com/r/bergutman/ollama-rocm\">https://hub.docker.com/r/bergutman/ollama-rocm</a></p>",
+        "id": 430850138,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712082648
+    },
+    {
+        "content": "<p>ah no, this is not the offical one</p>",
+        "id": 430850211,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712082674
+    },
+    {
+        "content": "<p>I guess this should be the official dockerfile:</p>\n<p><a href=\"https://github.com/ollama/ollama/blob/main/Dockerfile\">https://github.com/ollama/ollama/blob/main/Dockerfile</a></p>",
+        "id": 430850405,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712082748
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430849761\">said</a>:</p>\n<blockquote>\n<div class=\"codehilite\"><pre><span></span><code>ollama/ollama   0.1.24-rocm  9d567aacf463   7 weeks ago    20.9GB\n</code></pre></div>\n<p>That is the last image I pulled. Smaller might be better <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span></p>\n</blockquote>\n<p>Damn, I just noticed the image size is 20GB</p>",
+        "id": 430856135,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712084998
+    },
+    {
+        "content": "<p>yes, and since I already have multiple such images for different apps, you can see how that can easily become a bit cumbersome. Let's just say the image size is one of the many places AMD's ROCm could use some optimization.</p>\n<p>But I am happy that is working more or less nicely out of the box now. That is already a big thing. So they might get there eventually.</p>",
+        "id": 430856388,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712085098
+    },
+    {
+        "content": "<p>It might just be very simple to enable ROCm, I am trying something out with CUDA, if that works out, I will post here and you can tell me if it works for you</p>",
+        "id": 430862540,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712087578
+    },
+    {
+        "content": "<p>the only CUDA device I have is my laptop GPU with 2GB of VRAM. So you'd need to set a very small model for that. (Btw. defining models more dynamically might also be a nice add-on for this)</p>",
+        "id": 430863301,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712087853
+    },
+    {
+        "content": "<p>but once you have a CUDA implementation going, I can see if I can derive a ROCm implementation from that one</p>",
+        "id": 430863360,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712087878
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430862540\">said</a>:</p>\n<blockquote>\n<p>It might just be very simple to enable ROCm, I am trying something out with CUDA, if that works out, I will post here and you can tell me if it works for you</p>\n</blockquote>\n<p>my bad, I wasn’t clear here.</p>\n<p>This is what I am trying for CUDA:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>services<span class=\"o\">.</span>ollama<span class=\"o\">.</span><span class=\"s2\">\"ollama\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n   <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n   <span class=\"ss\">package</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>ollama<span class=\"o\">.</span>override <span class=\"p\">{</span> <span class=\"ss\">acceleration</span> <span class=\"o\">=</span> <span class=\"s2\">\"cuda\"</span><span class=\"p\">;</span> <span class=\"p\">};</span>\n   <span class=\"ss\">host</span> <span class=\"o\">=</span> <span class=\"s2\">\"0.0.0.0\"</span><span class=\"p\">;</span>\n    <span class=\"ss\">models</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"llama2-uncensored\"</span> <span class=\"p\">];</span>\n<span class=\"p\">};</span>\n</code></pre></div>\n<p>What I want you to try is:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>services<span class=\"o\">.</span>ollama<span class=\"o\">.</span><span class=\"s2\">\"ollama\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n   <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n   <span class=\"ss\">package</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>ollama<span class=\"o\">.</span>override <span class=\"p\">{</span> <span class=\"ss\">acceleration</span> <span class=\"o\">=</span> <span class=\"err\">“</span>rocm<span class=\"s2\">\"; };</span>\n<span class=\"s2\">   host = \"</span><span class=\"mf\">0.0.0.0</span><span class=\"s2\">\";</span>\n<span class=\"s2\">    models = [ \"</span>llama2-uncensored<span class=\"s2\">\" ];</span>\n<span class=\"s2\">};</span>\n</code></pre></div>",
+        "id": 430863926,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712088091
+    },
+    {
+        "content": "<p>okay, but for that I'd need to actually provide the ROCm libraries somewhere, right? Otherwise there is nothing to pick up. Also ollama should detect that automatically, if it has been compiled with ROCm support. At least I believe it should.</p>",
+        "id": 430864155,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712088163
+    },
+    {
+        "content": "<blockquote>\n<p>but for that I'd need to actually provide the ROCm libraries somewhere, right? </p>\n</blockquote>\n<p>nixpkgs does it for you: <a href=\"https://github.com/NixOS/nixpkgs/blob/8a22284f51fcd7771ee65ba124175bf9b90505ad/pkgs/tools/misc/ollama/default.nix#L51-L62\">https://github.com/NixOS/nixpkgs/blob/8a22284f51fcd7771ee65ba124175bf9b90505ad/pkgs/tools/misc/ollama/default.nix#L51-L62</a></p>",
+        "id": 430864265,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712088219
+    },
+    {
+        "content": "<blockquote>\n<p>package = pkgs.ollama.override { acceleration = “rocm\"; };</p>\n</blockquote>\n<p>when you use the above override it will build ollama again with rocm libraries in its env, atleast that is what I believe it does.</p>",
+        "id": 430864401,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712088274
+    },
+    {
+        "content": "<p>alright, I will clone the repo and try if that works tomorrow</p>",
+        "id": 430864594,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712088350
+    },
+    {
+        "content": "<p>after the override for cuda, ollama detected the libraries:<br>\n(from the logs of <code>ollama serve</code>)</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code><span class=\"nv\">time</span><span class=\"o\">=</span><span class=\"m\">2024</span>-04-02T20:07:05.102Z<span class=\"w\"> </span><span class=\"nv\">level</span><span class=\"o\">=</span>INFO<span class=\"w\"> </span><span class=\"nv\">source</span><span class=\"o\">=</span>gpu.go:237<span class=\"w\"> </span><span class=\"nv\">msg</span><span class=\"o\">=</span><span class=\"s2\">\"Discovered GPU libraries: [/nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67]\"</span>\n</code></pre></div>\n<p>but it fails at a later stage: </p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nvmlInit_v2<span class=\"w\"> </span>err:<span class=\"w\"> </span><span class=\"m\">18</span>\n<span class=\"nv\">time</span><span class=\"o\">=</span><span class=\"m\">2024</span>-04-02T20:07:05.106Z<span class=\"w\"> </span><span class=\"nv\">level</span><span class=\"o\">=</span>INFO<span class=\"w\"> </span><span class=\"nv\">source</span><span class=\"o\">=</span>gpu.go:249<span class=\"w\"> </span><span class=\"nv\">msg</span><span class=\"o\">=</span><span class=\"s2\">\"Unable to load CUDA management library /nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67: nvml vram init failure: 18\"</span>\n</code></pre></div>\n<p>I will investigate this tomorrow</p>",
+        "id": 430865110,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712088564
+    },
+    {
+        "content": "<p>I am suspecting now already that for ROCm you might need other components too. Like <code>rocmPackages.rocm-runtime</code> for instance, or <code>rocmPackages.rocm-smi</code> maybe. Not sure.</p>",
+        "id": 430865347,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712088653
+    },
+    {
+        "content": "<p>Yup, let’s check that out tomorrow. I will head out for today</p>",
+        "id": 430865637,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712088780
+    },
+    {
+        "content": "<p>/me hasn't had a chance check this out because he is yet to find a reliable internet connection in Australia</p>",
+        "id": 430867659,
+        "sender_full_name": "Srid",
+        "timestamp": 1712089624
+    },
+    {
+        "content": "<p>macOS support is still a WIP for the open-webui backend, works well on linux for now. It is because the lock.json only locks for one platform atm. I have to switch to pdm for package management instead of pip, ensuring multi-platform support.</p>",
+        "id": 430872215,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712091430
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430865110\">said</a>:</p>\n<blockquote>\n<p>after the override for cuda, ollama detected the libraries:<br>\n(from the logs of <code>ollama serve</code>)</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code><span class=\"nv\">time</span><span class=\"o\">=</span><span class=\"m\">2024</span>-04-02T20:07:05.102Z<span class=\"w\"> </span><span class=\"nv\">level</span><span class=\"o\">=</span>INFO<span class=\"w\"> </span><span class=\"nv\">source</span><span class=\"o\">=</span>gpu.go:237<span class=\"w\"> </span><span class=\"nv\">msg</span><span class=\"o\">=</span><span class=\"s2\">\"Discovered GPU libraries: [/nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67]”</span>\n</code></pre></div>\n<p>but it fails at a later stage: </p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nvmlInit_v2<span class=\"w\"> </span>err:<span class=\"w\"> </span><span class=\"m\">18</span>\n<span class=\"nv\">time</span><span class=\"o\">=</span><span class=\"m\">2024</span>-04-02T20:07:05.106Z<span class=\"w\"> </span><span class=\"nv\">level</span><span class=\"o\">=</span>INFO<span class=\"w\"> </span><span class=\"nv\">source</span><span class=\"o\">=</span>gpu.go:249<span class=\"w\"> </span><span class=\"nv\">msg</span><span class=\"o\">=</span><span class=\"s2\">\"Unable to load CUDA management library /nix/store/ikmrvm9hp2j7mka3li49cycx8mzbw080-nvidia-x11-550.67-6.6.23/lib/libnvidia-ml.so.550.67: nvml vram init failure: 18”</span>\n</code></pre></div>\n<p>I will investigate this tomorrow</p>\n</blockquote>\n<p><span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> turns out it was just incompatibility between the driver version installed on my system vs the respective library exposed to ollama by the override. I matched them and now it works <span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span></p>",
+        "id": 430872515,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712091572
+    },
+    {
+        "content": "<p>The speed difference is huge, like 20x. On my CPU I get about 10-11 tokens/second and with RTX 3070 8GB vram mobile GPU, I get about 200-210 tokens/second</p>",
+        "id": 430872782,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712091656
+    },
+    {
+        "content": "<p>Wait, The token per second is for prompt eval, generation eval is much slower for both of them. For CPU it is 3.9 tokens/second and for GPU it is 24.7 tokens/seconds, about 10x better on GPU.</p>",
+        "id": 430874851,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712092447
+    },
+    {
+        "content": "<p>yes, I will try later today. Where can you see the generation speed btw.?</p>",
+        "id": 430949971,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712133856
+    },
+    {
+        "content": "<p>but the huge speed increase is to be expected. That's why I wanted GPU to work so badly. <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span></p>",
+        "id": 430950120,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712133891
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430949971\">said</a>:</p>\n<blockquote>\n<p>yes, I will try later today. Where can you see the generation speed btw.?</p>\n</blockquote>\n<p>You can find it in the logs of <code>ollama serve</code> process after a request is complete. I am thinking of exposing a benchmark script that can be run to compare numbers on different hardware.</p>",
+        "id": 430951307,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712134241
+    },
+    {
+        "content": "<p>ah so it's in the logs. I never bothered to look at them so far. But I'd like to compare my two AMD cards with your Nvidia 3070.</p>\n<p>Also speed will depend on the model I guess. You are still using llama-7b-uncensored, right?</p>",
+        "id": 430951537,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712134317
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/430951537\">said</a>:</p>\n<blockquote>\n<p>ah so it's in the logs. I never bothered to look at them so far. But I'd like to compare my two AMD cards with your Nvidia 3070.</p>\n<p>Also speed will depend on the model I guess. You are still using llama-7b-uncensored, right?</p>\n</blockquote>\n<p>Yup, I am using llama-7b-uncensored. I tried with llama-70b-uncensored on my GPU, it is extremely slow, like 0.3-0.5 tokens/second</p>",
+        "id": 430952101,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712134473
+    },
+    {
+        "content": "<p>Didn’t even bother trying on CPU</p>",
+        "id": 430952276,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712134527
+    },
+    {
+        "content": "<p>I will start playing around in the night today, after I am done with work</p>",
+        "id": 430952577,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712134616
+    },
+    {
+        "content": "<p>Actually you did bother trying on CPU. <span aria-label=\"big smile\" class=\"emoji emoji-1f604\" role=\"img\" title=\"big smile\">:big_smile:</span> </p>\n<p>Because ollama most likely did fall back to CPU as you ran out of VRAM with your 8 GB.</p>",
+        "id": 430952847,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712134691
+    },
+    {
+        "content": "<p>but for smaller models, there are quite a few capable models for code-related tasks that fit into 8GB of VRAM. And even a good amount that might fit my 2 GB of VRAM on my somewhat older laptop.</p>",
+        "id": 430953097,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712134755
+    },
+    {
+        "content": "<blockquote>\n<p>Because ollama most likely did fall back to CPU as you ran out of VRAM with your 8 GB.</p>\n</blockquote>\n<p>Right, that makes sense.</p>",
+        "id": 430958463,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712136226
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/Lb9ZzETtGb-OJZMBn7U9Rrdb/E972A83F-3126-43BE-B30F-BC656E551C9A.jpg\">E972A83F-3126-43BE-B30F-BC656E551C9A.jpg</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/Lb9ZzETtGb-OJZMBn7U9Rrdb/E972A83F-3126-43BE-B30F-BC656E551C9A.jpg\" title=\"E972A83F-3126-43BE-B30F-BC656E551C9A.jpg\"><img src=\"/user_uploads/60244/Lb9ZzETtGb-OJZMBn7U9Rrdb/E972A83F-3126-43BE-B30F-BC656E551C9A.jpg\"></a></div><p>Now, I can access it on my phone as well</p>",
+        "id": 430974051,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712141319
+    },
+    {
+        "content": "<p>I am right now trying this snippet of code:</p>\n<div class=\"codehilite\"><pre><span></span><code>services.ollama.&quot;ollama&quot; = {\n   enable = true;\n   package = pkgs.ollama.override { acceleration = “rocm&quot;; };\n   host = &quot;0.0.0.0&quot;;\n    models = [ &quot;llama2-uncensored&quot; ];\n};\n</code></pre></div>\n<p>However the result is that Nix wants to compile rocblas-6.0.2 from source... or at least that what my CPU fans sound like. Not ideal. I tried compiling the ROCm stack from source once. I have a Ryzen 3900x, but even with that machine this will take several hours, depending on how much it needs to compile. </p>\n<p>That being said, how can I specify runtime dependencies for the service I am declaring? Because I have a feeling I might need some, as I do not have ROCm runtime packages available on my system by default.</p>",
+        "id": 431004147,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712151102
+    },
+    {
+        "content": "<p>I will let it do it's building and see what happens (most likely it will not work, since... ROCm)</p>",
+        "id": 431005266,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712151419
+    },
+    {
+        "content": "<blockquote>\n<p>However the result is that Nix wants to compile rocblas-6.0.2 from source</p>\n</blockquote>\n<p>assuming you are on x86_64-linux, it should be coming from cache: <a href=\"https://hydra.nixos.org/build/254389608\">https://hydra.nixos.org/build/254389608</a></p>",
+        "id": 431010566,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712152814
+    },
+    {
+        "content": "<p>that would make sense, however it did not</p>",
+        "id": 431010718,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712152849
+    },
+    {
+        "content": "<p>right now it is stuck for some reason for the last 10 min so telling me:</p>\n<p><code>[1/1/10 built, 57 copied (9806.3/9806.5 MiB), 1089.1 MiB DL] building rocblas-6.0.2 (buildPhase): 4 warnings generated when compiling for gfx942.</code></p>\n<p>I will wait a bit longer and see if it back up on its feet again</p>",
+        "id": 431011020,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712152922
+    },
+    {
+        "content": "<blockquote>\n<p>I will let it do it's building and see what happens (most likely it will not work, since... ROCm)</p>\n</blockquote>\n<p>The only problem I would see is the mismatch of versions between drivers installed on your OS with that of rocmPackages in the nixpkgs commit we are using in nixify-ollama’s flake.nix</p>",
+        "id": 431011160,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712152947
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431011020\">said</a>:</p>\n<blockquote>\n<p>right now it is stuck for some reason for the last 10 min so telling me:</p>\n<p><code>[1/1/10 built, 57 copied (9806.3/9806.5 MiB), 1089.1 MiB DL] building rocblas-6.0.2 (buildPhase): 4 warnings generated when compiling for gfx942.</code></p>\n<p>I will wait a bit longer and see if it back up on its feet again</p>\n</blockquote>\n<p>It definitely is building from scratch, not a good sign.</p>",
+        "id": 431011275,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712152984
+    },
+    {
+        "content": "<blockquote>\n<p>mismatch of versions between drivers installed on your OS</p>\n</blockquote>\n<p>The drivers are the Linux kernel drivers for my kernel version. Which is the LTS kernel 6.1.82 right now.</p>\n<blockquote>\n<p>It definitely is building from scratch, not a good sign.</p>\n</blockquote>\n<p>Might this be due to the ollama package being overridden in the nixify flake?</p>",
+        "id": 431011413,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712153026
+    },
+    {
+        "content": "<blockquote>\n<p>Might this be due to the ollama package being overridden in the nixify flake?</p>\n</blockquote>\n<p>That should rebuild only the ollama package and not the rocmPackages</p>",
+        "id": 431012598,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712153308
+    },
+    {
+        "content": "<p>okay, my base system is on NixOS stable, not unstable. Would that have an impact here?</p>",
+        "id": 431012788,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712153347
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431012788\">said</a>:</p>\n<blockquote>\n<p>okay, my base system is on NixOS stable, not unstable. Would that have an impact here?</p>\n</blockquote>\n<p>probably, let’s wait for it to build. In any case, you can override rocmPackages as well (to match your system’s stable release), so not a problem</p>",
+        "id": 431013250,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712153452
+    },
+    {
+        "content": "<p>since it's not moving anywhere, I decided to cancel it now</p>",
+        "id": 431018854,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712154938
+    },
+    {
+        "content": "<p>yes, that is a bit of a sad state if Nix wants to rebuild stuff from scratch</p>",
+        "id": 431018986,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712154966
+    },
+    {
+        "content": "<p>but since your flake itself uses nixpkgs unstable, normally it should pull in the binaries nonetheless, right?</p>",
+        "id": 431019241,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712155041
+    },
+    {
+        "content": "<p>okay, so now I decided to downgrade your flake to the NixOS-23.11 branch, and now it is only compiling ollama itself.</p>",
+        "id": 431065629,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712155520
+    },
+    {
+        "content": "<p>okay, so it compiled, but the webui now gets me an internal server error when trying to talk to model.</p>",
+        "id": 431142442,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712165361
+    },
+    {
+        "content": "<p>When I do a </p>\n<div class=\"codehilite\"><pre><span></span><code>curl http://localhost:11434/api/generate -d &#39;{\n  &quot;model&quot;: &quot;llama2-uncensored&quot;,\n  &quot;prompt&quot;:&quot;Why is the sky blue?&quot;\n}&#39;\n</code></pre></div>\n<p>I get <code>curl: (52) Empty reply from server</code></p>",
+        "id": 431143108,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712165639
+    },
+    {
+        "content": "<p>when I run that on my docker llama2, there is no issue, I get a stream of individual response tokens</p>",
+        "id": 431143597,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712165827
+    },
+    {
+        "content": "<p>how would I set the environment for the process compose flake services? I'd say passing <code>OLLAMA_DEBUG=1</code> might help find out what isn't moving there...</p>",
+        "id": 431144517,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712166160
+    },
+    {
+        "content": "<p>As for stats, I get this on my GPU:</p>\n<div class=\"codehilite\"><pre><span></span><code>[1712166751] print_timings: prompt eval time =      25.77 ms /     0 tokens (     inf ms per token,     0.00 tokens per second)\n[1712166751] print_timings:        eval time =    2132.53 ms /   118 runs   (   18.07 ms per token,    55.33 tokens per second)\n[1712166751] print_timings:       total time =    2158.30 ms\n</code></pre></div>",
+        "id": 431146483,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712166882
+    },
+    {
+        "content": "<p>no idea if this is good or bad. But the response comes pretty fast I'd say</p>",
+        "id": 431146560,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712166906
+    },
+    {
+        "content": "<p>I’d need to expose an option to add extraEnvs</p>",
+        "id": 431147254,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712167169
+    },
+    {
+        "content": "<p>and this is from my secondary GPU</p>\n<div class=\"codehilite\"><pre><span></span><code>[1712167117] print_timings: prompt eval time =      95.26 ms /    28 tokens (    3.40 ms per token,   293.94 tokens per second)\n[1712167117] print_timings:        eval time =    5266.83 ms /   212 runs   (   24.84 ms per token,    40.25 tokens per second)\n[1712167117] print_timings:       total time =    5362.09 ms\n</code></pre></div>",
+        "id": 431147293,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712167187
+    },
+    {
+        "content": "<p>These stats are from within the docker, is it?</p>",
+        "id": 431147403,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712167218
+    },
+    {
+        "content": "<p>What GPUs are you running on your machine?</p>",
+        "id": 431147514,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712167261
+    },
+    {
+        "content": "<p>Yeah the stats are from within the docker containers</p>\n<p>Great idea having some env to set. Let's see how you implement it <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>\n<p>Is there a way to attach to the tty of the running process in process compose? That way I could see what ollama spits out in debug messages</p>",
+        "id": 431147534,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712167267
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431147514\">said</a>:</p>\n<blockquote>\n<p>What GPUs are you running on your machine?</p>\n</blockquote>\n<p>1) Radeon Pro W6800<br>\n2) Radeon Pro W6600</p>",
+        "id": 431147574,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712167284
+    },
+    {
+        "content": "<p>You could do “nix run — -t=false” to disable tui mode in process-compose</p>",
+        "id": 431147636,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712167315
+    },
+    {
+        "content": "<p>So you 3070 was getting 25 tokens per second, yes? I find it odd that the W6600 should be that much faster with 40 tokens per second.</p>",
+        "id": 431147894,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712167404
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431147574\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431147514\">said</a>:</p>\n<blockquote>\n<p>What GPUs are you running on your machine?</p>\n</blockquote>\n<p>1) Radeon Pro W6800<br>\n2) Radeon Pro W6600</p>\n</blockquote>\n<p>That’s 32 gb and 8gb vram respectively?</p>",
+        "id": 431147905,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712167407
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431147894\">said</a>:</p>\n<blockquote>\n<p>So you 3070 was getting 25 tokens per second, yes? I find it odd that the W6600 should be that much faster with 40 tokens per second.</p>\n</blockquote>\n<p>Does that depend on the prompt maybe? I will try giving the same prompt as you</p>",
+        "id": 431148169,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712167497
+    },
+    {
+        "content": "<p>And is your GPU over clocked by any chance?</p>",
+        "id": 431148277,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712167543
+    },
+    {
+        "content": "<p>that is possible, I was just trying the prompt via curl that ollama has on github. Just with the different model</p>\n<div class=\"codehilite\"><pre><span></span><code>curl http://localhost:11434/api/generate -d &#39;{\n  &quot;model&quot;: &quot;llama2-uncensored&quot;,\n  &quot;prompt&quot;:&quot;Why is the sky blue?&quot;\n}&#39;\n</code></pre></div>",
+        "id": 431148293,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712167551
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431148277\">said</a>:</p>\n<blockquote>\n<p>And is your GPU over clocked by any chance?</p>\n</blockquote>\n<p>Nope, rather underclocked if compared to the gaming variant. The TDP for the Radeon Pro W6600 is basically locked at around 100W, it's s one slot card, which is very nice. The same goes for the W6800, which is the equivalent of the RX 6800, but uses less power. It does however have twice the VRAM.</p>",
+        "id": 431148490,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712167620
+    },
+    {
+        "content": "<p>When it comes to gaming your 3070 should be rather close to my W6800 I'd say.</p>",
+        "id": 431148672,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712167684
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431147636\">said</a>:</p>\n<blockquote>\n<p>You could do “nix run — -t=false” to disable tui mode in process-compose</p>\n</blockquote>\n<p>copy pasting this will only get me <code>error: unrecognised flag '-t'</code></p>",
+        "id": 431150752,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712168598
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431150752\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431147636\">said</a>:</p>\n<blockquote>\n<p>You could do “nix run — -t=false” to disable tui mode in process-compose</p>\n</blockquote>\n<p>copy pasting this will only get me <code>error: unrecognised flag '-t’</code></p>\n</blockquote>\n<p>My bad, it is <code>nix run .#default -- -t=false</code></p>",
+        "id": 431155020,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712170401
+    },
+    {
+        "content": "<p>(Yes that was me being stupid / lazy I guess) </p>\n<p>okay let's see... there are quite a few errors coming from ollama</p>",
+        "id": 431155754,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712170697
+    },
+    {
+        "content": "<p>Also, I have implemented the <code>extraEnvs</code> option. You can pull the latest changes on <code>nixify-ollama</code> and use this:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  services<span class=\"o\">.</span>ollama<span class=\"o\">.</span><span class=\"s2\">\"ollama\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n    <span class=\"ss\">host</span> <span class=\"o\">=</span> <span class=\"s2\">\"0.0.0.0\"</span><span class=\"p\">;</span>\n    <span class=\"ss\">models</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"llama2-uncensored\"</span> <span class=\"p\">];</span>\n    <span class=\"ss\">extraEnvs</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n      <span class=\"ss\">OLLAMA_DEBUG</span><span class=\"o\">=</span><span class=\"s2\">\"1\"</span><span class=\"p\">;</span>\n    <span class=\"p\">};</span>\n  <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 431155859,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712170737
+    },
+    {
+        "content": "<p>and at some point among the gigantic mess we see this:</p>\n<div class=\"codehilite\"><pre><span></span><code>[ollama ] CUDA error: invalid device function\n[ollama ]   current device: 0, in function ggml_cuda_op_flatten at /build/source/llm/llama.cpp/ggml-cuda.cu:10012\n[ollama ]   hipGetLastError()\n[ollama ] GGML_ASSERT: /build/source/llm/llama.cpp/ggml-cuda.cu:256: !&quot;CUDA error&quot;\n[ollama ] loading library /tmp/ollama1196279674/rocm/libext_server.so\n[ollama ] SIGABRT: abort\n[ollama ] PC=0x7f95e13c3ddc m=10 sigcode=18446744073709551610\n[ollama ] signal arrived during cgo execution\n</code></pre></div>\n<p>My assumption is that I need to set a env var to get over this. So I will pull and try again.</p>",
+        "id": 431155940,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712170768
+    },
+    {
+        "content": "<p>Success!!! </p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>services<span class=\"o\">.</span>ollama<span class=\"o\">.</span><span class=\"s2\">\"ollama\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n  <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n  <span class=\"ss\">package</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>ollama<span class=\"o\">.</span>override <span class=\"p\">{</span> <span class=\"ss\">acceleration</span> <span class=\"o\">=</span> <span class=\"s2\">\"rocm\"</span><span class=\"p\">;</span> <span class=\"p\">};</span>\n  <span class=\"ss\">host</span> <span class=\"o\">=</span> <span class=\"s2\">\"0.0.0.0\"</span><span class=\"p\">;</span>\n  <span class=\"ss\">models</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"llama2-uncensored\"</span> <span class=\"p\">];</span>\n  <span class=\"ss\">extraEnvs</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">HSA_OVERRIDE_GFX_VERSION</span> <span class=\"o\">=</span> <span class=\"s2\">\"10.3.0\"</span><span class=\"p\">;</span>\n    <span class=\"ss\">OLLAMA_DEBUG</span> <span class=\"o\">=</span> <span class=\"s2\">\"1\"</span><span class=\"p\">;</span>\n  <span class=\"p\">};</span>\n</code></pre></div>",
+        "id": 431158649,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712171765
+    },
+    {
+        "content": "<p>If I ask it about the Roman empire, I still get 56 tokens per second on the W6800</p>",
+        "id": 431158795,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712171831
+    },
+    {
+        "content": "<p>sometimes to goes down to 48-49 tokens per second. but the model does not like to give long responses it seems</p>",
+        "id": 431159063,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712171951
+    },
+    {
+        "content": "<p>but at least it is running now</p>",
+        "id": 431159089,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712171962
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431158795\">said</a>:</p>\n<blockquote>\n<p>If I ask it about the Roman empire, I still get 56 tokens per second on the W6800</p>\n</blockquote>\n<p>Is that the same in docker with GPU acceleration?</p>",
+        "id": 431159227,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712172012
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431158649\">said</a>:</p>\n<blockquote>\n<p>Success!!! </p>\n<p><div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>services<span class=\"o\">.</span>ollama<span class=\"o\">.</span><span class=\"s2\">\"ollama\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n  <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n  <span class=\"ss\">package</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>ollama<span class=\"o\">.</span>override <span class=\"p\">{</span> <span class=\"ss\">acceleration</span> <span class=\"o\">=</span> <span class=\"s2\">\"rocm\"</span><span class=\"p\">;</span> <span class=\"p\">};</span>\n  <span class=\"ss\">host</span> <span class=\"o\">=</span> <span class=\"err\">“</span><span class=\"mf\">0.0.0.0</span><span class=\"err\">”</span><span class=\"p\">;</span>\n  <span class=\"ss\">models</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"llama2-uncensored” ];</span>\n<span class=\"s2\">  extraEnvs = {</span>\n<span class=\"s2\">    HSA_OVERRIDE_GFX_VERSION = “10.3.0”;</span>\n<span class=\"s2\">    OLLAMA_DEBUG = “1”;</span>\n<span class=\"s2\">  };</span>\n</code></pre></div><br>\n</p>\n</blockquote>\n<p>Great, will star these messages to document them later.</p>",
+        "id": 431159285,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712172035
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431159227\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431158795\">said</a>:</p>\n<blockquote>\n<p>If I ask it about the Roman empire, I still get 56 tokens per second on the W6800</p>\n</blockquote>\n<p>Is that the same in docker with GPU acceleration?</p>\n</blockquote>\n<p>I guess so, more or less</p>",
+        "id": 431159360,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172067
+    },
+    {
+        "content": "<p>I mean we could try and think how to structure the flake so that you can run with different GPU architectures.</p>",
+        "id": 431159472,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172116
+    },
+    {
+        "content": "<blockquote>\n<p>I mean we could try and think how to structure the flake so that you can run with different GPU architectures.</p>\n</blockquote>\n<p>I will be providing two different nix runnable apps, <code>nix run .#with-cuda</code> and <code>nix run .#with-rocm</code>. This is what I am thinking for now</p>",
+        "id": 431159644,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712172177
+    },
+    {
+        "content": "<p>I'd just go for <code>#cuda</code> and <code>#rocm</code> ... and I think I'd also really like to disable the webui.</p>",
+        "id": 431159769,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172236
+    },
+    {
+        "content": "<p>webui, I am thinking only for the default app. Can disable it for others</p>",
+        "id": 431159960,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712172299
+    },
+    {
+        "content": "<p>let me add <code>cuda</code> and <code>rocm</code> really quick</p>",
+        "id": 431159996,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712172313
+    },
+    {
+        "content": "<p>I'd say let me (or the consumer) choose to enable to disable.</p>",
+        "id": 431160060,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172338
+    },
+    {
+        "content": "<p>In the future, I am also planning to export a home-manager module that will support systemd config for linux and launchd config for mac. To allow running ollama server in the background</p>",
+        "id": 431160250,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712172407
+    },
+    {
+        "content": "<p>I mean there is already a nixos module, isn't there?</p>",
+        "id": 431160332,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172433
+    },
+    {
+        "content": "<p>Yes, I can take inspiration from it, but can’t reuse it in macos or other linux distros</p>",
+        "id": 431160414,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712172467
+    },
+    {
+        "content": "<p>yes, that is true.</p>",
+        "id": 431160503,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172488
+    },
+    {
+        "content": "<p>Added support for <code>cuda</code> and <code>rocm</code>:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  <span class=\"ss\">default</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">imports</span> <span class=\"o\">=</span> <span class=\"p\">[</span> common <span class=\"p\">];</span>\n    services<span class=\"o\">.</span>ollama-stack<span class=\"o\">.</span>open-webui<span class=\"o\">.</span><span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n  <span class=\"p\">};</span>\n  <span class=\"ss\">cuda</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">imports</span> <span class=\"o\">=</span> <span class=\"p\">[</span> common <span class=\"p\">];</span>\n    services<span class=\"o\">.</span>ollama-stack<span class=\"o\">.</span><span class=\"ss\">extraOllamaConfig</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n      <span class=\"ss\">package</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>ollama<span class=\"o\">.</span>override <span class=\"p\">{</span> <span class=\"ss\">acceleration</span> <span class=\"o\">=</span> <span class=\"s2\">\"cuda\"</span><span class=\"p\">;</span> <span class=\"p\">};</span>\n    <span class=\"p\">};</span>\n  <span class=\"p\">};</span>\n  <span class=\"ss\">rocm</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">imports</span> <span class=\"o\">=</span> <span class=\"p\">[</span> common <span class=\"p\">];</span>\n    services<span class=\"o\">.</span>ollama-stack<span class=\"o\">.</span><span class=\"ss\">extraOllamaConfig</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n       <span class=\"ss\">package</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>ollama<span class=\"o\">.</span>override <span class=\"p\">{</span> <span class=\"ss\">acceleration</span> <span class=\"o\">=</span> <span class=\"s2\">\"rocm\"</span><span class=\"p\">;</span> <span class=\"p\">};</span>\n     <span class=\"p\">};</span>\n   <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>Above is the definition for three apps, you can enable or disable open-webui on any of them. You can even pass <code>extraOllamaConfig</code>, I didn’t add the <code>HSA_OVERRIDE_GFX_VERSION</code> yet because I want to understand more about why it is needed and how to determine the version</p>",
+        "id": 431169594,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712175754
+    },
+    {
+        "content": "<p>I have a Hetzner dedicated server (x86_64-linux) now; how do I try this out?</p>",
+        "id": 431170303,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176025
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431170303\">said</a>:</p>\n<blockquote>\n<p>I have a Hetzner dedicated server (x86_64-linux) now; how do I try this out?</p>\n</blockquote>\n<p><code>nix run github:shivaraj-bh/nixify-ollama</code></p>",
+        "id": 431170497,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712176113
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431170497\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431170303\">said</a>:</p>\n<blockquote>\n<p>I have a Hetzner dedicated server (x86_64-linux) now; how do I try this out?</p>\n</blockquote>\n<p><code>nix run github:shivaraj-bh/nixify-ollama</code></p>\n</blockquote>\n<p>And then to test it:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>curl<span class=\"w\"> </span>http://&lt;hetzner-machine-ip&gt;:11434/api/generate<span class=\"w\"> </span>-d<span class=\"w\"> </span><span class=\"s1\">'{</span>\n<span class=\"s1\">  \"model\": “llama2-uncensored\",</span>\n<span class=\"s1\">  \"prompt\": \"Why is the sky blue?\",</span>\n<span class=\"s1\">  \"stream\": false</span>\n<span class=\"s1\">}'</span>\n</code></pre></div>\n<p>or</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>open<span class=\"w\"> </span>http://&lt;hetzner-machine-ip&gt;:1111\n</code></pre></div>\n<p>to open <code>open-webui</code></p>",
+        "id": 431171057,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712176347
+    },
+    {
+        "content": "<p>What does the curl command do exactly? Why can't I type that prompt in the webui itself?</p>",
+        "id": 431171285,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176451
+    },
+    {
+        "content": "<p>(I have firewall setup so this means I'd have to setup port forwarding for 1111 the webui, which is fine, but why should I have to do it for 11434?)</p>",
+        "id": 431171329,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176482
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> </p>\n<p>On the <code>HSA_OVERRIDE_GFX_VERSION</code> variable. I didn't find any documentation on it. However, the whole ROCm stack can be compiled for different LLVM targets, which you can find here:</p>\n<p><a href=\"https://llvm.org/docs/AMDGPUUsage.html\">https://llvm.org/docs/AMDGPUUsage.html</a> (there are quite a few recent ones not documented there, no idea why not)</p>\n<p>You will see that <code>gfx1030</code> corresponds to my Radeon Pro W6800 (which is basically the same as any consumer RX 6800). This is where I got the number from. Now usufally that should not be necessary for my card as it is one of the few which has official support. However as we have seen, it still is necessary to override this. As it will be for any other RDNA2 based card, and probably RDNA1. Basically you fake having a Radeon RX 6800 architecture to ROCm so that it runs anyways. Which works just fine on my W6600 for instance.</p>\n<p>If you have a more recent RDNA3 based card, you will need a different override. Most likely <code>SA_OVERRIDE_GFX_VERSION=11.0.0</code></p>",
+        "id": 431171564,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712176598
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431171285\">said</a>:</p>\n<blockquote>\n<p>What does the curl command do exactly? Why can't I type that prompt in the webui itself?</p>\n</blockquote>\n<p>You can do the same thing from webui as well</p>",
+        "id": 431171684,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712176662
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431171329\">said</a>:</p>\n<blockquote>\n<p>(I have firewall setup so this means I'd have to setup port forwarding for 1111 the webui, which is fine, but why should I have to do it for 11434?)</p>\n</blockquote>\n<p>only 1111 should suffice</p>",
+        "id": 431171732,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712176680
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png\"></a></div><p>Should I sign up?</p>",
+        "id": 431171817,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176704
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431171285\">said</a>:</p>\n<blockquote>\n<p>What does the curl command do exactly? Why can't I type that prompt in the webui itself?</p>\n</blockquote>\n<p>The curl command is just talking to ollama's API directly. That API is running on port 11434. Which the webui is most likely talking to as well.</p>",
+        "id": 431171866,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712176726
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431171817\">said</a>:</p>\n<blockquote>\n<p><a href=\"/user_uploads/60244/BbzpIv9XaxDerudHJxXlP5Xn/image.png\">image.png</a></p>\n<p>Should I sign up?</p>\n</blockquote>\n<p>Yes, I was looking for ways to get rid of it. But open-webui has it hardcoded. You can signup with any dummy mail</p>",
+        "id": 431171925,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712176752
+    },
+    {
+        "content": "<p>As a \"noob user\" looking to explore this, I'd just want to do the minimal thing necessary to get this up and running. Would be good to document it in README</p>",
+        "id": 431171927,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176755
+    },
+    {
+        "content": "<p>Okay I created an account. I suppose it stores it in local DB?</p>",
+        "id": 431172072,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176808
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/ZsNrrnZL6_QDSCcgXRMMvtLU/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/ZsNrrnZL6_QDSCcgXRMMvtLU/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/ZsNrrnZL6_QDSCcgXRMMvtLU/image.png\"></a></div><p>Nice! <span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span></p>",
+        "id": 431172147,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176846
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431171927\">said</a>:</p>\n<blockquote>\n<p>As a \"noob user\" looking to explore this, I'd just want to do the minimal thing necessary to get this up and running. Would be good to document it in README</p>\n</blockquote>\n<p>Yup, I was looking for simpler alternatives</p>",
+        "id": 431172238,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712176882
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431172072\">said</a>:</p>\n<blockquote>\n<p>Okay I created an account. I suppose it stores it in local DB?</p>\n</blockquote>\n<p>Yes</p>",
+        "id": 431172272,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712176898
+    },
+    {
+        "content": "<p>This would be a great example for services-flake.</p>",
+        "id": 431172395,
+        "sender_full_name": "Srid",
+        "timestamp": 1712176941
+    },
+    {
+        "content": "<p>If you port forward 11434 you can use the <a href=\"https://apps.apple.com/in/app/enchanted-llm/id6474268307\">Enchanted ios client</a> to get a nice looking mobile and desktop app as well.</p>",
+        "id": 431172696,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712177062
+    },
+    {
+        "content": "<p>So <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> you broke ROCm again because the <code>HSA_OVERRIDE_GFX_VERSION</code> variable isn't set... how do you propose to set it so I don't have to walk into <code>./nix/ollama.nix</code>?</p>",
+        "id": 431172822,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712177121
+    },
+    {
+        "content": "<p>(Maybe we do that tomorrow <span aria-label=\"big smile\" class=\"emoji emoji-1f604\" role=\"img\" title=\"big smile\">:big_smile:</span> I'll check out for today!)</p>",
+        "id": 431172871,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712177150
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431172822\">said</a>:</p>\n<blockquote>\n<p>So <span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> you broke ROCm again because the <code>HSA_OVERRIDE_GFX_VERSION</code> variable isn't set... how do you propose to set it so I don't have to walk into <code>./nix/ollama.nix</code>?</p>\n</blockquote>\n<p>You can add the envs here: <a href=\"https://github.com/shivaraj-bh/nixify-ollama/blob/017dca208fbec393f8c5c6b574c1c1234df176ce/flake.nix#L70-L72\">https://github.com/shivaraj-bh/nixify-ollama/blob/017dca208fbec393f8c5c6b574c1c1234df176ce/flake.nix#L70-L72</a></p>",
+        "id": 431173039,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712177207
+    },
+    {
+        "content": "<p>The repo is now renamed to ollama-flake: <a href=\"https://github.com/shivaraj-bh/ollama-flake/issues/2\">https://github.com/shivaraj-bh/ollama-flake/issues/2</a></p>",
+        "id": 431179725,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712179802
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> I get about 77 tokens/second on the “why is the sky blue?” prompt, with GPU:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code><span class=\"o\">[</span>ollama<span class=\"w\"> </span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"o\">{</span><span class=\"s2\">\"function\"</span>:<span class=\"s2\">\"print_timings\"</span>,<span class=\"s2\">\"level\"</span>:<span class=\"s2\">\"INFO\"</span>,<span class=\"s2\">\"line\"</span>:257,<span class=\"s2\">\"msg\"</span>:<span class=\"s2\">\"prompt eval time     =      62.70 ms /    28 tokens (    2.24 ms per token,   446.56 t</span>\n<span class=\"s2\">okens per second)\"</span>,<span class=\"s2\">\"n_prompt_tokens_processed\"</span>:28,<span class=\"s2\">\"n_tokens_second\"</span>:446.5638506562894,<span class=\"s2\">\"slot_id\"</span>:0,<span class=\"s2\">\"t_prompt_processing\"</span>:62.701,<span class=\"s2\">\"t_token\"</span>:2.2393214285714285,<span class=\"s2\">\"</span>\n<span class=\"s2\">task_id\"</span>:0,<span class=\"s2\">\"tid\"</span>:<span class=\"s2\">\"139803154691776\"</span>,<span class=\"s2\">\"timestamp\"</span>:1712181596<span class=\"o\">}</span>\n<span class=\"o\">[</span>ollama<span class=\"w\"> </span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"o\">{</span><span class=\"s2\">\"function\"</span>:<span class=\"s2\">\"print_timings\"</span>,<span class=\"s2\">\"level\"</span>:<span class=\"s2\">\"INFO\"</span>,<span class=\"s2\">\"line\"</span>:271,<span class=\"s2\">\"msg\"</span>:<span class=\"s2\">\"generation eval time =    1717.36 ms /   133 runs   (   12.91 ms per token,    77.44 t</span>\n<span class=\"s2\">okens per second)\"</span>,<span class=\"s2\">\"n_decoded\"</span>:133,<span class=\"s2\">\"n_tokens_second\"</span>:77.44463000100154,<span class=\"s2\">\"slot_id\"</span>:0,<span class=\"s2\">\"t_token\"</span>:12.91245112781955,<span class=\"s2\">\"t_token_generation\"</span>:1717.356,<span class=\"s2\">\"task_id\"</span>:0,<span class=\"s2\">\"tid</span>\n<span class=\"s2\">\"</span>:<span class=\"s2\">\"139803154691776\"</span>,<span class=\"s2\">\"timestamp\"</span>:1712181596<span class=\"o\">}</span>\n</code></pre></div>",
+        "id": 431184304,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712181716
+    },
+    {
+        "content": "<p>I have a feeling you should have some commented out env vars right in the main <code>flake.nix</code> ... useability.</p>\n<p>Yes I can get the 55 token / second I reported on the W6800. What you got now is more what I expected. Nvidia should be faster at this. Also because CUDA will be more otimized than ROCm. We might try ROCm 6.0 at some point and see if this improves performance on AMD, because right now this is ROCm 5.7 I am running.</p>",
+        "id": 431281306,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712227220
+    },
+    {
+        "content": "<p>Also funny effect I had: ollama wouldn't shut down properly some <code>.ollama-unwrap</code> process got stuck, didn't release the bound port 11434 and even on reboot systemd had quite some work to do to get the process killed. Not sure what happened there...</p>",
+        "id": 431281533,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712227322
+    },
+    {
+        "content": "<p>Next thing I'd do for usability is add a catered list of models that are commented out by default (because let's be honest llama2-7b is not the more talkative buddy) and document that a bit. So users can choose what they want.</p>",
+        "id": 431283150,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712227956
+    },
+    {
+        "content": "<blockquote>\n<p>I have a feeling you should have some commented out env vars right in the main flake.nix ... useability.</p>\n</blockquote>\n<p>Right, the primary one’s I would see people using is <code>CUDA_VISIBLE_DEVICES</code> <code>HIP_VISIBLE_DEVICES</code> and of course <code>HSA_OVERRIDE_GFX_VERSION</code></p>",
+        "id": 431290236,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712230500
+    },
+    {
+        "content": "<blockquote>\n<p>What you got now is more what I expected</p>\n</blockquote>\n<p>I investigated as to why the performance was poor earlier. Turns out, my GPU was not running in performance mode earlier.</p>",
+        "id": 431290414,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712230560
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431283150\">said</a>:</p>\n<blockquote>\n<p>Next thing I'd do for usability is add a catered list of models that are commented out by default (because let's be honest llama2-7b is not the more talkative buddy) and document that a bit. So users can choose what they want.</p>\n</blockquote>\n<p>Along with that I should also document how to override <code>cudaPackages</code> or <code>rocmPackages</code> to match the one’s installed on the system. </p>\n<p>What I tend to do is <code>nix run github:shivaraj-bh/ollama-flake#cuda —override-input nixpkgs flake:nixpkgs</code>. In my configuration, I have the registry <code>flake:nixpkgs</code> pinned to the same nixpkgs I use to install nvidia drivers for, so it should work out of the box. I will add this is as a possible solution.</p>",
+        "id": 431291168,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712230780
+    },
+    {
+        "content": "<p>If they are on a non-nixos machine, then they will have to manually get the version of the drivers installed and use the compatible <code>cudaPackages</code> or <code>rocmPackages</code></p>",
+        "id": 431291590,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712230883
+    },
+    {
+        "content": "<p>Yes, all that sounds quite good. There is also <code>ROCR_VISIBLE_DEVICES</code> for GPU isolation.</p>",
+        "id": 431292842,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712231214
+    },
+    {
+        "content": "<p>I believe it is <code>HIP_VISIBLE_DEVICES</code>, I don’t see <code>ROCR_VISIBLE_DEVICES</code> in ollama docs: <a href=\"https://github.com/ollama/ollama/blob/9768e2dc7574c36608bb04ac39a3b79e639a837f/docs/gpu.md?plain=1#L88-L93\">https://github.com/ollama/ollama/blob/9768e2dc7574c36608bb04ac39a3b79e639a837f/docs/gpu.md?plain=1#L88-L93</a></p>",
+        "id": 431293766,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712231501
+    },
+    {
+        "content": "<p>yeah maybe that one doesn't do much in our context. </p>\n<p>AMD's docs are here for once: <a href=\"https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html\">https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html</a> </p>\n<p>(At least they have some in this case)</p>",
+        "id": 431294201,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712231633
+    },
+    {
+        "content": "<p>Gotcha, will add that too!</p>",
+        "id": 431294734,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712231765
+    },
+    {
+        "content": "<p>funny thing is, that according to <code>CUDA_VISIBLE_DEVICES</code> has the same effect as <code>HIP_VISIBLE_DEVICES</code> for compatibility reasons</p>",
+        "id": 431294996,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712231841
+    },
+    {
+        "content": "<p>once you make another commit, I will test this again and see which flag does what in practice. You never know.</p>",
+        "id": 431299791,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712233199
+    },
+    {
+        "content": "<p>done: <a href=\"https://github.com/shivaraj-bh/ollama-flake/commit/7b6375cc4849c6b3a91be5543043d3c820d312f6\">https://github.com/shivaraj-bh/ollama-flake/commit/7b6375cc4849c6b3a91be5543043d3c820d312f6</a></p>",
+        "id": 431312176,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712236818
+    },
+    {
+        "content": "<p>just trying this out on my Nvidia Laptop with 2GB of VRAM. It starts building ollama 0.1.29 from source. Any idea why this might be happening? I am also on NixOS stable there...</p>",
+        "id": 431375197,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712253954
+    },
+    {
+        "content": "<p>so after building a bit, it actually works. I can run <code>deepseek-coder:1.3-instruct</code> on my crappy Nvidia MX 150.</p>\n<p>And it gets me 27 tokens / sec. Not too bad for this older laptop GPU.</p>",
+        "id": 431377071,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712254699
+    },
+    {
+        "content": "<p>I think it'd be nice to provide a list of models directly in flake.nix</p>",
+        "id": 431378448,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712255246
+    },
+    {
+        "content": "<p>but I'll play with this setup a bit tomorrow for coding. Sadly it won't be very good at Nix.</p>",
+        "id": 431378491,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712255269
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431375197\">said</a>:</p>\n<blockquote>\n<p>just trying this out on my Nvidia Laptop with 2GB of VRAM. It starts building ollama 0.1.29 from source. Any idea why this might be happening? I am also on NixOS stable there...</p>\n</blockquote>\n<p>If you are overriding with acceleration = “cuda”, it will build ollama from scratch. Although, I have noticed that it doesn’t do that if I use garnix cache.</p>",
+        "id": 431378587,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712255296
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431378448\">said</a>:</p>\n<blockquote>\n<p>I think it'd be nice to provide a list of models directly in flake.nix</p>\n</blockquote>\n<p>I was thinking of linking to <a href=\"http://ollama.com/library\">ollama.com/library</a></p>",
+        "id": 431378729,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712255364
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431378491\">said</a>:</p>\n<blockquote>\n<p>but I'll play with this setup a bit tomorrow for coding. Sadly it won't be very good at Nix.</p>\n</blockquote>\n<p>Someone’s gotta train it with good content. Unfortunately there isn’t much. Hopefully with <a href=\"http://Nixos.asia\">Nixos.asia</a> tutorials, we can bridge that gap</p>",
+        "id": 431378879,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712255426
+    },
+    {
+        "content": "<p>I mean my idea was to try and finetune something at some point. I am still stuck at the point of \"What's the right data that I need for that?\" ... because if I understand it correctly, most base models haven't see a whole lot of Nix code.</p>",
+        "id": 431378990,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712255476
+    },
+    {
+        "content": "<p>Yup</p>",
+        "id": 431379781,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712255814
+    },
+    {
+        "content": "<p>Getting back to the issue at hand: is there a good way passing an externally defined config file to the flake that would specify the models I would want to use? Otherwise I'd say it'll be nice to expose that list of models directly in <code>flake.nix</code> somehow.</p>",
+        "id": 431385201,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712257962
+    },
+    {
+        "content": "<p>(I will be trying out the <a href=\"http://continue.dev\">continue.dev</a> extension in VSCode a bit more with this local A.I. and deepseek-coder:1.3b-instruct. So far it performs quite okay.)</p>",
+        "id": 431385315,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712258028
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431385201\">said</a>:</p>\n<blockquote>\n<p>Getting back to the issue at hand: is there a good way passing an externally defined config file to the flake that would specify the models I would want to use? Otherwise I'd say it'll be nice to expose that list of models directly in <code>flake.nix</code> somehow.</p>\n</blockquote>\n<p>Nothing that comes to my mind right of the top, will give some thought to it over the weekend</p>",
+        "id": 431504821,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712317017
+    },
+    {
+        "content": "<p>it just came up because with me not maintaining a fork of your repo, everytime I do <code>git pull</code> it obviously annoys me because of changes I made myself to the files. So how about reading the config of local network config and models from a TOML or YAML file that the user would have to create on his end and that is in <code>.gitignore</code>? You might provide a template in the repo for the user to adopt to their use case.</p>",
+        "id": 431505550,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712317283
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/431505550\">said</a>:</p>\n<blockquote>\n<p>it just came up because with me not maintaining a fork of your repo, everytime I do <code>git pull</code> it obviously annoys me because of changes I made myself to the files. So how about reading the config of local network config and models from a TOML or YAML file that the user would have to create on his end and that is in <code>.gitignore</code>? You might provide a template in the repo for the user to adopt to their use case.</p>\n</blockquote>\n<p>Yup, that makes sense</p>",
+        "id": 431506276,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712317528
+    },
+    {
+        "content": "<p>macOS support added: <a href=\"https://github.com/shivaraj-bh/ollama-flake/pull/3\">https://github.com/shivaraj-bh/ollama-flake/pull/3</a></p>\n<p>Next steps:</p>\n<ul>\n<li>Expose a <code>processComposeModule</code> for <span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> to use ollama-flake without having to clone and pull my repo all the time (I will also include example directory for how to use the module)</li>\n<li>Add CI</li>\n</ul>",
+        "id": 431943668,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712575712
+    },
+    {
+        "content": "<p>Awesome!</p>",
+        "id": 431947478,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712576528
+    },
+    {
+        "content": "<p>And I will bet on others being thankful for that possibility as well</p>",
+        "id": 431947580,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712576550
+    },
+    {
+        "content": "<p>Is this expected? (on macOS, after downloading the model for about 30 mins)</p>\n<p><a href=\"/user_uploads/60244/l-QsWdGaW5NiDk1tIR2o-N6b/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/l-QsWdGaW5NiDk1tIR2o-N6b/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/l-QsWdGaW5NiDk1tIR2o-N6b/image.png\"></a></div>",
+        "id": 432131460,
+        "sender_full_name": "Srid",
+        "timestamp": 1712642556
+    },
+    {
+        "content": "<p>I have to debug this on macOS, usually a restart of that process and then the open-browser process solves it</p>",
+        "id": 432131640,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712642621
+    },
+    {
+        "content": "<p>Alright, just a temporary issue. Re-running it worked</p>",
+        "id": 432131649,
+        "sender_full_name": "Srid",
+        "timestamp": 1712642626
+    },
+    {
+        "content": "<p>I think it has to do with the initial_delay_seconds of the readiness_probe because uvicorn takes a while to start</p>",
+        "id": 432131865,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712642686
+    },
+    {
+        "content": "<p>And also about the model pull taking long time, I am thinking of creating something like dockerPullImage for ollama models and serving it as a cache. I have ovserved that ollama pull starts off with a good bandwidth and it just goes to kbps in the end.</p>",
+        "id": 432132749,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712642985
+    },
+    {
+        "content": "<p>In this way, I can also run flake checks, without requiring internet connection in sandbox mode</p>",
+        "id": 432133104,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712643094
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> ollama-flake now exports a processComposeModule, see the examples: <a href=\"https://github.com/shivaraj-bh/ollama-flake/tree/main/example\">https://github.com/shivaraj-bh/ollama-flake/tree/main/example</a></p>",
+        "id": 432303591,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712685048
+    },
+    {
+        "content": "<p>You can use them in any of your flake now</p>",
+        "id": 432303760,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712685102
+    },
+    {
+        "content": "<p>I will be updating the README with relevant details too</p>",
+        "id": 432304047,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712685159
+    },
+    {
+        "content": "<p>I want to make some design changes, like decoupling the open-webui service from ollama itself, allowing to configure them separately. I will deprioritise this for now, as I see a feature like <code>dockerTools.pullImage</code> for ollama models being more useful, I will research a bit on that next.</p>",
+        "id": 432305220,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712685425
+    },
+    {
+        "content": "<blockquote>\n<p>like decoupling the open-webui service from ollama itself</p>\n</blockquote>\n<p>This will also allow configuring multiple frontends in the future, enable and disable them as you like.</p>",
+        "id": 432305508,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712685495
+    },
+    {
+        "content": "<p>awesome, looking very nice! I will give it a try tomorrow maybe or a but later...</p>",
+        "id": 432309436,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712686426
+    },
+    {
+        "content": "<p>Got my PR merged to open-webui: <a href=\"https://github.com/open-webui/open-webui/pull/1472\">https://github.com/open-webui/open-webui/pull/1472</a></p>\n<p>This has helped in packaging the frontend and backend in one single derivation. </p>\n<p>Earlier I had to do a lot of hacky stuff to workaround this:<br>\n<a href=\"/user_uploads/60244/HevSWTQQ_Wq0cJ0JziI2zjm9/Screenshot-2024-04-10-at-1.48.04PM.png\">Screenshot-2024-04-10-at-1.48.04PM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/HevSWTQQ_Wq0cJ0JziI2zjm9/Screenshot-2024-04-10-at-1.48.04PM.png\" title=\"Screenshot-2024-04-10-at-1.48.04PM.png\"><img src=\"/user_uploads/60244/HevSWTQQ_Wq0cJ0JziI2zjm9/Screenshot-2024-04-10-at-1.48.04PM.png\"></a></div>",
+        "id": 432443833,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712737183
+    },
+    {
+        "content": "<p>Now it looks clean:<br>\n<a href=\"/user_uploads/60244/iBWi3oO5urcKQEEeNPUyce1e/Screenshot-2024-04-10-at-1.48.46PM.png\">Screenshot-2024-04-10-at-1.48.46PM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/iBWi3oO5urcKQEEeNPUyce1e/Screenshot-2024-04-10-at-1.48.46PM.png\" title=\"Screenshot-2024-04-10-at-1.48.46PM.png\"><img src=\"/user_uploads/60244/iBWi3oO5urcKQEEeNPUyce1e/Screenshot-2024-04-10-at-1.48.46PM.png\"></a></div>",
+        "id": 432443878,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712737197
+    },
+    {
+        "content": "<p>I will resume work on ollama-flake tonight, will solve some juspay/nix-health issues now.</p>",
+        "id": 432445072,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712737474
+    },
+    {
+        "content": "<p>Beautiful! I have a feeling this will be <em>the best ollama flake ever, period</em>... once people know about it, that is. Maybe after it has good usability, you could post it somewhere to create publicity?</p>",
+        "id": 432457926,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712740929
+    },
+    {
+        "content": "<p>So, I am back after a quick break. Before I left, I tried to create a derivation that would pull the model and cache it in <code>/nix/store</code>, just like <code>dockerTools.pullImage</code> does, but with docker images. Unfortunately, there is a blocker for this: <a href=\"https://github.com/ollama/ollama/issues/3369\">https://github.com/ollama/ollama/issues/3369</a>.</p>\n<p>I will get back to this, once that issue is resolved (I tried to implement it for a bit, but it isn’t that straightforward). Looking forward to that.</p>\n<p>For now, I will decouple the frontend service (open-webui) from the ollama backend service. Maybe also add another frontend service to it (to show how easily swap-able it can be), make a <code>0.1.0</code> release and announce it.</p>",
+        "id": 434372013,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713536128
+    },
+    {
+        "content": "<p>it should be swap-able to some extent. Ollama has a long list of possible frontend service irrc. I am not sure that storing models in the nix store is a great strategy, as these can be fairly big, and you might want to add some from the <code>ollama</code> cli after the fact. Also you certainly would not want your 30 GB model to be garbage collected while still using it from time to time, so you'd have to prevent that somehow. In docker the image might be stored in the nix store without issues as it is immutable once built. But docker volumes and their content would not be, I suppose.</p>\n<p>idk if I am right though, let me know what you think.</p>",
+        "id": 434408090,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713548677
+    },
+    {
+        "content": "<p>also: how does this work right now? I kinda don't see the command and just checking <code>nix flake show</code> and <code>nix flake info</code> and looking into <code>flake.nix</code> didn't really tell me how to run the rocm service right now... I am in a LXC container right now, running some Debian 12 which doesn't want to give me podman on ZFS sadly, and I was trying to get this to work.</p>",
+        "id": 434413562,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713551036
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/434408090\">said</a>:</p>\n<blockquote>\n<p>it should be swap-able to some extent. Ollama has a long list of possible frontend service irrc. I am not sure that storing models in the nix store is a great strategy, as these can be fairly big, and you might want to add some from the <code>ollama</code> cli after the fact. Also you certainly would not want your 30 GB model to be garbage collected while still using it from time to time, so you'd have to prevent that somehow. In docker the image might be stored in the nix store without issues as it is immutable once built. But docker volumes and their content would not be, I suppose.</p>\n<p>idk if I am right though, let me know what you think.</p>\n</blockquote>\n<p>You might be right, I haven’t fully evaluated this idea yet. Anyways, can’t do much until the issue I linked above from ollama is open.</p>",
+        "id": 434517380,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713631917
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/434413562\">said</a>:</p>\n<blockquote>\n<p>also: how does this work right now? I kinda don't see the command and just checking <code>nix flake show</code> and <code>nix flake info</code> and looking into <code>flake.nix</code> didn't really tell me how to run the rocm service right now... I am in a LXC container right now, running some Debian 12 which doesn't want to give me podman on ZFS sadly, and I was trying to get this to work.</p>\n</blockquote>\n<p>I have updated the README now, you can use the flake template. For you, it will look like:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>mkdir my-ollama-flake <span class=\"o\">&amp;&amp;</span> cd <span class=\"l\">./my-ollama-flake</span>\nnix flake init <span class=\"o\">-</span>t <span class=\"l\">github:shivaraj-bh/ollama-flake</span><span class=\"c1\">#rocm</span>\nnix run\n</code></pre></div>",
+        "id": 434517477,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713631974
+    },
+    {
+        "content": "<p>Or if you already have an existing flake where you would like to integrate this into, you can look at the examples and grab the necessary pieces</p>",
+        "id": 434517517,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713632013
+    },
+    {
+        "content": "<p>I decided to not depend on <code>services-flake</code> in <code>ollama-flake</code> (yet to update <code>README</code>). I was unnecessarily keeping only the <code>ollama</code> service in the former and rest everything in the latter. let’s keep it simple! I have decided to bundle everything related to ollama in this single repository (from the server, to frontends, also the CLI clients and so on). </p>\n<p>Aside, I do have some ambitious plans for <code>ollama-flake</code> in the future, one of which being:</p>\n<p>Provide a <code>just generate-doc &lt;service&gt;</code> command in services-flake. This command will run a <code>process-compose</code> app that will start the <code>ollama</code> server (configured by <code>ollama-flake</code>), run a CLI client (gotta find something like <code>smartcat</code> for <code>ollama</code>), provide the context of docs of other services and the tests for <code>&lt;service&gt;</code> and out comes the doc for <code>&lt;service&gt;</code>. </p>\n<p>Let’s see how this idea fares</p>",
+        "id": 434519127,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713633491
+    },
+    {
+        "content": "<p>So if I get this correctly you want to write tests and docs in an automated fashion?</p>\n<p>What would be the input of &lt;service&gt;? Some git repo with an existing codebase?</p>",
+        "id": 434519808,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713634045
+    },
+    {
+        "content": "<p>Yes, at the moment focused only on docs. &lt;service&gt; here could be one of many that we support in services-flake. For example, Postgres or MySQL or Redis and so on. We do have docs for Postgres, but not for MySQL and many other services.</p>",
+        "id": 434519901,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713634168
+    },
+    {
+        "content": "<p>Alright... one thing I noticed that confused me is this: your flake is now not really a flake for providing ollama, but a set of flake templates for providing ollama. If this is to be permanent, maybe the repo should be renamed again?</p>",
+        "id": 434580329,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713697163
+    },
+    {
+        "content": "<p>There are other repos that follow the same approach of providing flake-templates/flake-module, like <a href=\"https://github.com/juspay/services-flake\">services-flake</a>, <a href=\"https://github.com/juspay/rust-flake\">rust-flake</a>, <a href=\"https://github.com/juspay/just-flake\">just-flake</a>. I just went with the same naming convention. What do you think will be more appropriate?</p>",
+        "id": 434659681,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713766355
+    },
+    {
+        "content": "<p>FYI</p>\n<p><a href=\"https://discourse.nixos.org/t/ollama-cant-find-libstdc-so-6/44305\">https://discourse.nixos.org/t/ollama-cant-find-libstdc-so-6/44305</a></p>",
+        "id": 435822853,
+        "sender_full_name": "Srid",
+        "timestamp": 1714280175
+    },
+    {
+        "content": "<p>I doubt he is using the Ollama package from nixpkgs, otherwise this shouldn’t occur.</p>",
+        "id": 435828580,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714281637
+    },
+    {
+        "content": "<p>Aside: TIL that NixOS has a service for ollama: </p>\n<p><a href=\"https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/misc/ollama.nix\">https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/misc/ollama.nix</a></p>",
+        "id": 435828858,
+        "sender_full_name": "Srid",
+        "timestamp": 1714281716
+    },
+    {
+        "content": "<p>Yes, it just starts the server. Pulling the model is a manual process</p>",
+        "id": 435832944,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714282771
+    },
+    {
+        "content": "<p><a href=\"https://github.com/ollama/ollama/releases/tag/v0.1.33-rc5\">Ollama v0.1.33 with Llama 3, Phi 3, and Qwen 110B</a></p>\n<p><a href=\"https://news.ycombinator.com/item?id=40191723\">https://news.ycombinator.com/item?id=40191723</a></p>",
+        "id": 435982828,
+        "sender_full_name": "Srid",
+        "timestamp": 1714378681
+    },
+    {
+        "content": "<p>yeah I need to test ollama 0.1.33 actually</p>",
+        "id": 436736378,
+        "sender_full_name": "Andreas",
+        "timestamp": 1714668738
+    },
+    {
+        "content": "<p>Looks like <a href=\"#narrow/stream/426237-nixify-llm/topic/private-gpt\">private-gpt</a> uses ollama</p>",
+        "id": 438938901,
+        "sender_full_name": "Srid",
+        "timestamp": 1715837502
+    },
+    {
+        "content": "<p>It'd be interesting to be able to <code>nix run</code> it, and feed it local documents for querying.</p>\n<p>The nixpkgs PR has a module that is NixOS only, obviously.</p>",
+        "id": 438939023,
+        "sender_full_name": "Srid",
+        "timestamp": 1715837536
+    },
+    {
+        "content": "<p>This is cool, I was looking to add one more UI before I announce. This is a good candidate</p>",
+        "id": 438941925,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1715838779
+    },
+    {
+        "content": "<p>There is a package request for open-webui in nixpkgs, someone just referenced to what I have packaged in ollama-flake: <a href=\"https://github.com/NixOS/nixpkgs/issues/309567#issuecomment-2105940033\">https://github.com/NixOS/nixpkgs/issues/309567#issuecomment-2105940033</a></p>\n<p>If a PR gets merged in nixpkgs for the above issue, we can switch over to that.</p>",
+        "id": 439898095,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716323112
+    },
+    {
+        "content": "<p>Nice to see features getting added to <code>nixpkgs</code> inspired by <code>ollama-flake</code>: <a href=\"https://github.com/NixOS/nixpkgs/pull/313606\">https://github.com/NixOS/nixpkgs/pull/313606</a></p>",
+        "id": 440046672,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716368468
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/_18CC5Rri-p9cvM1ZQqel_Z6/Screenshot-2024-05-25-at-10.15.52PM.png\">Screenshot-2024-05-25-at-10.15.52PM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/_18CC5Rri-p9cvM1ZQqel_Z6/Screenshot-2024-05-25-at-10.15.52PM.png\" title=\"Screenshot-2024-05-25-at-10.15.52PM.png\"><img src=\"/user_uploads/60244/_18CC5Rri-p9cvM1ZQqel_Z6/Screenshot-2024-05-25-at-10.15.52PM.png\"></a></div><p>private-gpt in ollama-flake! I will share the nix command for you to try out in a bit, I am yet to push the commits.</p>",
+        "id": 440649515,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716655653
+    },
+    {
+        "content": "<p>In the screenshot you are seeing llama3:8b querying on <a href=\"https://nixos.asia/en/blog/replacing-docker-compose\">https://nixos.asia/en/blog/replacing-docker-compose</a></p>",
+        "id": 440649603,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716655748
+    },
+    {
+        "content": "<p>There you go: </p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>run<span class=\"w\"> </span><span class=\"s2\">\"github:shivaraj-bh/ollama-flake/private-gpt?dir=example/private-gpt” --refresh</span>\n</code></pre></div>",
+        "id": 440651465,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716657704
+    },
+    {
+        "content": "<p>works on Linux and macOS</p>",
+        "id": 440651649,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716657846
+    },
+    {
+        "content": "<p>Trying it out ...</p>\n<p>Should be <code>--refresh</code> not <code>-refresh</code>.</p>",
+        "id": 440651667,
+        "sender_full_name": "Srid",
+        "timestamp": 1716657884
+    },
+    {
+        "content": "<p>Thanks, updated</p>",
+        "id": 440651679,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716657899
+    },
+    {
+        "content": "<p>And should be next to <code>nix</code>, not at the end</p>",
+        "id": 440651684,
+        "sender_full_name": "Srid",
+        "timestamp": 1716657900
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/ZQohTbwmOoxsbKtFp2rsBo-j/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/ZQohTbwmOoxsbKtFp2rsBo-j/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/ZQohTbwmOoxsbKtFp2rsBo-j/image.png\"></a></div>",
+        "id": 440651699,
+        "sender_full_name": "Srid",
+        "timestamp": 1716657914
+    },
+    {
+        "content": "<blockquote>\n<p>And should be next to <code>nix</code>, not at the end</p>\n</blockquote>\n<p>Seems to work even at the end</p>",
+        "id": 440651721,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716657946
+    },
+    {
+        "content": "<p>s/<code>”</code>/<code>\"</code>/g</p>",
+        "id": 440651771,
+        "sender_full_name": "Srid",
+        "timestamp": 1716657978
+    },
+    {
+        "content": "<p>Is the <code>readiness check fail</code> of concern here?</p>\n<p><a href=\"/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png\"></a></div>",
+        "id": 440651786,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658005
+    },
+    {
+        "content": "<p>Alright, what should I do now? It is running.</p>",
+        "id": 440651791,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658020
+    },
+    {
+        "content": "<p>readiness thing happens on macOS, I believe you remember it happened with open-webui too</p>",
+        "id": 440651820,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658047
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/440651786\">said</a>:</p>\n<blockquote>\n<p>Is the <code>readiness check fail</code> of concern here?</p>\n<p><a href=\"/user_uploads/60244/b_ggWpDKQ0T78h4DNuLefKnp/image.png\">image.png</a></p>\n</blockquote>\n<p>Exit code <code>-1</code>, incidentally.</p>",
+        "id": 440651828,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658057
+    },
+    {
+        "content": "<p>I need to fix that, for now restarting the process works</p>",
+        "id": 440651829,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658058
+    },
+    {
+        "content": "<p>Okay, I restarted it, now what?</p>\n<p><a href=\"/user_uploads/60244/x3UhaeFlESeGno3jPJYQj1fr/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/x3UhaeFlESeGno3jPJYQj1fr/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/x3UhaeFlESeGno3jPJYQj1fr/image.png\"></a></div>",
+        "id": 440651892,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658099
+    },
+    {
+        "content": "<p>I expected it to automatically open something in my browser, TBH</p>",
+        "id": 440651911,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658134
+    },
+    {
+        "content": "<p>the browser is available at 8001 port, I need to add the open-browser process to this</p>",
+        "id": 440651918,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658142
+    },
+    {
+        "content": "<p>Its a  TODO</p>",
+        "id": 440651926,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658153
+    },
+    {
+        "content": "<p>Yea, that would be helpful - especially if it is cross-platform (<code>xdg-open</code> vs <code>open</code>?)</p>",
+        "id": 440651931,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658160
+    },
+    {
+        "content": "<p>So there are these two things to address before we have <code>nix run ...</code> <em>just work</em>?</p>",
+        "id": 440651941,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658186
+    },
+    {
+        "content": "<p>is this supposed to run on AMD / ROCm as well? I might try later...</p>",
+        "id": 440651997,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716658205
+    },
+    {
+        "content": "<blockquote>\n<p>Yea, that would be helpful - especially if it is cross-platform (<code>xdg-open</code> vs <code>open</code>?)</p>\n</blockquote>\n<p>open-webui already has this, I need to generalise it: <a href=\"https://github.com/shivaraj-bh/ollama-flake/blob/b61859956129b63fc6e2c8ad1ab4c8d13cc6cc96/services/open-webui.nix#L87-L97\">https://github.com/shivaraj-bh/ollama-flake/blob/b61859956129b63fc6e2c8ad1ab4c8d13cc6cc96/services/open-webui.nix#L87-L97</a></p>",
+        "id": 440652012,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658218
+    },
+    {
+        "content": "<blockquote>\n<p>is this supposed to run on AMD / ROCm as well? I might try later…</p>\n</blockquote>\n<p>Yes</p>",
+        "id": 440652020,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658230
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/440651771\">said</a>:</p>\n<blockquote>\n<p>s/<code>”</code>/<code>”</code>/g</p>\n</blockquote>\n<p>zulip does something with the text while copy pasting, which changed the quotation and also the “—“ became “-“</p>\n<p>Edit: I can’t reproduce, maybe it was something else.</p>",
+        "id": 440652064,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658295
+    },
+    {
+        "content": "<p>Uploaded it an Ikea invoice,</p>\n<p><a href=\"/user_uploads/60244/ikj4lQ_rQHh9Ny7YTHb0NXGv/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/ikj4lQ_rQHh9Ny7YTHb0NXGv/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/ikj4lQ_rQHh9Ny7YTHb0NXGv/image.png\"></a></div>",
+        "id": 440652350,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658629
+    },
+    {
+        "content": "<p>There's a broken image link, though.</p>\n<p>Pointing to <code>http://localhost:8001/file=/Users/srid/code/the-actualism-way/private_gpt/ui/avatar-bot.ico</code></p>\n<p>(<code>/Users/srid/code/the-actualism-way/</code> is the $PWD)</p>",
+        "id": 440652360,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658658
+    },
+    {
+        "content": "<p>When I open that link, the text response is:</p>\n<div class=\"codehilite\"><pre><span></span><code>{&quot;detail&quot;:&quot;File not allowed: /Users/srid/code/the-actualism-way/private_gpt/ui/avatar-bot.ico.&quot;}\n</code></pre></div>",
+        "id": 440652425,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658688
+    },
+    {
+        "content": "<p>It is missing the <code>./data/</code> parent directory.</p>",
+        "id": 440652436,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658713
+    },
+    {
+        "content": "<p>Noted, 3 things to fix then!</p>",
+        "id": 440652447,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658733
+    },
+    {
+        "content": "<p>But I can't find the <code>.ico</code> file in the <code>./data</code> directory. So 4th thing?</p>",
+        "id": 440652465,
+        "sender_full_name": "Srid",
+        "timestamp": 1716658755
+    },
+    {
+        "content": "<p>It is probably in the private-gpt’s source, might have to copy it from there.</p>\n<p>Yes, it is: <a href=\"https://github.com/zylon-ai/private-gpt/blob/main/private_gpt/ui/avatar-bot.ico\">https://github.com/zylon-ai/private-gpt/blob/main/private_gpt/ui/avatar-bot.ico</a></p>",
+        "id": 440652486,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658793
+    },
+    {
+        "content": "<blockquote>\n<p>might have to copy it from there.</p>\n</blockquote>\n<p>Or just point it to the /nix/store.. path</p>",
+        "id": 440652596,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716658908
+    },
+    {
+        "content": "<blockquote>\n<p>Noted, 3 things to fix then!</p>\n</blockquote>\n<p>Fixed one of them: <a href=\"https://github.com/shivaraj-bh/ollama-flake/commit/1c19aadfbb975b2f16f05163322b677d13201760\">https://github.com/shivaraj-bh/ollama-flake/commit/1c19aadfbb975b2f16f05163322b677d13201760</a></p>\n<p>Now the browser should open as soon as private-gpt is healthy</p>",
+        "id": 440653598,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716660033
+    },
+    {
+        "content": "<p>Uploading <a href=\"https://www.foo.be/docs-free/social-architecture/book.pdf\">https://www.foo.be/docs-free/social-architecture/book.pdf</a></p>\n<p>Took maybe 30 seconds to process. But the results are underwhelming:</p>\n<p><a href=\"/user_uploads/60244/dQ1Q_K6KtEuxzjU_boXFVRqL/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/dQ1Q_K6KtEuxzjU_boXFVRqL/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/dQ1Q_K6KtEuxzjU_boXFVRqL/image.png\"></a></div>",
+        "id": 440653851,
+        "sender_full_name": "Srid",
+        "timestamp": 1716660260
+    },
+    {
+        "content": "<p>Also, must it always create <code>$PWD/data</code>? Why not <code>~/.ollama-flake/data</code>?</p>",
+        "id": 440653877,
+        "sender_full_name": "Srid",
+        "timestamp": 1716660320
+    },
+    {
+        "content": "<p>I think, that’s a better default, we can reuse the pre-loaded models</p>",
+        "id": 440653897,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716660353
+    },
+    {
+        "content": "<blockquote>\n<p>Took maybe 30 seconds to process. But the results are underwhelming:</p>\n</blockquote>\n<p>I am yet to play around with larger documents. Works fine with smaller one’s. I have tried one with 2000-3000 words.</p>",
+        "id": 440653981,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716660449
+    },
+    {
+        "content": "<p>This thing creates a <code>tiktoken_cache</code> directory in $PWD for some reason.</p>",
+        "id": 440658012,
+        "sender_full_name": "Srid",
+        "timestamp": 1716664776
+    },
+    {
+        "content": "<p>I played a little with some RAG stuff in the open webui, and it was underwhelming as well. There must be some kind of better approach I haven't yet figured out. Maybe we should ask some other people around here who might know more?</p>",
+        "id": 440658240,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716664940
+    },
+    {
+        "content": "<p>At least larger books didn't really work at all. But maybe having smaller documents is somewhat important.</p>",
+        "id": 440658294,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716664999
+    },
+    {
+        "content": "<p>upstreaming open-webui to nixpkgs: <a href=\"https://github.com/NixOS/nixpkgs/pull/316248\">https://github.com/NixOS/nixpkgs/pull/316248</a></p>",
+        "id": 441802917,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1717188457
+    },
+    {
+        "content": "<p>Very nice!</p>",
+        "id": 441867579,
+        "sender_full_name": "Andreas",
+        "timestamp": 1717225221
+    }
+]

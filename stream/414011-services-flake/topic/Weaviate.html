@@ -1,0 +1,316 @@
+<html>
+<head><meta charset="utf-8"><title>Weaviate · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html">Weaviate</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="440079291"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440079291" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440079291">(May 22 2024 at 12:20)</a>:</h4>
+<p>I looked through documentation of Weaviate but I cant find how to run Weaviate locally.</p>
+
+
+
+<a name="440085062"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440085062" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440085062">(May 22 2024 at 12:53)</a>:</h4>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nix<span class="w"> </span>run<span class="w"> </span>nixpkgs#weaviate<span class="w"> </span>--<span class="w"> </span>--scheme<span class="o">=</span>http
+</code></pre></div>
+
+
+
+<a name="440085236"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440085236" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440085236">(May 22 2024 at 12:54)</a>:</h4>
+<p>That uses all the default configs, except I ask it not to use TLS, otherwise you will have to provide the location to the certificates and a bunch of other TLS related stuff</p>
+
+
+
+<a name="440085525"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440085525" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440085525">(May 22 2024 at 12:56)</a>:</h4>
+<p>In services-flake, we can assume it is <code>http</code> by default  — as we only target local development and <code>CI</code> workflows.</p>
+
+
+
+<a name="440106578"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440106578" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440106578">(May 22 2024 at 14:31)</a>:</h4>
+<p>I wrote this basic weaviate process:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  settings<span class="o">.</span>processes<span class="o">.</span>weaviate1<span class="o">.</span><span class="ss">command</span> <span class="o">=</span> pkgs<span class="o">.</span>writeShellApplication <span class="p">{</span>
+    <span class="ss">name</span> <span class="o">=</span> <span class="s2">"start-weaviate"</span><span class="p">;</span>
+    <span class="ss">runtimeInputs</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>weaviate <span class="p">];</span>
+    <span class="ss">text</span> <span class="o">=</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">      exec weaviate --scheme=http --host 0.0.0.0 --port 8080</span>
+<span class="s s-Multiline">    ''</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>But I don't know why running it doesn't always produce logs<br>
+<a href="/user_uploads/60244/f88TPN8kWy_pi7D4AhV3sMne/swappy-20240522_175414.png">swappy-20240522_175414.png</a><br>
+<a href="/user_uploads/60244/sd-E6KCsDC4AM3mtqm_4eag5/swappy-20240522_175259.png">swappy-20240522_175259.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/f88TPN8kWy_pi7D4AhV3sMne/swappy-20240522_175414.png" title="swappy-20240522_175414.png"><img src="/user_uploads/60244/f88TPN8kWy_pi7D4AhV3sMne/swappy-20240522_175414.png"></a></div><div class="message_inline_image"><a href="/user_uploads/60244/sd-E6KCsDC4AM3mtqm_4eag5/swappy-20240522_175259.png" title="swappy-20240522_175259.png"><img src="/user_uploads/60244/sd-E6KCsDC4AM3mtqm_4eag5/swappy-20240522_175259.png"></a></div>
+
+
+
+<a name="440126817"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440126817" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440126817">(May 22 2024 at 15:58)</a>:</h4>
+<p>I am not very certain, but it could be an upstream process-compose bug. I have noticed that when you switch back to the process you see logs, you can do that if there are more than one processes</p>
+
+
+
+<a name="440126943"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440126943" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440126943">(May 22 2024 at 15:59)</a>:</h4>
+<p>Anyways, you could also pass “-t=false” to process-compose to disable TUI mode</p>
+
+
+
+<a name="440126962"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440126962" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440126962">(May 22 2024 at 15:59)</a>:</h4>
+<p>That should do that job as well</p>
+
+
+
+<a name="440178687"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440178687" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440178687">(May 22 2024 at 20:37)</a>:</h4>
+<p>Right now this is my <code>weaviate.nix</code> file:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span> pkgs<span class="p">,</span> lib<span class="p">,</span> name<span class="p">,</span> config<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="k">let</span>
+  <span class="k">inherit</span> <span class="p">(</span>lib<span class="p">)</span> types<span class="p">;</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> lib<span class="o">.</span>mkEnableOption name<span class="p">;</span>
+
+    <span class="ss">package</span> <span class="o">=</span> lib<span class="o">.</span>mkPackageOption pkgs <span class="s2">"weaviate"</span> <span class="p">{</span> <span class="p">};</span>
+
+    outputs<span class="o">.</span><span class="ss">settings</span> <span class="o">=</span> lib<span class="o">.</span>mkOption <span class="p">{</span>
+      <span class="ss">type</span> <span class="o">=</span> types<span class="o">.</span>deferredModule<span class="p">;</span>
+      <span class="ss">internal</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="ss">readOnly</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="ss">default</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="ss">processes</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="s2">"</span><span class="si">${</span>name<span class="si">}</span><span class="s2">"</span> <span class="o">=</span>
+            <span class="k">let</span>
+              <span class="ss">startScript</span> <span class="o">=</span> pkgs<span class="o">.</span>writeShellApplication <span class="p">{</span>
+                <span class="ss">name</span> <span class="o">=</span> <span class="s2">"start-weaviate"</span><span class="p">;</span>
+                <span class="ss">runtimeInputs</span> <span class="o">=</span> <span class="p">[</span> config<span class="o">.</span>package <span class="p">];</span>
+                <span class="ss">text</span> <span class="o">=</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">                  exec weaviate --scheme=http --host 0.0.0.0 --port 8080</span>
+<span class="s s-Multiline">                ''</span><span class="p">;</span>
+              <span class="p">};</span>
+
+              <span class="ss">readyScript</span> <span class="o">=</span> pkgs<span class="o">.</span>writeText <span class="s2">"ready.py"</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">                import weaviate</span>
+<span class="s s-Multiline">                client = weaviate.connect_to_local(port=8080)</span>
+<span class="s s-Multiline">                client.close()</span>
+<span class="s s-Multiline">              ''</span><span class="p">;</span>
+            <span class="k">in</span>
+            <span class="p">{</span>
+              <span class="ss">command</span> <span class="o">=</span> startScript<span class="p">;</span>
+
+              <span class="ss">readiness_probe</span> <span class="o">=</span> <span class="p">{</span>
+                exec<span class="o">.</span><span class="ss">command</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span><span class="p">(</span>pkgs<span class="o">.</span>python3<span class="o">.</span>withPackages <span class="p">(</span>p<span class="p">:</span> <span class="p">[</span> p<span class="o">.</span>weaviate-client <span class="p">]))</span><span class="si">}</span><span class="s2">/bin/python </span><span class="si">${</span>readyScript<span class="si">}</span><span class="s2">"</span><span class="p">;</span>
+                <span class="ss">initial_delay_seconds</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="ss">period_seconds</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+                <span class="ss">timeout_seconds</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+                <span class="ss">success_threshold</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="ss">failure_threshold</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+              <span class="p">};</span>
+              <span class="ss">namespace</span> <span class="o">=</span> name<span class="p">;</span>
+
+              <span class="c1"># https://github.com/F1bonacc1/process-compose#-auto-restart-if-not-healthy</span>
+              availability<span class="o">.</span><span class="ss">restart</span> <span class="o">=</span> <span class="s2">"on_failure"</span><span class="p">;</span>
+            <span class="p">};</span>
+        <span class="p">};</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>and this is <code>weaviate_test.nix</code> file:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span> pkgs<span class="p">,</span> config<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+  services<span class="o">.</span>weaviate<span class="o">.</span><span class="s2">"weaviate1"</span><span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  settings<span class="o">.</span>processes<span class="o">.</span><span class="ss">test</span> <span class="o">=</span>
+    <span class="k">let</span>
+      <span class="ss">cfg</span> <span class="o">=</span> config<span class="o">.</span>services<span class="o">.</span>weaviate<span class="o">.</span><span class="s2">"weaviate1"</span><span class="p">;</span>
+      <span class="ss">testScript</span> <span class="o">=</span> pkgs<span class="o">.</span>writeText <span class="s2">"test.py"</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">        import weaviate</span>
+
+<span class="s s-Multiline">        client = weaviate.connect_to_local(</span>
+<span class="s s-Multiline">            port=8080,</span>
+<span class="s s-Multiline">        )</span>
+<span class="s s-Multiline">        client.close()</span>
+<span class="s s-Multiline">      ''</span><span class="p">;</span>
+    <span class="k">in</span>
+    <span class="p">{</span>
+      <span class="ss">command</span> <span class="o">=</span> pkgs<span class="o">.</span>writeShellApplication <span class="p">{</span>
+        <span class="ss">runtimeInputs</span> <span class="o">=</span> <span class="p">[</span>
+          cfg<span class="o">.</span>package
+          <span class="p">(</span>pkgs<span class="o">.</span>python3<span class="o">.</span>withPackages <span class="p">(</span>python-pkgs<span class="p">:</span> <span class="p">[</span>
+            python-pkgs<span class="o">.</span>weaviate-client
+          <span class="p">]))</span>
+        <span class="p">];</span>
+        <span class="ss">text</span> <span class="o">=</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">          exec python3 </span><span class="si">${</span>testScript<span class="si">}</span>
+<span class="s s-Multiline">        ''</span><span class="p">;</span>
+        <span class="ss">name</span> <span class="o">=</span> <span class="s2">"weaviate-test"</span><span class="p">;</span>
+      <span class="p">};</span>
+      depends_on<span class="o">.</span><span class="s2">"weaviate1"</span><span class="o">.</span><span class="ss">condition</span> <span class="o">=</span> <span class="s2">"process_healthy"</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>command <code>just run weaviate</code> works fine but when i run <code>just test weaviate</code> I get error:<br>
+<a href="/user_uploads/60244/g30SMSseATBuAHG0PdJ56Btc/swappy-20240522_235102.png">swappy-20240522_235102.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/g30SMSseATBuAHG0PdJ56Btc/swappy-20240522_235102.png" title="swappy-20240522_235102.png"><img src="/user_uploads/60244/g30SMSseATBuAHG0PdJ56Btc/swappy-20240522_235102.png"></a></div>
+
+
+
+<a name="440316022"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440316022" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440316022">(May 23 2024 at 12:52)</a>:</h4>
+<p>can’t reproduce. Tried it on macOS the test is passing.</p>
+
+
+
+<a name="440316261"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440316261" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440316261">(May 23 2024 at 12:53)</a>:</h4>
+<p>I added other config options and even doc in this <a href="https://github.com/jedimahdi/services-flake/commit/ea2115f9938a49fcdacd32555206d7b21cb6381b">commit</a>. Can you see if there is anything missing</p>
+
+
+
+<a name="440316504"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440316504" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440316504">(May 23 2024 at 12:54)</a>:</h4>
+<p>I can reproduce your error on linux</p>
+
+
+
+<a name="440317226"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440317226" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440317226">(May 23 2024 at 12:58)</a>:</h4>
+<blockquote>
+<p>I added other config options and even doc in this <a href="https://github.com/jedimahdi/services-flake/commit/ea2115f9938a49fcdacd32555206d7b21cb6381b">commit</a>. Can you see if there is anything missing</p>
+</blockquote>
+<p>Looks neat! Only missing piece will be the test failing on linux. Weaviate is doing something different on macOS, it works there.</p>
+
+
+
+<a name="440317460"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440317460" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440317460">(May 23 2024 at 12:59)</a>:</h4>
+<p>It works with <code>just run weaviate</code> right?</p>
+
+
+
+<a name="440318378"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440318378" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440318378">(May 23 2024 at 13:04)</a>:</h4>
+<p>And the only difference i can see is running process-compose with -t=false flag</p>
+
+
+
+<a name="440335675"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440335675" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440335675">(May 23 2024 at 14:28)</a>:</h4>
+<p>I added --no-sandbox to </p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="nb">test</span><span class="w"> </span>service:
+<span class="w">    </span>nix<span class="w"> </span>--no-sandbox<span class="w"> </span>build<span class="w"> </span>./test#checks.<span class="k">$(</span>nix<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>--impure<span class="w"> </span>--expr<span class="w"> </span><span class="s2">"builtins.currentSystem"</span><span class="k">)</span>.<span class="o">{{</span>service<span class="o">}}</span><span class="w"> </span>--override-input<span class="w"> </span>services-flake<span class="w"> </span>.<span class="w"> </span>-L
+</code></pre></div>
+<p>and it works</p>
+
+
+
+<a name="440465935"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440465935" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440465935">(May 24 2024 at 08:43)</a>:</h4>
+<blockquote>
+<p>I added other config options and even doc in this <a href="https://github.com/jedimahdi/services-flake/commit/ea2115f9938a49fcdacd32555206d7b21cb6381b">commit</a>. Can you see if there is anything missing</p>
+</blockquote>
+<p>You are missing <code>dataDir</code> option for the service</p>
+
+
+
+<a name="440471909"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440471909" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440471909">(May 24 2024 at 09:20)</a>:</h4>
+<p>Also, <code>Usage of the weaviate.conf.json file is deprecated and will be removed in the future. Please use environment variables.</code></p>
+
+
+
+<a name="440514571"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440514571" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440514571">(May 24 2024 at 13:55)</a>:</h4>
+<p>I changed the configs to use environment variables <a href="https://github.com/jedimahdi/services-flake/commit/e45010ef99833fb3ec177025853fb1e07e999d4e">commit</a> also added dataDir option.</p>
+<p>and found a better way to check for readiness and for test without the python scripts. <a href="https://github.com/jedimahdi/services-flake/commit/a228b5bb8b809d1160a2eecb411c56133fb9577b">commit</a></p>
+
+
+
+<a name="440529968"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440529968" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440529968">(May 24 2024 at 15:21)</a>:</h4>
+<p>Great! </p>
+<blockquote>
+<p>I added --no-sandbox to and it works</p>
+</blockquote>
+<p>I don’t why weaviate would require to disable sandbox mode.</p>
+
+
+
+<a name="440531175"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440531175" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440531175">(May 24 2024 at 15:29)</a>:</h4>
+<p>I thought it was because of weaviate telemetry but even after disabling it, test won't pass.</p>
+
+
+
+<a name="440532050"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440532050" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440532050">(May 24 2024 at 15:33)</a>:</h4>
+<p>I think I figured it out. It has to do with <a href="https://github.com/hashicorp/memberlist">https://github.com/hashicorp/memberlist</a>. Although I am yet to find the exact reason, but setting this ENV makes the test pass: </p>
+<div class="codehilite"><pre><span></span><code>diff --git a/nix/weaviate_test.nix b/nix/weaviate_test.nix
+index a766c58..31d7975 100644
+--- a/nix/weaviate_test.nix
++++ b/nix/weaviate_test.nix
+@@ -1,5 +1,10 @@
+ { pkgs, config, ... }: {
+-  services.weaviate.&quot;weaviate1&quot;.enable = true;
++  services.weaviate.&quot;weaviate1&quot; = {
++    enable = true;
++    envs = {
++      CLUSTER_ADVERTISE_ADDR = &quot;127.0.0.1&quot;;
++    };
++  };
+
+   settings.processes.test =
+     let
+</code></pre></div>
+
+
+
+<a name="440532706"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440532706" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440532706">(May 24 2024 at 15:37)</a>:</h4>
+<p>This is what lead me to it: <a href="https://github.com/weaviate/weaviate/blob/9e924cc88933b3042e27e30ad4abf26ab9ab78f8/usecases/cluster/state.go#L84-L86">https://github.com/weaviate/weaviate/blob/9e924cc88933b3042e27e30ad4abf26ab9ab78f8/usecases/cluster/state.go#L84-L86</a></p>
+
+
+
+<a name="440533450"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440533450" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440533450">(May 24 2024 at 15:43)</a>:</h4>
+<p>I think it has to do with the fact that the default value for <code>AdvertiseAddr</code> config is an empty string: <a href="https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/config.go#L308">https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/config.go#L308</a></p>
+<p>But what I fail to understand is, how does it work when sandbox is disabled. I think the question can be better framed as: What does empty addr translate to?</p>
+
+
+
+<a name="440542394"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440542394" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440542394">(May 24 2024 at 16:38)</a>:</h4>
+<p>When <code>AdvertiseAddr</code> is empty it goes to this path:<br>
+<a href="https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/net_transport.go#L160">https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/net_transport.go#L160</a></p>
+<p>and calls <code>GetPrivateIP</code> function which I guess in sandbox mode can't find any ip</p>
+
+
+
+<a name="440759946"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/440759946" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#440759946">(May 27 2024 at 02:01)</a>:</h4>
+<p>Should i use types.raw as type of value of environment? other than int, str, list of str and bool, is there anything else? at least for environment values of weaviate</p>
+
+
+
+<a name="441010077"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/Weaviate/near/441010077" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mahdi Seyedan <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/Weaviate.html#441010077">(May 28 2024 at 10:32)</a>:</h4>
+<p>I forgot to update envs to environment in weaviate.md file<br>
+<a href="https://github.com/juspay/services-flake/blob/main/doc/weaviate.md?plain=1#L32">https://github.com/juspay/services-flake/blob/main/doc/weaviate.md?plain=1#L32</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>Usr files persist after being removed from the configuration · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Usr.20files.20persist.20after.20being.20removed.20from.20the.20configuration.html">Usr files persist after being removed from the configuration</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="423803581"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Usr%20files%20persist%20after%20being%20removed%20from%20the%20configuration/near/423803581" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Usr.20files.20persist.20after.20being.20removed.20from.20the.20configuration.html#423803581">(Feb 28 2024 at 12:01)</a>:</h4>
+<p><code>remotedev</code> user was <a href="https://github.com/juspay/remote-development/blob/7aa17a2f6849d31477f18792e145710d0bbacc23/hosts/vanjaram/configuration.nix#L99-L107">present</a> in the configuration and was later <a href="https://github.com/juspay/remote-development/pull/12/files#diff-a7c2716e96e14fd507ada5ecf25fa4138ad73fe6bb002285b5fb90f662c36295">removed</a>  </p>
+<p>But I still see the user’s files:<br>
+<a href="/user_uploads/60244/wLiaehgYEUOixVHDG4XblQKH/Screenshot-2024-02-28-at-5.25.16PM.png">Screenshot-2024-02-28-at-5.25.16PM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/wLiaehgYEUOixVHDG4XblQKH/Screenshot-2024-02-28-at-5.25.16PM.png" title="Screenshot-2024-02-28-at-5.25.16PM.png"><img src="/user_uploads/60244/wLiaehgYEUOixVHDG4XblQKH/Screenshot-2024-02-28-at-5.25.16PM.png"></a></div>
+
+
+
+<a name="423805009"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Usr%20files%20persist%20after%20being%20removed%20from%20the%20configuration/near/423805009" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Usr.20files.20persist.20after.20being.20removed.20from.20the.20configuration.html#423805009">(Feb 28 2024 at 12:10)</a>:</h4>
+<p>Makes sense why they are not deleted, though nixos should probably offer an option to the user here, or at least inform them. This all falls under the larger category of automatic migration of stateful data, I guess.</p>
+
+
+
+<a name="423818447"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Usr%20files%20persist%20after%20being%20removed%20from%20the%20configuration/near/423818447" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Usr.20files.20persist.20after.20being.20removed.20from.20the.20configuration.html#423818447">(Feb 28 2024 at 13:34)</a>:</h4>
+<p>Probably the best solution to this kind of thing so far would be:<br>
+<a href="https://nixos.wiki/wiki/Impermanence">https://nixos.wiki/wiki/Impermanence</a></p>
+
+
+
+<a name="423870738"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Usr%20files%20persist%20after%20being%20removed%20from%20the%20configuration/near/423870738" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Usr.20files.20persist.20after.20being.20removed.20from.20the.20configuration.html#423870738">(Feb 28 2024 at 17:46)</a>:</h4>
+<p>Impermenence can work for certain servers, more than shared machines. In the latter, user home directories will have various git repos checked out with <code>direnv</code> enabled on them, which needs to be persisted.</p>
+
+
+
+<a name="423879815"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Usr%20files%20persist%20after%20being%20removed%20from%20the%20configuration/near/423879815" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Usr.20files.20persist.20after.20being.20removed.20from.20the.20configuration.html#423879815">(Feb 28 2024 at 18:39)</a>:</h4>
+<p>That's what the impermanence module is for. It's essentially a white list for files and directories you wish to be persisted across reboots. Everything else is wiped</p>
+
+
+
+<a name="423879991"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Usr%20files%20persist%20after%20being%20removed%20from%20the%20configuration/near/423879991" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Usr.20files.20persist.20after.20being.20removed.20from.20the.20configuration.html#423879991">(Feb 28 2024 at 18:40)</a>:</h4>
+<p>I used to use it, haven't for a little while now, but was considering adding it again on my large build server, just to keep it clean, but then I don't reboot it very often either <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,67 @@
+<html>
+<head><meta charset="utf-8"><title>0.5.0 plan · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html">0.5.0 plan</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="423171464"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/0.5.0%20plan/near/423171464" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html#423171464">(Feb 24 2024 at 13:49)</a>:</h4>
+<p>Mainly I want to tighten up docs &amp; stability of this thing.</p>
+<p>Let me know if anything else should go into this release.</p>
+<p><a href="https://github.com/srid/haskell-flake/milestone/1">https://github.com/srid/haskell-flake/milestone/1</a></p>
+<p>Will aim to release something in a week or two.</p>
+
+
+
+<a name="424226954"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/0.5.0%20plan/near/424226954" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html#424226954">(Mar 01 2024 at 12:43)</a>:</h4>
+<p>I guess we'll add <a href="https://github.com/srid/haskell-flake/issues/261">https://github.com/srid/haskell-flake/issues/261</a> to this release.</p>
+
+
+
+<a name="429871023"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/0.5.0%20plan/near/429871023" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html#429871023">(Mar 27 2024 at 14:23)</a>:</h4>
+<p>Pending PRs for 0.5:</p>
+<ul>
+<li><a href="https://github.com/srid/haskell-flake/pull/275">https://github.com/srid/haskell-flake/pull/275</a></li>
+<li><a href="https://github.com/srid/haskell-flake/pull/277">https://github.com/srid/haskell-flake/pull/277</a></li>
+</ul>
+
+
+
+<a name="429871820"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/0.5.0%20plan/near/429871820" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html#429871820">(Mar 27 2024 at 14:26)</a>:</h4>
+<p>Oh, and I should give <a href="https://github.com/srid/haskell-flake/issues/262">https://github.com/srid/haskell-flake/issues/262</a> another attempt as well</p>
+
+
+
+<a name="429917103"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/0.5.0%20plan/near/429917103" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html#429917103">(Mar 27 2024 at 17:56)</a>:</h4>
+<p>Also this:</p>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/Can.E2.80.99t.20assign.20custom.20library.20packages.20in.20settings/near/429917075">said</a>:</p>
+<blockquote>
+<p>I'll take a look later today. Actually, this may be related to the ordering of settings,</p>
+<p><a href="https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77">https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77</a></p>
+</blockquote>
+
+
+
+<a name="434050808"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/0.5.0%20plan/near/434050808" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html#434050808">(Apr 18 2024 at 13:45)</a>:</h4>
+<p>#275 is close to being complete, here are the tests: <a href="https://github.com/srid/haskell-flake/pull/275#issuecomment-2063903367">https://github.com/srid/haskell-flake/pull/275#issuecomment-2063903367</a></p>
+
+
+
+<a name="434053966"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/0.5.0%20plan/near/434053966" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/0.2E5.2E0.20plan.html#434053966">(Apr 18 2024 at 14:00)</a>:</h4>
+<p>documentation should be last thing to do. Also, need to rethink the naming conventions for the defaults</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

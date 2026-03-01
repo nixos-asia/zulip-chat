@@ -1,0 +1,73 @@
+<html>
+<head><meta charset="utf-8"><title>Convering Islands to Derivations Efficiently · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Convering.20Islands.20to.20Derivations.20Efficiently.html">Convering Islands to Derivations Efficiently</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="478760391"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Convering%20Islands%20to%20Derivations%20Efficiently/near/478760391" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Convering.20Islands.20to.20Derivations.20Efficiently.html#478760391">(Oct 24 2024 at 16:54)</a>:</h4>
+<h1>Converting Islands To Derivations</h1>
+<p>Fetching entire source trees using islands will be very inefficient. Say when we're doing:</p>
+<div class="codehilite"><pre><span></span><code>packages.cargoBuild {
+  source = &lt;github:cull-os/cab&gt;,
+}
+</code></pre></div>
+<p>The build derivation will depend on the source derivation. But we don't have a derivation, we only have an island.</p>
+<p>Then what will we do? We will have to fetch it all and reupload it to our realizer, as a derivation (via toDerivation).</p>
+<p>This could be fixed with fixed output derivations, but specifying hashes manually is cumbersome.</p>
+<p>Instead of that, the implementation of <code>toDerivation island</code> will output a super tiny program (ideally written in Zig with -Osmall) that fetches the island and places the contents in a fixed output derivation.</p>
+<p>There is one minor issue. There is no way to do <code>cab build --update</code> without instructing the realizer to re-run the fetcher program with the found hash instead of expected one. This will be terrible for huge downloads.</p>
+<p>The fix is to have "self-fixing" derivations where the derivation will set its own fixed hash itself. Then we can have our "updating" program set its fixed hash and exit.</p>
+<p>This will be done with a fifo in the programs working directory where it will write the final hash right before exiting.</p>
+
+
+
+<a name="478917499"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Convering%20Islands%20to%20Derivations%20Efficiently/near/478917499" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Convering.20Islands.20to.20Derivations.20Efficiently.html#478917499">(Oct 25 2024 at 13:18)</a>:</h4>
+<h1>Converting Islands To Derivations</h1>
+<p>Fetching entire source trees using islands will be very inefficient. Say when we're doing:</p>
+<div class="codehilite"><pre><span></span><code>packages.cargoBuild {
+  source = &lt;github:cull-os/cab&gt;,
+}
+</code></pre></div>
+<p>The build derivation will depend on the source derivation. But we don't have a derivation, we only have an island.</p>
+<p>Then what will we do? We will have to fetch it all and reupload it to our realizer, as a derivation (via <code>toDerivation island</code>).</p>
+<p>This could be fixed with fixed output derivations, but specifying hashes manually is cumbersome.</p>
+<p>Instead of that, the implementation of <code>toDerivation island</code> will output a derivation using a super tiny WASM file (which is shared for all builtin islands, and requires <code>requiredRealizerFeatures = [ "wasm" ]</code>) that fetches the island and places the contents in a fixed output derivation.</p>
+<p>There is one minor issue. There is no way to do <code>cab build --update</code> (and fetch new islands without the flag) without instructing the realizer to re-run the fetcher program with the found hash after failing initially by running with a random one. This will be terrible for huge downloads.</p>
+<p>The fix is to have "self-fixing" derivations where the derivation will set its own fixed hash itself. Then we can have our "updating" program set its fixed hash and exit.</p>
+<p>This will be done with a fifo in the programs working directory where it will write the final hash in a number of formats (like our git fetcher can write the git revision at the start, before fetching and writing the Cab hash), and when each format is written the realizer has the right to terminate the derivation as it might already have it stored somewhere.</p>
+
+
+
+<a name="478917734"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Convering%20Islands%20to%20Derivations%20Efficiently/near/478917734" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Convering.20Islands.20to.20Derivations.20Efficiently.html#478917734">(Oct 25 2024 at 13:20)</a>:</h4>
+<p>(updated to say WASM, for truly system independent building)</p>
+
+
+
+<a name="478917902"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Convering%20Islands%20to%20Derivations%20Efficiently/near/478917902" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Convering.20Islands.20to.20Derivations.20Efficiently.html#478917902">(Oct 25 2024 at 13:21)</a>:</h4>
+<p>Which makes me think, does having <code>system</code> be something special make sense at all? Why not make it a feature in the protocol too?</p>
+
+
+
+<a name="484352848"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Convering%20Islands%20to%20Derivations%20Efficiently/near/484352848" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Convering.20Islands.20to.20Derivations.20Efficiently.html#484352848">(Nov 25 2024 at 17:10)</a>:</h4>
+<p><span class="user-mention" data-user-id="679006">@Tim DeHerrera</span> See the "self-fixing" part here.</p>
+
+
+
+<a name="484352897"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Convering%20Islands%20to%20Derivations%20Efficiently/near/484352897" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Convering.20Islands.20to.20Derivations.20Efficiently.html#484352897">(Nov 25 2024 at 17:10)</a>:</h4>
+<p>(this is a reply to <a href="https://x.com/nrdexp/status/1861093446846451897">https://x.com/nrdexp/status/1861093446846451897</a>)</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

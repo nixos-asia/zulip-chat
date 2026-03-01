@@ -1,0 +1,110 @@
+<html>
+<head><meta charset="utf-8"><title>Things to not do in the realizer protocol · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Things.20to.20not.20do.20in.20the.20realizer.20protocol.html">Things to not do in the realizer protocol</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="480073432"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Things%20to%20not%20do%20in%20the%20realizer%20protocol/near/480073432" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Things.20to.20not.20do.20in.20the.20realizer.20protocol.html#480073432">(Nov 01 2024 at 15:46)</a>:</h4>
+<p>Well, this will be a list of weird things in the Nix store protocol for now and I'll decide on what to do to avoid them later</p>
+
+
+
+<a name="480076973"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Things%20to%20not%20do%20in%20the%20realizer%20protocol/near/480076973" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Things.20to.20not.20do.20in.20the.20realizer.20protocol.html#480076973">(Nov 01 2024 at 16:06)</a>:</h4>
+<p>First off: no copying files into realizers. Only derivations.</p>
+<p>You know how when you do </p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="nb">derivation</span> <span class="p">{</span>
+  <span class="ss">builder</span> <span class="o">=</span> <span class="l">./builder</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Nix first</p>
+<ol>
+<li>Copies the file to the store</li>
+<li>Then it actually creates the the derivation files with that path referenced</li>
+</ol>
+<p>And how that file itself isn't actually a derivation? But instead is just a file?</p>
+
+
+
+<a name="480080891"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Things%20to%20not%20do%20in%20the%20realizer%20protocol/near/480080891" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Things.20to.20not.20do.20in.20the.20realizer.20protocol.html#480080891">(Nov 01 2024 at 16:31)</a>:</h4>
+<p>We can avoid this by letting people specify paths inside derivations:</p>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">paths</span><span class="o">.</span><span class="n">builder</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">executable</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">fileContent</span><span class="w"> </span><span class="s">"binary contents of it here"</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">command</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">"builder"</span><span class="p">;</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="n">relative</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">pwd</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="kr">default</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>These "paths" inside derivations will be an attribute of the derivation itself.</p>
+<p>Now, when the command is run, the process will see this filesystem layout:</p>
+<div class="codehilite"><pre><span></span><code>/
+  var/lib/real/xxxxx-that-drv/ # this is our pwd
+    builder
+</code></pre></div>
+<p>But of course this is quite inefficient. Every time we change that derivation, we have to write another file with the exact same contents. How do we avoid this?</p>
+<p>By making a derivation with only that file, of course:</p>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">\</span><span class="n">thatfileder</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">paths</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">builder</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">executable</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">fileContent</span><span class="w"> </span><span class="s">"binary contents here"</span><span class="p">;</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">};</span>
+
+<span class="nf">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">command</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">pathOf</span><span class="w"> </span><span class="n">thatfileder</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"/builder"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This will also mandate that our derivation should not require a command, which is a good thing.</p>
+<p>This will be what things like <code>./foo.sh</code> and <code>./mydir</code> desugar to too. These two are equivalent:</p>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">paths</span><span class="o">.</span><span class="p">`</span><span class="n">foo</span><span class="o">.</span><span class="n">sh</span><span class="p">`</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">./</span><span class="n">foo</span><span class="o">.</span><span class="n">sh</span><span class="p">;</span>
+<span class="w">  </span><span class="n">paths</span><span class="o">.</span><span class="n">mydir</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">./</span><span class="n">mydir</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">paths</span><span class="o">.</span><span class="n">foo</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="n">pathOf</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">paths</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="o">#</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">executable</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="n">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">automatically</span><span class="w"> </span><span class="n">determined</span>
+<span class="w">      </span><span class="p">`</span><span class="n">foo</span><span class="o">.</span><span class="n">sh</span><span class="p">`</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">executable</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">fileContents</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="s">"foo.sh"</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">})</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"/foo.sh"</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">paths</span><span class="o">.</span><span class="n">mydir</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="n">pathOf</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">paths</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">idk</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">fileContents</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">readFile</span><span class="w"> </span><span class="s">"aaa"</span><span class="p">;</span>
+<span class="w">      </span><span class="o">#</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">on</span><span class="p">,</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">nested</span><span class="w"> </span><span class="n">derivations</span><span class="w"> </span><span class="p">(</span><span class="n">or</span><span class="w"> </span><span class="n">maybe</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="o">?</span><span class="p">)</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="480084683"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Things%20to%20not%20do%20in%20the%20realizer%20protocol/near/480084683" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Things.20to.20not.20do.20in.20the.20realizer.20protocol.html#480084683">(Nov 01 2024 at 16:54)</a>:</h4>
+<p>Notice how we don't need the concept of "outputs" where we magically get mutable store paths, as we can now specify output directories in the filesystem layout, right inside our derivation? These directories will persist even after the derivation builds. But we have another problem now:</p>
+<p>How do we make them content addressed and garbage collect them individually, without affecting the integrity? Luckily there is a smart way out.</p>
+<p>We now hash the derivation individually with separate views for every output directory, while replacing self references with a fixed magic hash, and move them to their respective <code>/var/lib/real/xxhashofthisoutput-llvm/</code> and finally replace the cross and self references with the respective hashes of the output derivations.</p>
+
+
+
+<a name="480085836"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Things%20to%20not%20do%20in%20the%20realizer%20protocol/near/480085836" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Things.20to.20not.20do.20in.20the.20realizer.20protocol.html#480085836">(Nov 01 2024 at 17:01)</a>:</h4>
+<p>Though, as discussed earlier, this will require even more communication for clients to find out paths. I'll tackle this when I'm actually implementing it.</p>
+
+
+
+<a name="480087377"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Things%20to%20not%20do%20in%20the%20realizer%20protocol/near/480087377" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Things.20to.20not.20do.20in.20the.20realizer.20protocol.html#480087377">(Nov 01 2024 at 17:10)</a>:</h4>
+<p>One thing this WILL break is binaries not using absolute references when cross referencing other outputs, but I'm sure nothing ever does that so it's fine.</p>
+<p>Or maybe we can fix this by symlinking the other output directories (of which are not the content addressed one) into every output derivation.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

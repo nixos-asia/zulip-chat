@@ -1,0 +1,195 @@
+<html>
+<head><meta charset="utf-8"><title>`custom` setting stopped working · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html">`custom` setting stopped working</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="429935364"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/429935364" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#429935364">(Mar 27 2024 at 19:48)</a>:</h4>
+<p>Introduced by <a href="https://github.com/srid/haskell-flake/pull/253">https://github.com/srid/haskell-flake/pull/253</a></p>
+
+
+
+<a name="429935907"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/429935907" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#429935907">(Mar 27 2024 at 19:51)</a>:</h4>
+<p>Tangentially related: <a href="https://github.com/srid/haskell-flake/issues/192">https://github.com/srid/haskell-flake/issues/192</a></p>
+<p>But now that we have <code>otherOverlays</code> I wonder if I should just get rid of <code>custom</code>.</p>
+
+
+
+<a name="429937742"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/429937742" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#429937742">(Mar 27 2024 at 20:03)</a>:</h4>
+<h3>Ordering is the issue</h3>
+<p>I can confirm that the order in which settings are applied is the issue. If I rename <code>custom</code> to <code>A_custom</code>, it works. This suggests that <code>custom</code> doesn't work because it comes after <code>buildFromSdist</code> in alphabetical order.</p>
+
+
+
+<a name="429938477"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/429938477" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#429938477">(Mar 27 2024 at 20:08)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working/near/429935907">said</a>:</p>
+<blockquote>
+<p>Tangentially related: <a href="https://github.com/srid/haskell-flake/issues/192">https://github.com/srid/haskell-flake/issues/192</a></p>
+<p>But now that we have <code>otherOverlays</code> I wonder if I should just get rid of <code>custom</code>.</p>
+</blockquote>
+<p>Hmm, we can't do that, because overlays don't compose when <code>import</code>'ing.</p>
+
+
+
+<a name="429938892"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/429938892" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#429938892">(Mar 27 2024 at 20:11)</a>:</h4>
+<p>Here's an idea: provide two settings:</p>
+<ul>
+<li><code>settings.&lt;name&gt;.init : drv</code>: assigns the initial value <em>before</em> settings are applied</li>
+<li><code>settings.&lt;name&gt;.final : drv -&gt; drv</code>: transforms the final drv after the other settings are applied.</li>
+</ul>
+
+
+
+<a name="429942552"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/429942552" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#429942552">(Mar 27 2024 at 20:28)</a>:</h4>
+<h3>Proposal for fix</h3>
+<p><a href="https://github.com/srid/haskell-flake/issues/283">https://github.com/srid/haskell-flake/issues/283</a></p>
+<p>Need <span aria-label="eyes" class="emoji emoji-1f440" role="img" title="eyes">:eyes:</span> and ideas from people.</p>
+
+
+
+<a name="429946774"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/429946774" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#429946774">(Mar 27 2024 at 20:49)</a>:</h4>
+<p>Or,</p>
+<ul>
+<li><code>settings.&lt;name&gt;.custom.initial</code></li>
+<li><code>settings.&lt;name&gt;.custom.final</code></li>
+</ul>
+
+
+
+<a name="430086331"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430086331" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430086331">(Mar 28 2024 at 14:54)</a>:</h4>
+<p>Or,</p>
+<ul>
+<li><code>packages.&lt;name&gt;.drv</code> (computed from <code>source</code> automatically, by default)</li>
+<li><code>settings.&lt;name&gt;.custom</code> (applies at the end, after other settings)</li>
+</ul>
+
+
+
+<a name="430086733"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430086733" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430086733">(Mar 28 2024 at 14:56)</a>:</h4>
+<p>Incidentally, I began thinking about why we even need separate <code>packages</code> and <code>settings</code> option groups. Like, why not this:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">packages</span> <span class="o">=</span> <span class="p">{</span>
+    hello_rust<span class="o">.</span><span class="ss">drv</span> <span class="o">=</span> self'<span class="o">.</span>packages<span class="o">.</span>hello_rust
+    myhaskell<span class="o">.</span><span class="ss">source</span> <span class="o">=</span> <span class="l">./haskell</span><span class="p">;</span>
+    myhaskell<span class="o">.</span>setting<span class="o">.</span><span class="ss">libraryProfiling</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    aeson<span class="o">.</span><span class="ss">source</span> <span class="o">=</span> <span class="s2">"1.5.0"</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="430095239"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430095239" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430095239">(Mar 28 2024 at 15:31)</a>:</h4>
+<p>This is nice, keeps all the info about a package in one-place.</p>
+
+
+
+<a name="430095850"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430095850" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430095850">(Mar 28 2024 at 15:33)</a>:</h4>
+<p>Will be a big ass refactoring, will try from Australia next week.</p>
+
+
+
+<a name="430095997"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430095997" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430095997">(Mar 28 2024 at 15:34)</a>:</h4>
+<p>Since this bug affects only non-existent packages, it is not high prio to fix I guess.</p>
+
+
+
+<a name="430100576"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430100576" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430100576">(Mar 28 2024 at 15:48)</a>:</h4>
+<p>I could add the &lt;package-name&gt;.drv feature for non-existent packages, which shouldn’t be hard to do and not break anything</p>
+
+
+
+<a name="430101291"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430101291" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430101291">(Mar 28 2024 at 15:50)</a>:</h4>
+<p>Will help publish this tutorial soon: <a href="https://github.com/nixos-asia/website/pull/24">https://github.com/nixos-asia/website/pull/24</a></p>
+
+
+
+<a name="430102669"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430102669" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430102669">(Mar 28 2024 at 15:55)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working/near/430100576">said</a>:</p>
+<blockquote>
+<p>I could add the &lt;package-name&gt;.drv feature for non-existent packages, which shouldn’t be hard to do and not break anything</p>
+</blockquote>
+<p>Feel free to give it a try.</p>
+
+
+
+<a name="430144537"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430144537" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430144537">(Mar 28 2024 at 18:55)</a>:</h4>
+<p>Turns out we can fix this particular bug without implementing this proposal (which should be good on its own merits, though):</p>
+<p><a href="https://github.com/srid/haskell-flake/pull/284">https://github.com/srid/haskell-flake/pull/284</a></p>
+
+
+
+<a name="430145537"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430145537" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430145537">(Mar 28 2024 at 19:02)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>srid on appreciate haskell-rust-ffi-template on  master [⇣]
+❯ g log -1
+commit 1038ca8a87aae4e448bbd7ea6e1c41ee4e7acb2d (HEAD -&gt; master)
+Author: Shivaraj B H &lt;sbh69840@gmail.com&gt;
+Date:   Wed Mar 27 15:04:33 2024 +0530
+
+    ci: upgrade nixci
+
+srid on appreciate haskell-rust-ffi-template on  master [⇣]
+❯ nix build --override-input haskell-flake github:srid/haskell-flake/settings-null --show-trace
+warning: not writing modified lock file of flake &#39;git+file:///Users/srid/code/haskell-rust-ffi-template&#39;:
+• Updated input &#39;haskell-flake&#39;:
+    &#39;github:srid/haskell-flake/f9d17c3aa68e65529f424816c8b9346ae602d1de&#39; (2024-02-06)
+  → &#39;github:srid/haskell-flake/d6a9187919cbf087b99d88d154086a20fc1b72f1&#39; (2024-03-28)
+
+srid on appreciate haskell-rust-ffi-template on  master [⇣] took 5s
+❯
+</code></pre></div>
+
+
+
+<a name="430733939"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430733939" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430733939">(Apr 02 2024 at 08:05)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> has marked this topic as unresolved.</p>
+
+
+
+<a name="430734120"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430734120" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430734120">(Apr 02 2024 at 08:06)</a>:</h4>
+<p>seems like it is broken again: <a href="https://github.com/srid/haskell-flake/issues/283#issuecomment-2031339304">https://github.com/srid/haskell-flake/issues/283#issuecomment-2031339304</a></p>
+
+
+
+<a name="430927626"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430927626" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430927626">(Apr 03 2024 at 06:29)</a>:</h4>
+<p>Does this fix it? </p>
+<p><a href="https://github.com/srid/haskell-flake/pull/298">https://github.com/srid/haskell-flake/pull/298</a></p>
+
+
+
+<a name="430929017"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%60custom%60%20setting%20stopped%20working/near/430929017" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working.html#430929017">(Apr 03 2024 at 06:41)</a>:</h4>
+<p>Yes, it does.</p>
+<p>here’s what I tried:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nix<span class="w"> </span>build<span class="w"> </span>github:shivaraj-bh/haskell-rust-ffi-template<span class="w"> </span>--override-input<span class="w"> </span>haskell-flake<span class="w"> </span>github:srid/haskell-flake/e20cdd30ad9201bedc4977fa55f7a4765d6a56ac
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

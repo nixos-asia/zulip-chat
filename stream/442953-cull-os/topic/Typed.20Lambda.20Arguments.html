@@ -1,0 +1,43 @@
+<html>
+<head><meta charset="utf-8"><title>Typed Lambda Arguments · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Typed.20Lambda.20Arguments.html">Typed Lambda Arguments</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="451146419"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Typed%20Lambda%20Arguments/near/451146419" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Typed.20Lambda.20Arguments.html#451146419">(Jul 13 2024 at 08:58)</a>:</h4>
+<p>I was thinking about this yesterday. Even though a lot of the stdlib will be in Rust, which eagerly checks for types, we need a way to do it in userspace too.</p>
+<p>So I decided on this:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">filter</span> <span class="o">=</span> x <span class="p">::</span> lambda any boolean<span class="p">:</span> y <span class="p">::</span> list <span class="p">(</span>typeOf x<span class="p">)</span><span class="o">.</span>input<span class="p">:</span> <span class="o">&lt;</span>impl here<span class="o">&gt;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This would sugar down into something that's equivalent to this but with better error messages:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">filter</span> <span class="o">=</span> x<span class="p">:</span> <span class="k">assert</span> <span class="p">(</span>typeOf x<span class="p">)</span> <span class="o">==</span> lambda any <span class="ss">boolean</span> <span class="o">==&gt;</span> y<span class="p">:</span> <span class="k">assert</span> <span class="p">(</span>typeOf y<span class="p">)</span> <span class="o">==</span> <span class="p">(</span>typeOf x<span class="p">)</span><span class="o">.</span><span class="ss">input</span> <span class="o">==&gt;</span> <span class="o">&lt;</span>impl here<span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>How this works is you can specify expressions between the <code>::</code> and <code>:</code>, and they get compared to the type of the argument every time the lambda is called.</p>
+<p><code>==&gt;</code> is normally for importing namespaces, but it can be used for an equivalent of Nix's <code>builtins.seq</code> without the parens by making functions return empty attribute sets or maybe even some information in that attribute set when they pass and <code>throw</code> if they don't, making it bubble up with a trace.</p>
+
+
+
+<a name="451146837"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Typed%20Lambda%20Arguments/near/451146837" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Typed.20Lambda.20Arguments.html#451146837">(Jul 13 2024 at 09:02)</a>:</h4>
+<p>I want to take a shot at implementing this in Nix. It's backwards compatible syntax and shouldn't be that hard to implement, and having a nice demo would be neat</p>
+
+
+
+<a name="479074939"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Typed%20Lambda%20Arguments/near/479074939" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Typed.20Lambda.20Arguments.html#479074939">(Oct 26 2024 at 19:50)</a>:</h4>
+<p>This will now be done with pattern matching and will work everywhere. <code>&lt;pat&gt; :: &lt;expr&gt;</code> is a valid pattern match: <code>\x :: number: x + 1</code></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

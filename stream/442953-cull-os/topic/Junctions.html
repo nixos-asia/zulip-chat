@@ -1,0 +1,47 @@
+<html>
+<head><meta charset="utf-8"><title>Junctions · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Junctions.html">Junctions</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="482787906"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Junctions/near/482787906" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Junctions.html#482787906">(Nov 16 2024 at 17:29)</a>:</h4>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="err">\</span><span class="ss">xs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="c1"># 1 | 2 | 3</span>
+<span class="err">\</span><span class="ss">anyXs</span> <span class="o">=</span> foldLeft <span class="p">(</span><span class="err">|</span><span class="p">)</span> <span class="p">(</span>head xs<span class="p">)</span> <span class="p">(</span>tail xs<span class="p">);</span>
+
+<span class="c1"># 1 &amp; 2 &amp; 3</span>
+<span class="err">\</span><span class="ss">allXs</span> <span class="o">=</span> foldLeft <span class="p">(</span><span class="err">&amp;</span><span class="p">)</span> <span class="p">(</span>head xs<span class="p">)</span> <span class="p">(</span>tail xs<span class="p">);</span>
+
+<span class="c1"># Applies it to each element.</span>
+<span class="c1">#   false | true | false</span>
+<span class="c1"># becomes true.</span>
+<span class="err">\</span><span class="ss">anyEven</span> <span class="o">=</span> allXs <span class="err">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1"># Same for anyEven.</span>
+</code></pre></div>
+<p>Where this is actually useful it type checking:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="err">\</span><span class="ss">juncType</span> <span class="o">=</span> string <span class="err">|</span> number<span class="p">;</span>
+
+<span class="c1"># `string` is just an attribute set.</span>
+<span class="c1"># So is `numbee`, and `check` is a child of both.</span>
+<span class="c1"># So we lazily apply each one and when we reach the first true, we collapse our junction.</span>
+<span class="err">\</span><span class="ss">isAnyOfTheseTypes</span> <span class="o">=</span> juncType<span class="o">.</span>check <span class="mi">123</span><span class="p">;</span>
+</code></pre></div>
+
+
+
+<a name="482787920"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Junctions/near/482787920" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Junctions.html#482787920">(Nov 16 2024 at 17:29)</a>:</h4>
+<p>This exists in Raku and I think it's really cool.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,119 @@
+<html>
+<head><meta charset="utf-8"><title>Single Package Multi Executables · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html">Single Package Multi Executables</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="510454662"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510454662" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510454662">(Apr 06 2025 at 07:01)</a>:</h4>
+<p><code>nix run .#package-name</code> should work, no?</p>
+
+
+
+<a name="510454730"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510454730" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510454730">(Apr 06 2025 at 07:02)</a>:</h4>
+<p>Ah, different executables. Try <code>nix --accept-flake-config run github:juspay/omnix show &lt;your-flake&gt;</code>. You should see the executables in the apps section.</p>
+
+
+
+<a name="510454731"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510454731" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510454731">(Apr 06 2025 at 07:02)</a>:</h4>
+<p>Do you have to add any reference of the other executables in the flake file?</p>
+
+
+
+<a name="510454758"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510454758" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510454758">(Apr 06 2025 at 07:02)</a>:</h4>
+<p>I will try that out shortly!</p>
+
+
+
+<a name="510455077"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455077" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455077">(Apr 06 2025 at 07:06)</a>:</h4>
+<p>If you try it out in the haskell-flake example, you can expect the two executables to show up:</p>
+<p><a href="/user_uploads/60244/oih0t5LtpdBFNfRvqqAOOk3j/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/oih0t5LtpdBFNfRvqqAOOk3j/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1982x1528" src="/user_uploads/thumbnail/60244/oih0t5LtpdBFNfRvqqAOOk3j/image.png/840x560.webp"></a></div>
+
+
+
+<a name="510455104"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455104" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455104">(Apr 06 2025 at 07:06)</a>:</h4>
+<p>That command indeed shows up the correct list of executables for the project</p>
+
+
+
+<a name="510455139"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455139" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455139">(Apr 06 2025 at 07:07)</a>:</h4>
+<p>But I'm not too sure <code>nix build .#exec-2</code> works as intended.</p>
+
+
+
+<a name="510455196"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455196" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455196">(Apr 06 2025 at 07:07)</a>:</h4>
+<p>You have to <code>nix run</code> it:</p>
+<div class="codehilite"><pre><span></span><code>❯ nix run .#ex2
+warning: Git tree &#39;/Users/srid/code/haskell-flake&#39; is dirty
+Hello, Haskell!
+</code></pre></div>
+<p><code>nix build</code> is used for <em>packages</em> not <em>apps</em></p>
+
+
+
+<a name="510455252"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455252" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455252">(Apr 06 2025 at 07:08)</a>:</h4>
+<p>As you can see from the output of <code>om show</code> in that screenshot above. See the table header.</p>
+
+
+
+<a name="510455315"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455315" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455315">(Apr 06 2025 at 07:09)</a>:</h4>
+<p>I see my mistake. Does that mean that the flake does not need to reference any executable?</p>
+
+
+
+<a name="510455320"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455320" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455320">(Apr 06 2025 at 07:09)</a>:</h4>
+<p>haskell-flake auto-generates them for you</p>
+
+
+
+<a name="510455333"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455333" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455333">(Apr 06 2025 at 07:09)</a>:</h4>
+<p>apps.ex2 just wraps packages.example</p>
+
+
+
+<a name="510455426"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455426" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455426">(Apr 06 2025 at 07:10)</a>:</h4>
+<p>I see, I see</p>
+
+
+
+<a name="510455442"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455442" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455442">(Apr 06 2025 at 07:10)</a>:</h4>
+<p><a href="https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L123-L125">https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L123-L125</a></p>
+<p><a href="https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L100">https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L100</a></p>
+<p>If you are curious of implementation.</p>
+<p><code>${lib.getBin package}/bin/${exe}</code></p>
+
+
+
+<a name="510455655"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455655" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455655">(Apr 06 2025 at 07:14)</a>:</h4>
+<p>I think we can put this to solved. My original problem seems to have been addressed and now I just can't run the executables because of different reasons (one of the packages is not passing checkPhase)</p>
+
+
+
+<a name="510455865"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Single%20Package%20Multi%20Executables/near/510455865" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lemos <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Single.20Package.20Multi.20Executables.html#510455865">(Apr 06 2025 at 07:16)</a>:</h4>
+<p>Thank you very much, both for haskell-flake and helping me with these questions!</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,57 @@
+<html>
+<head><meta charset="utf-8"><title>How to use an older version of a tool in NixOS? · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/How.20to.20use.20an.20older.20version.20of.20a.20tool.20in.20NixOS.3F.html">How to use an older version of a tool in NixOS?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="450478235"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/How%20to%20use%20an%20older%20version%20of%20a%20tool%20in%20NixOS%3F/near/450478235" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/How.20to.20use.20an.20older.20version.20of.20a.20tool.20in.20NixOS.3F.html#450478235">(Jul 10 2024 at 15:03)</a>:</h4>
+<p>On the latest stable, uptime command gives wrong uptime on raspberry pi. It used to work fine before</p>
+<div class="codehilite"><pre><span></span><code>shivam@vivy ~ $ uptime
+ 20:30:24  up 216 days 18:21,  1 user,  load average: 0.04, 0.13, 0.10
+shivam@vivy ~ $ uptime --version
+uptime (GNU coreutils) 9.5
+Packaged by https://nixos.org
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;https://gnu.org/licenses/gpl.html&gt;.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by Joseph Arceneaux, David MacKenzie, and Kaveh Ghazi.
+shivam@vivy ~ $
+</code></pre></div>
+<p>How would I go about using uptime from an older version of coreutils in a temporary shell?</p>
+
+
+
+<a name="450494652"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/How%20to%20use%20an%20older%20version%20of%20a%20tool%20in%20NixOS%3F/near/450494652" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/How.20to.20use.20an.20older.20version.20of.20a.20tool.20in.20NixOS.3F.html#450494652">(Jul 10 2024 at 15:58)</a>:</h4>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>nix<span class="w"> </span>shell<span class="w"> </span>github:nixos/nixpkgs/nixos-23.05#coreutils<span class="w"> </span>-c<span class="w"> </span>uptime
+</code></pre></div>
+
+
+
+<a name="450494729"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/How%20to%20use%20an%20older%20version%20of%20a%20tool%20in%20NixOS%3F/near/450494729" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/How.20to.20use.20an.20older.20version.20of.20a.20tool.20in.20NixOS.3F.html#450494729">(Jul 10 2024 at 15:58)</a>:</h4>
+<p>Replace <code>nixos-23.05</code> with the appropriate branch name or revision of <a href="https://github.com/NixOS/nixpkgs">https://github.com/NixOS/nixpkgs</a></p>
+
+
+
+<a name="450509528"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/How%20to%20use%20an%20older%20version%20of%20a%20tool%20in%20NixOS%3F/near/450509528" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/How.20to.20use.20an.20older.20version.20of.20a.20tool.20in.20NixOS.3F.html#450509528">(Jul 10 2024 at 17:01)</a>:</h4>
+<p>Thanks</p>
+<div class="codehilite"><pre><span></span><code>shivam@vivy ~ $ nix --extra-experimental-features nix-command --extra-experimental-features flakes shell github:nixos/nixpkgs/23.11#coreutils -c uptime
+ 22:30:52  up   0:34,  3 users,  load average: 0.26, 2.86, 3.02
+shivam@vivy ~ $ uptime
+ 22:30:56  up 216 days 20:22,  3 users,  load average: 0.24, 2.82, 3.00
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

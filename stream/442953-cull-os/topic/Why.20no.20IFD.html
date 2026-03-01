@@ -1,0 +1,31 @@
+<html>
+<head><meta charset="utf-8"><title>Why no IFD · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Why.20no.20IFD.html">Why no IFD</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="476503496"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Why%20no%20IFD/near/476503496" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Why.20no.20IFD.html#476503496">(Oct 12 2024 at 07:50)</a>:</h4>
+<h1>Why no IFD is Good, Actually</h1>
+<ul>
+<li>Faster evaluation</li>
+<li>No need to have a configured builder to evaluate the derivation graph</li>
+<li>Evaluator simplicity</li>
+<li>It will also enable me or someone else to create a LSP that interprets the expression with intermediate steps and gives you suggestions, without taking a year or doing anything impure or requiring a builder</li>
+</ul>
+
+
+
+<a name="476528151"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Why%20no%20IFD/near/476528151" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Why.20no.20IFD.html#476528151">(Oct 12 2024 at 14:28)</a>:</h4>
+<p>Indeed, this is also the reason I am (eventually) planning to add a language agnostic plugin boundary to eka. I imagine most things you might want IFD for you can do more easily in the native language of concern, and then just feed them into the evaluation via a json stream or something</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

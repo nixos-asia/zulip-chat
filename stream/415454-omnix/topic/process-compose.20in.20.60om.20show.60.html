@@ -1,0 +1,122 @@
+<html>
+<head><meta charset="utf-8"><title>process-compose in `om show` · omnix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/415454-omnix/index.html">omnix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html">process-compose in `om show`</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="498798031"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498798031" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498798031">(Feb 10 2025 at 15:49)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="871998">Nikhil Singh</span> [said]:</p>
+<blockquote>
+<p><a href="/user_uploads/60244/tXmH8r5WUGO4ft-SEZcNeLwx/image.png">image.png</a><br>
+This is currently a dirty commit in my local repo. I just wanted to confirm that this is the expected output—<br>
+I mean, <code>yada, yada</code> will be replaced (ignore that) XD.</p>
+</blockquote>
+
+
+
+<a name="498798102"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498798102" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498798102">(Feb 10 2025 at 15:49)</a>:</h4>
+<p><a href="https://github.com/juspay/omnix/pull/415">https://github.com/juspay/omnix/pull/415</a></p>
+
+
+
+<a name="498798298"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498798298" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498798298">(Feb 10 2025 at 15:50)</a>:</h4>
+<p>Regarding <code>debug</code>, one way to tackle is to make <code>process-compose-flake</code> to output a <code>schemas</code> output (see <a href="https://github.com/DeterminateSystems/flake-schemas/blob/b960fc9779e9b29b01bcb4db81b236387ad7e5c8/flake.nix#L17-L18">here</a>) hardcoded for that specific process-compose configuration. And then <code>om show</code> can merge that flake's schemas output.</p>
+
+
+
+<a name="498803957"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498803957" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nikhil Singh <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498803957">(Feb 10 2025 at 16:14)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> just tested on a new cloned <code>juspay/services-flakes/llm</code>, working fine. <br>
+can you test if <code>allSystems</code> is exposed in <code>nix repl</code> after you enable <code>debug</code> flag?<br>
+did a flake update in <code>llm</code> too and also enabled <code>debug = true</code>.</p>
+<p><a href="/user_uploads/60244/79NhsQYxeIBnHamsk1ZZ__f0/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/79NhsQYxeIBnHamsk1ZZ__f0/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1114x601" src="/user_uploads/thumbnail/60244/79NhsQYxeIBnHamsk1ZZ__f0/image.png/840x560.webp"></a></div><p>about <code>juspay/vira</code></p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>      evalChecks<span class="o">.</span><span class="ss">isValidProcess</span> <span class="o">=</span>
+                      definition <span class="o">?</span> settings<span class="p">;</span>
+</code></pre></div>
+<p>changing the <code>evalChecks.isValidProcess</code> to the above snippet in the omnix/flake-schemas will get it working.</p>
+<p>below is a working screenshot<br>
+<a href="/user_uploads/60244/TGtO4aLC10DGG9GSWVyFpBOR/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/TGtO4aLC10DGG9GSWVyFpBOR/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1920x1080" src="/user_uploads/thumbnail/60244/TGtO4aLC10DGG9GSWVyFpBOR/image.png/840x560.webp"></a></div>
+
+
+
+<a name="498804557"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498804557" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nikhil Singh <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498804557">(Feb 10 2025 at 16:17)</a>:</h4>
+<blockquote>
+<p>one way to tackle is to make <code>process-compose-flake</code> to output a <code>schemas</code> output.</p>
+</blockquote>
+<p>Yes, this was my thought too. If it is a custom flake with a non standard output it should expose it's own schema.</p>
+
+
+
+<a name="498883495"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498883495" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498883495">(Feb 10 2025 at 23:08)</a>:</h4>
+<p><a href="/user_uploads/60244/EU18AZyLZnIwlvUD5YzK6OGk/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/EU18AZyLZnIwlvUD5YzK6OGk/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="2088x2110" src="/user_uploads/thumbnail/60244/EU18AZyLZnIwlvUD5YzK6OGk/image.png/840x560.webp"></a></div>
+
+
+
+<a name="498883840"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498883840" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498883840">(Feb 10 2025 at 23:10)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="871998">Nikhil Singh</span> <a href="#narrow/channel/415454-omnix/topic/process-compose.20in.20.60om.20show.60/near/498804557">said</a>:</p>
+<blockquote>
+<blockquote>
+<p>one way to tackle is to make <code>process-compose-flake</code> to output a <code>schemas</code> output.</p>
+</blockquote>
+<p>Yes, this was my thought too. If it is a custom flake with a non standard output it should expose it's own schema.</p>
+</blockquote>
+<p>Go ahead with this, by making <a href="https://github.com/Platonic-Systems/process-compose-flake">https://github.com/Platonic-Systems/process-compose-flake</a> export the schema automatically which we can then use.</p>
+
+
+
+<a name="498962978"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/498962978" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nikhil Singh <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#498962978">(Feb 11 2025 at 09:22)</a>:</h4>
+<p><a href="/user_uploads/60244/LHyqQOaf1cippj5qNOEJQ2gB/image.png">image.png</a><br>
+<span class="user-mention" data-user-id="667408">@Srid</span>  Screenshot is with newly spined up nix os in virtual.</p>
+<div class="message_inline_image"><a href="/user_uploads/60244/LHyqQOaf1cippj5qNOEJQ2gB/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1920x1080" src="/user_uploads/thumbnail/60244/LHyqQOaf1cippj5qNOEJQ2gB/image.png/840x560.webp"></a></div><p>please share <code>nix --version</code> as i am unable to reproduce this. </p>
+<p><span class="user-mention" data-user-id="669081">@Shivaraj B H</span> can you please try <code>nix --no-accept-flake-config --refresh run github:niksingh710/omnix/arbitrary-flake-schemas show .</code> in <code>juspay/services-flake/example/llm</code>. make sure to enable <code>debug</code> flag for llm services flake.</p>
+
+
+
+<a name="499069175"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/499069175" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#499069175">(Feb 11 2025 at 18:04)</a>:</h4>
+<p>You need to add aarch64-darwin to the list, as I'm on M1 mac.</p>
+<p>That's another issue that needs to be resolved as well; systems should not be hardcoded like this.</p>
+
+
+
+<a name="499331060"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/499331060" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nikhil Singh <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#499331060">(Feb 12 2025 at 21:22)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> </p>
+<blockquote>
+<p>Go ahead with this, by making <a href="https://github.com/Platonic-Systems/process-compose-flake">https://github.com/Platonic-Systems/process-compose-flake</a> export the schema automatically which we can then use.</p>
+</blockquote>
+<p>By this you meant me to integrate the schema with debug one to be added in process-compose?</p>
+<p>We can make <code>process-compose-flake</code> output a schema but i don't feel like with <code>debug</code> it is the correct way to solve it.</p>
+<p>as in <a href="https://determinate.systems/posts/flake-schemas/">https://determinate.systems/posts/flake-schemas/</a></p>
+<p><a href="/user_uploads/60244/kD4ACGTY_KzToYduFH0KXIB5/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/kD4ACGTY_KzToYduFH0KXIB5/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="783x233" src="/user_uploads/thumbnail/60244/kD4ACGTY_KzToYduFH0KXIB5/image.png/840x560.webp"></a></div><p>it states that <code>flake-schemas</code> are there to enumerate and check the content of <code>flake *outputs*</code>.<br>
+but in case of <code>process-compose-flake</code>, it doesn't expose itself via flake output. it is exposed by <code>perSystem</code> Option of flake-parts.</p>
+<p>Imo the right way to solve this will be making <code>process-compose</code> also expose a flake output named <code>process-compose</code> under which the perSystem definition can exist.</p>
+<p>it should be something like <code>process-compose.${system}.default = {}</code> but right now it is like <code>${system}.process-compose.default</code>  in the repl.</p>
+
+
+
+<a name="499332638"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/process-compose%20in%20%60om%20show%60/near/499332638" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/process-compose.20in.20.60om.20show.60.html#499332638">(Feb 12 2025 at 21:33)</a>:</h4>
+<p>You don't need <code>debug</code>, because when you generate the <code>schemas</code> it already has access to <code>config</code> anyway. If that's not viable for any reason, you can explore alternate ideas - for eg., perhaps something in <code>meta</code> attribute of the packages? </p>
+<p>A big part of this task involves research and experimenting :-)</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,25 @@
+<html>
+<head><meta charset="utf-8"><title>&lt;meta property=&quot;og:image&quot;&gt; for wiki-links · website · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/416826-website/index.html">website</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/416826-website/topic/.3Cmeta.20property.3D.22og.3Aimage.22.3E.20for.20wiki-links.html">&lt;meta property=&quot;og:image&quot;&gt; for wiki-links</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="409526031"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/%3Cmeta%20property%3D%22og%3Aimage%22%3E%20for%20wiki-links/near/409526031" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/.3Cmeta.20property.3D.22og.3Aimage.22.3E.20for.20wiki-links.html#409526031">(Dec 22 2023 at 05:50)</a>:</h4>
+<p>The corresponding Pandoc AST for the wiki-link <code>![[emanote-logo.svg]]</code> is: <code>[Para [Link ("",[],[("data-wikilink-type","WikiLinkEmbed")]) [] ("emanote-logo.svg","")]]</code>. We can just pattern match on <code>Link</code> and <code>WikiLinkEmbed</code> to get <code>emanote-logo.svg</code> (let's assume for simplicity that <code>WikiLinkEmbed</code> only refers to static image files), but the problem here is that the relative URL is <code>_emanote-static/emanote-logo.svg</code> which is obtained from <a href="https://github.com/srid/emanote/blob/30d3d084ddf551e131523b2c41c5a5ab49592848/emanote/src/Emanote/Route/SiteRoute/Class.hs#L180C1-L206">siteRouteUrl</a> function. I was considering to create a pandoc filter to fetch the <code>siteRouteUrl</code>-- if there is no way to fetch it by reusing the function linked above --, is that the correct approach? <span class="user-mention" data-user-id="667408">@Srid</span></p>
+
+
+
+<a name="410176665"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/%3Cmeta%20property%3D%22og%3Aimage%22%3E%20for%20wiki-links/near/410176665" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/.3Cmeta.20property.3D.22og.3Aimage.22.3E.20for.20wiki-links.html#410176665">(Dec 27 2023 at 16:31)</a>:</h4>
+<p>There are functions to parse and resolve wikilinks, <a href="https://github.com/srid/emanote/blob/30d3d084ddf551e131523b2c41c5a5ab49592848/emanote/src/Emanote/Pandoc/Renderer/Url.hs#L31-L34">https://github.com/srid/emanote/blob/30d3d084ddf551e131523b2c41c5a5ab49592848/emanote/src/Emanote/Pandoc/Renderer/Url.hs#L31-L34</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

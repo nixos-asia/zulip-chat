@@ -1,0 +1,43 @@
+<html>
+<head><meta charset="utf-8"><title>process-compose log in GitHub runners · process-compose-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/index.html">process-compose-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20log.20in.20GitHub.20runners.html">process-compose log in GitHub runners</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422718437"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20log%20in%20GitHub%20runners/near/422718437" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20log.20in.20GitHub.20runners.html#422718437">(Feb 21 2024 at 23:00)</a>:</h4>
+<p>On my NixOS it is usually found at /tmp/process-compose-&lt;user&gt;.log but this file doesn’t exist on the GitHub runners, anyone happen to know where else could it be?</p>
+
+
+
+<a name="422851940"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20log%20in%20GitHub%20runners/near/422851940" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20log.20in.20GitHub.20runners.html#422851940">(Feb 22 2024 at 16:11)</a>:</h4>
+<p>That’s probably because nix flake check runs in sandbox mode. I could set the log_location somewhere in the build directory and create a process that will tail -f on the log: <a href="https://github.com/F1bonacc1/process-compose/blob/main/www/docs/logging.md">https://github.com/F1bonacc1/process-compose/blob/main/www/docs/logging.md</a></p>
+
+
+
+<a name="422852192"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20log%20in%20GitHub%20runners/near/422852192" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20log.20in.20GitHub.20runners.html#422852192">(Feb 22 2024 at 16:13)</a>:</h4>
+<p>But the problem is that the output is not very readable, need to expose log_configuration options in process-compose-flake</p>
+
+
+
+<a name="422852764"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20log%20in%20GitHub%20runners/near/422852764" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20log.20in.20GitHub.20runners.html#422852764">(Feb 22 2024 at 16:15)</a>:</h4>
+<p>In the flake check how about <code>cat</code>'ing the log file at the end of a failed run?</p>
+
+
+
+<a name="422852946"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414022-process-compose-flake/topic/process-compose%20log%20in%20GitHub%20runners/near/422852946" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414022-process-compose-flake/topic/process-compose.20log.20in.20GitHub.20runners.html#422852946">(Feb 22 2024 at 16:16)</a>:</h4>
+<p>But there is no failed run, it’s an infinite loop</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

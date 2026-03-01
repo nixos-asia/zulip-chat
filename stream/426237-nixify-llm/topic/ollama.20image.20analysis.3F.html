@@ -1,0 +1,77 @@
+<html>
+<head><meta charset="utf-8"><title>ollama image analysis? · nixify-llm · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/index.html">nixify-llm</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html">ollama image analysis?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="449113605"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449113605" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449113605">(Jul 04 2024 at 15:24)</a>:</h4>
+<p>Interesting question,</p>
+<blockquote>
+<p>can you paste an image to the chat ui for the chatbot to analyze?</p>
+</blockquote>
+<p><a href="https://old.reddit.com/r/NixOS/comments/1dujxu4/run_local_ai_chatbot_using_nix/">https://old.reddit.com/r/NixOS/comments/1dujxu4/run_local_ai_chatbot_using_nix/</a></p>
+
+
+
+<a name="449116930"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449116930" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449116930">(Jul 04 2024 at 15:40)</a>:</h4>
+<p>Supposedly open webui supports something in that direction...</p>
+
+
+
+<a name="449117007"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449117007" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449117007">(Jul 04 2024 at 15:41)</a>:</h4>
+<p>you might need to run a specific model for that. Like this one: <a href="https://ollama.com/library/llava:13b">https://ollama.com/library/llava:13b</a></p>
+
+
+
+<a name="449117134"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449117134" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449117134">(Jul 04 2024 at 15:41)</a>:</h4>
+<p>Looks like it may work: <a href="https://openwebui.com/m/dwbranson/image-analysis-using-llava-1:latest">https://openwebui.com/m/dwbranson/image-analysis-using-llava-1:latest</a></p>
+
+
+
+<a name="449117457"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449117457" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449117457">(Jul 04 2024 at 15:43)</a>:</h4>
+<p>Is it just me or is the Add Model button basically broken for others too?</p>
+<p><a href="/user_uploads/60244/uLXr2Uu9_o600gLeSXCY0HC3/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/uLXr2Uu9_o600gLeSXCY0HC3/image.png" title="image.png"><img src="/user_uploads/60244/uLXr2Uu9_o600gLeSXCY0HC3/image.png"></a></div>
+
+
+
+<a name="449118153"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449118153" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449118153">(Jul 04 2024 at 15:48)</a>:</h4>
+<p>Okay, it works, but not the greatest quality:</p>
+<p><a href="/user_uploads/60244/1oPcOQs3EQUDTw3wSDntEKYn/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/1oPcOQs3EQUDTw3wSDntEKYn/image.png" title="image.png"><img src="/user_uploads/60244/1oPcOQs3EQUDTw3wSDntEKYn/image.png"></a></div>
+
+
+
+<a name="449118516"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449118516" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449118516">(Jul 04 2024 at 15:51)</a>:</h4>
+<p>Compare with Claude:</p>
+<p><a href="/user_uploads/60244/HM_Ck0E5bPIR8RxoXe99Mt6o/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/HM_Ck0E5bPIR8RxoXe99Mt6o/image.png" title="image.png"><img src="/user_uploads/60244/HM_Ck0E5bPIR8RxoXe99Mt6o/image.png"></a></div>
+
+
+
+<a name="449118967"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449118967" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449118967">(Jul 04 2024 at 15:54)</a>:</h4>
+<p>at least it works <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="449118986"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/ollama%20image%20analysis%3F/near/449118986" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/ollama.20image.20analysis.3F.html#449118986">(Jul 04 2024 at 15:54)</a>:</h4>
+<p>but yeah I'd say that might be a bit neglected so far in the open LLM space</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

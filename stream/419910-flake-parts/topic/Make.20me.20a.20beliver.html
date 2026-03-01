@@ -1,0 +1,125 @@
+<html>
+<head><meta charset="utf-8"><title>Make me a beliver · flake-parts · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/419910-flake-parts/index.html">flake-parts</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html">Make me a beliver</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="449441366"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449441366" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John Bargman <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449441366">(Jul 06 2024 at 05:38)</a>:</h4>
+<p>I've used flake parts twice - by requirement of other things using it.<br>
+I've seen people describe it as a "flake-cancer that's spreading faster than flake-utils"</p>
+<p>and... I just don't get it.</p>
+<p>Why would I want flake parts; what's it going to do for me besides add dependencies to evaluation?</p>
+<p>SELL ME YOUR TOOLZ</p>
+
+
+
+<a name="449467011"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449467011" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449467011">(Jul 06 2024 at 09:35)</a>:</h4>
+<blockquote>
+<p>and... I just don't get it.</p>
+</blockquote>
+<p>Frankly, I have the same problem. Maybe we can have this thread and go for an explanation?</p>
+
+
+
+<a name="449467089"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449467089" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449467089">(Jul 06 2024 at 09:36)</a>:</h4>
+<p>Because <span class="user-mention" data-user-id="667408">@Srid</span> and been working with it for a while now, and is working fairly closely with <span class="user-mention" data-user-id="679956">@Robert Hensing</span>, the author of it. (But he hasn't been logged in here for a while I think)</p>
+
+
+
+<a name="449467233"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449467233" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449467233">(Jul 06 2024 at 09:37)</a>:</h4>
+<p>Module system</p>
+
+
+
+<a name="449484539"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449484539" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449484539">(Jul 06 2024 at 12:03)</a>:</h4>
+<p>I don't get it either - you can do it as easily without the library</p>
+
+
+
+<a name="449484613"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449484613" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449484613">(Jul 06 2024 at 12:03)</a>:</h4>
+<p>The module system already handles stuff for system abstractions, so <span aria-label="man shrugging" class="emoji emoji-1f937-200d-2642" role="img" title="man shrugging">:man_shrugging:</span></p>
+
+
+
+<a name="449490307"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449490307" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Robert Hensing <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449490307">(Jul 06 2024 at 12:54)</a>:</h4>
+<p>Hi <span aria-label="wave" class="emoji emoji-1f44b" role="img" title="wave">:wave:</span> </p>
+<p>To quote <a href="https://flake.parts">https://flake.parts</a></p>
+<blockquote>
+<p>Flakes are configuration. The module system lets you refactor configuration into modules that can be shared.</p>
+<p>It reduces the proliferation of custom Nix glue code, similar to what the module system has done for NixOS configurations.</p>
+</blockquote>
+<p>It makes it easier to add Nix logic that other people have already written to a flake that uses it.</p>
+<p>Flake parts by itself doesn't do much, because it's only an interface. Nobody <em>needs</em> it. Everyone <em>could</em> write their flakes by hand, and that's fine, especially when the flakes are simple.</p>
+<p>Now suppose you're adding pre-commit hooks to five flakes. If those are all framework-less flakes that only depend on Nixpkgs or whatever, you'll have to figure out for each of them how their Nix code is structured, to find where to put the <code>checks.&lt;system&gt;.pre-commit-run</code> derivation and where to put the <code>shellHook</code>, which variables are in scope in those places, etc.<br>
+With flake parts, that's reduced to simpler steps: add its module to <code>inputs</code> and <code>imports</code>, then find the shell, add <code>[config.pre-commit.installationScript](https://flake.parts/options/pre-commit-hooks-nix#opt-perSystem.pre-commit.installationScript)</code> to <code>shellHook</code> and you're done. Always the same.</p>
+<p>It doesn't standardize a nix shell interface yet, but that could totally be done, and the "gluing" part of the job is just <code>inputs</code> and <code>imports</code>.</p>
+<p>@Srid is working on a CLI so that it's just a single command to add a module with some defaults (forget about inputs/imports).<br>
+It will also find the right modules based on the files you already have, and have templates for things you want to create in your flake, like a new custom python package for example.</p>
+
+
+
+<a name="449491621"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449491621" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Robert Hensing <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449491621">(Jul 06 2024 at 13:01)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/419910-flake-parts/topic/Make.20me.20a.20beliver/near/449467089">said</a>:</p>
+<blockquote>
+<p>Because <span class="user-mention silent" data-user-id="667408">Srid</span> and been working with it for a while now, and is working fairly closely with <span class="user-mention silent" data-user-id="679956">Robert Hensing</span>, the author of it. (But he hasn't been logged in here for a while I think)</p>
+</blockquote>
+<p>I'm always available for flake-parts related questions. Srid asks good questions, but I don't have much time to contribute to his projects.<br>
+I've only really contributed a bit of code to <code>haskell-flake</code>, which I use in <code>hercules-ci-agent</code>.</p>
+
+
+
+<a name="449495819"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449495819" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449495819">(Jul 06 2024 at 13:33)</a>:</h4>
+<p>Thanks for coming by <span class="user-mention" data-user-id="679956">@Robert Hensing</span> ! It's always good to have the author of a project to talk to <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="449498671"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449498671" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449498671">(Jul 06 2024 at 14:00)</a>:</h4>
+<p>That's a good explanation <span aria-label="+1" class="emoji emoji-1f44d" role="img" title="+1">:+1:</span></p>
+<p>Essentially flake-parts moves us a substantial way towards better DX, especially in non-trivial flakes. In the long run, a total solution may emerge. Upstream could get a flake module system and/or something better than Nix can emerge (the idea David was talking about).</p>
+<p><span class="user-mention silent" data-user-id="679956">Robert Hensing</span> <a href="#narrow/stream/419910-flake-parts/topic/Make.20me.20a.20beliver/near/449490307">said</a>:</p>
+<blockquote>
+<p>It doesn't standardize a nix shell interface yet,</p>
+</blockquote>
+<p><a href="https://community.flake.parts/haskell-flake/devshell#composing-devshells"><code>inputsFrom</code></a> can be used to somehow mitigate that.</p>
+
+
+
+<a name="449647706"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449647706" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449647706">(Jul 07 2024 at 12:05)</a>:</h4>
+<p>Ah, I get it now. I do have a lot of glue code in my repositories, and I suppose I could swap that with flake-parts</p>
+
+
+
+<a name="449648963"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449648963" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449648963">(Jul 07 2024 at 12:16)</a>:</h4>
+<p>yeah the glue code problem is a real issue, I get that. But I might have to look a bit harder at flake-parts to see if I can envision it being the go-to solution for me.</p>
+
+
+
+<a name="449649085"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/419910-flake-parts/topic/Make%20me%20a%20beliver/near/449649085" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/419910-flake-parts/topic/Make.20me.20a.20beliver.html#449649085">(Jul 07 2024 at 12:18)</a>:</h4>
+<p>Because just from my subjective impression on this one here from <span class="user-mention" data-user-id="667408">@Srid</span> </p>
+<blockquote>
+<p>Essentially flake-parts moves us a substantial way towards better DX, especially in non-trivial flakes.</p>
+</blockquote>
+<p>To me looking at the non-trivial flake repos using flake-parts, it still looks like a lot of glue code tbh.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,90 @@
+<html>
+<head><meta charset="utf-8"><title>Where is the Language in the Computability Hierarchy? · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html">Where is the Language in the Computability Hierarchy?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="450235364"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450235364" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450235364">(Jul 09 2024 at 17:24)</a>:</h4>
+<p>One thing I have come to realize as I study Nix's architecture more, and after years of experience and just dealing with the pain points, is that Nix may have actually missed a critical opportunity for itself by being turing-complete.</p>
+<p>In order to address some of the inefficiency concerns (changing hashes over added whitespace, reformatting, etc), the most formal solution would be to use a total programming language that can be reliably reduced to normal form (since it's not turing complete). You can then compute the hash over this normal form and use it to verify the "semantic integrity" of the code (as Dhall puts it).</p>
+<p>This hash could also equally function as a cache key, for more granular and correct expression caching. Also keeps the complexity of expressions capped, which puts a cap on the overall complexity of evaluation (which keeps getting worse and worse in nixpkgs, for example).</p>
+<p>Nix has already missed the boat on this, since any changes of this magnitude would break all backward compatibility, but when starting a new project completely from scratch you have the opportunity to design a language with these things in mind up front, before you get locked in.</p>
+<p>For that reason, I just wanted to suggest, if you haven't thought of it already, specifying the language as a "total" programming language, which would give you a compelling advantage over Nix. Yes there is already Dhall, but that lang has some of its own problems (too rigid of typing, mostly).</p>
+
+
+
+<a name="450239321"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450239321" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450239321">(Jul 09 2024 at 17:42)</a>:</h4>
+<ol>
+<li>When <code>cab eval</code> is run, it hashes the file. If that hash already exists in the hash table that maps file hashes to structure hashes, it skips to step 3. If not, step 2.</li>
+<li>It evaluates the structure of the file (since the language is reproducible and does not do IO, the same expression will always evaluate to the same thing) and places it inside the hash table that maps structure hashes to results.</li>
+<li>It then returns the result.</li>
+</ol>
+<p>This way, changing whitespace won't do anything as it does not affect the AST. You don't need the language to not be turning complete to achieve this, either.</p>
+
+
+
+<a name="450239481"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450239481" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450239481">(Jul 09 2024 at 17:43)</a>:</h4>
+<p>This could be performed for every single thunk evaluation, but initial evaluation would be quite super slow, so we need to find a middle ground.</p>
+
+
+
+<a name="450239660"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450239660" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450239660">(Jul 09 2024 at 17:44)</a>:</h4>
+<p>Top-level is also quite bad, which is the way Nix does it. I'm thinking of doing it per island, which is either a git repository, a zip file, etc. Like flake inputs, one might say</p>
+
+
+
+<a name="450239663"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450239663" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450239663">(Jul 09 2024 at 17:44)</a>:</h4>
+<p>Makes sense, but the benefit of reducing to normal form and then hashing would be that refactors would still maintain the same hash, basically any two expressions that are semantically equivalent would have the same hash, also I think a turing-complete language is a bit overkill for what should have been a DSL, no?</p>
+
+
+
+<a name="450239946"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450239946" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450239946">(Jul 09 2024 at 17:45)</a>:</h4>
+<p>"reducing to normal form" is evaluation, though. And the result of that would still be the same derivation files, so you wouldn't end up building anything</p>
+
+
+
+<a name="450240263"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450240263" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450240263">(Jul 09 2024 at 17:46)</a>:</h4>
+<p>I don't think we are going to have any performance issues, as I'm planning to implement the standard library in Rust, instead of Nix. That is what takes the most time in Nix to evaluate modules. Nix itself is just slow and shouldn't be used to create huge things, only use them as glue.</p>
+
+
+
+<a name="450240837"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450240837" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450240837">(Jul 09 2024 at 17:49)</a>:</h4>
+<p>reducing to normal form would be the first step in eval sure. That isn't even technically always possible in turing complete languages though, due to arbitrary complexity, the point is that it is always possible and should be computationally fairly inexpensive in a total language.</p>
+<p>The point about two expressions building the same derivation anyway is also true, but if you wanted to cache that evaluation, you'd have know way of knowing they are equivalent beforehand unless you first reduced them to normal form.</p>
+<p>Anyway, just wanted to share my thoughts with you since you are doing this, as it's something I've been thinking about lately in my effort to understand how one might improve Nix. Ultimately I am looking for something that is backwards compatible, but for someone in your position it is more feasible.</p>
+
+
+
+<a name="450241037"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450241037" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450241037">(Jul 09 2024 at 17:50)</a>:</h4>
+<p>if my ideas are fuzzy or useless, that is also fine, I didn't fully flesh it out</p>
+
+
+
+<a name="450264832"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450264832" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450264832">(Jul 09 2024 at 19:29)</a>:</h4>
+<p>It should also be possible to do ast-hashing in Nix. Not sure why it doesn't do it though.</p>
+
+
+
+<a name="450264905"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Where%20is%20the%20Language%20in%20the%20Computability%20Hierarchy%3F/near/450264905" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Where.20is.20the.20Language.20in.20the.20Computability.20Hierarchy.3F.html#450264905">(Jul 09 2024 at 19:29)</a>:</h4>
+<p>Maybe because in C++, you can't just #[derive(Hash)]?</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,105 @@
+<html>
+<head><meta charset="utf-8"><title>Content addressed dynamic libraries · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html">Content addressed dynamic libraries</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446163533"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446163533" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446163533">(Jun 21 2024 at 20:10)</a>:</h4>
+<blockquote>
+<p>Extending ELF to link dynamic libraries via a content addressed URI</p>
+</blockquote>
+<p>Could you elaborate? Sounds interesting.</p>
+
+
+
+<a name="446164026"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446164026" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446164026">(Jun 21 2024 at 20:12)</a>:</h4>
+<p>If I'm understanding correctly, if that was possible it wouldn't matter where the dynamic libraries are, as long as the dynamic linker can find them? So you wouldn't have to rebuild the whole world if you decided to use <code>/nux/store</code> instead of <code>/nix/store</code> as the path isn't referenced anywhere in the ELF</p>
+
+
+
+<a name="446164360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446164360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446164360">(Jun 21 2024 at 20:14)</a>:</h4>
+<p>It shouldn't be that much work to make it run, all that needs to work is the systems dynamic linker resolving the URI to a path on the FS. I wonder how it would affect other tools, though. Do binaries even rely on the "paths"(in this case, the uri that's served as a path) they dynamically loaded existing?</p>
+
+
+
+<a name="446175376"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446175376" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446175376">(Jun 21 2024 at 21:19)</a>:</h4>
+<p>It's one of my crazier ideas, but hypothetically the binaries would have no reliance on the filepath at all, and could simply load from the URI if it exists (could still fall back on a path, potentially).</p>
+<p>I've thought about this a bit, may need some explicit support from the file-system as well. I've wanted to look further into it for a bit though, get a more solid plan</p>
+
+
+
+<a name="446179448"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446179448" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446179448">(Jun 21 2024 at 21:47)</a>:</h4>
+<p>Why would you need filesystem support? The dynamic linker could check for a prefix or a format match on the path field. Like if a library "path" starts with <code>uri:</code> it could treat that as a uri and find the equivalent path</p>
+
+
+
+<a name="446181903"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446181903" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446181903">(Jun 21 2024 at 22:03)</a>:</h4>
+<p>Maybe not for binaries, but probably for interpreted languages. I'm actually not 100% sure on that either though. There might be a clever way to avoid it</p>
+
+
+
+<a name="446182200"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446182200" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446182200">(Jun 21 2024 at 22:06)</a>:</h4>
+<p>I know someone gave a talk on a similar idea at nixcon maybe 2 years ago or so. Going over how one could extend ELF to suit Nix</p>
+
+
+
+<a name="446202875"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446202875" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446202875">(Jun 22 2024 at 01:12)</a>:</h4>
+<p>The point of the fs being aware is mostly so that files can be stored via their content URI and not have any true file path whatever, and every file exposed is just a virtual path to a hard uri, roughly speaking</p>
+
+
+
+<a name="446275046"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446275046" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446275046">(Jun 22 2024 at 13:58)</a>:</h4>
+<p>Ah I understand</p>
+
+
+
+<a name="446275058"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446275058" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446275058">(Jun 22 2024 at 13:58)</a>:</h4>
+<p>Would this be possible to implement as a kernel module? without modifying every filesystem in existence</p>
+
+
+
+<a name="446275231"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446275231" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446275231">(Jun 22 2024 at 14:00)</a>:</h4>
+<p>Perhaps something like /proc/$PID but for /file/$HASH (/file is up for debate, doesn't sound that good)</p>
+
+
+
+<a name="446276193"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446276193" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446276193">(Jun 22 2024 at 14:13)</a>:</h4>
+<p>But then that's the Nix store we're talking about. Another level of indirection doesn't sound appealing</p>
+
+
+
+<a name="446277956"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446277956" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446277956">(Jun 22 2024 at 14:32)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="679006">Tim DeHerrera</span> <a href="#narrow/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries/near/446182200">said</a>:</p>
+<blockquote>
+<p>I know someone gave a talk on a similar idea at nixcon maybe 2 years ago or so. Going over how one could extend ELF to suit Nix</p>
+</blockquote>
+<p>Do you have a link to this?</p>
+
+
+
+<a name="446306294"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Content%20addressed%20dynamic%20libraries/near/446306294" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries.html#446306294">(Jun 22 2024 at 18:32)</a>:</h4>
+<p>I tried to find it but failed. I should be able to track it down later when I have more time though. I'll post when I do</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

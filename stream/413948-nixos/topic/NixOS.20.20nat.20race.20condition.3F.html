@@ -1,0 +1,49 @@
+<html>
+<head><meta charset="utf-8"><title>NixOS  nat race condition? · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20.20nat.20race.20condition.3F.html">NixOS  nat race condition?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="426937440"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20%20nat%20race%20condition%3F/near/426937440" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20.20nat.20race.20condition.3F.html#426937440">(Mar 16 2024 at 23:28)</a>:</h4>
+<p><a href="https://github.com/NixOS/nixpkgs/blob/nixos-23.11/nixos/modules/services/networking/nat.nix">https://github.com/NixOS/nixpkgs/blob/nixos-23.11/nixos/modules/services/networking/nat.nix</a> Line 181 through 191<br>
+the commands <em>all</em> and <em>default</em> should be swapped</p>
+<p>Explanation:</p>
+<div class="codehilite"><pre><span></span><code> Minor nitpick. When you set the following sysctls:
+
+net.ipv6.conf.all.forwarding=2
+net.ipv6.conf.default.forwarding=2
+
+There is a slight race condition in between the two. &quot;all&quot; includes all existing interfaces, but not future interfaces. &quot;default&quot; includes all future interfaces, but no existing interfaces.
+
+So if an interface (i.e. ppp0) is created in between the two statements, it will not have that applied. To do it race-free, just reverse the order:
+
+net.ipv6.conf.default.forwarding=2
+net.ipv6.conf.all.forwarding=2
+</code></pre></div>
+<p>Reference: search "race" on <a href="https://vk5tu.livejournal.com/37206.html">https://vk5tu.livejournal.com/37206.html</a></p>
+
+
+
+<a name="426938036"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20%20nat%20race%20condition%3F/near/426938036" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20.20nat.20race.20condition.3F.html#426938036">(Mar 16 2024 at 23:30)</a>:</h4>
+<p>Should be pretty rare tho, interfaces normally just don't come  up and go away.</p>
+
+
+
+<a name="426939540"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20%20nat%20race%20condition%3F/near/426939540" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20.20nat.20race.20condition.3F.html#426939540">(Mar 16 2024 at 23:37)</a>:</h4>
+<p>Tonight I was setting up NixOS for rpi5.  Thanks to <a href="https://github.com/NixOS/nixpkgs/issues/260754#issuecomment-1908664693">https://github.com/NixOS/nixpkgs/issues/260754#issuecomment-1908664693</a> it was a pretty smooth experience. Compiling aarch64 on rpi5 with sdcard was quite slow - took about 3-4 hours or so. <br>
+The final goal was to replace rpi3 in my home which was running a hotspot with ipv6 capability.<br>
+I spent some time trying hostapd - but it just wouldn't stay connected for more than a second. I got some error 13 = INVALID_AE. Can share detailed logs in another thread.<br>
+create_ap worked as is, but it didn't have ipv6. Started a radvd server to assign ipv6 and then struggled with forwarding. Finally got it all working! And in all the struggle found this random blog + bug. There may be similar issues in networking</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

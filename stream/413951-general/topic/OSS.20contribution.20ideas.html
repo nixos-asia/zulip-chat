@@ -1,0 +1,61 @@
+<html>
+<head><meta charset="utf-8"><title>OSS contribution ideas · general · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413951-general/index.html">general</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413951-general/topic/OSS.20contribution.20ideas.html">OSS contribution ideas</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="436248824"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413951-general/topic/OSS%20contribution%20ideas/near/436248824" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413951-general/topic/OSS.20contribution.20ideas.html#436248824">(Apr 30 2024 at 11:24)</a>:</h4>
+<p>I thought I'd dedicate a topic to catalogue ideas for OSS contributions.</p>
+
+
+
+<a name="436248828"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413951-general/topic/OSS%20contribution%20ideas/near/436248828" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413951-general/topic/OSS.20contribution.20ideas.html#436248828">(Apr 30 2024 at 11:24)</a>:</h4>
+<h2>Use <code>haskell-flake</code> in pandoc</h2>
+<p>Pandoc's author is receptive to modernizing the <code>flake.nix</code> to use haskell-flake. If anybody's interested: <a href="https://github.com/jgm/pandoc/issues/8818">https://github.com/jgm/pandoc/issues/8818</a></p>
+
+
+
+<a name="441964540"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413951-general/topic/OSS%20contribution%20ideas/near/441964540" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> majorkaks <a href="http://chat.nixos.asia/stream/413951-general/topic/OSS.20contribution.20ideas.html#441964540">(Jun 01 2024 at 21:09)</a>:</h4>
+<p>Problem: Linux doesn't have portable binaries like windows - download exe from a site and double click to run.</p>
+<p>I think we could build something based off nix, which runs on any distro and sets up /nix under some X, and allows people to run all nix binaries directly on any distro. </p>
+<p>Example:<br>
+makeitrun reptyr - launches reptyr as of nixos unstable / latest stable.</p>
+<p>X: </p>
+<ol>
+<li>Can be a ram based filesytem like tmpfs</li>
+<li>Can be a filesystem within a file. </li>
+<li>Can be a directory path - mainly if user wants to debug.</li>
+</ol>
+<p>makeitrun itself must be a statically linked binary - so that it can run without relying on any glibc etc.</p>
+<p>What do you peeps thing about it?</p>
+
+
+
+<a name="448870341"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413951-general/topic/OSS%20contribution%20ideas/near/448870341" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413951-general/topic/OSS.20contribution.20ideas.html#448870341">(Jul 03 2024 at 14:45)</a>:</h4>
+<p>Anybody want to add a NixOS service module for this?</p>
+<p><a href="https://once.com/writebook">https://once.com/writebook</a></p>
+
+
+
+<a name="449180867"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413951-general/topic/OSS%20contribution%20ideas/near/449180867" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413951-general/topic/OSS.20contribution.20ideas.html#449180867">(Jul 04 2024 at 23:51)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413951-general/topic/OSS.20contribution.20ideas/near/436248828">said</a>:</p>
+<blockquote>
+<h2>Use <code>haskell-flake</code> in pandoc</h2>
+<p>Pandoc's author is receptive to modernizing the <code>flake.nix</code> to use haskell-flake. If anybody's interested: <a href="https://github.com/jgm/pandoc/issues/8818">https://github.com/jgm/pandoc/issues/8818</a></p>
+</blockquote>
+<p><a href="https://github.com/jgm/pandoc/pull/9952">https://github.com/jgm/pandoc/pull/9952</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

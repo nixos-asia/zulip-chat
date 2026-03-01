@@ -1,0 +1,124 @@
+<html>
+<head><meta charset="utf-8"><title>✔ automatic gc in home-manager · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html">✔ automatic gc in home-manager</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="418380224"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/418380224" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#418380224">(Jan 27 2024 at 02:51)</a>:</h4>
+<p>I am planning to add automatic gc to home-manager and in mac it would be via launchd, if you would like to try out launchd in your home-manager config, here’s a simple example:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">launchd</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">agents</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="ss">hello</span> <span class="o">=</span> <span class="p">{</span>
+       <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+       <span class="ss">config</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="ss">ProgramArguments</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"say"</span> <span class="s2">"hello"</span> <span class="p">];</span>
+         <span class="ss">StartCalendarInterval</span> <span class="o">=</span> <span class="p">[</span>
+           <span class="p">{</span>
+             <span class="ss">Minute</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+           <span class="p">}</span>
+         <span class="p">];</span>
+       <span class="p">};</span>
+     <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This agent will say hello at 0th minute of every hour</p>
+
+
+
+<a name="418470042"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/418470042" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#418470042">(Jan 28 2024 at 04:12)</a>:</h4>
+<p>I have an initial draft ready and has been tested on macOS: <br>
+<a href="https://github.com/shivaraj-bh/home-manager/tree/nix-gc">https://github.com/shivaraj-bh/home-manager/tree/nix-gc</a></p>
+<p>Will test on linux before raising a PR</p>
+
+
+
+<a name="418470290"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/418470290" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#418470290">(Jan 28 2024 at 04:16)</a>:</h4>
+<p>Try it out in your home-manager config:<br>
+Add my home-manager flake to your inputs:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  inputs<span class="o">.</span>home-manager<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="err">“</span><span class="l">github:shivaraj-bh/home-manager/nix-gc</span><span class="err">”</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Add the service:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  services<span class="o">.</span><span class="ss">nix-gc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">frequency</span> <span class="o">=</span> <span class="err">“</span>monthly<span class="s2">";</span>
+<span class="s2">  };</span>
+<span class="s2">}</span>
+</code></pre></div>
+<p>To see the status of the agent, run:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>launchctl<span class="w"> </span>print<span class="w"> </span>gui/501/org.nix-community.home.nix-gc
+</code></pre></div>
+<p>And to verify if it is working fine, you can kickstart the agent manually and check the logs in <code>/tmp/nix-gc.log</code>:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>launchctl<span class="w"> </span>kickstart<span class="w"> </span>gui/501/org.nix-community.home.nix-gc
+tail<span class="w"> </span>/tmp/nix-gc.log
+</code></pre></div>
+<p>I will be removing the log file while raising a PR, this is just to debug.</p>
+
+
+
+<a name="418488888"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/418488888" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#418488888">(Jan 28 2024 at 09:57)</a>:</h4>
+<p>Tangential: <a href="https://github.com/LnL7/nix-darwin/issues/746">https://github.com/LnL7/nix-darwin/issues/746</a></p>
+
+
+
+<a name="418566627"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/418566627" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#418566627">(Jan 29 2024 at 05:05)</a>:</h4>
+<p>I have now changed the API to be same as nixos, enabling gc will look like:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  nix<span class="o">.</span><span class="ss">gc</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="ss">automatic</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+     <span class="ss">frequency</span> <span class="o">=</span> <span class="err">“</span>monthly<span class="err">”</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>I have tested it on linux as well, this is how you can check the status of the systemd service on linux:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>systemctl<span class="w"> </span>—user<span class="w"> </span>status<span class="w"> </span>nix-gc
+</code></pre></div>
+<p><code>—user</code> is used because home-manager spawns up user units and not system units (as done by nixos module).</p>
+<p>To manually trigger gc, run:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>systemctl<span class="w"> </span>—user<span class="w"> </span>start<span class="w"> </span>nix-gc
+</code></pre></div>
+
+
+
+<a name="418566763"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/418566763" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#418566763">(Jan 29 2024 at 05:07)</a>:</h4>
+<p>Overall, it looks good to raise a PR and I am only worried about the convention to choose <code>frequency</code> option be an enum, which I think will be bought up in the PR discussion and we can resolve it then.</p>
+
+
+
+<a name="418633790"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/418633790" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#418633790">(Jan 29 2024 at 13:12)</a>:</h4>
+<p><a href="https://github.com/nix-community/home-manager/pull/4973">https://github.com/nix-community/home-manager/pull/4973</a></p>
+
+
+
+<a name="419973200"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/419973200" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#419973200">(Feb 06 2024 at 04:16)</a>:</h4>
+<p>And it is merged! Also raised a PR to <a href="https://github.com/juspay/nix-dev-home/pull/10">juspay/nix-dev-home</a> to use it in the template.</p>
+
+
+
+<a name="420022756"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/%E2%9C%94%20automatic%20gc%20in%20home-manager/near/420022756" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/.E2.9C.94.20automatic.20gc.20in.20home-manager.html#420022756">(Feb 06 2024 at 11:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

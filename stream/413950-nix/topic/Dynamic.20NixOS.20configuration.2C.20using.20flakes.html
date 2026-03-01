@@ -1,0 +1,129 @@
+<html>
+<head><meta charset="utf-8"><title>Dynamic NixOS configuration, using flakes · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html">Dynamic NixOS configuration, using flakes</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="435892562"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/435892562" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#435892562">(Apr 28 2024 at 17:19)</a>:</h4>
+<p>Hello everyone, for a long time, I had been deploying NixOS and devshells using the traditional, non-flake approach. As I had some time a few months ago, I tried flakes and understood why they're so useful.</p>
+<p>I had written an "installer script" in Bash that would, depending on hardware detected, add lines to a <code>host-specific-configuration.nix</code> file which, as it's name suggested, was host-specific and not included in the git tree. This always rubbed me the wrong way as it it was a very hacky solution and also something that couldn't be in the git tree. After getting familiar with Nix, I could easily get rid of this monster from the installer script, leaving it only essential duties like partitioning, formatting, mounting and calling <code>nixos-install</code>. Everything else was moved from Bash statements to Nix expressions.</p>
+<p>Though I haven't yet written a blog about this, you can checkout my configuration repository. It includes the following outputs:</p>
+<ul>
+<li>NixOS configurations</li>
+<li>Standalone (non-NixOS) home manager configurations for Linux and Darwin</li>
+<li>ISOs with an up-to-date kernel and packages that I need</li>
+</ul>
+<p>This post was made mostly to help anyone else who stumbles on the same problems I did and hopefully not waste a lot of time because of the widely known documentation issue.</p>
+<p><a href="https://github.com/thefossguy/prathams-nixos">https://github.com/thefossguy/prathams-nixos</a><br>
+<a href="https://gitlab.com/thefossguy/prathams-nixos">https://gitlab.com/thefossguy/prathams-nixos</a> (same thing, mirrored on GitLab)</p>
+
+
+
+<a name="435892866"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/435892866" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#435892866">(Apr 28 2024 at 17:23)</a>:</h4>
+<p>The obvious next step is to use <code>disko</code> but I need some more experimentation with it in a feature branch before mass deployment.</p>
+
+
+
+<a name="435921397"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/435921397" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#435921397">(Apr 29 2024 at 00:27)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="696416">Pratham Patel</span> <a href="#narrow/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes/near/435892866">said</a>:</p>
+<blockquote>
+<p>The obvious next step is to use <code>disko</code> but I need some more experimentation with it in a feature branch before mass deployment.</p>
+</blockquote>
+<p>Have you looked into <code>disko-install</code>?</p>
+<p>cf. <a href="https://nixos.asia/en/nixos-install-oneclick">https://nixos.asia/en/nixos-install-oneclick</a></p>
+
+
+
+<a name="435935606"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/435935606" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#435935606">(Apr 29 2024 at 02:37)</a>:</h4>
+<p>I do intend to, just need some more time to tinker with. Probably this weekend :)</p>
+
+
+
+<a name="436016974"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436016974" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436016974">(Apr 29 2024 at 11:17)</a>:</h4>
+<p>Update: Added a GitHub workflow to build x86 and arm64 build nightly. <a href="https://github.com/thefossguy/prathams-nixos/blob/master/.github/workflows/continuous-build.yaml">workflow file</a><br>
+The only thing that I haven't gotten around (other than the RISC-V issue for my SBCs) is targeting x86 and arm64 Darwin. At the moment, my company laptop is an Intel MBP and will tend to arm64 once I own one. :)</p>
+
+
+
+<a name="436549532"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436549532" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436549532">(May 01 2024 at 18:15)</a>:</h4>
+<p>Another update: Added a <a href="https://github.com/thefossguy/prathams-nixos/commit/8870fdf8a5dbe5847e9939b66eb4a2d9b494a485"><code>justfile</code></a> to so that I don't need to remember long invocations like <code>nixosConfigurations.bla.bla.bla</code> :D</p>
+
+
+
+<a name="436549639"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436549639" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436549639">(May 01 2024 at 18:16)</a>:</h4>
+<p>Hmm, maybe I should write a blog about this, it was quite an adventure lol</p>
+
+
+
+<a name="436590614"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436590614" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436590614">(May 01 2024 at 23:39)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="696416">Pratham Patel</span> <a href="#narrow/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes/near/436549639">said</a>:</p>
+<blockquote>
+<p>Hmm, maybe I should write a blog about this, it was quite an adventure lol</p>
+</blockquote>
+<p>Yes.</p>
+<p>(Also link back to this zulip topic as reference :-)  )</p>
+
+
+
+<a name="436609652"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436609652" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436609652">(May 02 2024 at 03:26)</a>:</h4>
+<p>Absolutely!</p>
+
+
+
+<a name="436725558"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436725558" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436725558">(May 02 2024 at 15:54)</a>:</h4>
+<p>Part 1 (rationale behind it) is live!<br>
+<a href="https://blog.thefossguy.com/posts/nixos-migration-with-flakes-01.md">https://blog.thefossguy.com/posts/nixos-migration-with-flakes-01.md</a></p>
+
+
+
+<a name="436727853"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436727853" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436727853">(May 02 2024 at 16:05)</a>:</h4>
+<p>I plan to add some follow-ups for</p>
+<ul>
+<li>part 2: the actual transition</li>
+<li>part 3: handling home-manager on non-nixos machines</li>
+<li>part 4: the GitHub CI</li>
+<li>part 5: the justfile adventure</li>
+</ul>
+
+
+
+<a name="436748209"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436748209" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436748209">(May 02 2024 at 18:00)</a>:</h4>
+<blockquote>
+<p>That doesn’t mean that you cannot lean from it. ;)</p>
+</blockquote>
+<p>A typo?</p>
+
+
+
+<a name="436807193"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Dynamic%20NixOS%20configuration%2C%20using%20flakes/near/436807193" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes.html#436807193">(May 03 2024 at 02:32)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes/near/436748209">said</a>:</p>
+<blockquote>
+<blockquote>
+<p>That doesn’t mean that you cannot lean from it. ;)</p>
+</blockquote>
+<p>A typo?</p>
+</blockquote>
+<p>hah yeah, fixed it just now; thanks for pointing it out!</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

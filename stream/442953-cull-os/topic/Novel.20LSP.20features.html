@@ -1,0 +1,33 @@
+<html>
+<head><meta charset="utf-8"><title>Novel LSP features · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Novel.20LSP.20features.html">Novel LSP features</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="479328304"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Novel%20LSP%20features/near/479328304" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Novel.20LSP.20features.html#479328304">(Oct 28 2024 at 17:35)</a>:</h4>
+<p>You know how it's really cumbersome to provide patch files for derivations in nixpkgs? I thought I could do something with islands where when in the LSP, the action menu (of the island) has the option "Patch island" which preemptively clones it (or maybe lazily clones it, anything is possible with FUSE) and sends you to that directory. And when you save your changes in there and open the action menu (while on the files in the island) and select "Save patches", it edits your code so that it turns into:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>patch <span class="o">&lt;</span><span class="l">github:cull-os/cab</span><span class="o">&gt;</span> <span class="l">./promptedname.patch</span>
+</code></pre></div>
+
+
+
+<a name="479328569"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Novel%20LSP%20features/near/479328569" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Novel.20LSP.20features.html#479328569">(Oct 28 2024 at 17:36)</a>:</h4>
+<p>I think this would be <em>really</em> neat for quick patching of software</p>
+
+
+
+<a name="479328773"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Novel%20LSP%20features/near/479328773" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Novel.20LSP.20features.html#479328773">(Oct 28 2024 at 17:38)</a>:</h4>
+<p>And when you bump a git island and try to edit it, it would query saved edits' remotes to see if it could just pull instead of cloning the whole thing again.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

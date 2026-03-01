@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Hi Everyone, I am Deepak a software engineer from India for the past year I have been learning nix and including it in most of my workflows and I attempted to use nix as a code execution engine that supports most languages, language dependencies for some of them and system packages. I am currently running user submitted code inside containers and sharing the nix store between containers using podman overlay mounts. You can check out the project here - <a href=\"https://odin.evnix.cloud\">Odin</a></p>\n<p>Please let me know your thoughts and any feedback that you have.</p>",
+        "id": 482662609,
+        "sender_full_name": "Deepak Dinesh",
+        "timestamp": 1731692257
+    },
+    {
+        "content": "<p>Pretty cool</p>",
+        "id": 484176281,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1732478498
+    }
+]

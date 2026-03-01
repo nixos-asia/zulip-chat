@@ -1,0 +1,69 @@
+<html>
+<head><meta charset="utf-8"><title>Language design philosophy · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Language.20design.20philosophy.html">Language design philosophy</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="449468962"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Language%20design%20philosophy/near/449468962" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Language.20design.20philosophy.html#449468962">(Jul 06 2024 at 09:57)</a>:</h4>
+<p>Currently in Cab, there are only 3 keywords that aren't defined as infix/postfix operators: <code>if</code>, <code>then</code> and <code>else</code>. (and <code>and</code>, <code>or</code> which are infix, <code>not</code> which is a prefix opetator, just like <code>-</code>)</p>
+<p>I believe a this doesn't fit the language because there are no other "special cased" keywords. I want to change their behavior, also removing the <code>if</code> keyword in the process of redesigning this approach. The new syntax for "if else" will be:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>cond <span class="k">then</span> y <span class="k">else</span> n
+</code></pre></div>
+<ul>
+<li>
+<p>The <code>then</code> operator works like this: <code>cond then y</code></p>
+<ul>
+<li>If <code>cond</code> is false, it evaluates to <code>undefined</code>, if it isn't, it simply evaluates to <code>y</code></li>
+</ul>
+</li>
+<li>
+<p>The <code>else</code> operator works like this: <code>maybeUndefined else n</code></p>
+<ul>
+<li>If <code>maybeUndefined</code> is undefined, it simply evaluates to <code>n</code>. If not, it evaluates to <code>maybeUndefined</code></li>
+</ul>
+</li>
+</ul>
+<p><code>then</code> has higher binding power, so you can chain <code>then</code> and <code>else</code>.</p>
+<p>Another benefit of this is that you will be able to do <code>setThatDoesNotHaveFoo.foo else "foo didn't exist"</code> without special casing (like the <code>or</code> in Nix), as <code>.foo</code> is undefined.</p>
+<p>Thoughts?</p>
+
+
+
+<a name="449710074"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Language%20design%20philosophy/near/449710074" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Language.20design.20philosophy.html#449710074">(Jul 07 2024 at 19:49)</a>:</h4>
+<p>I think I'll keep the normal if else then right now. Have some doubts about precendence and the general ergonomics of it</p>
+
+
+
+<a name="449710086"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Language%20design%20philosophy/near/449710086" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Language.20design.20philosophy.html#449710086">(Jul 07 2024 at 19:49)</a>:</h4>
+<p>But I'll definitely look into it later when more stuff is done</p>
+
+
+
+<a name="449711474"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Language%20design%20philosophy/near/449711474" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Language.20design.20philosophy.html#449711474">(Jul 07 2024 at 19:56)</a>:</h4>
+<p>I was thinking about this a bit yesterday. FWIW, I think its a fairly nice idea. It's basically the "ternary" operation from other languages at that point, which I am fond of.</p>
+
+
+
+<a name="449713155"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Language%20design%20philosophy/near/449713155" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Language.20design.20philosophy.html#449713155">(Jul 07 2024 at 20:05)</a>:</h4>
+<p>It is exactly like ? and :, but each operator is seperate</p>
+
+
+
+<a name="449713285"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Language%20design%20philosophy/near/449713285" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Language.20design.20philosophy.html#449713285">(Jul 07 2024 at 20:05)</a>:</h4>
+<p>However this might require you to put () everywhere, which I'm not fond of. I'll look at some snippets inside nixpkgs lib and rewrite them to use this, seeing how it works</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

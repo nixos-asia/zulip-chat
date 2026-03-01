@@ -1,0 +1,94 @@
+<html>
+<head><meta charset="utf-8"><title>Automate NixOS install on bare metal - howto? · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html">Automate NixOS install on bare metal - howto?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="439757403"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439757403" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439757403">(May 21 2024 at 08:17)</a>:</h4>
+<p>What is the easiest way to automate a NixOS install on bare metal? I had this question coming from someone, and I didn't quite know how to answer it.</p>
+<p>Make a custom boot image I guess? </p>
+<p>Partition disks with disko I guess?</p>
+<p>But after that, is there a straightforward way to set up the boot image in such a way to pull in a (private) github nixosConfiguration from a flake to do all this stuff on first boot automatically?</p>
+
+
+
+<a name="439855776"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439855776" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439855776">(May 21 2024 at 16:31)</a>:</h4>
+<p>I would say this: <a href="https://nixos.asia/en/nixos-install-oneclick">https://nixos.asia/en/nixos-install-oneclick</a>, once the tutorial is complete.</p>
+
+
+
+<a name="439855925"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439855925" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439855925">(May 21 2024 at 16:32)</a>:</h4>
+<p>ah awesome <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> I will check it out.</p>
+<p>But I do not want to enter any commands on the machine I am installing NixOS on.</p>
+
+
+
+<a name="439856686"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439856686" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439856686">(May 21 2024 at 16:36)</a>:</h4>
+<p>Then it would be <a href="https://github.com/nix-community/nixos-anywhere">nixos-anywhere</a>. Assuming you have wired ethernet and ssh access, it should work.</p>
+
+
+
+<a name="439857010"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439857010" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439857010">(May 21 2024 at 16:38)</a>:</h4>
+<p>yeah so the idea is then this?</p>
+<p>1) Make a custom boot iso for NixOS with ssh access and ssh keys and stuff<br>
+2) Boot machine from that ISO<br>
+3) Use nixos-anywhere remotely to do disk configuration and proper installation</p>
+
+
+
+<a name="439857558"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439857558" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439857558">(May 21 2024 at 16:41)</a>:</h4>
+<p>You wouldn’t need NixOS in Step 1, it could be any Linux distro</p>
+
+
+
+<a name="439857834"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439857834" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439857834">(May 21 2024 at 16:42)</a>:</h4>
+<p>Yeah okay, technically that is true, but assuming I don't wanna mess with that and have a fundamentalist-purist approach <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+<p>Also we are talking bare-metal install here, so I have physical access to the machine, I can put a USB drive in with whatever I have.</p>
+
+
+
+<a name="439857918"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439857918" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439857918">(May 21 2024 at 16:42)</a>:</h4>
+<p>The important point is also: I don't want to <strong>install</strong> any other Linux distro first. I just want to boot a live ISO.</p>
+
+
+
+<a name="439858013"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439858013" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439858013">(May 21 2024 at 16:43)</a>:</h4>
+<p>Can I use nixos-anywhere with, let's say, an Arch Linux Live USB boot?</p>
+
+
+
+<a name="439858255"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439858255" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439858255">(May 21 2024 at 16:44)</a>:</h4>
+<p>Yes</p>
+
+
+
+<a name="439858294"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Automate%20NixOS%20install%20on%20bare%20metal%20-%20howto%3F/near/439858294" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Automate.20NixOS.20install.20on.20bare.20metal.20-.20howto.3F.html#439858294">(May 21 2024 at 16:44)</a>:</h4>
+<blockquote>
+<p>Can I use nixos-anywhere with, let's say, an Arch Linux Live USB boot?</p>
+</blockquote>
+<p>Yes</p>
+<blockquote>
+<p>The important point is also: I don't want to <strong>install</strong> any other Linux distro first. I just want to boot a live ISO.</p>
+</blockquote>
+<p>In this case, I would still say <a href="https://nixos.asia/en/nixos-install-oneclick">https://nixos.asia/en/nixos-install-oneclick</a> is most reliable approach</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

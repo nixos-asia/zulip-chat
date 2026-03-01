@@ -1,0 +1,111 @@
+<html>
+<head><meta charset="utf-8"><title>Hot to trigger AllowUnfree · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Hot.20to.20trigger.20AllowUnfree.html">Hot to trigger AllowUnfree</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="516000560"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Hot%20to%20trigger%20AllowUnfree/near/516000560" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Hot.20to.20trigger.20AllowUnfree.html#516000560">(May 04 2025 at 06:59)</a>:</h4>
+<p>Hello, kind nix people : )</p>
+<p>I have a package of a multi package project that uses an unfree license and I get this error:</p>
+<div class="codehilite"><pre><span></span><code>❯ nix build -Lv
+warning: Git tree &#39;/home/hhefesto/src/Tontine/robo-actuary&#39; is dirty
+error:
+       … while calling the &#39;derivationStrict&#39; builtin
+         at &lt;nix/derivation-internal.nix&gt;:37:12:
+           36|
+           37|   strict = derivationStrict drvAttrs;
+             |            ^
+           38|
+
+       … while evaluating derivation &#39;user-account-service-0.1.0.0&#39;
+         whose name attribute is located at /nix/store/qmm7hgw60vp7vj9lma95hl329d0j3n6n-source/pkgs/stdenv/generic/make-derivation.nix:438:13
+
+       … while evaluating attribute &#39;buildInputs&#39; of derivation &#39;user-account-service-0.1.0.0&#39;
+         at /nix/store/qmm7hgw60vp7vj9lma95hl329d0j3n6n-source/pkgs/stdenv/generic/make-derivation.nix:493:13:
+          492|             depsHostHost = elemAt (elemAt dependencies 1) 0;
+          493|             buildInputs = elemAt (elemAt dependencies 1) 1;
+             |             ^
+          494|             depsTargetTarget = elemAt (elemAt dependencies 2) 0;
+
+       (stack trace truncated; use &#39;--show-trace&#39; to show the full, detailed trace)
+
+       error: Package ‘tt-common-0.1.0.0’ in /nix/store/zdxbv7why72l2plp920vgxviinawgw02-cabal2nix-tt-common/default.nix:21 has an unfree license (‘unfree’), refusing to evaluate.
+
+       a) To temporarily allow unfree packages, you can use an environment variable
+          for a single invocation of the nix tools.
+
+            $ export NIXPKGS_ALLOW_UNFREE=1
+
+          Note: When using `nix shell`, `nix build`, `nix develop`, etc with a flake,
+                then pass `--impure` in order to allow use of environment variables.
+
+       b) For `nixos-rebuild` you can set
+         { nixpkgs.config.allowUnfree = true; }
+       in configuration.nix to override this.
+
+       Alternatively you can configure a predicate to allow specific packages:
+         { nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+             &quot;tt-common&quot;
+           ];
+         }
+
+       c) For `nix-env`, `nix-build`, `nix-shell` or any other Nix command you can add
+         { allowUnfree = true; }
+       to ~/.config/nixpkgs/config.nix.
+</code></pre></div>
+<p>In my flake I've tried to set allowUnfree to true like this without success:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="ss">outputs</span> <span class="o">=</span> inputs<span class="p">@{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> flake-parts<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+    flake-parts<span class="o">.</span>lib<span class="o">.</span>mkFlake <span class="p">{</span> <span class="k">inherit</span> inputs<span class="p">;</span> <span class="p">}</span> <span class="p">{</span>
+      <span class="ss">systems</span> <span class="o">=</span> nixpkgs<span class="o">.</span>lib<span class="o">.</span>systems<span class="o">.</span>flakeExposed<span class="p">;</span>
+      <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span> inputs<span class="o">.</span>haskell-flake<span class="o">.</span>flakeModule <span class="p">];</span>
+
+      <span class="ss">perSystem</span> <span class="o">=</span> <span class="p">{</span> self'<span class="p">,</span> system<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+      <span class="k">let</span>
+        <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span>
+          <span class="k">inherit</span> system<span class="p">;</span>
+          <span class="ss">config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="ss">allowUnfree</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+            <span class="ss">allowUnfreePredicate</span> <span class="o">=</span> pkg<span class="p">:</span> <span class="nb">builtins</span><span class="o">.</span>elem <span class="p">(</span>pkgs<span class="o">.</span>lib<span class="o">.</span>getName pkg<span class="p">)</span> <span class="p">[</span>
+             <span class="s2">"tt-common"</span>
+            <span class="p">];</span>
+            <span class="ss">permittedInsecurePackages</span> <span class="o">=</span> <span class="p">[</span>
+              <span class="s2">"beekeeper-studio-5.1.5"</span>
+            <span class="p">];</span>
+          <span class="p">};</span>
+        <span class="p">};</span>
+      <span class="k">in</span> <span class="p">{</span>
+
+        haskellProjects<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> <span class="p">{</span> <span class="o">...</span>
+</code></pre></div>
+<p>How can I achieve this?</p>
+
+
+
+<a name="516004881"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Hot%20to%20trigger%20AllowUnfree/near/516004881" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Hot.20to.20trigger.20AllowUnfree.html#516004881">(May 04 2025 at 08:00)</a>:</h4>
+<p>You want _module.args: <a href="https://github.com/search?q=repo%3Anammayatri%2Fcommon%20_module.args&amp;type=code">https://github.com/search?q=repo%3Anammayatri%2Fcommon%20_module.args&amp;type=code</a></p>
+
+
+
+<a name="516108824"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Hot%20to%20trigger%20AllowUnfree/near/516108824" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Hot.20to.20trigger.20AllowUnfree.html#516108824">(May 05 2025 at 05:10)</a>:</h4>
+<p>That worked! Thank you, <span class="user-mention" data-user-id="667408">@Srid</span> !</p>
+<p>Is there any resources to read up on how <code>_module</code> works? What's the sort of things that should be set there?</p>
+
+
+
+<a name="516110161"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Hot%20to%20trigger%20AllowUnfree/near/516110161" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Hot.20to.20trigger.20AllowUnfree.html#516110161">(May 05 2025 at 05:25)</a>:</h4>
+<p>Perhaps this may help: <a href="https://flake.parts/overlays.html#consuming-an-overlay">https://flake.parts/overlays.html#consuming-an-overlay</a></p>
+<p>It comes from flake-parts</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

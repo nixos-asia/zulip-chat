@@ -1,0 +1,98 @@
+[
+    {
+        "content": "<p><code>nix run .#package-name</code> should work, no?</p>",
+        "id": 510454662,
+        "sender_full_name": "Srid",
+        "timestamp": 1743922889
+    },
+    {
+        "content": "<p>Ah, different executables. Try <code>nix --accept-flake-config run github:juspay/omnix show &lt;your-flake&gt;</code>. You should see the executables in the apps section.</p>",
+        "id": 510454730,
+        "sender_full_name": "Srid",
+        "timestamp": 1743922929
+    },
+    {
+        "content": "<p>Do you have to add any reference of the other executables in the flake file?</p>",
+        "id": 510454731,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743922930
+    },
+    {
+        "content": "<p>I will try that out shortly!</p>",
+        "id": 510454758,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743922948
+    },
+    {
+        "content": "<p>If you try it out in the haskell-flake example, you can expect the two executables to show up:</p>\n<p><a href=\"/user_uploads/60244/oih0t5LtpdBFNfRvqqAOOk3j/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/oih0t5LtpdBFNfRvqqAOOk3j/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1982x1528\" src=\"/user_uploads/thumbnail/60244/oih0t5LtpdBFNfRvqqAOOk3j/image.png/840x560.webp\"></a></div>",
+        "id": 510455077,
+        "sender_full_name": "Srid",
+        "timestamp": 1743923174
+    },
+    {
+        "content": "<p>That command indeed shows up the correct list of executables for the project</p>",
+        "id": 510455104,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743923206
+    },
+    {
+        "content": "<p>But I'm not too sure <code>nix build .#exec-2</code> works as intended.</p>",
+        "id": 510455139,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743923229
+    },
+    {
+        "content": "<p>You have to <code>nix run</code> it:</p>\n<div class=\"codehilite\"><pre><span></span><code>❯ nix run .#ex2\nwarning: Git tree &#39;/Users/srid/code/haskell-flake&#39; is dirty\nHello, Haskell!\n</code></pre></div>\n<p><code>nix build</code> is used for <em>packages</em> not <em>apps</em></p>",
+        "id": 510455196,
+        "sender_full_name": "Srid",
+        "timestamp": 1743923275
+    },
+    {
+        "content": "<p>As you can see from the output of <code>om show</code> in that screenshot above. See the table header.</p>",
+        "id": 510455252,
+        "sender_full_name": "Srid",
+        "timestamp": 1743923292
+    },
+    {
+        "content": "<p>I see my mistake. Does that mean that the flake does not need to reference any executable?</p>",
+        "id": 510455315,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743923349
+    },
+    {
+        "content": "<p>haskell-flake auto-generates them for you</p>",
+        "id": 510455320,
+        "sender_full_name": "Srid",
+        "timestamp": 1743923361
+    },
+    {
+        "content": "<p>apps.ex2 just wraps packages.example</p>",
+        "id": 510455333,
+        "sender_full_name": "Srid",
+        "timestamp": 1743923376
+    },
+    {
+        "content": "<p>I see, I see</p>",
+        "id": 510455426,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743923435
+    },
+    {
+        "content": "<p><a href=\"https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L123-L125\">https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L123-L125</a></p>\n<p><a href=\"https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L100\">https://github.com/srid/haskell-flake/blob/f2fffebd1bac6b6d64d6eaf1227a27808ef05736/nix/modules/project/outputs.nix#L100</a></p>\n<p>If you are curious of implementation.</p>\n<p><code>${lib.getBin package}/bin/${exe}</code></p>",
+        "id": 510455442,
+        "sender_full_name": "Srid",
+        "timestamp": 1743923447
+    },
+    {
+        "content": "<p>I think we can put this to solved. My original problem seems to have been addressed and now I just can't run the executables because of different reasons (one of the packages is not passing checkPhase)</p>",
+        "id": 510455655,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743923642
+    },
+    {
+        "content": "<p>Thank you very much, both for haskell-flake and helping me with these questions!</p>",
+        "id": 510455865,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743923764
+    }
+]

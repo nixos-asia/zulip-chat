@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>rust-flake (Nixify Rust projects) · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29.html">rust-flake (Nixify Rust projects)</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="451119493"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/rust-flake%20%28Nixify%20Rust%20projects%29/near/451119493" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29.html#451119493">(Jul 13 2024 at 03:28)</a>:</h4>
+<p><a href="https://github.com/juspay/rust-flake">https://github.com/juspay/rust-flake</a> now supports multiple crates from cargo workspace</p>
+<p><a href="/user_uploads/60244/GRx8d5qLblSZp37TZNFumRrw/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/GRx8d5qLblSZp37TZNFumRrw/image.png" title="image.png"><img src="/user_uploads/60244/GRx8d5qLblSZp37TZNFumRrw/image.png"></a></div>
+
+
+
+<a name="451203521"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/rust-flake%20%28Nixify%20Rust%20projects%29/near/451203521" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Quinn <a href="http://chat.nixos.asia/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29.html#451203521">(Jul 13 2024 at 17:41)</a>:</h4>
+<p>oh cool. NCI is frustrating me with wasm and trunk right now. so if you have an example for wasm and trunk, that might get me to switch</p>
+
+
+
+<a name="451235367"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/rust-flake%20%28Nixify%20Rust%20projects%29/near/451235367" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29.html#451235367">(Jul 13 2024 at 22:45)</a>:</h4>
+<p><span class="user-mention" data-user-id="734332">@Quinn</span> <code>rust-flake</code> is designed to be basically a (flake-parts) wrapper over <a href="https://crane.dev/">https://crane.dev/</a> - so if you can get something working with crane, it should map straightforwardly to <code>rust-flake</code>.</p>
+
+
+
+<a name="452163350"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/rust-flake%20%28Nixify%20Rust%20projects%29/near/452163350" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29.html#452163350">(Jul 17 2024 at 19:03)</a>:</h4>
+<blockquote>
+<p>oh cool. NCI is frustrating me with wasm and trunk right now. so if you have an example for wasm and trunk, that might get me to switch</p>
+</blockquote>
+<p>Do you have an existing repo with wasm and trunk? I could try to package it using <code>rust-flake</code></p>
+
+
+
+<a name="452163872"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/rust-flake%20%28Nixify%20Rust%20projects%29/near/452163872" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Quinn <a href="http://chat.nixos.asia/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29.html#452163872">(Jul 17 2024 at 19:05)</a>:</h4>
+<p>this is the current deal <a href="https://github.com/quinn-dougherty/gatekept-traffic-PoC/tree/master/src.rs">https://github.com/quinn-dougherty/gatekept-traffic-PoC/tree/master/src.rs</a> i haven't done a ton of debugging as to why its not working. I will say my emacs lsp is jank in that it works when i <code>direnv</code> to an NCI full rust environment of the project, but it all depends on rustup not being installed. it all comes crashing down if emacs finds a rustup. that's a separate issue tho-- it'd be dope if it even built in CI.</p>
+
+
+
+<a name="452164321"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/rust-flake%20%28Nixify%20Rust%20projects%29/near/452164321" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/rust-flake.20.28Nixify.20Rust.20projects.29.html#452164321">(Jul 17 2024 at 19:07)</a>:</h4>
+<p>Alright, I will give it a try tomorrow, its almost bed time here.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

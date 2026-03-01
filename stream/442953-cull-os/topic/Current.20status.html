@@ -1,0 +1,306 @@
+<html>
+<head><meta charset="utf-8"><title>Current status · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html">Current status</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="446141360"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446141360" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446141360">(Jun 21 2024 at 18:07)</a>:</h4>
+<p>Currently, I've only completed the tokenizer. But the general way I want to continue forward is like so:</p>
+<ul>
+<li>Create AST</li>
+<li>Create the lazy interpreters</li>
+<li>At this point, the program will be able to create files similar to Nix or Guix's .drv that specify environment variables, the builder &amp; arguments to that builder and other derivations that this derivation depends on</li>
+</ul>
+<p>That will be all that's done by the <code>cab</code> CLI tool. You will be able to import code from islands (e.g <code>&lt;github:cull-os/cab&gt;</code>) and create derivations (as well as convert islands into derivations). But you won't be able to import or inspect contents of derivations as Cab doesn't know how to build them, which is IMO a feature.</p>
+
+
+
+<a name="446141844"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446141844" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446141844">(Jun 21 2024 at 18:10)</a>:</h4>
+<p>Essentially, <code>cull-os/cab</code> provides its own language (not Nix) and cross-repo abstraction (not flakes) - but using the underlying <code>.drv</code> language, right?</p>
+
+
+
+<a name="446141986"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446141986" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446141986">(Jun 21 2024 at 18:11)</a>:</h4>
+<p>And then <code>cab</code> will invoke the configured derivation builder and copy the result to the current filesystem (if the builder is remote). The builder has to adhere to the "builder protocol"; something that I want to create and write a specification for. Unlike Nix or Guix, it will be documented and will allow for custom builders that accomplish custom needs. The specification will only require the builder to return a result matching the specified derivation, making it super flexible.</p>
+
+
+
+<a name="446142002"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142002" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142002">(Jun 21 2024 at 18:11)</a>:</h4>
+<p>FTR, I am able to use the tokenizer (had to use Nix shell from a different Rust project since <code>shell.nix</code> doesn't provide cargo and friends):</p>
+<p><a href="/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png" title="image.png"><img src="/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png"></a></div>
+
+
+
+<a name="446142163"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142163" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142163">(Jun 21 2024 at 18:12)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="725711">RGBCube</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446141360">said</a>:</p>
+<blockquote>
+<ul>
+<li>similar to Nix or Guix's .drv</li>
+</ul>
+</blockquote>
+<p>Ah, wait, you said <em>similar</em> to. So nothing's shared with Nix/nixpkgs?</p>
+
+
+
+<a name="446142186"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142186" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142186">(Jun 21 2024 at 18:13)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446141844">said</a>:</p>
+<blockquote>
+<p>Essentially, <code>cull-os/cab</code> provides its own language (not Nix) and cross-repo abstraction (not flakes) - but using the underlying <code>.drv</code> language, right?</p>
+</blockquote>
+<p>Yes, it's essentially just a simple tool to compose derivation files (though, I do not think I will use Nix's .drv syntax or even the .drv extension)</p>
+
+
+
+<a name="446142299"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142299" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142299">(Jun 21 2024 at 18:14)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446142163">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="725711">RGBCube</span> <a href="#narrow/stream/442953-cull-os/topic/Current.20status/near/446141360">said</a>:</p>
+<blockquote>
+<ul>
+<li>similar to Nix or Guix's .drv</li>
+</ul>
+</blockquote>
+<p>Ah, wait, you said <em>similar</em> to. So nothing's shared with Nix/nixpkgs?</p>
+</blockquote>
+<p>Yes, I'm not planning to be compatible. What Cab essentially is is a frontend to the Builder Protocol, it creates derivation files required by the protocol and communicates with the backend (the builder server) to produce results</p>
+
+
+
+<a name="446142475"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142475" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142475">(Jun 21 2024 at 18:15)</a>:</h4>
+<p>One could even use Nix for the (currently non existent) protocol to build things, as what Nix does it also create derivation files. Like another frontend</p>
+
+
+
+<a name="446142569"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142569" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142569">(Jun 21 2024 at 18:15)</a>:</h4>
+<p>I'm specifically wondering if it would be possible to use (ie., <code>import &lt;github:NixOS/nixpkgs&gt;</code>) the existing packages from <code>nixpkgs</code> in a Cull package file.</p>
+
+
+
+<a name="446142772"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142772" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142772">(Jun 21 2024 at 18:17)</a>:</h4>
+<p>I am wondering if <span class="user-mention" data-user-id="679006">@Tim DeHerrera</span> might not be interested in this. Because he and I talked about about separating evaluation and builder functions of Nix, potentially distributing them somehow.</p>
+
+
+
+<a name="446142797"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446142797" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446142797">(Jun 21 2024 at 18:17)</a>:</h4>
+<p>That would require Cab to be compatible with Nix syntax, so no. But if Nix ever gets support for the builder protocol, it wouldn't be that hard to use Nix alongside Cab to build things on your system (with the same daemon managing both)</p>
+
+
+
+<a name="446151052"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/446151052" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#446151052">(Jun 21 2024 at 19:07)</a>:</h4>
+<p>Definitely interesting, especially the builder protocol, as that as something I've been itching to improve for years now with Nix.</p>
+<p>Have begun to wonder if a full scale rearch wasn't necessary. I've had some other more outlandish ideas like extending ELF to link dynamic libs via a content addressed URI instead of a file path </p>
+<p>That way, you could make the file system layer a virtual abstraction, and maybe even present the files as a regular FHS while still retaining the benefits of a Nix build.</p>
+<p>In any case, I'll keep a close eye on your project, and maybe even contrib at some point if it helps. Seems like you have a solid plan so far. Bravo <span aria-label="clap" class="emoji emoji-1f44f" role="img" title="clap">:clap:</span></p>
+
+
+
+<a name="447758527"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/447758527" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#447758527">(Jun 28 2024 at 12:47)</a>:</h4>
+<p>Almost finished the AST, the macros are done for automatic code generation</p>
+
+
+
+<a name="447777259"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/447777259" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#447777259">(Jun 28 2024 at 13:53)</a>:</h4>
+<p>I'll continue monday, I'm done</p>
+
+
+
+<a name="448801760"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/448801760" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#448801760">(Jul 03 2024 at 09:38)</a>:</h4>
+<p>AST node and token structures are done, as well as the tokenizer and stuff. Only need to create a parser that creates them, which shouldn't be more than 600 loc</p>
+
+
+
+<a name="448801929"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/448801929" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#448801929">(Jul 03 2024 at 09:39)</a>:</h4>
+<p>Also I finally understand how rowan actually works, which will help</p>
+
+
+
+<a name="449338974"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/449338974" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#449338974">(Jul 05 2024 at 15:33)</a>:</h4>
+<p><a href="/user_uploads/60244/m72lUqPBKR-klnnKlo3LZSnT/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/m72lUqPBKR-klnnKlo3LZSnT/image.png" title="image.png"><img src="/user_uploads/60244/m72lUqPBKR-klnnKlo3LZSnT/image.png"></a></div>
+
+
+
+<a name="449339041"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/449339041" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#449339041">(Jul 05 2024 at 15:33)</a>:</h4>
+<p>Parsing and formatting for debug output works! Currently I haven't implemented much of the parser but the formatter is working nicely now</p>
+
+
+
+<a name="449339152"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/449339152" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#449339152">(Jul 05 2024 at 15:34)</a>:</h4>
+<p>I need to clean up a little bit, however. But that's for after the parser</p>
+
+
+
+<a name="450233681"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450233681" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450233681">(Jul 09 2024 at 17:17)</a>:</h4>
+<p>Found a much better way to write parsers, using chumsky. It's exactly like the megaparsec haskell library</p>
+
+
+
+<a name="450233827"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450233827" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450233827">(Jul 09 2024 at 17:18)</a>:</h4>
+<p>I'm going to ditch the current implementation and rewrite it all. Did I waste the last 10 days? absolutely not</p>
+
+
+
+<a name="450265072"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450265072" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450265072">(Jul 09 2024 at 19:30)</a>:</h4>
+<p>Actually no. I can't use chumsky because I need a lossless parser for the formatter. I'll continue doing this, it already parses pretty well</p>
+
+
+
+<a name="450265479"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450265479" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450265479">(Jul 09 2024 at 19:33)</a>:</h4>
+<p>Unless there's a way to do lossless parsing with chumsky... I'm so unsure right now</p>
+
+
+
+<a name="450676238"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450676238" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450676238">(Jul 11 2024 at 10:45)</a>:</h4>
+<p><a href="/user_uploads/60244/Q2YUlNt6osgGRkmR9cs2xseB/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/Q2YUlNt6osgGRkmR9cs2xseB/image.png" title="image.png"><img src="/user_uploads/60244/Q2YUlNt6osgGRkmR9cs2xseB/image.png"></a></div><p>IT WORKS</p>
+
+
+
+<a name="450676312"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450676312" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450676312">(Jul 11 2024 at 10:46)</a>:</h4>
+<p>After this, everything should be easy</p>
+
+
+
+<a name="450761037"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450761037" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450761037">(Jul 11 2024 at 17:00)</a>:</h4>
+<p>lol, famous last words? <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="450950272"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450950272" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450950272">(Jul 12 2024 at 11:58)</a>:</h4>
+<p><a href="/user_uploads/60244/jcNvwB4au94F8U3A8jSpMiks/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/jcNvwB4au94F8U3A8jSpMiks/image.png" title="image.png"><img src="/user_uploads/60244/jcNvwB4au94F8U3A8jSpMiks/image.png"></a></div>
+
+
+
+<a name="450950545"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450950545" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450950545">(Jul 12 2024 at 12:00)</a>:</h4>
+<p><a href="/user_uploads/60244/QGYqNwYSRTvU2oh6Etu-WfUA/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/QGYqNwYSRTvU2oh6Etu-WfUA/image.png" title="image.png"><img src="/user_uploads/60244/QGYqNwYSRTvU2oh6Etu-WfUA/image.png"></a></div>
+
+
+
+<a name="450950597"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450950597" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450950597">(Jul 12 2024 at 12:00)</a>:</h4>
+<p><a href="/user_uploads/60244/uUCd0gYYettXAZ2ol8DRdE6l/image.png">image.png</a><br>
+meanwhile, nix without a recovering parser</p>
+<div class="message_inline_image"><a href="/user_uploads/60244/uUCd0gYYettXAZ2ol8DRdE6l/image.png" title="image.png"><img src="/user_uploads/60244/uUCd0gYYettXAZ2ol8DRdE6l/image.png"></a></div>
+
+
+
+<a name="450951789"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/450951789" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#450951789">(Jul 12 2024 at 12:04)</a>:</h4>
+<p><a href="/user_uploads/60244/6UOkJ5JToJ30Uz4Skjd2na8O/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/6UOkJ5JToJ30Uz4Skjd2na8O/image.png" title="image.png"><img src="/user_uploads/60244/6UOkJ5JToJ30Uz4Skjd2na8O/image.png"></a></div>
+
+
+
+<a name="451008047"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/451008047" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#451008047">(Jul 12 2024 at 15:21)</a>:</h4>
+<p>very nice!</p>
+
+
+
+<a name="453400609"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/453400609" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#453400609">(Jul 23 2024 at 12:19)</a>:</h4>
+<p>Parser is 100% complete!</p>
+
+
+
+<a name="453400710"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/453400710" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#453400710">(Jul 23 2024 at 12:20)</a>:</h4>
+<p>I implemented pratt parsing &amp; appliation today and yesterday after a long while</p>
+
+
+
+<a name="453400846"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/453400846" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#453400846">(Jul 23 2024 at 12:20)</a>:</h4>
+<p>I should update the examples to reflect the design changes I did</p>
+
+
+
+<a name="453981073"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/453981073" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#453981073">(Jul 25 2024 at 15:34)</a>:</h4>
+<p>Cleaned up a lot of parsing code, wrote a fuzzer (which optionally saves valid code to test later for regressions) and checker</p>
+
+
+
+<a name="453981121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/453981121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#453981121">(Jul 25 2024 at 15:34)</a>:</h4>
+<p><a href="https://x.com/RGBCubed/status/1816471661803127214">https://x.com/RGBCubed/status/1816471661803127214</a></p>
+
+
+
+<a name="453981139"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/453981139" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#453981139">(Jul 25 2024 at 15:34)</a>:</h4>
+<p>Also wrote an sexpr formatter</p>
+
+
+
+<a name="471333579"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/471333579" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#471333579">(Sep 18 2024 at 19:32)</a>:</h4>
+<p>How goes it? Are you still actively developing this? Just curious because I have been building some things that may be useful for your (or any Nix like) system, but act as a more general format for them to leverage, rather than tightly coupling with a particular tool. I'd be interested to see if you'd find it useful here.</p>
+
+
+
+<a name="475235977"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/475235977" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#475235977">(Oct 07 2024 at 07:57)</a>:</h4>
+<p>I forgot to check this chat, but no I haven't had the chance to develop it further because of school. I have refined the design and direction I want to take the language and builder protocol though</p>
+
+
+
+<a name="475236434"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/475236434" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#475236434">(Oct 07 2024 at 07:59)</a>:</h4>
+<p>What have you created? I'm not really looking to use an older format because I want to use Cap'n Proto for this, and a single Cap'n file can be leveraged by lots of languages so it's a de facto standard</p>
+
+
+
+<a name="476204865"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/476204865" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#476204865">(Oct 10 2024 at 19:07)</a>:</h4>
+<blockquote>
+<p>use Cap'n Proto for this</p>
+</blockquote>
+<p>Believe it or not, we've I've had some discussions with Tim on that one as well <span aria-label="grinning face with smiling eyes" class="emoji emoji-1f601" role="img" title="grinning face with smiling eyes">:grinning_face_with_smiling_eyes:</span> did you already build something with that?</p>
+
+
+
+<a name="476387266"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Current%20status/near/476387266" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Current.20status.html#476387266">(Oct 11 2024 at 13:18)</a>:</h4>
+<p>Nope, but it does seem pretty useful for creating APIs that can be used across multiple languages (thanks to the community) while enabling you to trivially extend the protocol</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

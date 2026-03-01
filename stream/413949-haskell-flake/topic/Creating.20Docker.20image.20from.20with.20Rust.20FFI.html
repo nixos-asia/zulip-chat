@@ -1,0 +1,57 @@
+<html>
+<head><meta charset="utf-8"><title>Creating Docker image from with Rust FFI · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html">Creating Docker image from with Rust FFI</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="524786854"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Creating%20Docker%20image%20from%20with%20Rust%20FFI/near/524786854" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Rene Vergara <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html#524786854">(Jun 18 2025 at 21:34)</a>:</h4>
+<p>Hello,</p>
+<p>I have a <code>haskell-flake</code> library <code>bar</code> that has a Rust FFI using the <code>settings.&lt;name&gt;.custom</code> property to link everything.</p>
+<p>I have an app <code>foo</code> that depends on <code>bar</code>. When trying to create a Docker image per the docs, the image is huge. When following the instructions in the docs to reduce the size, the Haskell portions get reduced but the image still contains all the Rust deps needed to build <code>bar</code>. Is there a way to avoid packing all the Rust code?</p>
+
+
+
+<a name="524821316"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Creating%20Docker%20image%20from%20with%20Rust%20FFI/near/524821316" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html#524821316">(Jun 19 2025 at 06:22)</a>:</h4>
+<p>You might have to <a href="https://search.nixos.org/packages?channel=25.05&amp;show=removeReferencesTo&amp;from=0&amp;size=50&amp;sort=relevance&amp;type=packages&amp;query=removeReferences">removeReferencesTo</a> unwanted deps of <code>bar</code>. But first, it would be helpful to see how the image depends on these unwanted deps using <code>nix why-depends</code></p>
+
+
+
+<a name="524831916"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Creating%20Docker%20image%20from%20with%20Rust%20FFI/near/524831916" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html#524831916">(Jun 19 2025 at 07:43)</a>:</h4>
+<p>Meta: same question <a href="https://github.com/srid/haskell-flake/discussions/433">https://github.com/srid/haskell-flake/discussions/433</a></p>
+
+
+
+<a name="524881134"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Creating%20Docker%20image%20from%20with%20Rust%20FFI/near/524881134" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Rene Vergara <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html#524881134">(Jun 19 2025 at 13:02)</a>:</h4>
+<p>I am using <code>removeReferencesTo</code>. The original Docker image was much larger and it included <code>ghc</code> and all the Haskell deps. <code>removeReferencesTo</code> did remove all of the Haskell deps, but I am left with all the Rust dependencies still.</p>
+
+
+
+<a name="524910332"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Creating%20Docker%20image%20from%20with%20Rust%20FFI/near/524910332" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Rene Vergara <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html#524910332">(Jun 19 2025 at 15:38)</a>:</h4>
+<p>The dependencies that remain in the image are the ones brought in by the derivation that the <code>bar</code> lib uses via <code>settings.&lt;name&gt;.custom</code></p>
+
+
+
+<a name="525089865"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Creating%20Docker%20image%20from%20with%20Rust%20FFI/near/525089865" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Rene Vergara <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html#525089865">(Jun 20 2025 at 18:55)</a>:</h4>
+<p>I was able to remove these using <code>removeReferencesTo</code> by explicitly calling out the Rust derivations, not just <code>bar</code>.</p>
+
+
+
+<a name="525138984"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Creating%20Docker%20image%20from%20with%20Rust%20FFI/near/525138984" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Creating.20Docker.20image.20from.20with.20Rust.20FFI.html#525138984">(Jun 21 2025 at 07:13)</a>:</h4>
+<p>I should include this use case in <a href="https://github.com/shivaraj-bh/haskell-rust-ffi-template">https://github.com/shivaraj-bh/haskell-rust-ffi-template</a> and also update <a href="https://nixos.asia/en/haskell-rust-ffi">https://nixos.asia/en/haskell-rust-ffi</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

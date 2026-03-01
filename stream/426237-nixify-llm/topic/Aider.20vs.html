@@ -1,0 +1,44 @@
+<html>
+<head><meta charset="utf-8"><title>Aider vs · nixify-llm · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/index.html">nixify-llm</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Aider.20vs.html">Aider vs</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="423165913"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Aider%20vs/near/423165913" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Aider.20vs.html#423165913">(Feb 24 2024 at 12:25)</a>:</h4>
+<p>Where Khoj (for search) and llmvm (for AI-LSP) is not, there's a bootstrapper with an optimized workflow to have a conversation on the entire code base:</p>
+<p><a href="https://github.com/paul-gauthier/aider">https://github.com/paul-gauthier/aider</a></p>
+<p>It seems good for early prototyping, schaffolding before you enter the details in the idea with LSP-like support.</p>
+<p><span class="user-mention" data-user-id="678574">@Andreas</span> this seems to be our missing bit, after all. Should work with any model runtime, such as nitro / llmvm et al.</p>
+
+
+
+<a name="423166837"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Aider%20vs/near/423166837" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Aider.20vs.html#423166837">(Feb 24 2024 at 12:41)</a>:</h4>
+<p>Code base context ...</p>
+<blockquote>
+<p>A simple solution is to send the entire codebase to GPT along with each change request. Now GPT has all the context! But this won’t work for even moderately sized repos, because they won’t fit into the context window.</p>
+</blockquote>
+<blockquote>
+<p>To address these issues, aider sends GPT a concise map of your whole git repository that includes the most important classes and functions along with their types and call signatures.</p>
+</blockquote>
+<blockquote>
+<p>This repository map is now built automatically using tree-sitter to extract symbol definitions from source files.</p>
+</blockquote>
+
+
+
+<a name="423195564"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/Aider%20vs/near/423195564" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/Aider.20vs.html#423195564">(Feb 24 2024 at 18:56)</a>:</h4>
+<p>Indeed I was working on packaging aider just last night <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span> </p>
+<p>Seems like a good idea to send a "repo context map" using tree-sitter</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

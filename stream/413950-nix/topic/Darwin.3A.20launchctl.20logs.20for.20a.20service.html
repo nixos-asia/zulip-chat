@@ -1,0 +1,87 @@
+<html>
+<head><meta charset="utf-8"><title>Darwin: launchctl logs for a service · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html">Darwin: launchctl logs for a service</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="426832368"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/426832368" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#426832368">(Mar 15 2024 at 22:32)</a>:</h4>
+<p>How do we get the logs for a failing launchd service? This is the github-runner service setup by <code>nix-darwin</code>. </p>
+<p>It is surprisingly impossible to find a way to do this. One of the reasons macOS sucks compared to Linux.</p>
+
+
+
+<a name="426832445"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/426832445" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#426832445">(Mar 15 2024 at 22:32)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>$ sudo launchctl kickstart -kp system/org.nixos.github-runner-heist-extra-1
+service spawned with pid: 84781
+$
+</code></pre></div>
+<p>And that PID no longer exists after that.</p>
+
+
+
+<a name="426832597"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/426832597" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#426832597">(Mar 15 2024 at 22:34)</a>:</h4>
+<p><a href="/user_uploads/60244/EO03WEV_ys-WtfVaqNex8wJV/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/EO03WEV_ys-WtfVaqNex8wJV/image.png" title="image.png"><img src="/user_uploads/60244/EO03WEV_ys-WtfVaqNex8wJV/image.png"></a></div><p>Guess that's why it is failing -- my token expired. </p>
+<p>(But can't confirm -- just guessing)</p>
+
+
+
+<a name="426904808"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/426904808" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#426904808">(Mar 16 2024 at 16:39)</a>:</h4>
+<p>You will have to use either the <code>log</code> cli command in MacOS, or if you have access to GUI you can use Console app to start filtering all the messages with <code>system/org.nixos.github-runner-heist-extra-1</code> in it and then kickstart your daemon</p>
+
+
+
+<a name="426904942"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/426904942" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#426904942">(Mar 16 2024 at 16:40)</a>:</h4>
+<p>If you still don’t see anything, you can try enabling <code>debug</code> mode first, with <code>launchctl debug</code> and then start filtering for logs again</p>
+
+
+
+<a name="427104630"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/427104630" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#427104630">(Mar 17 2024 at 12:22)</a>:</h4>
+<p>Console app never showed any logs for the crashed service, but I'll try the <code>debug</code> command next time this happens.</p>
+
+
+
+<a name="429231563"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/429231563" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#429231563">(Mar 24 2024 at 17:53)</a>:</h4>
+<p>Nothing's coming through:</p>
+<div class="codehilite"><pre><span></span><code>❯ sudo launchctl debug  system/org.nixos.github-runner-dioxus-desktop-template-1 --stdout ~/out --stderr ~/err
+Service configured for next launch.
+</code></pre></div>
+<p>And:</p>
+<div class="codehilite"><pre><span></span><code>srid on appreciate ~/code
+❯  sudo launchctl kickstart system/org.nixos.github-runner-dioxus-desktop-template-1
+
+srid on appreciate ~/code
+❯ more ~/out
+
+srid on appreciate ~/code
+❯ more ~/err
+</code></pre></div>
+
+
+
+<a name="429371861"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/429371861" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#429371861">(Mar 25 2024 at 12:06)</a>:</h4>
+<p>3 messages were moved from this topic to <a class="stream-topic" data-stream-id="413948" href="/#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners">#nixos &gt; Self-hosted GitHub runners</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="429372469"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Darwin%3A%20launchctl%20logs%20for%20a%20service/near/429372469" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service.html#429372469">(Mar 25 2024 at 12:07)</a>:</h4>
+<p>The new nix-darwin module writes the log files (see topic referenced above), thus allowing me to not repy on Apple's slipshod tech.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

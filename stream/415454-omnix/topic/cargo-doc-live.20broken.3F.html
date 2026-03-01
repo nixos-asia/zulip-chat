@@ -1,0 +1,35 @@
+<html>
+<head><meta charset="utf-8"><title>cargo-doc-live broken? · omnix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/415454-omnix/index.html">omnix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/415454-omnix/topic/cargo-doc-live.20broken.3F.html">cargo-doc-live broken?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="452155518"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/cargo-doc-live%20broken%3F/near/452155518" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/415454-omnix/topic/cargo-doc-live.20broken.3F.html#452155518">(Jul 17 2024 at 18:26)</a>:</h4>
+<p><code>cargo-doc</code> process exits with:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w">    </span><span class="p">|</span>
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w">    </span><span class="o">=</span><span class="w"> </span>note:<span class="w"> </span>bare<span class="w"> </span>URLs<span class="w"> </span>are<span class="w"> </span>not<span class="w"> </span>automatically<span class="w"> </span>turned<span class="w"> </span>into<span class="w"> </span>clickable<span class="w"> </span>links
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w">    </span><span class="o">=</span><span class="w"> </span>note:<span class="w"> </span><span class="sb">`</span><span class="c1">#[warn(rustdoc::bare_urls)]` on by default</span>
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span>
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w"> </span>warning:<span class="w"> </span><span class="sb">`</span>omnix-gui<span class="sb">`</span><span class="w"> </span><span class="o">(</span>bin<span class="w"> </span><span class="s2">"omnix-gui"</span><span class="w"> </span>doc<span class="o">)</span><span class="w"> </span>generated<span class="w"> </span><span class="m">3</span><span class="w"> </span>warnings<span class="w"> </span><span class="o">(</span>run<span class="w"> </span><span class="sb">`</span>cargo<span class="w"> </span>fix<span class="w"> </span>--bin<span class="w"> </span><span class="s2">"omnix-gui"</span><span class="sb">`</span><span class="w"> </span>to<span class="w"> </span>apply<span class="w"> </span><span class="m">1</span><span class="w"> </span>suggestion<span class="o">)</span>
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w">     </span>Finished<span class="w"> </span><span class="sb">`</span>dev<span class="sb">`</span><span class="w"> </span>profile<span class="w"> </span><span class="o">[</span>unoptimized<span class="w"> </span>+<span class="w"> </span>debuginfo<span class="o">]</span><span class="w"> </span>target<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">55</span>.57s
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w">    </span>Generated<span class="w"> </span>/Users/shivaraj/oss/omnix/target/doc/nix_health/index.html<span class="w"> </span>and<span class="w"> </span><span class="m">5</span><span class="w"> </span>other<span class="w"> </span>files
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w"> </span>Browsersync<span class="w"> </span>not<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>http://localhost:8008
+<span class="o">[</span>cargo-doc<span class="w">      </span><span class="o">]</span><span class="w"> </span><span class="o">[</span>Finished<span class="w"> </span>running.<span class="w"> </span>Exit<span class="w"> </span>status:<span class="w"> </span><span class="m">0</span><span class="o">]</span>
+</code></pre></div>
+
+
+
+<a name="452172213"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/cargo-doc-live%20broken%3F/near/452172213" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/cargo-doc-live.20broken.3F.html#452172213">(Jul 17 2024 at 19:42)</a>:</h4>
+<p>We should check the docs in CI to prevent this in future, let me take a look.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,189 @@
+<html>
+<head><meta charset="utf-8"><title>NixOS Anywhere · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html">NixOS Anywhere</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="417271466"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417271466" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417271466">(Jan 22 2024 at 16:43)</a>:</h4>
+<p>Shrink the initrd, how?</p>
+<p>The documentation states a minimum 1.5GB RAM requirement, but my target host has only 900MB (yeah!, needs to be a cheap proxy).</p>
+<p>Does anyone know how I can shrink the initrd (<code>makeInitrdNG</code>?)? &mdash; and even more importantly test that reliably?</p>
+<ul>
+<li>kexec image: <a href="https://github.com/nix-community/nixos-images?tab=readme-ov-file#kexec-tarballs">https://github.com/nix-community/nixos-images?tab=readme-ov-file#kexec-tarballs</a></li>
+<li><a href="https://github.com/nix-community/nixos-images/blob/9dd480c8be0ec772bb73380c641f975c0f946b4a/nix/kexec-installer/test.nix#L27">some tests</a> which don't finish on my machine <span aria-label="shrug" class="emoji emoji-1f937" role="img" title="shrug">:shrug:</span> </li>
+<li><a href="https://github.com/nix-community/nixos-images/blob/9dd480c8be0ec772bb73380c641f975c0f946b4a/nix/kexec-installer/module.nix#L40">https://github.com/nix-community/nixos-images/blob/9dd480c8be0ec772bb73380c641f975c0f946b4a/nix/kexec-installer/module.nix#L40</a></li>
+</ul>
+<p>What is all that is there in an initrd and how can I minimalize that which there is? &mdash; I've never touched this topic and am finding myself on the bottom of a climb that I wouldn't want to do on my own, alone.</p>
+
+
+
+<a name="417286014"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417286014" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417286014">(Jan 22 2024 at 18:00)</a>:</h4>
+<p>kexec image uses <a href="https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/netboot/netboot-base.nix">netboot-base.nix</a> module which depends on <a href="https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/base.nix">profiles/base.nix</a>, and this base module has a lot of packages by default, you can probably override it to remove unwanted base packages, which will reduce the kexec image size.</p>
+
+
+
+<a name="417286696"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417286696" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417286696">(Jan 22 2024 at 18:04)</a>:</h4>
+<p>(deleted)</p>
+
+
+
+<a name="417287157"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417287157" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417287157">(Jan 22 2024 at 18:07)</a>:</h4>
+<p>I think it's here in the squashfsStore where it get's heavy:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>    <span class="c1"># Create the initrd</span>
+    system<span class="o">.</span>build<span class="o">.</span><span class="ss">netbootRamdisk</span> <span class="o">=</span> pkgs<span class="o">.</span>makeInitrdNG <span class="p">{</span>
+      <span class="k">inherit</span> <span class="p">(</span>config<span class="o">.</span>boot<span class="o">.</span>initrd<span class="p">)</span> compressor<span class="p">;</span>
+      <span class="ss">prepend</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"</span><span class="si">${</span>config<span class="o">.</span>system<span class="o">.</span>build<span class="o">.</span>initialRamdisk<span class="si">}</span><span class="s2">/initrd"</span> <span class="p">];</span>
+
+      <span class="ss">contents</span> <span class="o">=</span>
+        <span class="p">[</span> <span class="p">{</span> <span class="ss">object</span> <span class="o">=</span> config<span class="o">.</span>system<span class="o">.</span>build<span class="o">.</span>squashfsStore<span class="p">;</span>
+            <span class="ss">symlink</span> <span class="o">=</span> <span class="s2">"/nix-store.squashfs"</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">];</span>
+    <span class="p">};</span>
+</code></pre></div>
+<p>and then here:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="ss">initialRamdisk</span> <span class="o">=</span> pkgs<span class="o">.</span>makeInitrdNG <span class="p">{</span>
+    <span class="ss">name</span> <span class="o">=</span> <span class="s2">"initrd-</span><span class="si">${</span>kernel-name<span class="si">}</span><span class="s2">"</span><span class="p">;</span>
+    <span class="k">inherit</span> <span class="p">(</span>config<span class="o">.</span>boot<span class="o">.</span>initrd<span class="p">)</span> compressor compressorArgs prepend<span class="p">;</span>
+    <span class="k">inherit</span> <span class="p">(</span>cfg<span class="p">)</span> strip<span class="p">;</span>
+
+    <span class="ss">contents</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">(</span>path<span class="p">:</span> <span class="p">{</span> <span class="ss">object</span> <span class="o">=</span> path<span class="p">;</span> <span class="ss">symlink</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span> <span class="p">})</span> <span class="p">(</span>subtractLists cfg<span class="o">.</span>suppressedStorePaths cfg<span class="o">.</span>storePaths<span class="p">)</span>
+      <span class="o">++</span> mapAttrsToList <span class="p">(</span>_<span class="p">:</span> v<span class="p">:</span> <span class="p">{</span> <span class="ss">object</span> <span class="o">=</span> v<span class="o">.</span>source<span class="p">;</span> <span class="ss">symlink</span> <span class="o">=</span> v<span class="o">.</span>target<span class="p">;</span> <span class="p">})</span> <span class="p">(</span>filterAttrs <span class="p">(</span>_<span class="p">:</span> v<span class="p">:</span> v<span class="o">.</span>enable<span class="p">)</span> cfg<span class="o">.</span>contents<span class="p">);</span>
+  <span class="p">};</span>
+</code></pre></div>
+<p>with</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>      <span class="ss">contents</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"/tmp/.keep"</span><span class="o">.</span><span class="ss">text</span> <span class="o">=</span> <span class="s2">"systemd requires the /tmp mount point in the initrd cpio archive"</span><span class="p">;</span>
+        <span class="s2">"/init"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span>cfg<span class="o">.</span>package<span class="si">}</span><span class="s2">/lib/systemd/systemd"</span><span class="p">;</span>
+        <span class="s2">"/etc/systemd/system"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> stage1Units<span class="p">;</span>
+
+        <span class="s2">"/etc/systemd/system.conf"</span><span class="o">.</span><span class="ss">text</span> <span class="o">=</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">          [Manager]</span>
+<span class="s s-Multiline">          DefaultEnvironment=PATH=/bin:/sbin</span>
+<span class="s s-Multiline">          </span><span class="si">${</span>cfg<span class="o">.</span>extraConfig<span class="si">}</span>
+<span class="s s-Multiline">          ManagerEnvironment=</span><span class="si">${</span>lib<span class="o">.</span>concatStringsSep <span class="s2">" "</span> <span class="p">(</span>lib<span class="o">.</span>mapAttrsToList <span class="p">(</span>n<span class="p">:</span> v<span class="p">:</span> <span class="s2">"</span><span class="si">${</span>n<span class="si">}</span><span class="s2">=</span><span class="si">${</span>lib<span class="o">.</span>escapeShellArg v<span class="si">}</span><span class="s2">"</span><span class="p">)</span> cfg<span class="o">.</span>managerEnvironment<span class="p">)</span><span class="si">}</span>
+<span class="s s-Multiline">        ''</span><span class="p">;</span>
+
+        <span class="s2">"/lib"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span>modulesClosure<span class="si">}</span><span class="s2">/lib"</span><span class="p">;</span>
+
+        <span class="s2">"/etc/modules-load.d/nixos.conf"</span><span class="o">.</span><span class="ss">text</span> <span class="o">=</span> concatStringsSep <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> config<span class="o">.</span>boot<span class="o">.</span>initrd<span class="o">.</span>kernelModules<span class="p">;</span>
+
+        <span class="c1"># We can use either ! or * to lock the root account in the</span>
+        <span class="c1"># console, but some software like OpenSSH won't even allow you</span>
+        <span class="c1"># to log in with an SSH key if you use ! so we use * instead</span>
+        <span class="s2">"/etc/shadow"</span><span class="o">.</span><span class="ss">text</span> <span class="o">=</span> <span class="s2">"root:</span><span class="si">${</span><span class="k">if</span> isBool cfg<span class="o">.</span>emergencyAccess <span class="k">then</span> optionalString <span class="p">(</span><span class="o">!</span>cfg<span class="o">.</span>emergencyAccess<span class="p">)</span> <span class="s2">"*"</span> <span class="k">else</span> cfg<span class="o">.</span>emergencyAccess<span class="si">}</span><span class="s2">:::::::"</span><span class="p">;</span>
+
+        <span class="s2">"/bin"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span>initrdBinEnv<span class="si">}</span><span class="s2">/bin"</span><span class="p">;</span>
+        <span class="s2">"/sbin"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span>initrdBinEnv<span class="si">}</span><span class="s2">/sbin"</span><span class="p">;</span>
+
+        <span class="s2">"/etc/sysctl.d/nixos.conf"</span><span class="o">.</span><span class="ss">text</span> <span class="o">=</span> <span class="s2">"kernel.modprobe = /sbin/modprobe"</span><span class="p">;</span>
+        <span class="s2">"/etc/modprobe.d/systemd.conf"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> <span class="s2">"</span><span class="si">${</span>cfg<span class="o">.</span>package<span class="si">}</span><span class="s2">/lib/modprobe.d/systemd.conf"</span><span class="p">;</span>
+        <span class="s2">"/etc/modprobe.d/ubuntu.conf"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> pkgs<span class="o">.</span>runCommand <span class="s2">"initrd-kmod-blacklist-ubuntu"</span> <span class="p">{</span> <span class="p">}</span> <span class="s s-Multiline">''</span>
+<span class="s s-Multiline">          </span><span class="si">${</span>pkgs<span class="o">.</span>buildPackages<span class="o">.</span>perl<span class="si">}</span><span class="s s-Multiline">/bin/perl -0pe 's/## file: iwlwifi.conf(.+?)##/##/s;' $src &gt; $out</span>
+<span class="s s-Multiline">        ''</span><span class="p">;</span>
+        <span class="s2">"/etc/modprobe.d/debian.conf"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> pkgs<span class="o">.</span>kmod-debian-aliases<span class="p">;</span>
+
+        <span class="s2">"/etc/os-release"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> config<span class="o">.</span>boot<span class="o">.</span>initrd<span class="o">.</span>osRelease<span class="p">;</span>
+        <span class="s2">"/etc/initrd-release"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> config<span class="o">.</span>boot<span class="o">.</span>initrd<span class="o">.</span>osRelease<span class="p">;</span>
+
+      <span class="p">}</span> <span class="o">//</span> optionalAttrs <span class="p">(</span>config<span class="o">.</span>environment<span class="o">.</span>etc <span class="o">?</span> <span class="s2">"modprobe.d/nixos.conf"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="s2">"/etc/modprobe.d/nixos.conf"</span><span class="o">.</span><span class="ss">source</span> <span class="o">=</span> config<span class="o">.</span>environment<span class="o">.</span>etc<span class="o">.</span><span class="s2">"modprobe.d/nixos.conf"</span><span class="o">.</span>source<span class="p">;</span>
+      <span class="p">};</span>
+</code></pre></div>
+
+
+
+<a name="417287178"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417287178" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417287178">(Jan 22 2024 at 18:07)</a>:</h4>
+<p>If you have an embedded usecade, clever's not-os might be a better choice fundamentally, as this is its goal from the outset.</p>
+
+
+
+<a name="417287335"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417287335" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417287335">(Jan 22 2024 at 18:08)</a>:</h4>
+<p>That'd be fun, but in my case not really necessary. I just got a cheap IPv6-only 900mb vps collocated in Bogota (which is key, and otherwise <em>very</em> expensive).</p>
+
+
+
+<a name="417303743"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417303743" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417303743">(Jan 22 2024 at 19:49)</a>:</h4>
+<p>I doubt it is the <code>initialRamdisk</code>, on my nixos machine when I check the size of initrd it shows just 12 MB:</p>
+<div class="codehilite"><pre><span></span><code>ls -lah /nix/store/l8qssxmf3ff1c6g2iq6klcfahclxxgzb-initrd-linux-6.1.71/initrd
+.r--r--r-- root root 12 MB Thu Jan  1 05:30:01 1970  /nix/store/l8qssxmf3ff1c6g2iq6klcfahclxxgzb-initrd-linux-6.1.71/initrd
+</code></pre></div>
+<p>This is how I built the initrd:</p>
+<div class="codehilite"><pre><span></span><code>nix build .#nixosConfigurations.nixos.config.system.build.initialRamdisk
+</code></pre></div>
+
+
+
+<a name="417326520"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417326520" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417326520">(Jan 22 2024 at 22:23)</a>:</h4>
+<p>I'll re-check tomorrow. I somehow need a better testing handle on this piece of software to be able to actually assess the max- memory consumption.</p>
+<p>Last time I felt lucky and just deployed, then the VM got stuck and hanged and I had to wait two business days for a manual intervention. Not fun <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="417344640"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417344640" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417344640">(Jan 23 2024 at 00:36)</a>:</h4>
+<p>900mb is pretty tight. Definitely use an OOM killer daemon on that thing. That will at least help you avoid another manual intervention <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="417376084"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417376084" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> sedlund <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417376084">(Jan 23 2024 at 05:52)</a>:</h4>
+<p>this will get you much further</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="ss">zramSwap</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">memoryPercent</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div>
+
+
+
+<a name="417382646"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417382646" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417382646">(Jan 23 2024 at 07:03)</a>:</h4>
+<p>Yeah, I just need it as a reverse proxy with stable IP as failover route in front of a mobile network backup internet link for a site with normally static IP wire-line link, where the site tunnels via wireguard onto that machine to establishes a stable route in case of issue with the main link.</p>
+<p>I think an OOM daemon might not do much, because it's already after the kexec when this happens and apparently during the loading of the <code>initrd</code>.</p>
+<p><span class="user-mention" data-user-id="685336">@sedlund</span> , I'll try your suggestion, although the docs say that swap wouldn't help much and that the requirement is 1.5gb (exclusive of swap). I didn't know about <code>zram</code>, this is really interesting!</p>
+<p>They don't explain _why_ "no swap" and maybe they should be more precise and change that to "no disk swap" if your suspicion is right.</p>
+
+
+
+<a name="417498394"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417498394" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417498394">(Jan 23 2024 at 17:51)</a>:</h4>
+<p>With nixos-anywhere you are looking to format your disk while being on the ram and swap exists on the disk, which is why it doesn’t help.</p>
+
+
+
+<a name="417515488"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417515488" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417515488">(Jan 23 2024 at 19:37)</a>:</h4>
+<p>I haven't come around to test this yet, but it looks like <code>zramSwap</code> is a compressed swap on ram, effectively making the RAM apparently bigger than it really is through compression. If that work's that'd be fun and really nice.</p>
+
+
+
+<a name="417567243"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417567243" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> sedlund <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417567243">(Jan 24 2024 at 03:06)</a>:</h4>
+<p>right, 150% is what google uses on ChromeOS.  you will see typically 4:1 compression in regular workloads.  the setting is not particular to nixos-anywhere (when building remotely), just useful on ram limited machines and in general.   Windows does ram compression by default as does Fedora with zram</p>
+
+
+
+<a name="417568638"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Anywhere/near/417568638" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Anywhere.html#417568638">(Jan 24 2024 at 03:22)</a>:</h4>
+<p>fwiw I also use a cheap RAM limited vps from digitalocean (1G). I haven't yet installed nixos on it (intended to, but I was in a rush at the time).</p>
+<p>Its only use is as a <a href="https://github.com/slackhq/nebula">nebula lighthouse</a> to create a network between some of my personal devices, and it hasn't had any issue since I set it up so I kinda forgot about it.</p>
+<p>Might have to circle back around at some point, if just for usage comparison's sake.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

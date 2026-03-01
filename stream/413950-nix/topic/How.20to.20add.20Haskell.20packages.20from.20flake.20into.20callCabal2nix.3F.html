@@ -1,0 +1,64 @@
+<html>
+<head><meta charset="utf-8"><title>How to add Haskell packages from flake into callCabal2nix? · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20add.20Haskell.20packages.20from.20flake.20into.20callCabal2nix.3F.html">How to add Haskell packages from flake into callCabal2nix?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="472918117"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20add%20Haskell%20packages%20from%20flake%20into%20callCabal2nix%3F/near/472918117" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> LC <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20add.20Haskell.20packages.20from.20flake.20into.20callCabal2nix.3F.html#472918117">(Sep 26 2024 at 15:03)</a>:</h4>
+<ul>
+<li>Hello, I'm trying to develop a haskell project named <code>my-project</code>, and it is relying on a haskell package named <code>some-package</code> from a nix flake named <code>some-flake</code>, but I don't know how to make cabal find it correctly, here is my flake:</li>
+</ul>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    some-flake<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:..."</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> nixpkgs<span class="p">,</span> some-flake<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+  <span class="k">let</span>
+    <span class="ss">project_name</span> <span class="o">=</span> <span class="s2">"my-project"</span><span class="p">;</span>
+    <span class="ss">supportedSystems</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"x86_64-linux"</span> <span class="s2">"aarch64-linux"</span> <span class="s2">"x86_64-darwin"</span> <span class="s2">"aarch64-darwin"</span> <span class="p">];</span>
+    <span class="ss">eachSystem</span> <span class="o">=</span> f<span class="p">:</span> nixpkgs<span class="o">.</span>lib<span class="o">.</span>genAttrs supportedSystems <span class="p">(</span>system<span class="p">:</span> f <span class="k">rec</span> <span class="p">{</span>
+      <span class="k">inherit</span> system<span class="p">;</span>
+      <span class="ss">pkgs</span> <span class="o">=</span> nixpkgs<span class="o">.</span>legacyPackages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="p">;</span>
+      <span class="ss">hpkgs</span> <span class="o">=</span> pkgs<span class="o">.</span>haskell<span class="o">.</span>packages<span class="o">.</span>ghc98<span class="p">;</span>
+    <span class="p">});</span>
+  <span class="k">in</span>
+  <span class="k">rec</span> <span class="p">{</span>
+    <span class="ss">packages</span> <span class="o">=</span> eachSystem <span class="p">({</span>hpkgs<span class="p">,</span> system<span class="p">,</span> <span class="o">...</span><span class="p">}:</span> <span class="p">{</span>
+      <span class="ss">default</span> <span class="o">=</span> hpkgs<span class="o">.</span>callCabal2nix project_name <span class="l">./.</span> <span class="p">{</span>
+        <span class="ss">some-package</span> <span class="o">=</span> some-flake<span class="o">.</span>packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span>default<span class="p">;</span> <span class="c1">#this seems not working</span>
+      <span class="p">};</span>
+    <span class="p">});</span>
+
+    <span class="ss">devShells</span> <span class="o">=</span> eachSystem <span class="p">({</span>pkgs<span class="p">,</span> hpkgs<span class="p">,</span> system<span class="p">,</span> <span class="o">...</span><span class="p">}:</span> <span class="p">{</span>
+      <span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>haskell<span class="o">.</span>lib<span class="o">.</span>addBuildTools packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span>default
+        <span class="p">(</span><span class="k">with</span> hpkgs<span class="p">;</span> <span class="p">[</span> haskell-language-server cabal-install <span class="p">]);</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Any help?</p>
+
+
+
+<a name="473840975"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20add%20Haskell%20packages%20from%20flake%20into%20callCabal2nix%3F/near/473840975" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20add.20Haskell.20packages.20from.20flake.20into.20callCabal2nix.3F.html#473840975">(Sep 30 2024 at 19:58)</a>:</h4>
+<p><span class="user-mention" data-user-id="761060">@LC</span> You want to use the haskell package overlay:</p>
+<p><a href="https://nixos.asia/en/nixify-haskell-nixpkgs">https://nixos.asia/en/nixify-haskell-nixpkgs</a></p>
+
+
+
+<a name="473841163"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/How%20to%20add%20Haskell%20packages%20from%20flake%20into%20callCabal2nix%3F/near/473841163" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/How.20to.20add.20Haskell.20packages.20from.20flake.20into.20callCabal2nix.3F.html#473841163">(Sep 30 2024 at 19:58)</a>:</h4>
+<p>which is simpler when using <code>haskell-flake</code>: <a href="https://community.flake.parts/haskell-flake/dependency#path">https://community.flake.parts/haskell-flake/dependency#path</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

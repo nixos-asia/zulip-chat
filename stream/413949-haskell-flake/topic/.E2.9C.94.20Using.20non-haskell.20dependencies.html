@@ -1,0 +1,111 @@
+<html>
+<head><meta charset="utf-8"><title>✔ Using non-haskell dependencies · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html">✔ Using non-haskell dependencies</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="484907946"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484907946" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484907946">(Nov 28 2024 at 12:15)</a>:</h4>
+<p>Haven’t used pkgconfig-depends before, doesn’t using extra-libraries work?</p>
+
+
+
+<a name="484908483"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484908483" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484908483">(Nov 28 2024 at 12:19)</a>:</h4>
+<p>here’s an example cabal and nix configuration respectively, might be helpful:<br>
+<a href="https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/hs-exp-client/hs-exp-client.cabal#L114-L115">https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/hs-exp-client/hs-exp-client.cabal#L114-L115</a><br>
+<a href="https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/default.nix#L8">https://github.com/juspay/superposition/blob/5b8410ea776a1758309b927ff2ab8b5370774431/clients/haskell/default.nix#L8</a></p>
+
+
+
+<a name="484910479"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484910479" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Perigord <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484910479">(Nov 28 2024 at 12:30)</a>:</h4>
+<p>yeah  just adding<code>libavcodec.custom = _: pkgs.ffmpeg.lib;</code> to <code>settings</code> worked</p>
+
+
+
+<a name="484910493"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/484910493" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#484910493">(Nov 28 2024 at 12:30)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="783564">Perigord</span> has marked this topic as resolved.</p>
+
+
+
+<a name="492102909"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/492102909" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#492102909">(Jan 06 2025 at 13:16)</a>:</h4>
+<p>Hello cool nix people : )</p>
+<p>I'm trying to use a non-haskell dependency and failing. To make it simpler I'm using <code>pkgs.cowsay</code> as the executable I want to run on my haskell code with:</p>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">cowsay</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="kt">String</span>
+<span class="nf">cowsay</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="n">mhout</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">createProcess</span><span class="w"> </span><span class="p">(</span><span class="n">shell</span><span class="w"> </span><span class="p">(</span><span class="s">"cowsay hola"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">std_out</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">CreatePipe</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="kr">case</span><span class="w"> </span><span class="n">mhout</span><span class="w"> </span><span class="kr">of</span>
+<span class="w">    </span><span class="kt">Just</span><span class="w"> </span><span class="n">hout</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">hGetContents</span><span class="w"> </span><span class="n">hout</span>
+<span class="w">    </span><span class="kt">Nothing</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="s">"mhout failed"</span>
+</code></pre></div>
+<p>I've added to the corresponding cabal executable stanza <code>build-tools:  cowsay</code> (also tried with <code>extra-libraries</code> but that just complained of not being a good C library)</p>
+<p>This is my whole flake:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:nixos/nixpkgs"</span><span class="p">;</span>
+    flake-parts<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:hercules-ci/flake-parts"</span><span class="p">;</span>
+    haskell-flake<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:srid/haskell-flake"</span><span class="p">;</span>
+    hvm<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:hhefesto/HVM"</span><span class="p">;</span>
+    <span class="ss">flake-compat</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">url</span> <span class="o">=</span> <span class="s2">"github:edolstra/flake-compat"</span><span class="p">;</span>
+      <span class="ss">flake</span> <span class="o">=</span> <span class="no">false</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> inputs<span class="p">@{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> flake-compat<span class="p">,</span> hvm<span class="p">,</span> flake-parts<span class="p">,</span> haskell-flake<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+    flake-parts<span class="o">.</span>lib<span class="o">.</span>mkFlake <span class="p">{</span> <span class="k">inherit</span> inputs<span class="p">;</span> <span class="p">}</span> <span class="p">{</span>
+      <span class="ss">systems</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"x86_64-linux"</span> <span class="s2">"aarch64-linux"</span> <span class="p">];</span>
+      <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span> inputs<span class="o">.</span>haskell-flake<span class="o">.</span>flakeModule <span class="p">];</span>
+      <span class="ss">perSystem</span> <span class="o">=</span> <span class="p">{</span> self'<span class="p">,</span> system<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+        haskellProjects<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="ss">basePackages</span> <span class="o">=</span> pkgs<span class="o">.</span>haskell<span class="o">.</span>packages<span class="o">.</span>ghc92<span class="p">;</span>
+          <span class="ss">settings</span> <span class="o">=</span> <span class="p">{</span>
+            cowsay<span class="o">.</span><span class="ss">custom</span> <span class="o">=</span> _<span class="p">:</span> pkgs<span class="o">.</span>cowsay<span class="p">;</span>
+            <span class="ss">telomare</span> <span class="o">=</span> <span class="p">{</span>
+              <span class="ss">extraBuildDepends</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>cowsay
+                                  <span class="p">];</span>
+            <span class="p">};</span>
+          <span class="p">};</span>
+          <span class="ss">devShell</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+          <span class="p">};</span>
+      <span class="p">};</span>
+      packages<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> self'<span class="o">.</span>packages<span class="o">.</span>telomare<span class="p">;</span>
+      apps<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="ss">type</span> <span class="o">=</span> <span class="s2">"app"</span><span class="p">;</span>
+        <span class="ss">program</span> <span class="o">=</span> self<span class="o">.</span>packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span>telomare <span class="o">+</span> <span class="s2">"/bin/telomare"</span><span class="p">;</span>
+      <span class="p">};</span>
+
+      apps<span class="o">.</span><span class="ss">repl</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="ss">type</span> <span class="o">=</span> <span class="s2">"app"</span><span class="p">;</span>
+        <span class="ss">program</span> <span class="o">=</span> self<span class="o">.</span>packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span>telomare <span class="o">+</span> <span class="s2">"/bin/telomare-repl"</span><span class="p">;</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>n.b. in <code>settings</code> I've added <code>cowsay.custom = _: pkgs.cowsay;</code> and also tried<code>settings.telomare.extraBuildDepends = [ pkgs.cowsay ];</code> </p>
+<p>To test it you just have to <code>nix run .</code> for the <code>flake-parts</code> branch in <a href="https://github.com/hhefesto/stand-in-language/tree/flake-parts">https://github.com/hhefesto/stand-in-language/tree/flake-parts</a></p>
+<p>Am I doing something wrong?</p>
+
+
+
+<a name="492104382"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/%E2%9C%94%20Using%20non-haskell%20dependencies/near/492104382" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.E2.9C.94.20Using.20non-haskell.20dependencies.html#492104382">(Jan 06 2025 at 13:25)</a>:</h4>
+<p>Forgot to add the error:</p>
+<div class="codehilite"><pre><span></span><code>$ nix run .
+/bin/sh: line 1: cowsay: command not found
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

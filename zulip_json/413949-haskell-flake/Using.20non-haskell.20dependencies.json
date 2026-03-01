@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p><code>sandbox.cabal</code></p>\n<div class=\"codehilite\" data-code-language=\"cabal\"><pre><span></span><code>pkgconfig-depends: libavcodec\n</code></pre></div>\n<p><code>Main.hs</code></p>\n<div class=\"codehilite\" data-code-language=\"Haskell\"><pre><span></span><code><span class=\"nf\">foreign</span><span class=\"w\"> </span><span class=\"kr\">import</span><span class=\"w\"> </span><span class=\"nn\">capi</span><span class=\"w\"> </span><span class=\"s\">\"libavcodec/avcodec.h avcodec_version\"</span>\n<span class=\"w\">  </span><span class=\"n\">c_avcodecVersion</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"kt\">CInt</span>\n</code></pre></div>\n<p>Just wanted to know how I would be able to add C libraries especially using the <code>pkgconfig-depends</code> in cabal.  Currently lost on where to add <code>pkgs.ffmpeg.lib</code> and <code>pkgs.ffmpeg.dev</code>.</p>",
+        "id": 484863718,
+        "sender_full_name": "Perigord",
+        "timestamp": 1732782563
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> has marked this topic as unresolved.</p>",
+        "id": 492113787,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1736173265
+    },
+    {
+        "content": "<p>Hmm, I think we should create a documentation page for this.</p>\n<p>Quick answer: you need <a href=\"https://github.com/search?q=repo%3Asrid%2Femanote+staticWhich&amp;type=code\"><code>staticWhich</code></a> along with <a href=\"https://github.com/search?q=repo%3Asrid%2Femanote+stork+language%3ANix&amp;type=code\"><code>extraBuildDepends</code></a>. You already use the later, just need the former.</p>",
+        "id": 492114048,
+        "sender_full_name": "Srid",
+        "timestamp": 1736173350
+    },
+    {
+        "content": "<p>Thanks, <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> ! I'm a huge fan, btw.</p>\n<p>This worked:</p>\n<div class=\"codehilite\" data-code-language=\"Haskell\"><pre><span></span><code><span class=\"nf\">cowsayBin</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"kt\">FilePath</span>\n<span class=\"nf\">cowsayBin</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"o\">$</span><span class=\"p\">(</span><span class=\"n\">staticWhich</span><span class=\"w\"> </span><span class=\"s\">\"cowsay\"</span><span class=\"p\">)</span>\n\n<span class=\"nf\">cowsay</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"kt\">IO</span><span class=\"w\"> </span><span class=\"kt\">String</span>\n<span class=\"nf\">cowsay</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"kr\">do</span>\n<span class=\"w\">  </span><span class=\"p\">(</span><span class=\"kr\">_</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">mhout</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"kr\">_</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"kr\">_</span><span class=\"p\">)</span><span class=\"w\"> </span><span class=\"ow\">&lt;-</span><span class=\"w\"> </span><span class=\"n\">createProcess</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"n\">shell</span><span class=\"w\"> </span><span class=\"o\">$</span><span class=\"w\"> </span><span class=\"n\">show</span><span class=\"w\"> </span><span class=\"n\">cowsayBin</span><span class=\"w\"> </span><span class=\"o\">&lt;&gt;</span><span class=\"w\"> </span><span class=\"s\">\" hola\"</span><span class=\"p\">)</span><span class=\"w\"> </span><span class=\"p\">{</span><span class=\"w\"> </span><span class=\"n\">std_out</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"kt\">CreatePipe</span><span class=\"w\"> </span><span class=\"p\">}</span>\n<span class=\"w\">  </span><span class=\"kr\">case</span><span class=\"w\"> </span><span class=\"n\">mhout</span><span class=\"w\"> </span><span class=\"kr\">of</span>\n<span class=\"w\">    </span><span class=\"kt\">Just</span><span class=\"w\"> </span><span class=\"n\">hout</span><span class=\"w\"> </span><span class=\"ow\">-&gt;</span><span class=\"w\"> </span><span class=\"n\">hGetContents</span><span class=\"w\"> </span><span class=\"n\">hout</span>\n<span class=\"w\">    </span><span class=\"kt\">Nothing</span><span class=\"w\"> </span><span class=\"ow\">-&gt;</span><span class=\"w\"> </span><span class=\"n\">pure</span><span class=\"w\"> </span><span class=\"s\">\"mhout failed\"</span>\n</code></pre></div>\n<p>Would <a href=\"https://hackage.haskell.org/package/which-0.2.0.2/docs/System-Which.html#v:staticWhichNix\">staticWhichNix</a> be a better fit?</p>\n<p>Is there a reason this way is better? </p>\n<p>On my previous iteration of this flake (not using <code>haskell-flake</code>) I used <code>pkgs.haskell.lib.addBuildDepends</code> <a href=\"https://github.com/hhefesto/stand-in-language/blob/82c42411a840d9d8c17b7fd17147871bd56ab45f/flake.nix#L23\">this way</a> and that worked. Are there advantages to using the <code>which</code> package?</p>\n<p>Thanks again and cheers all the way from Querétaro, México : )</p>",
+        "id": 492178361,
+        "sender_full_name": "Daniel Herrera Rendón",
+        "timestamp": 1736195103
+    },
+    {
+        "content": "<p>Great. Yes, using <code>staticWhich</code> basically hardcodes the full path to the binary at compile time, so it is guaranteed to be available on user's systems. Otherwise, you rely on it being in $PATH.</p>\n<p><code>staticWhichNix</code> is the same, but expects it to to be in Nix store, thus limiting your software to work only on Nix</p>",
+        "id": 492179104,
+        "sender_full_name": "Srid",
+        "timestamp": 1736195366
+    },
+    {
+        "content": "<p>Its implementation is simple enough to see what's going on: <a href=\"https://hackage.haskell.org/package/which-0.2.0.2/docs/src/System.Which.html#staticWhichNix\">https://hackage.haskell.org/package/which-0.2.0.2/docs/src/System.Which.html#staticWhichNix</a></p>",
+        "id": 492179277,
+        "sender_full_name": "Srid",
+        "timestamp": 1736195421
+    },
+    {
+        "content": "<p>I retract what I said about it working with <code>pkgs.haskell.lib.addBuildDepends</code>. I thought it did because I had no errors, but that was because I wasn't using it at all. I also had to use the <code>which</code> package to make it work on my previous flake iteration.</p>",
+        "id": 492180480,
+        "sender_full_name": "Daniel Herrera Rendón",
+        "timestamp": 1736195847
+    },
+    {
+        "content": "<p>Hello!<br>\nWhat about packages that aren't mine (i.e. from a package I imported: <code>postgresql-simple</code>) and also need external non-haskell dependencies.</p>\n<p>In this case <code>postgresql-libpq</code> needs <code>pg_config</code> which is provided by <code>postgresql_17</code>.</p>\n<p>The error is:</p>\n<div class=\"codehilite\"><pre><span></span><code>       &gt; Error: [Cabal-6666]\n       &gt; The program &#39;pg_config&#39; is required but it could not be found.\n</code></pre></div>\n<p>And just adding <code>haskellProjects.default.settings.postgresql-libpq.extraBuildDepends = [ pkgs.postgresql_17 ];</code></p>\n<p>Also doesn't work with <code>extraBuildTools</code>.</p>",
+        "id": 516242293,
+        "sender_full_name": "Daniel Herrera Rendón",
+        "timestamp": 1746461603
+    },
+    {
+        "content": "<p>Weirdly I used a flake.lock that's about a month old and that seems to have fixed things. I'll report back if I get the problem again.</p>",
+        "id": 516255417,
+        "sender_full_name": "Daniel Herrera Rendón",
+        "timestamp": 1746464820
+    }
+]

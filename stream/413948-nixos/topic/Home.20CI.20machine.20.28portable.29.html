@@ -1,0 +1,299 @@
+<html>
+<head><meta charset="utf-8"><title>Home CI machine (portable) · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html">Home CI machine (portable)</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="422415894"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422415894" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422415894">(Feb 20 2024 at 13:20)</a>:</h4>
+<p>For macOS builds, the answer to what "the simplest and space efficient &amp; portable way to setup a CI machine at home" is clearly the Mac Mini.</p>
+<p>What would be the answer for x86 Linux (NixOS) builds? Is there an equivalent hardware? I'd like to move away from Hetzner Dedicated to something hosted at home. </p>
+<p>cc <span class="user-mention" data-user-id="679006">@Tim DeHerrera</span> <span class="user-mention" data-user-id="669081">@Shivaraj B H</span></p>
+
+
+
+<a name="422416151"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422416151" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422416151">(Feb 20 2024 at 13:21)</a>:</h4>
+<p>Note: 'portable' as in I can throw it all in an international-flight allowed luggage.</p>
+
+
+
+<a name="422447076"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422447076" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422447076">(Feb 20 2024 at 15:51)</a>:</h4>
+<p>I have only experience of self-hosting a raspberry pi model 4 and an old ASUS fx503vd laptop of mine. I host DNS server, password manager, file syncing service and a reverse proxy on my pi. I use the Asus laptop to play around with GitHub runners.</p>
+
+
+
+<a name="422447195"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422447195" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422447195">(Feb 20 2024 at 15:51)</a>:</h4>
+<p>I am looking for a portable Linux box as well, in the same form factor as the Mac mini</p>
+
+
+
+<a name="422447905"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422447905" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422447905">(Feb 20 2024 at 15:55)</a>:</h4>
+<p>For portability, I tend to carry around the SSD, I got an SSD enclosure that supports upto 10gbps of transfer speeds if I want to carry only the data around. I am still yet to play around with encrypting the disk for security and hardware RAID for redundancy</p>
+
+
+
+<a name="422469515"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422469515" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422469515">(Feb 20 2024 at 17:41)</a>:</h4>
+<p>Have you looked at intel's NUC boxes? Some of those have fairly decent compute and are basically the same size as a mac mini.</p>
+
+
+
+<a name="422469888"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422469888" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422469888">(Feb 20 2024 at 17:44)</a>:</h4>
+<p>Interesting, I think I'll buy one of those NUCs.</p>
+
+
+
+<a name="422470540"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422470540" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422470540">(Feb 20 2024 at 17:48)</a>:</h4>
+<p><a href="/user_uploads/60244/it8HDgRMGEgrsmVSxQmTp6fb/66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg">66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/it8HDgRMGEgrsmVSxQmTp6fb/66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg" title="66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg"><img src="/user_uploads/60244/it8HDgRMGEgrsmVSxQmTp6fb/66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg"></a></div>
+
+
+
+<a name="422470560"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422470560" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422470560">(Feb 20 2024 at 17:48)</a>:</h4>
+<p>Great, I am getting one as well</p>
+
+
+
+<a name="422470635"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422470635" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422470635">(Feb 20 2024 at 17:49)</a>:</h4>
+<p>Oh wait, let me see if I can even buy this in India <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="422470840"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422470840" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422470840">(Feb 20 2024 at 17:50)</a>:</h4>
+<p>Okay, I can.</p>
+
+
+
+<a name="422471003"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422471003" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422471003">(Feb 20 2024 at 17:51)</a>:</h4>
+<p>Which NUC will you be getting?</p>
+
+
+
+<a name="422471656"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422471656" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422471656">(Feb 20 2024 at 17:55)</a>:</h4>
+<p>Intel NUC 13 pro is what I was thinking</p>
+
+
+
+<a name="422471668"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422471668" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422471668">(Feb 20 2024 at 17:55)</a>:</h4>
+<p><a href="https://amzn.eu/d/bTINAUA">https://amzn.eu/d/bTINAUA</a></p>
+
+
+
+<a name="422472498"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422472498" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422472498">(Feb 20 2024 at 18:00)</a>:</h4>
+<p>This looks like barebones configuration without memory/SSD?</p>
+<p>I'm looking at the same, but with memory/SSD installed: <a href="https://www.amazon.ca/Canyon-i5-1340P-Support-Thunderbolt-Windows/dp/B0CC2P1TVH/">https://www.amazon.ca/Canyon-i5-1340P-Support-Thunderbolt-Windows/dp/B0CC2P1TVH/</a></p>
+<p>Though it makes sense to get the barebones one and install whatever you need on top.</p>
+
+
+
+<a name="422472708"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422472708" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422472708">(Feb 20 2024 at 18:01)</a>:</h4>
+<p>Yeah, I want to swap stuff based on need</p>
+
+
+
+<a name="422473928"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422473928" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422473928">(Feb 20 2024 at 18:08)</a>:</h4>
+<p>NUCs are dead?</p>
+<blockquote>
+<p>The popular Intel NUC Mini PCs were to be scrapped - an austerity measure that was necessary after Intel's mounting losses. The processor giant has now reached an agreement with Asus to continue manufacturing existing NUC models and to develop new mini PCs. <a href="https://www.notebookcheck.com/Intel-NUC-Mini-PCs-werden-kuenftig-von-Asus-entwickelt-und-vertrieben.735057.0.html">https://www.notebookcheck.com/Intel-NUC-Mini-PCs-werden-kuenftig-von-Asus-entwickelt-und-vertrieben.735057.0.html</a></p>
+</blockquote>
+
+
+
+<a name="422474009"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422474009" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422474009">(Feb 20 2024 at 18:09)</a>:</h4>
+<p>That's a German article, but I learned of it from <a href="https://www.notebookcheck.net/Intel-NUC-13-Pro-Kit-Vivid-Canyon-review-The-last-Intel-NUC-has-a-new-case-and-a-Core-i7-1360P.741490.0.html">this English one</a></p>
+
+
+
+<a name="422474020"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422474020" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422474020">(Feb 20 2024 at 18:09)</a>:</h4>
+<p>Huh, well you can still buy them on Amazon for now at least <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="422474088"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422474088" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422474088">(Feb 20 2024 at 18:09)</a>:</h4>
+<p>I wish the world switched to ARM, then I can just run a Linux VM on my arm Mac.</p>
+
+
+
+<a name="422474399"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422474399" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422474399">(Feb 20 2024 at 18:11)</a>:</h4>
+<p>Well, it is really easy to setup an x86 NixOS box to emulate arm at least. I know that's the opposite of what you want though <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="422475164"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422475164" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422475164">(Feb 20 2024 at 18:15)</a>:</h4>
+<p>I am thinking that the NUC is a little too expensive for only the CPU, ports and the box. I might go scavenging in the local market nearby, see if I can find something cheap</p>
+
+
+
+<a name="422476776"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422476776" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422476776">(Feb 20 2024 at 18:25)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="679006">Tim DeHerrera</span> <a href="#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422474399">said</a>:</p>
+<blockquote>
+<p>Well, it is really easy to setup an x86 NixOS box to emulate arm at least. I know that's the opposite of what you want though <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+</blockquote>
+<p>You know what I am thinking? Just get a Mac Studio and setup a x86 Linux VM on it providing Linux CI.</p>
+<p>But if I'm going with that option, I should probably just wait for the M3 studio in <a href="https://www.macrumors.com/roundup/mac-studio/#whats_next_for_the_mac_studio">second half of this year</a>.</p>
+
+
+
+<a name="422477027"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422477027" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422477027">(Feb 20 2024 at 18:27)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422475164">said</a>:</p>
+<blockquote>
+<p>I am thinking that the NUC is a little too expensive for only the CPU, ports and the box. I might go scavenging in the local market nearby, see if I can find something cheap</p>
+</blockquote>
+<p>You will find cheaper alternative. I found some in Canada,</p>
+<ul>
+<li>12th gen, <a href="https://www.amazon.ca/KAMRUI-Windows-Ethernet-Business-Computer/dp/B0BS8DDNG4/">https://www.amazon.ca/KAMRUI-Windows-Ethernet-Business-Computer/dp/B0BS8DDNG4/</a></li>
+<li>AMD: <a href="https://www.amazon.ca/Beelink-Versatile-Computer-Desktop-Display/dp/B0B1DBVXY1/">https://www.amazon.ca/Beelink-Versatile-Computer-Desktop-Display/dp/B0B1DBVXY1/</a></li>
+</ul>
+
+
+
+<a name="422477280"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422477280" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422477280">(Feb 20 2024 at 18:29)</a>:</h4>
+<p>Yes, I was also considering getting all teh parts separately and assembling myself.</p>
+<p>I am literally getting i5 13th gen 14 core CPU for half the price of what the NUC with 12 core variant costed.</p>
+
+
+
+<a name="422477469"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422477469" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422477469">(Feb 20 2024 at 18:30)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422476776">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="679006">Tim DeHerrera</span> <a href="#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422474399">said</a>:</p>
+<blockquote>
+<p>Well, it is really easy to setup an x86 NixOS box to emulate arm at least. I know that's the opposite of what you want though <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+</blockquote>
+<p>You know what I am thinking? Just get a Mac Studio and setup a x86 Linux VM on it providing Linux CI.</p>
+<p>But if I'm going with that option, I should probably just wait for the M3 studio in <a href="https://www.macrumors.com/roundup/mac-studio/#whats_next_for_the_mac_studio">second half of this year</a>.</p>
+</blockquote>
+<p>I'll try this in the meanwhile: repurpose my M1 Max (macbook pro) to run intel x86 VM providing CI for my github projects, in addition to having a native macOS runner (maybe in a VM too) providing macOS CI for the same projects. If nothing else, it would put a good use of my  mostly unused 64GB of RAM and CPU cycles.</p>
+
+
+
+<a name="422482237"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422482237" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422482237">(Feb 20 2024 at 18:59)</a>:</h4>
+<p>Actually I don't even need a separate VM for it. Just use the arm NixOS VM, and setup <code>boot.binfmt.emulatedSystems</code>. Then I can build for intel using <code>--option system</code>. Parallels allows the use of rosetta somehow.</p>
+<p><a href="/user_uploads/60244/sV6ubCtJTuAjdOrkTV9Tti3p/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/sV6ubCtJTuAjdOrkTV9Tti3p/image.png" title="image.png"><img src="/user_uploads/60244/sV6ubCtJTuAjdOrkTV9Tti3p/image.png"></a></div>
+
+
+
+<a name="422484121"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422484121" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422484121">(Feb 20 2024 at 19:08)</a>:</h4>
+<p>The linux-builder in nix-darwin would streamline it even further,</p>
+<p><a href="https://nixcademy.com/2024/02/12/macos-linux-builder/">https://nixcademy.com/2024/02/12/macos-linux-builder/</a></p>
+<p>However, it:</p>
+<ul>
+<li>does not support rosetta</li>
+<li>does not build packages with IFD</li>
+</ul>
+
+
+
+<a name="422485373"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422485373" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422485373">(Feb 20 2024 at 19:13)</a>:</h4>
+<p>What is the overhead of running parallels NixOS VM? Running a qemu NixOS VM consumes additional 600 MB RAM (on my M1 Pro Mac) to keep the VM running, didn’t check the CPU usage though</p>
+
+
+
+<a name="422486439"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422486439" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422486439">(Feb 20 2024 at 19:21)</a>:</h4>
+<p>~850 MB</p>
+
+
+
+<a name="422486708"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422486708" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422486708">(Feb 20 2024 at 19:23)</a>:</h4>
+<p>(That's the total usage, not just overhead, as NixOS boots up)</p>
+
+
+
+<a name="422487830"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422487830" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422487830">(Feb 20 2024 at 19:30)</a>:</h4>
+<p>yeah the binfmt.emulatedSystems is what I was referring to. As for VM overhead I am currently using <a href="https://astro.github.io/microvm.nix/">https://astro.github.io/microvm.nix/</a>.</p>
+<p>The cloud-hypervisor instance I'm running seems to reserve all the memory I allocated for the machine up front, but I believe there are ways to configure it so that it doesn't do that. According to this post though, the memory overhead should be miniscule:<br>
+<a href="https://github.com/cloud-hypervisor/cloud-hypervisor/issues/1729#issuecomment-1158573430">https://github.com/cloud-hypervisor/cloud-hypervisor/issues/1729#issuecomment-1158573430</a></p>
+
+
+
+<a name="422873412"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/422873412" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#422873412">(Feb 22 2024 at 18:00)</a>:</h4>
+<p>A message was moved from this topic to <a class="stream-topic" data-stream-id="413948" href="/#narrow/stream/413948-nixos/topic/Darwin.27s.20linux-builder">#nixos &gt; Darwin's linux-builder</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="423472967"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/423472967" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#423472967">(Feb 26 2024 at 19:55)</a>:</h4>
+<p>for portable home CI (linux), I am planning to assemble myself. I will be using mini-itx motherboard for mac-mini like form factor.<br>
+This guy on youtube has some pretty cool builds: <a href="https://www.youtube.com/watch?v=WN6DUjML8Eo">https://www.youtube.com/watch?v=WN6DUjML8Eo</a></p>
+<div class="youtube-video message_inline_image"><a data-id="WN6DUjML8Eo" href="https://www.youtube.com/watch?v=WN6DUjML8Eo"><img src="https://uploads.zulipusercontent.net/c2a8b4765104e3dd54d3a109d640514ac3d9eae0/68747470733a2f2f692e7974696d672e636f6d2f76692f574e3644556a4d4c38456f2f64656661756c742e6a7067"></a></div>
+
+
+
+<a name="423488452"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/423488452" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#423488452">(Feb 26 2024 at 21:41)</a>:</h4>
+<p>Take pictures along the way for a great blog post.</p>
+
+
+
+<a name="423653527"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/423653527" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#423653527">(Feb 27 2024 at 16:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/423472967">said</a>:</p>
+<blockquote>
+<p>This guy on youtube has some pretty cool builds: <a href="https://www.youtube.com/watch?v=WN6DUjML8Eo">https://www.youtube.com/watch?v=WN6DUjML8Eo</a></p>
+</blockquote>
+<p>That looks very portable indeed!</p>
+
+
+
+<a name="423751250"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/423751250" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#423751250">(Feb 28 2024 at 05:48)</a>:</h4>
+<p><a href="/user_uploads/60244/cDpL777nyw1WiYKRexGHSmL3/1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg">1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/cDpL777nyw1WiYKRexGHSmL3/1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg" title="1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg"><img src="/user_uploads/60244/cDpL777nyw1WiYKRexGHSmL3/1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg"></a></div><p>Got my mac mini to self-host CI and other misc. stuff. Next up, linux build that I spoke of earlier. That might take a while though, temporarily I will use another rog strix laptop I got with i9 13th gen and 3070ti. </p>
+<p>Only problem is power consumption, I will try to hack my way through to have something like WOL for mac mini and also on the rog strix for now.</p>
+
+
+
+<a name="423795568"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/423795568" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#423795568">(Feb 28 2024 at 11:08)</a>:</h4>
+<blockquote>
+<p>Only problem is power consumption</p>
+</blockquote>
+<p>I power expensive where you live? In any case it is hard to beat the Mac Mini when you put in a dedicated GPU I guess...</p>
+
+
+
+<a name="423795819"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Home%20CI%20machine%20%28portable%29/near/423795819" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29.html#423795819">(Feb 28 2024 at 11:09)</a>:</h4>
+<p>It’s not expensive, but I like to be efficient <span aria-label="laughing" class="emoji emoji-1f606" role="img" title="laughing">:laughing:</span></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

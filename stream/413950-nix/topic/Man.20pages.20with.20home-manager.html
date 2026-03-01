@@ -1,0 +1,91 @@
+<html>
+<head><meta charset="utf-8"><title>Man pages with home-manager · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html">Man pages with home-manager</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="417622530"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/417622530" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Drew Jose <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#417622530">(Jan 24 2024 at 11:07)</a>:</h4>
+<p>Got inspired to finally try out the flake life after yesterday's talk. Problem is, all manpages from other packages not installed by nix (like ld) are not available anymore. Is there a package for man pages, or a setting in home manager I can use?</p>
+
+
+
+<a name="417693487"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/417693487" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#417693487">(Jan 24 2024 at 17:26)</a>:</h4>
+<p>man pages should generally be available if the package in question includes them.</p>
+<p>Using <a href="https://github.com/juspay/nix-dev-home">https://github.com/juspay/nix-dev-home</a>, I can see that both <code>fd</code> and <code>ripgrep</code> has them. Try:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>$<span class="w"> </span>man<span class="w"> </span>fd
+$<span class="w"> </span>man<span class="w"> </span>rg
+</code></pre></div>
+<p><a href="/user_uploads/60244/PlWfhP-lDber9HO32vdTZZBD/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/PlWfhP-lDber9HO32vdTZZBD/image.png" title="image.png"><img src="/user_uploads/60244/PlWfhP-lDber9HO32vdTZZBD/image.png"></a></div>
+
+
+
+<a name="417693665"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/417693665" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#417693665">(Jan 24 2024 at 17:27)</a>:</h4>
+<p>Incidentally, there's a module for <code>man</code> in home-manager: <code>programs.main</code>: <a href="https://github.com/nix-community/home-manager/blob/master/modules/programs/man.nix">https://github.com/nix-community/home-manager/blob/master/modules/programs/man.nix</a></p>
+
+
+
+<a name="417694504"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/417694504" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#417694504">(Jan 24 2024 at 17:32)</a>:</h4>
+<p>Oh I misunderstood your question. You mean for packages <em>not</em> installed by Nix. Do you have an example?</p>
+
+
+
+<a name="417694649"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/417694649" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#417694649">(Jan 24 2024 at 17:33)</a>:</h4>
+<p>I can access ld's man page on macOS:</p>
+<div class="codehilite"><pre><span></span><code>❯ man -d ld
+-- Using pager: /usr/bin/less -s
+-- Using manual sections: 1:8:2:3:3lua:n:4:5:6:7:9:l
+-- Searching PATH for man directories
+--   Adding /usr/local/share/man to manpath
+--   Adding /usr/share/man to manpath
+--   Adding /etc/profiles/per-user/srid/share/man to manpath
+--   Adding /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/share/man to manpath
+--   Adding /Applications/Xcode.app/Contents/Developer/usr/share/man to manpath
+--   Adding /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man to manpath
+-- Adding default manpath entries
+-- Parsing config file: /etc/man.conf
+-- Using manual path: /usr/local/share/man:/usr/share/man:/etc/profiles/per-user/srid/share/man:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/share/man:/Applications/Xcode.app/Contents/Developer/usr/share/man:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man
+-- Using locale paths: en_CA.UTF-8:en.UTF-8:.
+-- Using non-standard page width: 242
+-- Searching for ld
+--     Found manpage /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man/man1/ld.1
+--     Skipping catpage: non-standard page width
+-- Command: cd /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man &amp;&amp; /usr/bin/zcat -f &quot;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man/man1/ld.1&quot; | /usr/bin/mandoc -O width=242 | /usr/bin/less -s
+</code></pre></div>
+
+
+
+<a name="418007757"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/418007757" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Drew Jose <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#418007757">(Jan 25 2024 at 04:34)</a>:</h4>
+<p>I get a large stderr output when invoking <code>man -d ld</code>:<br>
+<a href="/user_uploads/60244/qwR3JQKmuNdTAC82JQwjm1EI/out.txt">out.txt</a></p>
+
+
+
+<a name="418007811"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/418007811" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#418007811">(Jan 25 2024 at 04:35)</a>:</h4>
+<p>Out of curiosity, what's the output of <code>nix run nixpkgs#nix-health</code>?</p>
+
+
+
+<a name="418007888"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Man%20pages%20with%20home-manager/near/418007888" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Man.20pages.20with.20home-manager.html#418007888">(Jan 25 2024 at 04:36)</a>:</h4>
+<p>Your output shows a lot of,</p>
+<div class="codehilite"><pre><span></span><code>can&#39;t open directory /nix/store/rj8w6wj160k1sblhjp5fsgjbfz3si51w-home-manager-path/share/man/cat3.Z: No such file or directory
+</code></pre></div>
+<p>Which indicates that something's wrong</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

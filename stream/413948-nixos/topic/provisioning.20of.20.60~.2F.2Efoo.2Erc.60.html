@@ -1,0 +1,45 @@
+<html>
+<head><meta charset="utf-8"><title>provisioning of `~/.foo.rc` · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/provisioning.20of.20.60~.2F.2Efoo.2Erc.60.html">provisioning of `~/.foo.rc`</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="535655487"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/provisioning%20of%20%60~/.foo.rc%60/near/535655487" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> eshep <a href="http://chat.nixos.asia/stream/413948-nixos/topic/provisioning.20of.20.60~.2F.2Efoo.2Erc.60.html#535655487">(Aug 22 2025 at 10:31)</a>:</h4>
+<p>What is the proper way to add various text files to any/all <code>$HOME</code> directories on rebuild?</p>
+<p>Is it possible to do something similar to <code>home.file.".foo.rc".text</code> without Home Manager?</p>
+
+
+
+<a name="535706439"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/provisioning%20of%20%60~/.foo.rc%60/near/535706439" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/provisioning.20of.20.60~.2F.2Efoo.2Erc.60.html#535706439">(Aug 22 2025 at 15:24)</a>:</h4>
+<p>What's the <a href="https://xyproblem.info/">X</a>?</p>
+<p>There's also <code>environment.etc</code> if you are okay with putting them in /etc</p>
+
+
+
+<a name="535777934"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/provisioning%20of%20%60~/.foo.rc%60/near/535777934" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> eshep <a href="http://chat.nixos.asia/stream/413948-nixos/topic/provisioning.20of.20.60~.2F.2Efoo.2Erc.60.html#535777934">(Aug 23 2025 at 03:08)</a>:</h4>
+<p><code>environment.etc</code> works for some things, yes.  but for programs that don't look there, or if I wanted <code>/etc/foo.rc</code> to be copied to <code>$HOME/foo.rc</code> as a default config; I've not yet been able to work out any way to do it other than using HM</p>
+
+
+
+<a name="540748966"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/provisioning%20of%20%60~/.foo.rc%60/near/540748966" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/provisioning.20of.20.60~.2F.2Efoo.2Erc.60.html#540748966">(Sep 22 2025 at 09:18)</a>:</h4>
+<p>Perhaps: <a href="https://viperml.github.io/nix-maid/">https://viperml.github.io/nix-maid/</a></p>
+
+
+
+<a name="543664473"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/provisioning%20of%20%60~/.foo.rc%60/near/543664473" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> eshep <a href="http://chat.nixos.asia/stream/413948-nixos/topic/provisioning.20of.20.60~.2F.2Efoo.2Erc.60.html#543664473">(Oct 08 2025 at 05:51)</a>:</h4>
+<p>this might be as close as I'm gonna get, thank you</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

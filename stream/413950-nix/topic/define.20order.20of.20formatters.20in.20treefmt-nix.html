@@ -1,0 +1,33 @@
+<html>
+<head><meta charset="utf-8"><title>define order of formatters in treefmt-nix · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/define.20order.20of.20formatters.20in.20treefmt-nix.html">define order of formatters in treefmt-nix</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="432477894"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/define%20order%20of%20formatters%20in%20treefmt-nix/near/432477894" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/define.20order.20of.20formatters.20in.20treefmt-nix.html#432477894">(Apr 10 2024 at 11:04)</a>:</h4>
+<p>Is it possible to define a <code>depends-on</code> relation for a formatter, like running <code>stylish-haskell</code> should depend on <code>ormolu</code> having been executed?</p>
+<p>FYI <span class="user-mention" data-user-id="704449">@Abhishek Yadav</span></p>
+
+
+
+<a name="432637493"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/define%20order%20of%20formatters%20in%20treefmt-nix/near/432637493" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/define.20order.20of.20formatters.20in.20treefmt-nix.html#432637493">(Apr 11 2024 at 06:43)</a>:</h4>
+<p>Similar to <a href="https://github.com/cachix/git-hooks.nix/issues/250">https://github.com/cachix/git-hooks.nix/issues/250</a> but for <code>treefmt-nix</code>.</p>
+<p>Maybe this: <a href="https://github.com/numtide/treefmt/issues/77">https://github.com/numtide/treefmt/issues/77</a></p>
+
+
+
+<a name="432678324"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/define%20order%20of%20formatters%20in%20treefmt-nix/near/432678324" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/define.20order.20of.20formatters.20in.20treefmt-nix.html#432678324">(Apr 11 2024 at 10:55)</a>:</h4>
+<p>There is also another option to write a custom formatter that will run the dependent formatters sequentially</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

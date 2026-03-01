@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>what is `toDefinedProject`? · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F.html">what is `toDefinedProject`?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="426336965"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/what%20is%20%60toDefinedProject%60%3F/near/426336965" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F.html#426336965">(Mar 13 2024 at 13:13)</a>:</h4>
+<p>As far as I can see, both <code>local.toCurrentProject</code> and <code>local.toDefinedProject</code> call the same function, only at different times. But I don’t seem to wrap my head around when <code>toDefinedProject</code> must be true.<br>
+In my  observation, it is true when a haskell package gets its source from <code>inputs</code> but it is not from <code>cabal.project</code> (which makes it non-local).</p>
+
+
+
+<a name="426337174"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/what%20is%20%60toDefinedProject%60%3F/near/426337174" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F.html#426337174">(Mar 13 2024 at 13:14)</a>:</h4>
+<p>when would this information be useful?</p>
+
+
+
+<a name="426347484"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/what%20is%20%60toDefinedProject%60%3F/near/426347484" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F.html#426347484">(Mar 13 2024 at 14:04)</a>:</h4>
+<p>Maybe now I get it, <code>toDefinedProject</code> is true if a project that you are importing is also defined using <code>haskell-flake</code>.</p>
+
+
+
+<a name="426354361"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/what%20is%20%60toDefinedProject%60%3F/near/426354361" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F.html#426354361">(Mar 13 2024 at 14:37)</a>:</h4>
+<p><span class="user-mention" data-user-id="669081">@Shivaraj B H</span> They are described in the option docs <a href="https://github.com/srid/haskell-flake/blob/02c71dfb51ca9f6bd1ee56435e32b9aae491e85c/nix/modules/project/packages/package.nix#L53-L74">here</a></p>
+
+
+
+<a name="426354509"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/what%20is%20%60toDefinedProject%60%3F/near/426354509" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F.html#426354509">(Mar 13 2024 at 14:37)</a>:</h4>
+<p>(But they are not visible in <a href="https://flake.parts/options/haskell-flake">https://flake.parts/options/haskell-flake</a> due to <a href="https://github.com/srid/haskell-flake/issues/272">https://github.com/srid/haskell-flake/issues/272</a> )</p>
+
+
+
+<a name="426354714"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/what%20is%20%60toDefinedProject%60%3F/near/426354714" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F.html#426354714">(Mar 13 2024 at 14:38)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F/near/426354361">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> They are described in the option docs <a href="https://github.com/srid/haskell-flake/blob/02c71dfb51ca9f6bd1ee56435e32b9aae491e85c/nix/modules/project/packages/package.nix#L53-L74">here</a></p>
+</blockquote>
+<p>Feel free to improve the <code>description</code> if you think that will be more clear.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,92 @@
+<html>
+<head><meta charset="utf-8"><title>Match syntax · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html">Match syntax</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="476588554"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476588554" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476588554">(Oct 13 2024 at 08:23)</a>:</h4>
+<p>I just decided on this syntax for match-case:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="k">if</span> <span class="l">&lt;expr&gt;</span> is
+  <span class="l">&lt;pat&gt;</span> <span class="k">then</span> <span class="l">&lt;expr&gt;</span><span class="p">,</span>
+  <span class="l">&lt;pat&gt;</span> <span class="k">then</span> <span class="l">&lt;expr&gt;</span><span class="p">,</span>
+  <span class="k">else</span> <span class="l">&lt;expr&gt;</span>
+</code></pre></div>
+
+
+
+<a name="476588730"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476588730" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476588730">(Oct 13 2024 at 08:26)</a>:</h4>
+<p>Since patterns will be able to have expressions in them for things like type checking (<code>&lt;pat&gt; :: &lt;expr&gt;</code>, same as just <code>&lt;pat&gt;</code> but with <code>and &lt;expr&gt;.check &lt;pat-bind&gt;</code>) and conditionals <code>&lt;pat&gt; and &lt;expr&gt;</code> you won't need to hard code an if into the match-case</p>
+
+
+
+<a name="476610543"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476610543" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476610543">(Oct 13 2024 at 14:30)</a>:</h4>
+<p>interesting, could you maybe give a few concrete examples to demonstrate to help grok?</p>
+
+
+
+<a name="476675531"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476675531" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476675531">(Oct 14 2024 at 04:33)</a>:</h4>
+<p><a href="https://dl.acm.org/doi/pdf/10.1145/3689746">https://dl.acm.org/doi/pdf/10.1145/3689746</a> inspired from this</p>
+
+
+
+<a name="476675667"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476675667" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476675667">(Oct 14 2024 at 04:35)</a>:</h4>
+<p>I was thinking of this earlier but I hadn't thought of using a different keyword after if to do a match. My initial idea was just</p>
+<div class="codehilite" data-code-language="Rust"><pre><span></span><code><span class="k">match</span><span class="w"> </span><span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span><span class="w"> </span><span class="n">with</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="n">pat</span><span class="o">&gt;</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="n">pat</span><span class="o">&gt;</span><span class="w"> </span><span class="n">then</span><span class="w"> </span><span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span>
+</code></pre></div>
+
+
+
+<a name="476675703"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476675703" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476675703">(Oct 14 2024 at 04:35)</a>:</h4>
+<p>This only replaces match-with with if-is</p>
+
+
+
+<a name="476675851"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476675851" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476675851">(Oct 14 2024 at 04:37)</a>:</h4>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">concatString</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="n">s</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">string</span><span class="kt">:</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="n">is</span>
+<span class="w">    </span><span class="n">xs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">insert</span><span class="w"> </span><span class="p">`</span><span class="o">+</span><span class="p">`</span><span class="w"> </span><span class="n">xs</span><span class="p">,</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</code></pre></div>
+
+
+
+<a name="476677843"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/476677843" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#476677843">(Oct 14 2024 at 05:00)</a>:</h4>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">insert</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="n">f</span><span class="kt">:</span><span class="w"> </span><span class="nf">\</span><span class="n">xs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">list</span><span class="kt">:</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="n">is</span>
+<span class="w">    </span><span class="kt">[]</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">throw</span><span class="w"> </span><span class="s">"cannot insert with zero items"</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">insert</span><span class="w"> </span><span class="n">xs</span><span class="p">;</span>
+
+<span class="nf">toString</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="n">x</span><span class="kt">:</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">is</span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">s</span><span class="p">,</span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">numberToString</span><span class="w"> </span><span class="n">n</span><span class="p">,</span>
+<span class="w">    </span><span class="n">xs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">insert</span><span class="w"> </span><span class="p">`</span><span class="o">+</span><span class="p">`</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="n">toString</span><span class="w"> </span><span class="n">xs</span><span class="p">;</span>
+</code></pre></div>
+
+
+
+<a name="479075091"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/Match%20syntax/near/479075091" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/Match.20syntax.html#479075091">(Oct 26 2024 at 19:52)</a>:</h4>
+<p>Update on this: <code>if is</code> won't have <code>else</code>, as that's a duplicate of <code>_ then</code> at the end (like in Rust)</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

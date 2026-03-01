@@ -1,0 +1,114 @@
+<html>
+<head><meta charset="utf-8"><title>Passing arguments to flake · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html">Passing arguments to flake</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="407602779"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407602779" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407602779">(Dec 13 2023 at 01:14)</a>:</h4>
+<p>I am taking inspiration from nix-systems work, but am struggling. </p>
+<p>I am trying to use a similar format to define user names, and host names so that I can pass them in as flake inputs and reference in all files as such.</p>
+<p>I have tried with local and remote files and flakes, but am not sure how to get the string out.</p>
+
+
+
+<a name="407603056"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407603056" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407603056">(Dec 13 2023 at 01:16)</a>:</h4>
+<p>I think you are looking for: <a href="https://github.com/NixOS/nix/issues/5663">https://github.com/NixOS/nix/issues/5663</a></p>
+<p>Right now, only the nix-systems approach is possible.</p>
+
+
+
+<a name="407603288"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407603288" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407603288">(Dec 13 2023 at 01:17)</a>:</h4>
+<p><a href="https://discourse.nixos.org/t/flake-how-to-have-a-literal-value-input-no-url-file-path/36035">https://discourse.nixos.org/t/flake-how-to-have-a-literal-value-input-no-url-file-path/36035</a></p>
+
+
+
+<a name="407603590"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407603590" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407603590">(Dec 13 2023 at 01:19)</a>:</h4>
+<p>I am following the nix-systems approach, but replacing system name with other names.</p>
+
+
+
+<a name="407603959"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407603959" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407603959">(Dec 13 2023 at 01:21)</a>:</h4>
+<p>I access system fine as a value, but if I try to access host, no bueno. I keep getting this is a set, not a string errors. And don't know how to get value as a string</p>
+
+
+
+<a name="407604172"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407604172" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407604172">(Dec 13 2023 at 01:22)</a>:</h4>
+<p>For example if I try something like ${hosts} = nixpkgs.lib.nixosSystem {}</p>
+
+
+
+<a name="407604316"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407604316" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407604316">(Dec 13 2023 at 01:23)</a>:</h4>
+<p>Where hosts is an input hosts.url = "path:./hosts.nix;<br>
+hosts.flake = false;</p>
+
+
+
+<a name="407604453"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407604453" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407604453">(Dec 13 2023 at 01:24)</a>:</h4>
+<p>And hosts.nix contains ["hostname"]</p>
+
+
+
+<a name="407604524"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407604524" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407604524">(Dec 13 2023 at 01:24)</a>:</h4>
+<p>I have tried mixing up hosts.nix format as well, and also making it a flake in a gitlab repo (I get same error)</p>
+
+
+
+<a name="407604695"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407604695" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407604695">(Dec 13 2023 at 01:25)</a>:</h4>
+<p>I have tried inheriting and importing hosts as well</p>
+
+
+
+<a name="407605282"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407605282" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407605282">(Dec 13 2023 at 01:29)</a>:</h4>
+<p>Is there a way to reproduce your problem? Difficult to help without seeing full context.</p>
+
+
+
+<a name="407605743"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407605743" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407605743">(Dec 13 2023 at 01:32)</a>:</h4>
+<p>No, I think I understand why now. <br>
+You can see current commit here which is a bad attempt: <a href="https://gitlab.com/stephenandary/flakes/-/tree/flakes/machines?ref_type=heads">https://gitlab.com/stephenandary/flakes/-/tree/flakes/machines?ref_type=heads</a></p>
+
+
+
+<a name="407605874"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407605874" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407605874">(Dec 13 2023 at 01:33)</a>:</h4>
+<p>In the nix-systems examples there are still let-in statements</p>
+
+
+
+<a name="407606128"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407606128" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407606128">(Dec 13 2023 at 01:34)</a>:</h4>
+<p>I did not have that, I can try something like that, but I dont think it would play out how I want</p>
+
+
+
+<a name="407606502"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407606502" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407606502">(Dec 13 2023 at 01:37)</a>:</h4>
+<p><code>${(import hosts).name} = ...</code></p>
+
+
+
+<a name="407607064"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/Passing%20arguments%20to%20flake/near/407607064" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Stephen <a href="http://chat.nixos.asia/stream/413950-nix/topic/Passing.20arguments.20to.20flake.html#407607064">(Dec 13 2023 at 01:40)</a>:</h4>
+<p>No bueno, but that atleast changed error to is a list instead of set haha. Thanks Srid. I can try to tinker with formats based on this</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

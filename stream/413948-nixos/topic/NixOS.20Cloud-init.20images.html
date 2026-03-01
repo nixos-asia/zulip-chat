@@ -1,0 +1,62 @@
+<html>
+<head><meta charset="utf-8"><title>NixOS Cloud-init images · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html">NixOS Cloud-init images</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="430968513"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Cloud-init%20images/near/430968513" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html#430968513">(Apr 03 2024 at 10:13)</a>:</h4>
+<p>I'd like to deploy NixOS VMs on Proxmox via terraform using Cloud-init images. (Potentially other real cloud providers with Terraform support as well) </p>
+<p>On the legacy nix community there was this one thread I found: <a href="https://discourse.nixos.org/t/a-cloudinit-image-for-use-in-proxmox/27519">https://discourse.nixos.org/t/a-cloudinit-image-for-use-in-proxmox/27519</a></p>
+<p>Any ideas on that anyone?</p>
+
+
+
+<a name="430969954"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Cloud-init%20images/near/430969954" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html#430969954">(Apr 03 2024 at 10:21)</a>:</h4>
+<p>The official documentation has a tutorial for deploying to AWS specifically with Terraform. </p>
+<p><a href="https://nix.dev/tutorials/nixos/deploying-nixos-using-terraform.html">https://nix.dev/tutorials/nixos/deploying-nixos-using-terraform.html</a></p>
+<p>But I am not looking for AWS. I am not sure the AWS image would do much good then.</p>
+
+
+
+<a name="431114051"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Cloud-init%20images/near/431114051" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html#431114051">(Apr 03 2024 at 15:00)</a>:</h4>
+<p>you can build VM images with NixOS out of the box. They use qemu by default so you should be able to wire those up with proxmox if desired. I have also made some of my own cloud images for digitalocean and aws in the past, there are nixos modules in nixpkgs that you can simply import that will then give you a build target for the image under <code>config.system.build</code></p>
+
+
+
+<a name="431300305"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Cloud-init%20images/near/431300305" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html#431300305">(Apr 04 2024 at 12:22)</a>:</h4>
+<p>but so if I build VM images, they won't support cloud-init, will they? So if I want to have a cluster of NixOS machines and set their IP address and authorized ssh-keys via cloud-init that won't work this way?</p>
+<p>I might try and see what I can make out of this guy's gist from legacy nix discourse: </p>
+<p><a href="https://gist.github.com/voidus/1230b200043b7f815e2513663d16353b">https://gist.github.com/voidus/1230b200043b7f815e2513663d16353b</a></p>
+<p>That doesn't look too bad actually.</p>
+
+
+
+<a name="431316114"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Cloud-init%20images/near/431316114" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html#431316114">(Apr 04 2024 at 13:40)</a>:</h4>
+<p>I know the do and aws images do respect ssh keys you set up through their api. Not sure if it uses cloud-init specifically for that or some ad hoc code path, but it works <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="431316216"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Cloud-init%20images/near/431316216" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html#431316216">(Apr 04 2024 at 13:41)</a>:</h4>
+<p>There may be a nixos module for cloyd-init as well, haven't checked</p>
+
+
+
+<a name="431318572"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20Cloud-init%20images/near/431318572" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20Cloud-init.20images.html#431318572">(Apr 04 2024 at 13:52)</a>:</h4>
+<p>yeah there is such a module afaik... I will try to build something myself and share it here if it works... or if I run into issues.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,211 @@
+<html>
+<head><meta charset="utf-8"><title>Grand plan for omnix · omnix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/415454-omnix/index.html">omnix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html">Grand plan for omnix</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="451024584"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451024584" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451024584">(Jul 12 2024 at 16:31)</a>:</h4>
+<p>Help me understand the project a bit better?</p>
+
+
+
+<a name="451026144"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451026144" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451026144">(Jul 12 2024 at 16:41)</a>:</h4>
+<p>are you gonna use dioxus or tauri or both?</p>
+
+
+
+<a name="451027167"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027167" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027167">(Jul 12 2024 at 16:48)</a>:</h4>
+<p>Dioxus is just going to be for the GUI component. There will also be a CLI component. </p>
+<p>To begin with, I want to address two use cases for the CLI:</p>
+<ul>
+<li>Ability to initialize flakes for any project  (based on smart templates; see <code>flakreate</code> proposal with RobertH)</li>
+<li>Ability to 'inspect' any project, so CEOs can switch to it and run it.</li>
+</ul>
+
+
+
+<a name="451027279"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027279" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027279">(Jul 12 2024 at 16:49)</a>:</h4>
+<p>Somewhat tangential: <a href="https://github.com/water-sucks/nixos">https://github.com/water-sucks/nixos</a></p>
+
+
+
+<a name="451027296"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027296" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027296">(Jul 12 2024 at 16:49)</a>:</h4>
+<p>ah yes, the CEO feature makes sense. How would you want to implement that? I'll check out the flakreate proposal.</p>
+
+
+
+<a name="451027332"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027332" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027332">(Jul 12 2024 at 16:49)</a>:</h4>
+<p>Where do I find flakreate?</p>
+
+
+
+<a name="451027436"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027436" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027436">(Jul 12 2024 at 16:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678574">Andreas</span> <a href="#narrow/stream/415454-omnix/topic/Grand.20plan.20for.20omnix/near/451027332">said</a>:</p>
+<blockquote>
+<p>Where do I find flakreate?</p>
+</blockquote>
+<p><a href="https://github.com/flake-parts/templates/issues/7">https://github.com/flake-parts/templates/issues/7</a></p>
+<p><a href="https://github.com/juspay/flakreate">https://github.com/juspay/flakreate</a></p>
+
+
+
+<a name="451027539"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027539" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027539">(Jul 12 2024 at 16:50)</a>:</h4>
+<p>ah so <code>nix flake init</code> with parameters</p>
+
+
+
+<a name="451027600"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027600" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027600">(Jul 12 2024 at 16:51)</a>:</h4>
+<p>It probably won't be parameters, but generators as Robert ideated.</p>
+
+
+
+<a name="451027674"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027674" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027674">(Jul 12 2024 at 16:51)</a>:</h4>
+<p>What would that mean for a CLI?</p>
+
+
+
+<a name="451027775"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027775" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027775">(Jul 12 2024 at 16:52)</a>:</h4>
+<p>ah so no templates... hm</p>
+
+
+
+<a name="451027832"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027832" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027832">(Jul 12 2024 at 16:52)</a>:</h4>
+<p>The CLI would maintain a registry, run <code>nix flake init</code> and then run the generator to 'complete' it. Something like that.</p>
+
+
+
+<a name="451027888"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027888" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027888">(Jul 12 2024 at 16:53)</a>:</h4>
+<p>okay, I see. But the generator isn't there yet, right?</p>
+
+
+
+<a name="451027921"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451027921" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451027921">(Jul 12 2024 at 16:53)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>om init --stack=haskell
+
+om init --stack=haskell --stack=treefmt --stack-pre-commit-hooks
+</code></pre></div>
+
+
+
+<a name="451028069"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451028069" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451028069">(Jul 12 2024 at 16:54)</a>:</h4>
+<p>okay so it would generate a flake for a haskell project with treefmt and pre-commit-hooks I suppose?</p>
+
+
+
+<a name="451028464"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451028464" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451028464">(Jul 12 2024 at 16:57)</a>:</h4>
+<p>You are asking questions too early. But I'll post PRs and stuff here over time.</p>
+
+
+
+<a name="451028788"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451028788" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451028788">(Jul 12 2024 at 16:59)</a>:</h4>
+<blockquote>
+<p>You are asking questions too early.</p>
+</blockquote>
+<p>And I always thought that was your approach! <span aria-label="rolling on the floor laughing" class="emoji emoji-1f923" role="img" title="rolling on the floor laughing">:rolling_on_the_floor_laughing:</span></p>
+
+
+
+<a name="451028838"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451028838" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451028838">(Jul 12 2024 at 16:59)</a>:</h4>
+<p>yeah but once you actually have something to do there, I might be interested in taking a look!</p>
+
+
+
+<a name="451029592"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451029592" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451029592">(Jul 12 2024 at 17:02)</a>:</h4>
+<p>My approach is certainly not to design everything up front, write it down, etc.</p>
+
+
+
+<a name="451030818"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451030818" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451030818">(Jul 12 2024 at 17:08)</a>:</h4>
+<p>mine neither, so where shall we go first with omnix?</p>
+
+
+
+<a name="451030925"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451030925" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451030925">(Jul 12 2024 at 17:09)</a>:</h4>
+<p>DM'ed you</p>
+
+
+
+<a name="451042536"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451042536" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451042536">(Jul 12 2024 at 18:11)</a>:</h4>
+<p>Initial priority:</p>
+<p><a href="https://github.com/juspay/omnix/issues/140">https://github.com/juspay/omnix/issues/140</a></p>
+
+
+
+<a name="451042634"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451042634" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451042634">(Jul 12 2024 at 18:12)</a>:</h4>
+<p>Perhaps I should start adopting a RFC workflow here.</p>
+
+
+
+<a name="451049152"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451049152" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451049152">(Jul 12 2024 at 18:48)</a>:</h4>
+<p>yeah maybe</p>
+
+
+
+<a name="451049356"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451049356" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451049356">(Jul 12 2024 at 18:50)</a>:</h4>
+<p>so first step is to implement initialization of a flake from templates?</p>
+
+
+
+<a name="451049682"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451049682" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451049682">(Jul 12 2024 at 18:52)</a>:</h4>
+<p>In particular, first demo would be initializing this home-manager template:</p>
+<p><a href="https://github.com/juspay/nix-dev-home/pull/41">https://github.com/juspay/nix-dev-home/pull/41</a></p>
+
+
+
+<a name="451049751"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451049751" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451049751">(Jul 12 2024 at 18:52)</a>:</h4>
+<p>Automatically fixing <a href="https://github.com/juspay/nix-dev-home/issues/37">https://github.com/juspay/nix-dev-home/issues/37</a> in the process</p>
+
+
+
+<a name="451053918"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451053918" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451053918">(Jul 12 2024 at 19:11)</a>:</h4>
+<p>You mean the existing <code>nix-dev-home</code> or what you want to do in that PR?</p>
+
+
+
+<a name="451060791"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451060791" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451060791">(Jul 12 2024 at 19:47)</a>:</h4>
+<p>One should be able to <code>om init home-manager</code> on any WSL, Ubuntu or macOS machine and get going.</p>
+
+
+
+<a name="451060900"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-omnix/topic/Grand%20plan%20for%20omnix/near/451060900" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-omnix/topic/Grand.20plan.20for.20omnix.html#451060900">(Jul 12 2024 at 19:48)</a>:</h4>
+<p>(Similar to <code>nix run github:juspay/flakreate</code> - which can you run today)</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

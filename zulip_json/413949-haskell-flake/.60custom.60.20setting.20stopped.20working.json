@@ -1,0 +1,128 @@
+[
+    {
+        "content": "<p>Introduced by <a href=\"https://github.com/srid/haskell-flake/pull/253\">https://github.com/srid/haskell-flake/pull/253</a></p>",
+        "id": 429935364,
+        "sender_full_name": "Srid",
+        "timestamp": 1711568885
+    },
+    {
+        "content": "<p>Tangentially related: <a href=\"https://github.com/srid/haskell-flake/issues/192\">https://github.com/srid/haskell-flake/issues/192</a></p>\n<p>But now that we have <code>otherOverlays</code> I wonder if I should just get rid of <code>custom</code>.</p>",
+        "id": 429935907,
+        "sender_full_name": "Srid",
+        "timestamp": 1711569100
+    },
+    {
+        "content": "<h3>Ordering is the issue</h3>\n<p>I can confirm that the order in which settings are applied is the issue. If I rename <code>custom</code> to <code>A_custom</code>, it works. This suggests that <code>custom</code> doesn't work because it comes after <code>buildFromSdist</code> in alphabetical order.</p>",
+        "id": 429937742,
+        "sender_full_name": "Srid",
+        "timestamp": 1711569786
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working/near/429935907\">said</a>:</p>\n<blockquote>\n<p>Tangentially related: <a href=\"https://github.com/srid/haskell-flake/issues/192\">https://github.com/srid/haskell-flake/issues/192</a></p>\n<p>But now that we have <code>otherOverlays</code> I wonder if I should just get rid of <code>custom</code>.</p>\n</blockquote>\n<p>Hmm, we can't do that, because overlays don't compose when <code>import</code>'ing.</p>",
+        "id": 429938477,
+        "sender_full_name": "Srid",
+        "timestamp": 1711570092
+    },
+    {
+        "content": "<p>Here's an idea: provide two settings:</p>\n<ul>\n<li><code>settings.&lt;name&gt;.init : drv</code>: assigns the initial value <em>before</em> settings are applied</li>\n<li><code>settings.&lt;name&gt;.final : drv -&gt; drv</code>: transforms the final drv after the other settings are applied.</li>\n</ul>",
+        "id": 429938892,
+        "sender_full_name": "Srid",
+        "timestamp": 1711570265
+    },
+    {
+        "content": "<h3>Proposal for fix</h3>\n<p><a href=\"https://github.com/srid/haskell-flake/issues/283\">https://github.com/srid/haskell-flake/issues/283</a></p>\n<p>Need <span aria-label=\"eyes\" class=\"emoji emoji-1f440\" role=\"img\" title=\"eyes\">:eyes:</span> and ideas from people.</p>",
+        "id": 429942552,
+        "sender_full_name": "Srid",
+        "timestamp": 1711571301
+    },
+    {
+        "content": "<p>Or,</p>\n<ul>\n<li><code>settings.&lt;name&gt;.custom.initial</code></li>\n<li><code>settings.&lt;name&gt;.custom.final</code></li>\n</ul>",
+        "id": 429946774,
+        "sender_full_name": "Srid",
+        "timestamp": 1711572590
+    },
+    {
+        "content": "<p>Or,</p>\n<ul>\n<li><code>packages.&lt;name&gt;.drv</code> (computed from <code>source</code> automatically, by default)</li>\n<li><code>settings.&lt;name&gt;.custom</code> (applies at the end, after other settings)</li>\n</ul>",
+        "id": 430086331,
+        "sender_full_name": "Srid",
+        "timestamp": 1711637679
+    },
+    {
+        "content": "<p>Incidentally, I began thinking about why we even need separate <code>packages</code> and <code>settings</code> option groups. Like, why not this:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  <span class=\"ss\">packages</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    hello_rust<span class=\"o\">.</span><span class=\"ss\">drv</span> <span class=\"o\">=</span> self'<span class=\"o\">.</span>packages<span class=\"o\">.</span>hello_rust\n    myhaskell<span class=\"o\">.</span><span class=\"ss\">source</span> <span class=\"o\">=</span> <span class=\"l\">./haskell</span><span class=\"p\">;</span>\n    myhaskell<span class=\"o\">.</span>setting<span class=\"o\">.</span><span class=\"ss\">libraryProfiling</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n    aeson<span class=\"o\">.</span><span class=\"ss\">source</span> <span class=\"o\">=</span> <span class=\"s2\">\"1.5.0\"</span><span class=\"p\">;</span>\n  <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 430086733,
+        "sender_full_name": "Srid",
+        "timestamp": 1711637771
+    },
+    {
+        "content": "<p>This is nice, keeps all the info about a package in one-place.</p>",
+        "id": 430095239,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711639919
+    },
+    {
+        "content": "<p>Will be a big ass refactoring, will try from Australia next week.</p>",
+        "id": 430095850,
+        "sender_full_name": "Srid",
+        "timestamp": 1711640035
+    },
+    {
+        "content": "<p>Since this bug affects only non-existent packages, it is not high prio to fix I guess.</p>",
+        "id": 430095997,
+        "sender_full_name": "Srid",
+        "timestamp": 1711640062
+    },
+    {
+        "content": "<p>I could add the &lt;package-name&gt;.drv feature for non-existent packages, which shouldn’t be hard to do and not break anything</p>",
+        "id": 430100576,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711640937
+    },
+    {
+        "content": "<p>Will help publish this tutorial soon: <a href=\"https://github.com/nixos-asia/website/pull/24\">https://github.com/nixos-asia/website/pull/24</a></p>",
+        "id": 430101291,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711641057
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/.60custom.60.20setting.20stopped.20working/near/430100576\">said</a>:</p>\n<blockquote>\n<p>I could add the &lt;package-name&gt;.drv feature for non-existent packages, which shouldn’t be hard to do and not break anything</p>\n</blockquote>\n<p>Feel free to give it a try.</p>",
+        "id": 430102669,
+        "sender_full_name": "Srid",
+        "timestamp": 1711641308
+    },
+    {
+        "content": "<p>Turns out we can fix this particular bug without implementing this proposal (which should be good on its own merits, though):</p>\n<p><a href=\"https://github.com/srid/haskell-flake/pull/284\">https://github.com/srid/haskell-flake/pull/284</a></p>",
+        "id": 430144537,
+        "sender_full_name": "Srid",
+        "timestamp": 1711652143
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>srid on appreciate haskell-rust-ffi-template on  master [⇣]\n❯ g log -1\ncommit 1038ca8a87aae4e448bbd7ea6e1c41ee4e7acb2d (HEAD -&gt; master)\nAuthor: Shivaraj B H &lt;sbh69840@gmail.com&gt;\nDate:   Wed Mar 27 15:04:33 2024 +0530\n\n    ci: upgrade nixci\n\nsrid on appreciate haskell-rust-ffi-template on  master [⇣]\n❯ nix build --override-input haskell-flake github:srid/haskell-flake/settings-null --show-trace\nwarning: not writing modified lock file of flake &#39;git+file:///Users/srid/code/haskell-rust-ffi-template&#39;:\n• Updated input &#39;haskell-flake&#39;:\n    &#39;github:srid/haskell-flake/f9d17c3aa68e65529f424816c8b9346ae602d1de&#39; (2024-02-06)\n  → &#39;github:srid/haskell-flake/d6a9187919cbf087b99d88d154086a20fc1b72f1&#39; (2024-03-28)\n\nsrid on appreciate haskell-rust-ffi-template on  master [⇣] took 5s\n❯\n</code></pre></div>",
+        "id": 430145537,
+        "sender_full_name": "Srid",
+        "timestamp": 1711652522
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> has marked this topic as unresolved.</p>",
+        "id": 430733939,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1712045143
+    },
+    {
+        "content": "<p>seems like it is broken again: <a href=\"https://github.com/srid/haskell-flake/issues/283#issuecomment-2031339304\">https://github.com/srid/haskell-flake/issues/283#issuecomment-2031339304</a></p>",
+        "id": 430734120,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712045174
+    },
+    {
+        "content": "<p>Does this fix it? </p>\n<p><a href=\"https://github.com/srid/haskell-flake/pull/298\">https://github.com/srid/haskell-flake/pull/298</a></p>",
+        "id": 430927626,
+        "sender_full_name": "Srid",
+        "timestamp": 1712125767
+    },
+    {
+        "content": "<p>Yes, it does.</p>\n<p>here’s what I tried:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>build<span class=\"w\"> </span>github:shivaraj-bh/haskell-rust-ffi-template<span class=\"w\"> </span>--override-input<span class=\"w\"> </span>haskell-flake<span class=\"w\"> </span>github:srid/haskell-flake/e20cdd30ad9201bedc4977fa55f7a4765d6a56ac\n</code></pre></div>",
+        "id": 430929017,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712126519
+    }
+]

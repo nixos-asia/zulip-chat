@@ -1,0 +1,33 @@
+<html>
+<head><meta charset="utf-8"><title>nixos-unified · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/nixos-unified.html">nixos-unified</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="474907174"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/nixos-unified/near/474907174" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/nixos-unified.html#474907174">(Oct 04 2024 at 22:08)</a>:</h4>
+<p>NixOS / nix-darwin and home-manager template all in one:</p>
+<p><a href="https://github.com/juspay/nixos-unified-template">https://github.com/juspay/nixos-unified-template</a></p>
+
+
+
+<a name="525149161"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/nixos-unified/near/525149161" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nikhil Singh <a href="http://chat.nixos.asia/stream/413948-nixos/topic/nixos-unified.html#525149161">(Jun 21 2025 at 09:54)</a>:</h4>
+<p><code>flake.config.me</code> is a toplevel flake option, this is being passed by nixos-unified via specialArgs.<br>
+how can i change the value for specific darwin host machine?</p>
+<p>i tried <code>_module.specialArgs.flake.config.me.username = "tada";</code> but this throws a random error for maintainer.nix not avaialable.<br>
+how can i override toplevel value from inside a module?how can i override toplevel value from inside a module?</p>
+<p>info:<br>
+trying to do the <code>_module.specialArgs.flake.config.me.username = "tada";</code><br>
+inf <code>configurations/darwin/&lt;machine&gt;.nix</code>.<br>
+so that the modules imported by <code>&lt;machine&gt;</code> have the changed value.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

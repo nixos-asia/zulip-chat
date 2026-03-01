@@ -1,0 +1,99 @@
+<html>
+<head><meta charset="utf-8"><title>Using non-haskell dependencies · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html">Using non-haskell dependencies</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="484863718"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/484863718" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Perigord <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#484863718">(Nov 28 2024 at 08:29)</a>:</h4>
+<p><code>sandbox.cabal</code></p>
+<div class="codehilite" data-code-language="cabal"><pre><span></span><code>pkgconfig-depends: libavcodec
+</code></pre></div>
+<p><code>Main.hs</code></p>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">foreign</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="nn">capi</span><span class="w"> </span><span class="s">"libavcodec/avcodec.h avcodec_version"</span>
+<span class="w">  </span><span class="n">c_avcodecVersion</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">CInt</span>
+</code></pre></div>
+<p>Just wanted to know how I would be able to add C libraries especially using the <code>pkgconfig-depends</code> in cabal.  Currently lost on where to add <code>pkgs.ffmpeg.lib</code> and <code>pkgs.ffmpeg.dev</code>.</p>
+
+
+
+<a name="492113787"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/492113787" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#492113787">(Jan 06 2025 at 14:21)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> has marked this topic as unresolved.</p>
+
+
+
+<a name="492114048"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/492114048" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#492114048">(Jan 06 2025 at 14:22)</a>:</h4>
+<p>Hmm, I think we should create a documentation page for this.</p>
+<p>Quick answer: you need <a href="https://github.com/search?q=repo%3Asrid%2Femanote+staticWhich&amp;type=code"><code>staticWhich</code></a> along with <a href="https://github.com/search?q=repo%3Asrid%2Femanote+stork+language%3ANix&amp;type=code"><code>extraBuildDepends</code></a>. You already use the later, just need the former.</p>
+
+
+
+<a name="492178361"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/492178361" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#492178361">(Jan 06 2025 at 20:25)</a>:</h4>
+<p>Thanks, <span class="user-mention" data-user-id="667408">@Srid</span> ! I'm a huge fan, btw.</p>
+<p>This worked:</p>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">cowsayBin</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">FilePath</span>
+<span class="nf">cowsayBin</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">$</span><span class="p">(</span><span class="n">staticWhich</span><span class="w"> </span><span class="s">"cowsay"</span><span class="p">)</span>
+
+<span class="nf">cowsay</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="kt">String</span>
+<span class="nf">cowsay</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="n">mhout</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">createProcess</span><span class="w"> </span><span class="p">(</span><span class="n">shell</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">cowsayBin</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">" hola"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">std_out</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">CreatePipe</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="kr">case</span><span class="w"> </span><span class="n">mhout</span><span class="w"> </span><span class="kr">of</span>
+<span class="w">    </span><span class="kt">Just</span><span class="w"> </span><span class="n">hout</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">hGetContents</span><span class="w"> </span><span class="n">hout</span>
+<span class="w">    </span><span class="kt">Nothing</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="s">"mhout failed"</span>
+</code></pre></div>
+<p>Would <a href="https://hackage.haskell.org/package/which-0.2.0.2/docs/System-Which.html#v:staticWhichNix">staticWhichNix</a> be a better fit?</p>
+<p>Is there a reason this way is better? </p>
+<p>On my previous iteration of this flake (not using <code>haskell-flake</code>) I used <code>pkgs.haskell.lib.addBuildDepends</code> <a href="https://github.com/hhefesto/stand-in-language/blob/82c42411a840d9d8c17b7fd17147871bd56ab45f/flake.nix#L23">this way</a> and that worked. Are there advantages to using the <code>which</code> package?</p>
+<p>Thanks again and cheers all the way from Querétaro, México : )</p>
+
+
+
+<a name="492179104"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/492179104" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#492179104">(Jan 06 2025 at 20:29)</a>:</h4>
+<p>Great. Yes, using <code>staticWhich</code> basically hardcodes the full path to the binary at compile time, so it is guaranteed to be available on user's systems. Otherwise, you rely on it being in $PATH.</p>
+<p><code>staticWhichNix</code> is the same, but expects it to to be in Nix store, thus limiting your software to work only on Nix</p>
+
+
+
+<a name="492179277"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/492179277" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#492179277">(Jan 06 2025 at 20:30)</a>:</h4>
+<p>Its implementation is simple enough to see what's going on: <a href="https://hackage.haskell.org/package/which-0.2.0.2/docs/src/System.Which.html#staticWhichNix">https://hackage.haskell.org/package/which-0.2.0.2/docs/src/System.Which.html#staticWhichNix</a></p>
+
+
+
+<a name="492180480"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/492180480" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#492180480">(Jan 06 2025 at 20:37)</a>:</h4>
+<p>I retract what I said about it working with <code>pkgs.haskell.lib.addBuildDepends</code>. I thought it did because I had no errors, but that was because I wasn't using it at all. I also had to use the <code>which</code> package to make it work on my previous flake iteration.</p>
+
+
+
+<a name="516242293"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/516242293" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#516242293">(May 05 2025 at 16:13)</a>:</h4>
+<p>Hello!<br>
+What about packages that aren't mine (i.e. from a package I imported: <code>postgresql-simple</code>) and also need external non-haskell dependencies.</p>
+<p>In this case <code>postgresql-libpq</code> needs <code>pg_config</code> which is provided by <code>postgresql_17</code>.</p>
+<p>The error is:</p>
+<div class="codehilite"><pre><span></span><code>       &gt; Error: [Cabal-6666]
+       &gt; The program &#39;pg_config&#39; is required but it could not be found.
+</code></pre></div>
+<p>And just adding <code>haskellProjects.default.settings.postgresql-libpq.extraBuildDepends = [ pkgs.postgresql_17 ];</code></p>
+<p>Also doesn't work with <code>extraBuildTools</code>.</p>
+
+
+
+<a name="516255417"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Using%20non-haskell%20dependencies/near/516255417" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Herrera Rendón <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Using.20non-haskell.20dependencies.html#516255417">(May 05 2025 at 17:07)</a>:</h4>
+<p>Weirdly I used a flake.lock that's about a month old and that seems to have fixed things. I'll report back if I get the problem again.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

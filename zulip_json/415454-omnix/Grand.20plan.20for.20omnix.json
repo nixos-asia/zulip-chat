@@ -1,0 +1,182 @@
+[
+    {
+        "content": "<p>Help me understand the project a bit better?</p>",
+        "id": 451024584,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720801911
+    },
+    {
+        "content": "<p>are you gonna use dioxus or tauri or both?</p>",
+        "id": 451026144,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720802487
+    },
+    {
+        "content": "<p>Dioxus is just going to be for the GUI component. There will also be a CLI component. </p>\n<p>To begin with, I want to address two use cases for the CLI:</p>\n<ul>\n<li>Ability to initialize flakes for any project  (based on smart templates; see <code>flakreate</code> proposal with RobertH)</li>\n<li>Ability to 'inspect' any project, so CEOs can switch to it and run it.</li>\n</ul>",
+        "id": 451027167,
+        "sender_full_name": "Srid",
+        "timestamp": 1720802901
+    },
+    {
+        "content": "<p>Somewhat tangential: <a href=\"https://github.com/water-sucks/nixos\">https://github.com/water-sucks/nixos</a></p>",
+        "id": 451027279,
+        "sender_full_name": "Srid",
+        "timestamp": 1720802959
+    },
+    {
+        "content": "<p>ah yes, the CEO feature makes sense. How would you want to implement that? I'll check out the flakreate proposal.</p>",
+        "id": 451027296,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720802966
+    },
+    {
+        "content": "<p>Where do I find flakreate?</p>",
+        "id": 451027332,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720802980
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/415454-omnix/topic/Grand.20plan.20for.20omnix/near/451027332\">said</a>:</p>\n<blockquote>\n<p>Where do I find flakreate?</p>\n</blockquote>\n<p><a href=\"https://github.com/flake-parts/templates/issues/7\">https://github.com/flake-parts/templates/issues/7</a></p>\n<p><a href=\"https://github.com/juspay/flakreate\">https://github.com/juspay/flakreate</a></p>",
+        "id": 451027436,
+        "sender_full_name": "Srid",
+        "timestamp": 1720803008
+    },
+    {
+        "content": "<p>ah so <code>nix flake init</code> with parameters</p>",
+        "id": 451027539,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720803043
+    },
+    {
+        "content": "<p>It probably won't be parameters, but generators as Robert ideated.</p>",
+        "id": 451027600,
+        "sender_full_name": "Srid",
+        "timestamp": 1720803070
+    },
+    {
+        "content": "<p>What would that mean for a CLI?</p>",
+        "id": 451027674,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720803102
+    },
+    {
+        "content": "<p>ah so no templates... hm</p>",
+        "id": 451027775,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720803138
+    },
+    {
+        "content": "<p>The CLI would maintain a registry, run <code>nix flake init</code> and then run the generator to 'complete' it. Something like that.</p>",
+        "id": 451027832,
+        "sender_full_name": "Srid",
+        "timestamp": 1720803165
+    },
+    {
+        "content": "<p>okay, I see. But the generator isn't there yet, right?</p>",
+        "id": 451027888,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720803185
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>om init --stack=haskell\n\nom init --stack=haskell --stack=treefmt --stack-pre-commit-hooks\n</code></pre></div>",
+        "id": 451027921,
+        "sender_full_name": "Srid",
+        "timestamp": 1720803205
+    },
+    {
+        "content": "<p>okay so it would generate a flake for a haskell project with treefmt and pre-commit-hooks I suppose?</p>",
+        "id": 451028069,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720803245
+    },
+    {
+        "content": "<p>You are asking questions too early. But I'll post PRs and stuff here over time.</p>",
+        "id": 451028464,
+        "sender_full_name": "Srid",
+        "timestamp": 1720803427
+    },
+    {
+        "content": "<blockquote>\n<p>You are asking questions too early.</p>\n</blockquote>\n<p>And I always thought that was your approach! <span aria-label=\"rolling on the floor laughing\" class=\"emoji emoji-1f923\" role=\"img\" title=\"rolling on the floor laughing\">:rolling_on_the_floor_laughing:</span></p>",
+        "id": 451028788,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720803558
+    },
+    {
+        "content": "<p>yeah but once you actually have something to do there, I might be interested in taking a look!</p>",
+        "id": 451028838,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720803583
+    },
+    {
+        "content": "<p>My approach is certainly not to design everything up front, write it down, etc.</p>",
+        "id": 451029592,
+        "sender_full_name": "Srid",
+        "timestamp": 1720803774
+    },
+    {
+        "content": "<p>mine neither, so where shall we go first with omnix?</p>",
+        "id": 451030818,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720804124
+    },
+    {
+        "content": "<p>DM'ed you</p>",
+        "id": 451030925,
+        "sender_full_name": "Srid",
+        "timestamp": 1720804169
+    },
+    {
+        "content": "<p>Initial priority:</p>\n<p><a href=\"https://github.com/juspay/omnix/issues/140\">https://github.com/juspay/omnix/issues/140</a></p>",
+        "id": 451042536,
+        "sender_full_name": "Srid",
+        "timestamp": 1720807914
+    },
+    {
+        "content": "<p>Perhaps I should start adopting a RFC workflow here.</p>",
+        "id": 451042634,
+        "sender_full_name": "Srid",
+        "timestamp": 1720807939
+    },
+    {
+        "content": "<p>yeah maybe</p>",
+        "id": 451049152,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720810110
+    },
+    {
+        "content": "<p>so first step is to implement initialization of a flake from templates?</p>",
+        "id": 451049356,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720810213
+    },
+    {
+        "content": "<p>In particular, first demo would be initializing this home-manager template:</p>\n<p><a href=\"https://github.com/juspay/nix-dev-home/pull/41\">https://github.com/juspay/nix-dev-home/pull/41</a></p>",
+        "id": 451049682,
+        "sender_full_name": "Srid",
+        "timestamp": 1720810345
+    },
+    {
+        "content": "<p>Automatically fixing <a href=\"https://github.com/juspay/nix-dev-home/issues/37\">https://github.com/juspay/nix-dev-home/issues/37</a> in the process</p>",
+        "id": 451049751,
+        "sender_full_name": "Srid",
+        "timestamp": 1720810377
+    },
+    {
+        "content": "<p>You mean the existing <code>nix-dev-home</code> or what you want to do in that PR?</p>",
+        "id": 451053918,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720811495
+    },
+    {
+        "content": "<p>One should be able to <code>om init home-manager</code> on any WSL, Ubuntu or macOS machine and get going.</p>",
+        "id": 451060791,
+        "sender_full_name": "Srid",
+        "timestamp": 1720813644
+    },
+    {
+        "content": "<p>(Similar to <code>nix run github:juspay/flakreate</code> - which can you run today)</p>",
+        "id": 451060900,
+        "sender_full_name": "Srid",
+        "timestamp": 1720813693
+    }
+]

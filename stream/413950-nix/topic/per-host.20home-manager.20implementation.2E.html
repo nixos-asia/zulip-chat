@@ -1,0 +1,111 @@
+<html>
+<head><meta charset="utf-8"><title>per-host home-manager implementation. · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html">per-host home-manager implementation.</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="435328943"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435328943" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Arul Agrawal <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435328943">(Apr 25 2024 at 07:32)</a>:</h4>
+<p>Hi, firstly, thanks for all the resources, I've got a nixos-flake based setup (essentially copied from srid/nixos-config) for my desktop and macbook.</p>
+<p>I want to extend my flake to some servers and was reading about per-host configs here: <a href="https://github.com/srid/nixos-flake/issues/19">https://github.com/srid/nixos-flake/issues/19</a>, but didn't quite grasp the workaround mentioned in the last 2 comments. I want to avoid pulling-in the gui related home-manager configs for the servers obviously. (as an aside, some of my gui configs like for wayland are split across the nixos/ and home/ folders, is there a way to unify them?)</p>
+<p>Has anyone got per-home config with a similar setup? here's my config for reference if needed: <a href="https://github.com/arulagrawal/nix">https://github.com/arulagrawal/nix</a>.</p>
+
+
+
+<a name="435336300"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435336300" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435336300">(Apr 25 2024 at 08:17)</a>:</h4>
+<p><span class="user-mention" data-user-id="711575">@Arul Agrawal</span> I suggest forking <code>nixos-flake</code> and modifying <a href="https://github.com/srid/nixos-flake/blob/40010feda1ac1afdcc2571ef550ef3de44926b0e/flake-module.nix#L85-L100">this writeShellApplication</a>.</p>
+<p>Make it so that it uses <code>HOSTNAME</code> instead of <code>USER</code> (but still fallback to <code>USER</code> if the former doesn't exist in <code>homeConfigurations</code>). You may first have to do a <code>nix flake show --json</code> on the flake, so as to see if <code>homeConfigurations.$HOSTNAME</code> does in fact exist.</p>
+<p>Once you get something working to satisfaction, open a PR on nixos-flake repo!</p>
+<p>Happy to help through your contribution here.</p>
+
+
+
+<a name="435347000"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435347000" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Arul Agrawal <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435347000">(Apr 25 2024 at 09:19)</a>:</h4>
+<p>so the idea is, instead of doing <a href="https://github.com/arulagrawal/nix/blob/45e654bb32f8653e7307031ec2fd7ac51bc23bd5/nix-darwin/default.nix#L9">this</a>, the home-manager config would instead be called in flake.nix under flake -&gt; homeConfigurations (where the darwinConfigurations and nixosConfigurations currently reside)?</p>
+
+
+
+<a name="435347220"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435347220" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435347220">(Apr 25 2024 at 09:21)</a>:</h4>
+<p>No, the idea is to fork nixos-flake and do the aforementioned change. </p>
+<p>Then change <a href="https://github.com/arulagrawal/nix/blob/45e654bb32f8653e7307031ec2fd7ac51bc23bd5/flake.nix#L12">this line</a> in your flake to point to your fork, and run <code>nix run</code>.</p>
+
+
+
+<a name="435348232"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435348232" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Arul Agrawal <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435348232">(Apr 25 2024 at 09:27)</a>:</h4>
+<p><a href="https://github.com/arulagrawal/nixos-flake/commit/2b8fc0f521db121d1f48d32e1cbc57732ede91a4">https://github.com/arulagrawal/nixos-flake/commit/2b8fc0f521db121d1f48d32e1cbc57732ede91a4</a></p>
+<p>Something like this? (will cleanup the commit message)</p>
+<p>I did this and pointed my flake to the branch and ran <code>nix run</code>.  The question I asked now was to ask where to put the per-host config.</p>
+
+
+
+<a name="435348973"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435348973" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435348973">(Apr 25 2024 at 09:31)</a>:</h4>
+<p><code>legacyPackages.homeConfigurations.HOSTNAME</code></p>
+<p>See <a href="https://github.com/srid/nixos-flake/blob/7b19503e7f8c7cc0884fc2fbd669c0cc2e05aef5/examples/home/flake.nix#L25C11-L25C58">https://github.com/srid/nixos-flake/blob/7b19503e7f8c7cc0884fc2fbd669c0cc2e05aef5/examples/home/flake.nix#L25C11-L25C58</a></p>
+
+
+
+<a name="435349008"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435349008" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435349008">(Apr 25 2024 at 09:31)</a>:</h4>
+<p>And run <code>nix run .#activate-home</code></p>
+
+
+
+<a name="435349104"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435349104" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435349104">(Apr 25 2024 at 09:32)</a>:</h4>
+<p>I'm assuming you are doing this in non-NixOS, since that issue is all about home-manager <strong>only</strong> config.</p>
+
+
+
+<a name="435349126"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435349126" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435349126">(Apr 25 2024 at 09:32)</a>:</h4>
+<p>So, try to get this working on macOS first. </p>
+<p>One little step at a time.</p>
+
+
+
+<a name="435349225"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435349225" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435349225">(Apr 25 2024 at 09:33)</a>:</h4>
+<p>You can put the config in <code>homeModules</code>, and import if from two places (to as to share between nixos &amp; macos)</p>
+
+
+
+<a name="435349310"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435349310" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435349310">(Apr 25 2024 at 09:33)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="667408">Srid</span> <a href="#narrow/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E/near/435349225">said</a>:</p>
+<blockquote>
+<p>You can put the config in <code>homeModules</code>, and import if from two places (to as to share between nixos &amp; macos)</p>
+</blockquote>
+<p>Example, <a href="https://github.com/srid/nixos-flake/blob/master/examples/both/flake.nix">https://github.com/srid/nixos-flake/blob/master/examples/both/flake.nix</a></p>
+
+
+
+<a name="435355849"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435355849" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Arul Agrawal <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435355849">(Apr 25 2024 at 10:10)</a>:</h4>
+<p>Okay I think I was going about this the wrong way (for what I need). I didn't test the server config yet (the device I was going to use died on me or smth) but I think something like this suffices: <a href="https://github.com/arulagrawal/nix/compare/main...separate-linux-configs">https://github.com/arulagrawal/nix/compare/main...separate-linux-configs</a></p>
+
+
+
+<a name="435355878"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435355878" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Arul Agrawal <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435355878">(Apr 25 2024 at 10:11)</a>:</h4>
+<p>apologies for the confusion</p>
+
+
+
+<a name="435893135"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/per-host%20home-manager%20implementation./near/435893135" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pratham Patel <a href="http://chat.nixos.asia/stream/413950-nix/topic/per-host.20home-manager.20implementation.2E.html#435893135">(Apr 28 2024 at 17:27)</a>:</h4>
+<p><span class="user-mention" data-user-id="711575">@Arul Agrawal</span> this post prompted me to write <a class="stream-topic" data-stream-id="413950" href="/#narrow/stream/413950-nix/topic/Dynamic.20NixOS.20configuration.2C.20using.20flakes">#nix &gt; Dynamic NixOS configuration, using flakes</a>. Feel free to "take inspiration" from it ;)</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

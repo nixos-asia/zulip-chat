@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>You can set the <code>acess-tokens</code> setting in the nix.conf to access private resources in general.</p>",
+        "id": 434524003,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1713637607
+    },
+    {
+        "content": "<p>Awesome, thanks <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> and <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> !</p>",
+        "id": 434524048,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713637657
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> has marked this topic as resolved.</p>",
+        "id": 434524049,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1713637663
+    }
+]

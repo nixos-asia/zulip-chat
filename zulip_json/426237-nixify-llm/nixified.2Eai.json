@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/nixified-ai/flake\">https://github.com/nixified-ai/flake</a></p>\n<p>Haven’t tried it yet, but hoping to play around with it this weekend and give me thoughts</p>",
+        "id": 422466540,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708449948
+    },
+    {
+        "content": "<p>I think <span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> has a few thoughts on its shortcomings.</p>",
+        "id": 422466715,
+        "sender_full_name": "Srid",
+        "timestamp": 1708449992
+    },
+    {
+        "content": "<p>Well the shortcomings are obviously that you can run two things and not more it seems: InvokeAI and textgen. But what if I want to run Automatic1111 Webui or ComyUI for stable diffusion? And I want to get several LoRAs from <a href=\"http://civit.ai\">civit.ai</a>? Not really a straightforward path.</p>\n<p>Like right now I am playing with LLMs using ollama. Which is really nice. But I use the ollama docker images for ROCm because setting up ROCm with StableDiffusionWebUI kinda taught me that the components going into ROCm and their interaction with PyTorch and all the rest of the Python ecosystem might be a bit finicky and you better take a working setup when you find one and never touch it again unless you have a day for experimenting...</p>",
+        "id": 422467630,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708450255
+    }
+]

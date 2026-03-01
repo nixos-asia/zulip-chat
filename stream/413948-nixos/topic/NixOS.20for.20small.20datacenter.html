@@ -1,0 +1,160 @@
+<html>
+<head><meta charset="utf-8"><title>NixOS for small datacenter · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html">NixOS for small datacenter</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="448127623"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448127623" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448127623">(Jun 30 2024 at 15:23)</a>:</h4>
+<p>Srid told mit that you <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> are having some kind of NixOS datacenter project going? Care to tell me more about that?</p>
+
+
+
+<a name="448156269"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448156269" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448156269">(Jun 30 2024 at 18:41)</a>:</h4>
+<p>I have it in mind, yes. But haven’t had the chance to do anything about it unfortunately. I was thinking of providing Hetzner like services here in India. It is especially important considering how expensive AWS, GCP and azure can get and their vendor lock-in strategies (these strategies might be less now, but it does exist). I don’t own racks in any datacenters, but I could either rent a few racks to start with and manage them using NixOS. All this will not matter if I don’t have clients to use this new cloud-service provider in the market. I am hoping a few clients might be ready to use it for their non-critical tasks just because of the lower price. Once the financials add up, could dream bigger and have DCs like Hetzner.</p>
+
+
+
+<a name="448668950"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448668950" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448668950">(Jul 02 2024 at 17:55)</a>:</h4>
+<p>Idk if you have seen this, but this project looks interesting: <a href="https://github.com/SaumonNet/proxmox-nixos">https://github.com/SaumonNet/proxmox-nixos</a></p>
+<p>Not quite there yet for clustering, but once they have that, it might be great.</p>
+<p>The only thing that isn't so great is that they put everything under a licence other than MIT and it's not clear if they intend to upstream this at all.</p>
+
+
+
+<a name="448669186"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448669186" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448669186">(Jul 02 2024 at 17:56)</a>:</h4>
+<p>but your project does sound enticing I have to say, very interesting</p>
+
+
+
+<a name="448790877"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448790877" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448790877">(Jul 03 2024 at 08:46)</a>:</h4>
+<blockquote>
+<p>Idk if you have seen this, but this project looks interesting: <a href="https://github.com/SaumonNet/proxmox-nixos">https://github.com/SaumonNet/proxmox-nixos</a></p>
+</blockquote>
+<p>Yes, I came across this one. It is interesting.</p>
+<blockquote>
+<p>The only thing that isn't so great is that they put everything under a licence other than MIT</p>
+</blockquote>
+<p>The AGPL-v3 license seems to be because upstream uses that one, I couldn’t find the source but one of the staff member of proxmox mentioned here: <a href="https://forum.proxmox.com/threads/proxmox-ve-licensing-features.87788/post-384662">https://forum.proxmox.com/threads/proxmox-ve-licensing-features.87788/post-384662</a></p>
+
+
+
+<a name="448790983"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448790983" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448790983">(Jul 03 2024 at 08:47)</a>:</h4>
+<p>Yes but does that make sense? Aren't there many pieces of software already in nixpkgs that use that licence?</p>
+
+
+
+<a name="448792115"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448792115" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448792115">(Jul 03 2024 at 08:53)</a>:</h4>
+<p>like that for instance:  <a href="https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/applications/backup/proxmox-backup-client/default.nix#L152">https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/applications/backup/proxmox-backup-client/default.nix#L152</a></p>
+
+
+
+<a name="448792575"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448792575" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448792575">(Jul 03 2024 at 08:55)</a>:</h4>
+<blockquote>
+<p>Yes but does that make sense?</p>
+</blockquote>
+<p>It does not, unless you are modifying the code you can have your own license and re-distribute it, while providing the original source code with agpl-v3 license.</p>
+
+
+
+<a name="448792949"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448792949" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448792949">(Jul 03 2024 at 08:57)</a>:</h4>
+<p>I think this only makes sense <em>if they don't want to commit it to nixpkgs</em> ... I will go and ask them on discourse what is going on with that.</p>
+
+
+
+<a name="448793072"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448793072" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448793072">(Jul 03 2024 at 08:58)</a>:</h4>
+<p>because the project is very nice. Once you have Proxmox clustering support and everything, you could use that as the foundational stone for NixOS-based datacenters.</p>
+
+
+
+<a name="448793201"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448793201" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448793201">(Jul 03 2024 at 08:59)</a>:</h4>
+<p>and then you could build a terraform-backend with a nice frontend for the outside to automate VM provisioning via Proxmox in your cluster</p>
+
+
+
+<a name="448793433"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448793433" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448793433">(Jul 03 2024 at 09:00)</a>:</h4>
+<p>Yup, pretty exciting</p>
+
+
+
+<a name="448795555"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448795555" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448795555">(Jul 03 2024 at 09:11)</a>:</h4>
+<p>Alright, I asked them</p>
+
+
+
+<a name="448795738"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448795738" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448795738">(Jul 03 2024 at 09:12)</a>:</h4>
+<p>but if this was working nicely for proxmox custering out of the box and wouldn't rely on a third party cache as it does right now, it'd be a really nice (and cheap!) basis for building smaller datacenters in order to offer hosting solutions with nice automated provisioning for clients.</p>
+
+
+
+<a name="448796530"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448796530" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448796530">(Jul 03 2024 at 09:16)</a>:</h4>
+<p>Idk what the alternatives would be tbh: VMware, Nutanix, maybe something like OpenStack?</p>
+
+
+
+<a name="448797173"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448797173" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448797173">(Jul 03 2024 at 09:19)</a>:</h4>
+<p><a href="https://www.reddit.com/r/homelab/s/2eHFsh2NPW">https://www.reddit.com/r/homelab/s/2eHFsh2NPW</a></p>
+
+
+
+<a name="448797228"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/448797228" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#448797228">(Jul 03 2024 at 09:19)</a>:</h4>
+<p>^ recommends xcp-ng</p>
+
+
+
+<a name="449026354"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/449026354" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#449026354">(Jul 04 2024 at 07:55)</a>:</h4>
+<p>yes, I am not sure on the Xen vs. KVM question. I only ever used the latter.</p>
+
+
+
+<a name="449026579"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/449026579" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#449026579">(Jul 04 2024 at 07:56)</a>:</h4>
+<p>I have also tried only KVM, but I might soon give Xen a shot</p>
+
+
+
+<a name="449452185"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/449452185" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John Bargman <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#449452185">(Jul 06 2024 at 07:17)</a>:</h4>
+<p>I think Proxmox is fantastic for VDS services; but you will most likely want VPS services aswell;<br>
+OpenStack works exceptionally for those.</p>
+<p>Using Nix as a reliable backbone for a data-center is very exciting! I've got some small-scale tests in my own home, never had enough resources to make a larger system though.</p>
+
+
+
+<a name="449452266"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/449452266" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John Bargman <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#449452266">(Jul 06 2024 at 07:18)</a>:</h4>
+<p>Also, LibVirt/QEMU and/or MicroVM works very very well for stable single-deployments (such as CDN and VPN/networking runners)</p>
+
+
+
+<a name="449457937"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/NixOS%20for%20small%20datacenter/near/449457937" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/NixOS.20for.20small.20datacenter.html#449457937">(Jul 06 2024 at 08:13)</a>:</h4>
+<p>I can only say I am very happy with Proxmox. If it came built on NixOS it might be even nicer to deploy quicker on new machines. But other than the deployment, there is a fairly capable Terraform-provider for Proxmox out there.</p>
+<p>And for larger stuff, yes, OpenStack might be a really nice solution.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

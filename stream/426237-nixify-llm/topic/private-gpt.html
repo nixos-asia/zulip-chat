@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>private-gpt · nixify-llm · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/index.html">nixify-llm</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/private-gpt.html">private-gpt</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="438938713"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/private-gpt/near/438938713" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/private-gpt.html#438938713">(May 16 2024 at 05:30)</a>:</h4>
+<p><a href="https://github.com/NixOS/nixpkgs/pull/305586">https://github.com/NixOS/nixpkgs/pull/305586</a></p>
+<p><a href="https://github.com/zylon-ai/private-gpt">https://github.com/zylon-ai/private-gpt</a></p>
+<div class="message_inline_image"><a href="https://github.com/zylon-ai/private-gpt/raw/main/fern/docs/assets/ui.png?raw=true"><img src="https://uploads.zulipusercontent.net/6d157fa5875550373a7805fc55addcf77459bd1d/68747470733a2f2f6769746875622e636f6d2f7a796c6f6e2d61692f707269766174652d6770742f7261772f6d61696e2f6665726e2f646f63732f6173736574732f75692e706e673f7261773d74727565"></a></div>
+
+
+
+<a name="438939097"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/private-gpt/near/438939097" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/private-gpt.html#438939097">(May 16 2024 at 05:33)</a>:</h4>
+<p>Oops, fails to build on macOS:</p>
+<p><a href="/user_uploads/60244/eayS6zAkbniYsCBEgRcygzo5/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/eayS6zAkbniYsCBEgRcygzo5/image.png" title="image.png"><img src="/user_uploads/60244/eayS6zAkbniYsCBEgRcygzo5/image.png"></a></div>
+
+
+
+<a name="438963066"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/private-gpt/near/438963066" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/private-gpt.html#438963066">(May 16 2024 at 08:04)</a>:</h4>
+<p>yeah interesting, open-webui, what <span class="user-mention" data-user-id="669081">@Shivaraj B H</span> was using so far, also has some RAG capabilities, but I haven't really been testing them in depth. I am not clear yet which is the best way to generate the embeddings. </p>
+<p>Apparently you can use ollama with specific models to get that done.</p>
+
+
+
+<a name="439868467"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/private-gpt/near/439868467" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/private-gpt.html#439868467">(May 21 2024 at 17:40)</a>:</h4>
+<p><code>private-gpt</code> build failure on <code>aarch64-darwin</code> should be solved after <a href="https://github.com/NixOS/nixpkgs/issues/313403">https://github.com/NixOS/nixpkgs/issues/313403</a></p>
+<p>Until then, I will override in the <code>nixpkgs</code> <code>flakeModule</code> of <code>ollama-flake</code> to make it work on <code>aarch64-darwin</code></p>
+
+
+
+<a name="440651533"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/426237-nixify-llm/topic/private-gpt/near/440651533" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/426237-nixify-llm/topic/private-gpt.html#440651533">(May 25 2024 at 17:22)</a>:</h4>
+<p><a href="https://github.com/zylon-ai/private-gpt">private-gpt</a> in <a href="https://github.com/shivaraj-bh/ollama-flake">ollama-flake</a>:</p>
+<p><a href="#narrow/stream/426237-nixify-llm/topic/ollama/near/440651465">https://nixos.zulipchat.com/#narrow/stream/426237-nixify-llm/topic/ollama/near/440651465</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

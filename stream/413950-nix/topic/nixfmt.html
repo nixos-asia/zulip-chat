@@ -1,0 +1,101 @@
+<html>
+<head><meta charset="utf-8"><title>nixfmt · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html">nixfmt</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="444706789"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444706789" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444706789">(Jun 14 2024 at 13:58)</a>:</h4>
+<p><span class="user-mention" data-user-id="728730">@Pol Dellaiera</span> Is <code>nixfmt</code> considered de facto/ stable now? Because the Github repo description says </p>
+<blockquote>
+<p>The official (<strong>but not yet stable</strong>) formatter for Nix code</p>
+</blockquote>
+<p><a href="https://github.com/NixOS/nixfmt">https://github.com/NixOS/nixfmt</a></p>
+
+
+
+<a name="444707250"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707250" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707250">(Jun 14 2024 at 14:01)</a>:</h4>
+<p>Apparently RFC 166 has established it to become the standard at least</p>
+
+
+
+<a name="444707285"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707285" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707285">(Jun 14 2024 at 14:01)</a>:</h4>
+<p>Yeah see this thingie: <a href="https://github.com/nix-community/nixvim/pull/1375#issuecomment-2039393789">https://github.com/nix-community/nixvim/pull/1375#issuecomment-2039393789</a></p>
+
+
+
+<a name="444707374"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707374" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707374">(Jun 14 2024 at 14:01)</a>:</h4>
+<p>I'm requiring every contributor to pass their new Nix files through <code>nixfmt-rfc-style</code> since 1 month or so now.</p>
+
+
+
+<a name="444707423"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707423" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707423">(Jun 14 2024 at 14:02)</a>:</h4>
+<p>Good to know!</p>
+
+
+
+<a name="444707477"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707477" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707477">(Jun 14 2024 at 14:02)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="728730">Pol Dellaiera</span> <a href="#narrow/stream/413950-nix/topic/nixfmt/near/444707374">said</a>:</p>
+<blockquote>
+<p>every contributor</p>
+</blockquote>
+<p>Which repo? nixpkgs?</p>
+
+
+
+<a name="444707494"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707494" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707494">(Jun 14 2024 at 14:02)</a>:</h4>
+<p>Yes</p>
+
+
+
+<a name="444707561"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707561" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707561">(Jun 14 2024 at 14:02)</a>:</h4>
+<p>Last example today: <a href="https://github.com/NixOS/nixpkgs/pull/317742#pullrequestreview-2118391543">https://github.com/NixOS/nixpkgs/pull/317742#pullrequestreview-2118391543</a></p>
+
+
+
+<a name="444707966"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444707966" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444707966">(Jun 14 2024 at 14:04)</a>:</h4>
+<p>In <code>services-flake</code> we have a CI check that runs <code>nixpkgs-fmt</code> to see that the code was formatted, but I was surprised to see that it didn't fail on your PR (cc <span class="user-mention" data-user-id="669081">@Shivaraj B H</span>)</p>
+<p><a href="https://github.com/juspay/services-flake/blob/db7ab711d9a6cefd28dbcfe58409d3a968a3b713/dev/flake.nix#L30">https://github.com/juspay/services-flake/blob/db7ab711d9a6cefd28dbcfe58409d3a968a3b713/dev/flake.nix#L30</a></p>
+<p>I'd welcome a dedicated PR that replaces <code>nixpkgs-fmt</code> with <code>nixfmt-rfc-style</code> mainly to see whether the new formatting is something we can switch over, not just for this project but for others as well. I've been happy with <code>nixpkgs-fmt</code> so far.</p>
+
+
+
+<a name="444708395"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444708395" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444708395">(Jun 14 2024 at 14:06)</a>:</h4>
+<p>I won't discuss the formatting, switch to <code>nixfmt-rfc-style</code> if you want to, that won't change a thing in the technical side of things. It's, I believe, up to the maintainers to decide.</p>
+
+
+
+<a name="444708430"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444708430" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444708430">(Jun 14 2024 at 14:06)</a>:</h4>
+<p>I don’t think <code>nixpkgs-fmt</code> flake check complaints about <code>nixfmt-rfc-style</code>, which is why the tests were passing.</p>
+
+
+
+<a name="444708769"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444708769" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pol Dellaiera <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444708769">(Jun 14 2024 at 14:08)</a>:</h4>
+<p>I've already spent too much time discussing the code formatting in plenty of languages... and in the end, I always end up using the default one... even if I don't like some parts of it.</p>
+
+
+
+<a name="444709031"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nixfmt/near/444709031" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413950-nix/topic/nixfmt.html#444709031">(Jun 14 2024 at 14:09)</a>:</h4>
+<p>yeah that is the best approach imho, just avoid useless discussion by establishing a formatting default</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

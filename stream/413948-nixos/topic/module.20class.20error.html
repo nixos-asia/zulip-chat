@@ -1,0 +1,46 @@
+<html>
+<head><meta charset="utf-8"><title>module class error · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/module.20class.20error.html">module class error</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="562467201"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/module%20class%20error/near/562467201" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Arul Agrawal <a href="http://chat.nixos.asia/stream/413948-nixos/topic/module.20class.20error.html#562467201">(Dec 08 2025 at 13:32)</a>:</h4>
+<p>Hey all, I recently tried to update my system nix flake after a few months, and ran into an issue I haven't been able to find much about:</p>
+<div class="codehilite"><pre><span></span><code>          419|               The module `${m._file or m.key}` (class: ${lib.strings.escapeNixString m._class}) cannot be imported into a module evaluation that expects class ${lib.strings.escapeNixString class}.
+
+       error: The module `/nix/store/xm3nq4fadri4jcc3ms6vhc4nx5rgi27z-source/flake.nix#nixosModules.common` (class: &quot;nixos&quot;) cannot be imported into a module evaluation that expects class &quot;darwin&quot;.
+
+       Help:
+       - Ensure that you are importing the correct module.
+       - Verify that the module&#39;s `_class`, &quot;nixos&quot; matches the expected `class` &quot;darwin&quot;.
+       - If you are using a custom class, make sure it is correctly defined and used consistently across your modules.
+</code></pre></div>
+<p>Here is my current flake: <a href="https://github.com/arulagrawal/nix/blob/fixing/flake.nix">https://github.com/arulagrawal/nix/blob/fixing/flake.nix</a><br>
+The only thing I did was run <code>nix flake update</code> (no config changes) so I'm not really sure where things changed.<br>
+Any help appreciated!!</p>
+
+
+
+<a name="562524410"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/module%20class%20error/near/562524410" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/module.20class.20error.html#562524410">(Dec 08 2025 at 17:43)</a>:</h4>
+<p>Probably coming from new flake-parts.</p>
+<p>Don't run <code>nix flake update</code>. Instead only update the relevant inputs (nixpkgs, nix-darwin, home-manager, etc.) by passing them as arguments.</p>
+
+
+
+<a name="562524965"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/module%20class%20error/near/562524965" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/module.20class.20error.html#562524965">(Dec 08 2025 at 17:46)</a>:</h4>
+<p>And since you use nixos-unified:</p>
+<p><a href="/user_uploads/60244/4y3UJ596T2Mdp6xiBuNYNHmi/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/4y3UJ596T2Mdp6xiBuNYNHmi/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1256x908" src="/user_uploads/thumbnail/60244/4y3UJ596T2Mdp6xiBuNYNHmi/image.png/840x560.webp"></a></div>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

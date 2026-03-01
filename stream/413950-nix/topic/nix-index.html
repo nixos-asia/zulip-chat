@@ -1,0 +1,271 @@
+<html>
+<head><meta charset="utf-8"><title>nix-index · nix · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413950-nix/index.html">nix</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html">nix-index</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="416719213"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416719213" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416719213">(Jan 19 2024 at 06:59)</a>:</h4>
+<p><a href="/user_uploads/60244/fUlea3Axidr0RbTc16q6n23z/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/fUlea3Axidr0RbTc16q6n23z/image.png" title="image.png"><img src="/user_uploads/60244/fUlea3Axidr0RbTc16q6n23z/image.png"></a></div><p><span class="user-mention" data-user-id="671300">@Aravind Gopal</span> You were talking about this -- telling the user to display a nix-friendly message when they try to run something that's not already (thus not encouraging them towards of homebrew and the like).</p>
+<p>Let me find the config I have for this.</p>
+
+
+
+<a name="416719331"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416719331" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416719331">(Jan 19 2024 at 07:00)</a>:</h4>
+<p>This uses a program called <code>nix-index</code>, which uses old-style commands unfortunately: <a href="https://github.com/nix-community/nix-index/issues/191">https://github.com/nix-community/nix-index/issues/191</a></p>
+
+
+
+<a name="416719451"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416719451" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416719451">(Jan 19 2024 at 07:02)</a>:</h4>
+<p>^ Potential OSS contribution here</p>
+
+
+
+<a name="416719579"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416719579" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416719579">(Jan 19 2024 at 07:03)</a>:</h4>
+<p>Here's the home-manager config for enabling this:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>  <span class="ss">programs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">nix-index</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="ss">enableZshIntegration</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="416719761"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416719761" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416719761">(Jan 19 2024 at 07:04)</a>:</h4>
+<p><a href="https://github.com/juspay/nix-dev-home/commit/4f4ab11b5f76c054289969d3927e6bbc31e2d981">https://github.com/juspay/nix-dev-home/commit/4f4ab11b5f76c054289969d3927e6bbc31e2d981</a></p>
+
+
+
+<a name="416719968"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416719968" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416719968">(Jan 19 2024 at 07:06)</a>:</h4>
+<p>Oh, nix-index does use new style commands but only if <code>~/.nix-profile/manifest.json</code> exists:</p>
+<p><a href="https://github.com/nix-community/nix-index/commit/cd7cdcb06f3552fc55cf0cded66de90461006c00">https://github.com/nix-community/nix-index/commit/cd7cdcb06f3552fc55cf0cded66de90461006c00</a></p>
+
+
+
+<a name="416720171"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416720171" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416720171">(Jan 19 2024 at 07:08)</a>:</h4>
+<p>I did <code>nix profile install nixpkgs#hello</code> just to populate this manifest, and now it shows the right thing:</p>
+<p><a href="/user_uploads/60244/aKjxWo0ZGVck8b7ELbQx1WqY/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/aKjxWo0ZGVck8b7ELbQx1WqY/image.png" title="image.png"><img src="/user_uploads/60244/aKjxWo0ZGVck8b7ELbQx1WqY/image.png"></a></div>
+
+
+
+<a name="416720707"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416720707" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416720707">(Jan 19 2024 at 07:12)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>$ cat .nix-profile/manifest.json
+{&quot;elements&quot;:[],&quot;version&quot;:2}
+</code></pre></div>
+
+
+
+<a name="416730211"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416730211" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Aravind Gopal <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416730211">(Jan 19 2024 at 08:31)</a>:</h4>
+<p>This is a good tool to motivate users towards full nix.</p>
+
+
+
+<a name="416731700"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/416731700" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#416731700">(Jan 19 2024 at 08:42)</a>:</h4>
+<p>One glitch. The installation is not seamless. You need to generate the index manually the first time,</p>
+<p><a href="/user_uploads/60244/gqkOc9u_PuTou8P485u-uW7l/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/gqkOc9u_PuTou8P485u-uW7l/image.png" title="image.png"><img src="/user_uploads/60244/gqkOc9u_PuTou8P485u-uW7l/image.png"></a></div>
+
+
+
+<a name="420778862"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/420778862" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#420778862">(Feb 10 2024 at 07:26)</a>:</h4>
+<p><span class="user-mention" data-user-id="671300">@Aravind Gopal</span> We've automated the nix-index DB generation part,</p>
+<p><a href="https://github.com/juspay/nix-dev-home/pull/14">https://github.com/juspay/nix-dev-home/pull/14</a></p>
+
+
+
+<a name="489966744"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489966744" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489966744">(Dec 19 2024 at 13:38)</a>:</h4>
+<p>Came here from this issue: <a href="https://github.com/nix-community/nix-index/issues/191">https://github.com/nix-community/nix-index/issues/191</a></p>
+<p>Any ideas if I can get <code>nix-index</code> to suggest new "nix" commands instead of <code>nix-env</code> / <code>nix-shell</code>?</p>
+
+
+
+<a name="489967572"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489967572" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489967572">(Dec 19 2024 at 13:42)</a>:</h4>
+<p><span class="user-mention" data-user-id="813909">@Gabriel Volpe</span> Welcome.</p>
+<p>Looks like this now works only after initializing the profile with some package:</p>
+<p><a href="/user_uploads/60244/xUl4QY0HV3ZURyma_wQnRYPW/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/xUl4QY0HV3ZURyma_wQnRYPW/image.png" title="image.png"><img data-original-dimensions="942x932" src="/user_uploads/thumbnail/60244/xUl4QY0HV3ZURyma_wQnRYPW/image.png/840x560.webp"></a></div><p>(Creatring just <code>.nix-profile/manifest.json</code> doesn't seem sufficient)</p>
+
+
+
+<a name="489967902"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489967902" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489967902">(Dec 19 2024 at 13:44)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>❯ more ~/.nix-profile/manifest.json
+{&quot;elements&quot;:{&quot;hello&quot;:{&quot;active&quot;:true,&quot;attrPath&quot;:&quot;legacyPackages.x86_64-linux.hel
+lo&quot;,&quot;originalUrl&quot;:&quot;flake:nixpkgs&quot;,&quot;outputs&quot;:null,&quot;priority&quot;:5,&quot;storePaths&quot;:[&quot;/n
+ix/store/1q8w6gl1ll0mwfkqc3c2yx005s6wwfrl-hello-2.12.1&quot;],&quot;url&quot;:&quot;path:/nix/store
+/22r7q7s9552gn1vpjigkbhfgcvhsrz68-source?lastModified=1734119587&amp;narHash=sha256
+-AKU6qqskl0yf2%2BJdRdD0cfxX4b9x3KKV5RqA6wijmPM%3D&amp;rev=3566ab7246670a43abd2ffa91
+3cc62dad9cdf7d5&quot;}},&quot;version&quot;:3}
+</code></pre></div>
+
+
+
+<a name="489974457"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489974457" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489974457">(Dec 19 2024 at 14:20)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> thanks. It's not supported without using Nix profile, right? I don't use nix profile at all</p>
+
+
+
+<a name="489974519"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489974519" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489974519">(Dec 19 2024 at 14:20)</a>:</h4>
+<p>Sorry for the delay, first time using Zulip, a bit lost here :D</p>
+
+
+
+<a name="489975287"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489975287" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489975287">(Dec 19 2024 at 14:24)</a>:</h4>
+<blockquote>
+<p>I don't use nix profile at all</p>
+</blockquote>
+<p>Yea, me neither. But the above (manifest.json) is basically a workaround, until upstream implements this support.</p>
+<p>I do notice that the Nix core community cares little about flakes, which is unfortunate.</p>
+
+
+
+<a name="489975676"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489975676" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489975676">(Dec 19 2024 at 14:27)</a>:</h4>
+<p>Got it. I do recall having all sort of weird issues in the past when mixing up flakes/nix profile/channels, so I think I'll pass on enabling nix profiles just for this. I think I'll just fork the project and fix up the script: <a href="https://github.com/nix-community/nix-index/blob/master/command-not-found.sh">https://github.com/nix-community/nix-index/blob/master/command-not-found.sh</a></p>
+
+
+
+<a name="489976833"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489976833" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489976833">(Dec 19 2024 at 14:33)</a>:</h4>
+<p>Ah, cool. Let me know if you get something working, perhaps we'll switch to it too.</p>
+
+
+
+<a name="489977141"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489977141" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489977141">(Dec 19 2024 at 14:35)</a>:</h4>
+<p>That script should probably check if flakes is enabled this way, rather than look for manifest.json</p>
+<div class="codehilite"><pre><span></span><code>❯ nix config show | grep &#39;experimental-features.*flakes&#39;
+experimental-features = fetch-tree flakes nix-command
+</code></pre></div>
+
+
+
+<a name="489977673"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489977673" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489977673">(Dec 19 2024 at 14:38)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> I think that's just trying to be smart about it. A simple script argument will be enough. Just let the user pass a simple flag and call it a day <span aria-label="man shrugging" class="emoji emoji-1f937-200d-2642" role="img" title="man shrugging">:man_shrugging:</span></p>
+
+
+
+<a name="489977753"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489977753" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489977753">(Dec 19 2024 at 14:39)</a>:</h4>
+<p>Agreed.</p>
+
+
+
+<a name="489977770"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489977770" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489977770">(Dec 19 2024 at 14:39)</a>:</h4>
+<p>And it would be compatible if flakes ever become a stable feature</p>
+
+
+
+<a name="489977865"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489977865" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489977865">(Dec 19 2024 at 14:40)</a>:</h4>
+<p>s/stable/non-experimental (I think flakes are already stable and well established)</p>
+
+
+
+<a name="489977877"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489977877" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489977877">(Dec 19 2024 at 14:40)</a>:</h4>
+<p>Would this flag be configurable in home-manager (i.e., <a href="https://github.com/juspay/nixos-unified-template/blob/15ea91d64725171fd10bdc7e07395d480025864b/modules/home/nix-index.nix#L10-L13">here</a>) - and if not how would you set it up?</p>
+
+
+
+<a name="489978127"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489978127" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489978127">(Dec 19 2024 at 14:41)</a>:</h4>
+<p>Yes, that would need to be adapted, but that's easy if the script supports it. Exactly what I wrote about here: <a href="https://github.com/nix-community/nix-index/issues/210#issuecomment-2554098215">https://github.com/nix-community/nix-index/issues/210#issuecomment-2554098215</a></p>
+
+
+
+<a name="489978279"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489978279" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489978279">(Dec 19 2024 at 14:42)</a>:</h4>
+<p>BTW pleasure to chat with you, followed a lot of your writings since my early adventures with Nix and Haskell :)</p>
+
+
+
+<a name="489978318"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/489978318" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#489978318">(Dec 19 2024 at 14:42)</a>:</h4>
+<p>Cheers :-)</p>
+
+
+
+<a name="490152580"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490152580" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490152580">(Dec 20 2024 at 12:35)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> if you'd like to give it a try :)</p>
+<p><a href="https://github.com/gvolpe/nix-index/pull/1">https://github.com/gvolpe/nix-index/pull/1</a></p>
+
+
+
+<a name="490176486"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490176486" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490176486">(Dec 20 2024 at 14:53)</a>:</h4>
+<p>Great, using this hm module, I get:</p>
+<div class="codehilite"><pre><span></span><code>       &gt; error: collision between `/nix/store/9fw6gqi3h1shbsiagkv3r0gy0kmy8nh1-nix-index-with-db-0.1.8/etc/profile.d/command-not-found.sh&#39; and `/nix/store/rfv2qmpf436ynpnacpkp30ccs9wwmiy3-nix-index-0.1.8/etc/profile.d/command-not-found.sh&#39;
+</code></pre></div>
+
+
+
+<a name="490176689"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490176689" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490176689">(Dec 20 2024 at 14:55)</a>:</h4>
+<p>hmm that's strange, perhaps the overlay is not taking effect? do you have the old nix-index installed?</p>
+
+
+
+<a name="490176985"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490176985" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490176985">(Dec 20 2024 at 14:56)</a>:</h4>
+<p>this is all I had to do to import it in my nix config: <a href="https://github.com/gvolpe/nix-config/commit/2d0486c3de66effdaab9df7485ed3fb83522bd77">https://github.com/gvolpe/nix-config/commit/2d0486c3de66effdaab9df7485ed3fb83522bd77</a></p>
+
+
+
+<a name="490177151"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490177151" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490177151">(Dec 20 2024 at 14:57)</a>:</h4>
+<p>the home manager module is adding the nixpkgs.overlay here: <a href="https://github.com/gvolpe/nix-index/blob/master/flake.nix#L24">https://github.com/gvolpe/nix-index/blob/master/flake.nix#L24</a></p>
+<p>but it could be the case that may need to be done explicitly in your packages instance? I can expose that separately</p>
+
+
+
+<a name="490186210"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490186210" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490186210">(Dec 20 2024 at 15:45)</a>:</h4>
+<p>Here's mine: <a href="https://github.com/srid/nixos-config/pull/72">https://github.com/srid/nixos-config/pull/72</a></p>
+
+
+
+<a name="490186532"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490186532" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490186532">(Dec 20 2024 at 15:47)</a>:</h4>
+<p>Can be reproduced using:</p>
+<div class="codehilite"><pre><span></span><code>nix build github:srid/nixos-config/nix-index-fork#nixosConfigurations.vixen.config.system.build.toplevel
+</code></pre></div>
+<p>(I'll revisit this later; engaged in something else now).</p>
+
+
+
+<a name="490197318"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413950-nix/topic/nix-index/near/490197318" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gabriel Volpe <a href="http://chat.nixos.asia/stream/413950-nix/topic/nix-index.html#490197318">(Dec 20 2024 at 16:49)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span> think I found the issue, left a comment on your PR</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

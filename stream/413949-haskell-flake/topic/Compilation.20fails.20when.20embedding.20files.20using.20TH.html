@@ -1,0 +1,110 @@
+<html>
+<head><meta charset="utf-8"><title>Compilation fails when embedding files using TH · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Compilation.20fails.20when.20embedding.20files.20using.20TH.html">Compilation fails when embedding files using TH</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="432279676"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Compilation%20fails%20when%20embedding%20files%20using%20TH/near/432279676" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jkru <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Compilation.20fails.20when.20embedding.20files.20using.20TH.html#432279676">(Apr 09 2024 at 15:59)</a>:</h4>
+<p>Hi, first off, thanks for creating <code>haskell-flake</code>! It got me up and running with Haskell quickly.</p>
+<p>I'm trying to deploy a Haskell project to a NixOS server and compilation fails when trying to embed files using template Haskell:</p>
+<div class="codehilite"><pre><span></span><code>src/Settings.hs:139:23: error: [GHC-87897]
+    • Exception when trying to run compile-time code:
+        config/settings.yml: withBinaryFile: does not exist (No such file or directory)
+      Code: (embedFile configSettingsYml)
+    • In the untyped splice: $(embedFile configSettingsYml)
+    |
+139 | configSettingsYmlBS = $(embedFile configSettingsYml)
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[12 of 54] Compiling TodoBundleName   ( src/TodoBundleName.hs, dist/build/TodoBundleName.o, dist/build/TodoBundleName.dyn_o )
+[13 of 54] Compiling TodoName         ( src/TodoName.hs, dist/build/TodoName.o, dist/build/TodoName.dyn_o )
+[14 of 54] Compiling TodoStatus       ( src/TodoStatus.hs, dist/build/TodoStatus.o, dist/build/TodoStatus.dyn_o )
+[15 of 54] Compiling TransferFeePaidBy ( src/TransferFeePaidBy.hs, dist/build/TransferFeePaidBy.o, dist/build/TransferFeePaidBy.dyn_o )
+[16 of 54] Compiling Model            ( src/Model.hs, dist/build/Model.o, dist/build/Model.dyn_o )
+
+src/Model.hs:64:3: error: [GHC-87897]
+    • Exception when trying to run compile-time code:
+        config/models.persistentmodels: withBinaryFile: does not exist (No such file or directory)
+      Code: (persistFileWith
+               lowerCaseSettings &quot;config/models.persistentmodels&quot;)
+    • In the untyped splice:
+        $(persistFileWith
+            lowerCaseSettings &quot;config/models.persistentmodels&quot;)
+   |
+64 |   $(persistFileWith lowerCaseSettings &quot;config/models.persistentmodels&quot;)
+   |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</code></pre></div>
+<p>The project compiles on my NixOS development machine using the devShell but the error occurs when deploying to a server running NixOS.</p>
+<p>The files exist in the project, are checked in to the repo, and our old deployment pipeline using Docker works so I think I've made some mistake when setting it up using <code>haskell-flake</code>.</p>
+<p>Do I have to whitelist these files to be part of the build or so? I tried reading up on it but am too new to Nix to understand.</p>
+<p>Here's the <code>flake.nix</code>:</p>
+<div class="codehilite"><pre><span></span><code>{
+  inputs = {
+    nixpkgs.url = &quot;github:nixos/nixpkgs/f373ad52f1fa4187abeb7d1ce1056314bcbc9980&quot;;
+    flake-parts.url = &quot;github:hercules-ci/flake-parts&quot;;
+    haskell-flake.url = &quot;github:srid/haskell-flake&quot;;
+  };
+  outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = nixpkgs.lib.systems.flakeExposed;
+      imports = [ inputs.haskell-flake.flakeModule ];
+      perSystem = { self&#39;, system, lib, config, pkgs, ... }: {
+        haskellProjects.default = {
+          basePackages = pkgs.haskell.packages.ghc982;
+
+          # Want to override dependencies?
+          # See https://haskell.flake.page/dependency
+          settings = {
+            slugify.check = false;
+            sendgrid-v3.check = false;
+            fast-logger.check = false;
+          };
+
+          devShell = {
+            hlsCheck.enable = false;
+          };
+
+          autoWire = [ &quot;packages&quot; &quot;apps&quot; &quot;checks&quot; ]; # Wire all but the devShell
+        };
+
+        packages.default = self&#39;.packages.internal-hs;
+        # apps.default = self&#39;.apps.internal-hs;
+
+        devShells.default = pkgs.mkShell {
+          name = &quot;Haskell devShell&quot;;
+          inputsFrom = [
+            config.haskellProjects.default.outputs.devShell
+          ];
+          nativeBuildInputs = with pkgs; [
+            watchexec
+            pcre
+            zlib
+          ];
+        };
+      };
+    };
+}
+</code></pre></div>
+
+
+
+<a name="432348509"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Compilation%20fails%20when%20embedding%20files%20using%20TH/near/432348509" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Compilation.20fails.20when.20embedding.20files.20using.20TH.html#432348509">(Apr 09 2024 at 21:54)</a>:</h4>
+<p>Welcome, <span class="user-mention" data-user-id="708802">@Jkru</span> </p>
+<p>Did you include <code>config/models.persistentmodels</code> in Cabal's <code>data-files</code>?</p>
+
+
+
+<a name="433058151"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/Compilation%20fails%20when%20embedding%20files%20using%20TH/near/433058151" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jkru <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/Compilation.20fails.20when.20embedding.20files.20using.20TH.html#433058151">(Apr 13 2024 at 16:05)</a>:</h4>
+<p>Thank you, that solved the issue!</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

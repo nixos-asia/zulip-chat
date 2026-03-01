@@ -1,0 +1,178 @@
+<html>
+<head><meta charset="utf-8"><title>obsidian graph in emanote · website · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/416826-website/index.html">website</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html">obsidian graph in emanote</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="406357125"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406357125" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406357125">(Dec 06 2023 at 17:55)</a>:</h4>
+<p><span class="user-mention" data-user-id="667408">@Srid</span>  I want to have <a href="https://obsidian.md/">obsidian</a> like <a href="https://help.obsidian.md/Plugins/Graph+view">interactive graph</a>  but reuse the nodes from <a href="https://emanote.srid.ca/guide/html-template/uptree">uplink tree</a> in <a href="https://github.com/srid/emanote">emanote</a>. How much of an effort, according to you, would that be? </p>
+<p>I like having the graph stuck to the screen on the sidebar, for quick navigation, while I scroll through the page -- a UX I prefer.</p>
+
+
+
+<a name="406360127"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406360127" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406360127">(Dec 06 2023 at 18:13)</a>:</h4>
+<p>I'd like to improve the layout such as the right side includes sticky ToC. And the left side includes a navigation sidebar built off folgezettel relationships. So, it shows the siblings of current note in context of the inverted tree.</p>
+<p>Yes, I want to do this in Emanote. But it is not clear how to visually represent a sidebar tree where nodes may have more than one parent. (In uplink tree this is not an issue because we don't show siblings)</p>
+
+
+
+<a name="406360425"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406360425" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406360425">(Dec 06 2023 at 18:15)</a>:</h4>
+<p>The graph itself is orthogonal feature, we can have that too. But I don't think it would be as useful as a (more flatish) navigation sidebar.</p>
+
+
+
+<a name="406364286"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406364286" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406364286">(Dec 06 2023 at 18:39)</a>:</h4>
+<blockquote>
+<p>But it is not clear how to visually represent a sidebar tree where nodes may have more than one parent. </p>
+</blockquote>
+<p>Can you give me an example for nodes having more than one parent?</p>
+
+
+
+<a name="406364575"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406364575" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406364575">(Dec 06 2023 at 18:41)</a>:</h4>
+<blockquote>
+<p>The graph itself is orthogonal feature, we can have that too. But I don't think it would be as useful as a (more flatish) navigation sidebar.</p>
+</blockquote>
+<p>If the sidebar works out, I don't mind using that. In the end, accessibility must be easy and navigation should be intuitive.</p>
+
+
+
+<a name="406364959"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406364959" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406364959">(Dec 06 2023 at 18:44)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="669081">Shivaraj B H</span> <a href="#narrow/stream/413951-general/topic/obsidian.20graph.20in.20emanote/near/406364286">said</a>:</p>
+<blockquote>
+<blockquote>
+<p>But it is not clear how to visually represent a sidebar tree where nodes may have more than one parent. </p>
+</blockquote>
+<p>Can you give me an example for nodes having more than one parent?</p>
+</blockquote>
+<p>Your own post: <a href="https://nixos.asia/en/blog/nixify-haskell-project-intro">https://nixos.asia/en/blog/nixify-haskell-project-intro</a></p>
+<p>What would the left sidebar content be, exactly, for this page?</p>
+
+
+
+<a name="406365163"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406365163" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406365163">(Dec 06 2023 at 18:46)</a>:</h4>
+<p>Another example: <a href="https://nixos.asia/en/gotchas/macos-upgrade">https://nixos.asia/en/gotchas/macos-upgrade</a></p>
+<p>Say, both 'Gotchas' and 'macOS' have multiple children. How would these children be rendered on the sidebar, and where and how would the current page's title be positioned?</p>
+
+
+
+<a name="406370759"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406370759" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406370759">(Dec 06 2023 at 19:20)</a>:</h4>
+<blockquote>
+<p>How would these children be rendered on the sidebar, and where and how would the current page's title be positioned?</p>
+</blockquote>
+<p>Why can't we have the title of the current page positioned in the centre and show the siblings of the current page recursively? It would look something of this sorts for nodes with multiple parents:<br>
+<a href="/user_uploads/60244/bKyFeClXPhC6kcVTtnkwWl4D/Screenshot-2023-12-07-at-12.47.00-AM.png">Screenshot-2023-12-07-at-12.47.00-AM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/bKyFeClXPhC6kcVTtnkwWl4D/Screenshot-2023-12-07-at-12.47.00-AM.png" title="Screenshot-2023-12-07-at-12.47.00-AM.png"><img src="/user_uploads/60244/bKyFeClXPhC6kcVTtnkwWl4D/Screenshot-2023-12-07-at-12.47.00-AM.png"></a></div><p>In this manner the children of 'Gotchas' and 'macOS' will be visible on the left side-bar when they visit the respective page. This will sure hide certain details, but is it a compromise worth making?</p>
+
+
+
+<a name="406370977"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406370977" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406370977">(Dec 06 2023 at 19:22)</a>:</h4>
+<p>Can you draw up (maybe on paper) what the <a href="https://nixos.asia/en/gotchas/macos-upgrade">https://nixos.asia/en/gotchas/macos-upgrade</a> page would look like?</p>
+
+
+
+<a name="406371071"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406371071" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406371071">(Dec 06 2023 at 19:22)</a>:</h4>
+<p>Don't think I fully understand the visualization being proposed here.</p>
+
+
+
+<a name="406371480"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406371480" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406371480">(Dec 06 2023 at 19:25)</a>:</h4>
+<p>If my understanding of siblings is right, <a href="https://nixos.asia/en/gotchas/macos-upgrade">https://nixos.asia/en/gotchas/macos-upgrade</a> doesn't have any siblings, does it?</p>
+
+
+
+<a name="406371733"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406371733" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406371733">(Dec 06 2023 at 19:27)</a>:</h4>
+<p>It does have siblings. </p>
+<p>In context of gotchas, it has two siblings:</p>
+<ul>
+<li><a href="https://nixos.asia/en/gotchas/new-file">https://nixos.asia/en/gotchas/new-file</a></li>
+<li><a href="https://nixos.asia/en/gotchas/sqlite-corruption">https://nixos.asia/en/gotchas/sqlite-corruption</a></li>
+</ul>
+<p>And in the context of macOS it has none, but could have in the future.</p>
+
+
+
+<a name="406371836"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406371836" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406371836">(Dec 06 2023 at 19:28)</a>:</h4>
+<p>(siblings by definition share the same parent)</p>
+
+
+
+<a name="406371976"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406371976" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406371976">(Dec 06 2023 at 19:29)</a>:</h4>
+<p>This is how normally sidebars are rendered. For eg, when you look at the sidebar of <a href="https://emanote.srid.ca/tips/adding-images">https://emanote.srid.ca/tips/adding-images</a> you see its two siblings: "JavaScript behaviours" and "Synchronizing notes using Syncthing".</p>
+<p>Now this sidebar can only represent one parent, unlike our heterarchy which can have multiple parents (and thus multiple <em>sets</em> of siblings).</p>
+
+
+
+<a name="406372037"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406372037" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406372037">(Dec 06 2023 at 19:29)</a>:</h4>
+<p>Related discussion: <a href="https://github.com/srid/emanote/discussions/64">https://github.com/srid/emanote/discussions/64</a></p>
+
+
+
+<a name="406372430"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406372430" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406372430">(Dec 06 2023 at 19:32)</a>:</h4>
+<p>Possibly related as well: <a href="https://github.com/srid/emanote/discussions/50">https://github.com/srid/emanote/discussions/50</a></p>
+
+
+
+<a name="406372994"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/406372994" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#406372994">(Dec 06 2023 at 19:36)</a>:</h4>
+<p>Ahh, my bad! I don't know why I kept thinking of children instead of siblings. I will get some sleep and think about this with a fresh mind</p>
+
+
+
+<a name="407472470"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/407472470" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#407472470">(Dec 12 2023 at 13:12)</a>:</h4>
+<p>This topic was moved here from <a class="stream-topic" data-stream-id="413951" href="/#narrow/stream/413951-general/topic/obsidian.20graph.20in.20emanote">#general &gt; obsidian graph in emanote</a> by <span class="user-mention silent" data-user-id="667408">Srid</span>.</p>
+
+
+
+<a name="408672295"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/408672295" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#408672295">(Dec 18 2023 at 19:09)</a>:</h4>
+<p>Tangentially related: <a href="https://github.com/srid/emanote/discussions/358">https://github.com/srid/emanote/discussions/358</a></p>
+
+
+
+<a name="408672674"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/408672674" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#408672674">(Dec 18 2023 at 19:12)</a>:</h4>
+<p>^ Seems relevant to generate a 'learning map'</p>
+
+
+
+<a name="409286619"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/409286619" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#409286619">(Dec 21 2023 at 01:18)</a>:</h4>
+<p>Implementation exploration here, <a href="https://github.com/srid/emanote/pull/483">https://github.com/srid/emanote/pull/483</a></p>
+<p>Will try to make <a href="http://nixos.asia">nixos.asia</a> use this branch once it is stable.</p>
+
+
+
+<a name="409943650"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/416826-website/topic/obsidian%20graph%20in%20emanote/near/409943650" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/416826-website/topic/obsidian.20graph.20in.20emanote.html#409943650">(Dec 25 2023 at 22:16)</a>:</h4>
+<p>Uptree can now be optionally enabled on the same book layout (I'll remove the note layout as it will no longer be necessary):</p>
+<p><a href="https://nixos.asia/en/tutorial/nixos-install">https://nixos.asia/en/tutorial/nixos-install</a></p>
+<p><a href="/user_uploads/60244/k4A-4NjDkO8ac6Ho-eL5VPsp/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/k4A-4NjDkO8ac6Ho-eL5VPsp/image.png" title="image.png"><img src="/user_uploads/60244/k4A-4NjDkO8ac6Ho-eL5VPsp/image.png"></a></div>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

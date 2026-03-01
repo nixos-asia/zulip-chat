@@ -1,0 +1,68 @@
+<html>
+<head><meta charset="utf-8"><title>just recipe grouping · offtopic · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/420166-offtopic/index.html">offtopic</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html">just recipe grouping</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="440732100"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/440732100" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#440732100">(May 26 2024 at 18:47)</a>:</h4>
+<p><code>just</code> recipes can now be grouped.</p>
+<ul>
+<li><a href="https://github.com/casey/just/pull/1842">https://github.com/casey/just/pull/1842</a></li>
+<li><a href="https://just.systems/man/en/chapter_35.html">https://just.systems/man/en/chapter_35.html</a></li>
+</ul>
+<p>Requires <a href="https://github.com/casey/just/releases/tag/1.27.0">1.27.0</a> which was released yesterday.</p>
+
+
+
+<a name="440734639"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/440734639" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#440734639">(May 26 2024 at 19:32)</a>:</h4>
+<p><a href="https://nixos.asia/en/buildRustPackage#override">https://nixos.asia/en/buildRustPackage#override</a></p>
+
+
+
+<a name="440734675"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/440734675" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#440734675">(May 26 2024 at 19:33)</a>:</h4>
+<p><a href="/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png" title="image.png"><img src="/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png"></a></div>
+
+
+
+<a name="450958551"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/450958551" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#450958551">(Jul 12 2024 at 12:28)</a>:</h4>
+<p>Just is pretty nice, it's like make but better</p>
+
+
+
+<a name="450974927"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/450974927" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#450974927">(Jul 12 2024 at 13:22)</a>:</h4>
+<p>Are there any big projects using it for nontrivial scripts?</p>
+
+
+
+<a name="451001729"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/451001729" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#451001729">(Jul 12 2024 at 15:01)</a>:</h4>
+<p><a href="https://github.com/juspay/nix-browser/blob/main/justfile">https://github.com/juspay/nix-browser/blob/main/justfile</a></p>
+<p>Generally I try to keep <code>justfile</code> trivial, and move any complex scripts into being <code>writeShellApplication</code> package under a devShell's <code>nativeBuildInputs</code></p>
+
+
+
+<a name="451001813"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/451001813" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#451001813">(Jul 12 2024 at 15:01)</a>:</h4>
+<p>There's also <a href="#narrow/stream/413950-nix/topic/just-flake.20.28justfile.20sharing.29">just-flake</a> - an attempt to abstract out common stuff in justfile</p>
+
+
+
+<a name="451008530"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/420166-offtopic/topic/just%20recipe%20grouping/near/451008530" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/420166-offtopic/topic/just.20recipe.20grouping.html#451008530">(Jul 12 2024 at 15:23)</a>:</h4>
+<p>Some of the other SRE at work use just as a sort of high-level cli to unify their workflows. Seemed pretty cool to me</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

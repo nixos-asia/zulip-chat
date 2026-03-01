@@ -1,0 +1,55 @@
+<html>
+<head><meta charset="utf-8"><title>Multi-config repos and sharing of nixpkgs · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Multi-config.20repos.20and.20sharing.20of.20nixpkgs.html">Multi-config repos and sharing of nixpkgs</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="440167696"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Multi-config%20repos%20and%20sharing%20of%20nixpkgs/near/440167696" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Multi-config.20repos.20and.20sharing.20of.20nixpkgs.html#440167696">(May 22 2024 at 19:32)</a>:</h4>
+<p>Ideas on this are welcome:</p>
+<p><a href="https://github.com/srid/nixos-flake/issues/51">https://github.com/srid/nixos-flake/issues/51</a></p>
+<p>(Need this for a Juspay internal repo, actually)</p>
+
+
+
+<a name="440318449"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Multi-config%20repos%20and%20sharing%20of%20nixpkgs/near/440318449" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Multi-config.20repos.20and.20sharing.20of.20nixpkgs.html#440318449">(May 23 2024 at 13:04)</a>:</h4>
+<p>I tried this: <a href="https://github.com/shivaraj-bh/nixos-flake/commit/183fc4d5a38875a9e2cf97728f3b354a25295f2e">https://github.com/shivaraj-bh/nixos-flake/commit/183fc4d5a38875a9e2cf97728f3b354a25295f2e</a></p>
+<p>It works if we don’t use nixosModules.home-manager.That can be fixed, if we allowspecifying home-manger input as well</p>
+
+
+
+<a name="440318518"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Multi-config%20repos%20and%20sharing%20of%20nixpkgs/near/440318518" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Multi-config.20repos.20and.20sharing.20of.20nixpkgs.html#440318518">(May 23 2024 at 13:04)</a>:</h4>
+<p>This will break the existing API though</p>
+
+
+
+<a name="440341865"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/Multi-config%20repos%20and%20sharing%20of%20nixpkgs/near/440341865" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413948-nixos/topic/Multi-config.20repos.20and.20sharing.20of.20nixpkgs.html#440341865">(May 23 2024 at 14:58)</a>:</h4>
+<p>I have tried that approach. Two disadvantages to it:</p>
+<ul>
+<li>it breaks with <code>colmena-flake</code> (but that's more a design fault of colmena than anything else).</li>
+<li>coupling</li>
+</ul>
+<p>To address the coupling issue, I thought of just dedicating a flake to each host, whilst sharing common modules from the root flake. So:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code><span class="c1"># Root flake, with common modules and inputs</span>
+./flake.nix
+
+<span class="c1"># Host A with its own nixpkgs, etc.</span>
+./hosts/a/flake.nix
+
+<span class="c1"># Host B with its own nixpkgs, etc.</span>
+./hosts/b/flake.nix
+</code></pre></div>
+<p>There are still some issues with it; I'll have revisit it.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

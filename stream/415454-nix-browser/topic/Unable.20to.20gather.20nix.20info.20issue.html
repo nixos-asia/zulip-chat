@@ -1,0 +1,34 @@
+<html>
+<head><meta charset="utf-8"><title>Unable to gather nix info issue · nix-browser · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/415454-nix-browser/index.html">nix-browser</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/415454-nix-browser/topic/Unable.20to.20gather.20nix.20info.20issue.html">Unable to gather nix info issue</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="423547625"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-nix-browser/topic/Unable%20to%20gather%20nix%20info%20issue/near/423547625" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jishnu Prakash <a href="http://chat.nixos.asia/stream/415454-nix-browser/topic/Unable.20to.20gather.20nix.20info.20issue.html#423547625">(Feb 27 2024 at 07:34)</a>:</h4>
+<p>Getting the following error after the same command got interrupted due to network issue. <br>
+cc: <span class="user-mention" data-user-id="667408">@Srid</span> </p>
+<div class="codehilite"><pre><span></span><code>❯ nix --accept-flake-config run github:juspay/nix-browser#nix-health
+Error: Unable to gather nix info
+
+Caused by:
+    0: Nix command error: Failed to decode command stdout (json error): invalid type: integer `1`, expected a string at line 1 column 11309
+    1: Failed to decode command stdout (json error): invalid type: integer `1`, expected a string at line 1 column 11309
+    2: invalid type: integer `1`, expected a string at line 1 column 11309
+</code></pre></div>
+
+
+
+<a name="423631692"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/415454-nix-browser/topic/Unable%20to%20gather%20nix%20info%20issue/near/423631692" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/415454-nix-browser/topic/Unable.20to.20gather.20nix.20info.20issue.html#423631692">(Feb 27 2024 at 15:26)</a>:</h4>
+<p>You got it working after a <code>nix nix-upgrade</code> right? You Nix version must have been old, in which case it would be good to know what it was, because it looks like we probably should do the version check first before running anything else.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

@@ -1,0 +1,33 @@
+<html>
+<head><meta charset="utf-8"><title>custom local service · services-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/414011-services-flake/index.html">services-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/custom.20local.20service.html">custom local service</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="440542921"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/custom%20local%20service/near/440542921" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Bruno Bigras <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/custom.20local.20service.html#440542921">(May 24 2024 at 16:42)</a>:</h4>
+<p>Is there a simple way to run a service by only adding something to my <code>flake.nix</code> file without having to upstream it? I guess I'm interested in both knowing how to import a service file that uses the same format as upstream <strong>and</strong> a way to set up a service with just a command (like <code>nats-server --js</code>.</p>
+
+
+
+<a name="440612147"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/custom%20local%20service/near/440612147" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/custom.20local.20service.html#440612147">(May 25 2024 at 06:06)</a>:</h4>
+<p>Yes, there is. See the pgweb service here: <a href="https://github.com/juspay/services-flake/blob/5ffae902f78b8f31416e5667ab95c40ee7a5ebef/example/simple/flake.nix#L42-L61">https://github.com/juspay/services-flake/blob/5ffae902f78b8f31416e5667ab95c40ee7a5ebef/example/simple/flake.nix#L42-L61</a></p>
+
+
+
+<a name="440612359"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/414011-services-flake/topic/custom%20local%20service/near/440612359" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/414011-services-flake/topic/custom.20local.20service.html#440612359">(May 25 2024 at 06:10)</a>:</h4>
+<p>And here’s an example of a service that doesn’t exist upstream but is only specific to the project: <a href="https://github.com/nammayatri/nammayatri/blob/main/Backend/nix/services/postgres-with-replica.nix">https://github.com/nammayatri/nammayatri/blob/main/Backend/nix/services/postgres-with-replica.nix</a></p>
+<p>And one more example: <a href="https://github.com/nammayatri/passetto/blob/nixify/process-compose.nix">https://github.com/nammayatri/passetto/blob/nixify/process-compose.nix</a>. This service is imported in nammayatri: <a href="https://github.com/nammayatri/nammayatri/blob/e8032f1fac3581b9062e2469dfc778d2913d3665/Backend/nix/services/nammayatri.nix#L32">https://github.com/nammayatri/nammayatri/blob/e8032f1fac3581b9062e2469dfc778d2913d3665/Backend/nix/services/nammayatri.nix#L32</a></p>
+<p>and it is configured like: <a href="https://github.com/nammayatri/nammayatri/blob/e8032f1fac3581b9062e2469dfc778d2913d3665/Backend/nix/services/nammayatri.nix#L285-L297">https://github.com/nammayatri/nammayatri/blob/e8032f1fac3581b9062e2469dfc778d2913d3665/Backend/nix/services/nammayatri.nix#L285-L297</a></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

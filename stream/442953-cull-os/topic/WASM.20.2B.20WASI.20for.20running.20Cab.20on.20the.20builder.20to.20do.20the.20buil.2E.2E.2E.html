@@ -1,0 +1,79 @@
+<html>
+<head><meta charset="utf-8"><title>WASM + WASI for running Cab on the builder to do the buil... · cull-os · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/442953-cull-os/index.html">cull-os</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html">WASM + WASI for running Cab on the builder to do the buil...</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="479061234"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479061234" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479061234">(Oct 26 2024 at 16:11)</a>:</h4>
+<p>This is just a very experimental idea, but I mentioned before that realizers will support WASM execution (for truly cross platform island-&gt;derivation conversion) and I thought: Why not do this for Cab itself?</p>
+
+
+
+<a name="479061677"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479061677" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479061677">(Oct 26 2024 at 16:17)</a>:</h4>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="nf">\</span><span class="n">program</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">runtime</span><span class="w"> </span><span class="o">==&gt;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">execute</span><span class="w"> </span><span class="s">"${lib.getExe packages.cargo}"</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s">"build"</span><span class="w"> </span><span class="p">];</span>
+<span class="w">  </span><span class="n">exit</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">);</span>
+
+<span class="nf">derive</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">features</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s">"wasm"</span><span class="w"> </span><span class="p">],</span>
+
+<span class="w">  </span><span class="n">command</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">./</span><span class="n">cab</span><span class="o">-</span><span class="n">runtime</span><span class="o">.</span><span class="n">wasm</span><span class="p">,</span>
+<span class="w">  </span><span class="n">arguments</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">compile</span><span class="w"> </span><span class="n">program</span><span class="p">)</span><span class="o">.</span><span class="n">wasmExecutablePath</span><span class="w"> </span><span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<a name="479061757"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479061757" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479061757">(Oct 26 2024 at 16:18)</a>:</h4>
+<p>This is definitely worth exploring IMO</p>
+
+
+
+<a name="479062098"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479062098" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479062098">(Oct 26 2024 at 16:24)</a>:</h4>
+<p>Here we have a minimal WASM runtime for Cab (via Rust WASM cross compilation) that runs Cab bytecode (made to be tiny)</p>
+
+
+
+<a name="479062524"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479062524" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479062524">(Oct 26 2024 at 16:31)</a>:</h4>
+<p><span class="user-mention" data-user-id="679006">@Tim DeHerrera</span> <span class="user-mention" data-user-id="678574">@Andreas</span> what do you guys think?</p>
+
+
+
+<a name="479062709"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479062709" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479062709">(Oct 26 2024 at 16:34)</a>:</h4>
+<p>so the "builder" is a wasm binary, essentialy?</p>
+
+
+
+<a name="479074791"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479074791" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479074791">(Oct 26 2024 at 19:46)</a>:</h4>
+<p>Yup</p>
+
+
+
+<a name="479080469"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/479080469" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#479080469">(Oct 26 2024 at 21:29)</a>:</h4>
+<p>looks like someone just asked a similar question to the tvix guys, might be good to review their response:<br>
+<a href="https://matrix.to/#/!YUnRYAzgytLSZbBhbx:hackint.org/$Sbspe2NOL3nYD2MQnmARWrnQ0SI2tOfT0GuK3s6qQck?via=hackint.org&amp;via=matrix.org&amp;via=envs.net">https://matrix.to/#/!YUnRYAzgytLSZbBhbx:hackint.org/$Sbspe2NOL3nYD2MQnmARWrnQ0SI2tOfT0GuK3s6qQck?via=hackint.org&amp;via=matrix.org&amp;via=envs.net</a></p>
+
+
+
+<a name="484352408"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/442953-cull-os/topic/WASM%20%2B%20WASI%20for%20running%20Cab%20on%20the%20builder%20to%20do%20the%20buil.../near/484352408" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> RGBCube <a href="http://chat.nixos.asia/stream/442953-cull-os/topic/WASM.20.2B.20WASI.20for.20running.20Cab.20on.20the.20builder.20to.20do.20the.20buil.2E.2E.2E.html#484352408">(Nov 25 2024 at 17:08)</a>:</h4>
+<p>Missed this message; that link is malformed for some reason (at least Element thinks so...)</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

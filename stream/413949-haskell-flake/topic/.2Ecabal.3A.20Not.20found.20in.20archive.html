@@ -1,0 +1,94 @@
+<html>
+<head><meta charset="utf-8"><title>.cabal: Not found in archive · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.2Ecabal.3A.20Not.20found.20in.20archive.html">.cabal: Not found in archive</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="543301340"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/.cabal%3A%20Not%20found%20in%20archive/near/543301340" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pavel Anpin <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.2Ecabal.3A.20Not.20found.20in.20archive.html#543301340">(Oct 06 2025 at 12:33)</a>:</h4>
+<p>hey everyone, just starting out with haskell and trying to make a toy project with hyperbole. When override the package version with <code> haskellProjects.default.packages.hyperbole.source = "0.5.0";</code> I get following error:</p>
+<div class="codehilite" data-code-language="Bash Session"><pre><span></span><code><span class="go">&gt; nix develop</span>
+<span class="go">warning: Git tree '/home/a/projects/haskell-exercises' is dirty</span>
+<span class="go">error: builder for '/nix/store/qb5jz3a8jn03khibmfjxp8sq8mx6d98b-all-cabal-hashes-component-hyperbole-0.5.0.drv' failed with exit code 2;</span>
+<span class="go">       last 3 log lines:</span>
+<span class="go">       &gt; tar: */hyperbole/0.5.0/hyperbole.json: Not found in archive</span>
+<span class="go">       &gt; tar: */hyperbole/0.5.0/hyperbole.cabal: Not found in archive</span>
+<span class="go">       &gt; tar: Exiting with failure status due to previous errors</span>
+<span class="go">       For full logs, run:</span>
+<span class="go">         nix log /nix/store/qb5jz3a8jn03khibmfjxp8sq8mx6d98b-all-cabal-hashes-component-hyperbole-0.5.0.drv</span>
+<span class="go">error:</span>
+<span class="go">       … while calling the 'derivationStrict' builtin</span>
+<span class="go">         at &lt;nix/derivation-internal.nix&gt;:37:12:</span>
+<span class="go">           36|</span>
+<span class="go">           37|   strict = derivationStrict drvAttrs;</span>
+<span class="go">             |            ^</span>
+<span class="go">           38|</span>
+
+<span class="go">       … while evaluating derivation 'ghc-shell-for-packages-0'</span>
+<span class="go">         whose name attribute is located at /nix/store/ybmnblw90230yl4p0l18ghwx9ry597bz-source/pkgs/stdenv/generic/make-derivation.nix:544:13</span>
+
+<span class="go">       … while evaluating attribute 'NIX_GHC' of derivation 'ghc-shell-for-packages-0'</span>
+
+<span class="go">       (stack trace truncated; use '--show-trace' to show the full, detailed trace)</span>
+
+<span class="go">       error: 1 dependencies of derivation '/nix/store/z8nd9zdv0za59irx46mnv5swvsydjpqg-cabal2nix-hyperbole-0.5.0.drv' failed to build</span>
+</code></pre></div>
+<p>what am I doing wrong? </p>
+<p><a href="/user_uploads/60244/U-cfHoCqTk96YD9gEUljcLyM/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/U-cfHoCqTk96YD9gEUljcLyM/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1902x1023" src="/user_uploads/thumbnail/60244/U-cfHoCqTk96YD9gEUljcLyM/image.png/840x560.webp"></a></div>
+
+
+
+<a name="543301723"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/.cabal%3A%20Not%20found%20in%20archive/near/543301723" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pavel Anpin <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.2Ecabal.3A.20Not.20found.20in.20archive.html#543301723">(Oct 06 2025 at 12:35)</a>:</h4>
+<p>I tried setting it up via flake input, but that fails due to a broken test in the dependency  flake input atomic-css. Yikes!</p>
+
+
+
+<a name="543358210"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/.cabal%3A%20Not%20found%20in%20archive/near/543358210" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pavel Anpin <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.2Ecabal.3A.20Not.20found.20in.20archive.html#543358210">(Oct 06 2025 at 16:03)</a>:</h4>
+<p>ok I figured out how to overcome this, run cabal2nix for a package and then use that instead of overriding the source number<br>
+<code>hyperbole = { super, ...}: { custom = _:  super.callPackage ./hyperbole.nix {}; };</code></p>
+
+
+
+<a name="543473388"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/.cabal%3A%20Not%20found%20in%20archive/near/543473388" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shivaraj B H <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.2Ecabal.3A.20Not.20found.20in.20archive.html#543473388">(Oct 07 2025 at 08:37)</a>:</h4>
+<blockquote>
+<p>tar: */hyperbole/0.5.0/hyperbole.json: Not found in archive<br>
+tar: */hyperbole/0.5.0/hyperbole.cabal: Not found in archive</p>
+</blockquote>
+<p><span class="user-mention" data-user-id="709111">@Pavel Anpin</span> </p>
+<p>It means that hyperbole 0.5.0 is not in the <code>all-cabal-hashes</code> registry.</p>
+<p>To fix the error, you will have to update the <code>all-cabal-hashes</code> revision to latest. You can do that by either updating <code>nixpkgs</code> (assuming someone has updated it upstream) or DIY:</p>
+<div class="codehilite"><pre><span></span><code># In haskellProjects.&lt;name&gt;
+{
+   basePackages = pkgs.haskellPackages.override {
+     all-cabal-hashes = builtins.fetchurl { url = &quot;https://github.com/commercialhaskell/all-cabal-hashes/archive/LATEST-COMMIT-HERE.tar.gz&quot;; sha256 = lib.fakeHash; };
+   };
+ }
+</code></pre></div>
+
+
+
+<a name="543484128"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/.cabal%3A%20Not%20found%20in%20archive/near/543484128" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pavel Anpin <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.2Ecabal.3A.20Not.20found.20in.20archive.html#543484128">(Oct 07 2025 at 09:31)</a>:</h4>
+<p>brilliant! I knew I was missing something out. Quick search pointed on updating cabal, but I went into fetching derivations manually. Thanks!</p>
+
+
+
+<a name="543627305"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/.cabal%3A%20Not%20found%20in%20archive/near/543627305" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/.2Ecabal.3A.20Not.20found.20in.20archive.html#543627305">(Oct 07 2025 at 21:51)</a>:</h4>
+<p>Alternatively, you can directly point to the source:  <a href="https://community.flake.parts/haskell-flake/dependency#source">https://community.flake.parts/haskell-flake/dependency#source</a></p>
+<p><a href="/user_uploads/60244/YMiuonxOg8AFJgjd4SSCuLF4/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/60244/YMiuonxOg8AFJgjd4SSCuLF4/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="944x1244" src="/user_uploads/thumbnail/60244/YMiuonxOg8AFJgjd4SSCuLF4/image.png/840x560.webp"></a></div>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

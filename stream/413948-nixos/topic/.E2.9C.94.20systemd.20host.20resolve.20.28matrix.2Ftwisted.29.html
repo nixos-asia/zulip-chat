@@ -1,0 +1,244 @@
+<html>
+<head><meta charset="utf-8"><title>✔ systemd host resolve (matrix/twisted) · nixos · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413948-nixos/index.html">nixos</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html">✔ systemd host resolve (matrix/twisted)</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="425165093"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425165093" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425165093">(Mar 06 2024 at 19:42)</a>:</h4>
+<p>within a systemd service</p>
+<div class="codehilite"><pre><span></span><code>synapse.http.client: [sentinel] Error sending request to  GET https://sistema.frx.localhost/.well-known/openid-configuration: RequestTimedOutError 504: Timeout [...]
+</code></pre></div>
+<p>From the host:</p>
+<div class="codehilite"><pre><span></span><code>❯ curl -L https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.openid_configuration
+HTTP/2 200
+server: nginx
+date: Wed, 06 Mar 2024 19:42:27 GMT
+content-type: application/json
+content-length: 763
+vary: Accept-Encoding
+set-cookie: sid=Guest; Expires=Sat, 09 Mar 2024 14:42:26 GMT; Secure; HttpOnly; Path=/; SameSite=Lax
+set-cookie: system_user=no; Secure; Path=/; SameSite=Lax
+set-cookie: full_name=Guest; Secure; Path=/; SameSite=Lax
+set-cookie: user_id=Guest; Secure; Path=/; SameSite=Lax
+set-cookie: user_image=; Secure; Path=/; SameSite=Lax
+x-frame-options: SAMEORIGIN
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+referrer-policy: same-origin, strict-origin-when-cross-origin
+
+{
+    &quot;issuer&quot;: &quot;https://sistema.frx.localhost&quot;,
+    &quot;authorization_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.authorize&quot;,
+    &quot;token_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.get_token&quot;,
+    &quot;userinfo_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.openid_profile&quot;,
+    &quot;revocation_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.revoke_token&quot;,
+    &quot;introspection_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.introspect_token&quot;,
+    &quot;response_types_supported&quot;: [
+        &quot;code&quot;,
+        &quot;token&quot;,
+        &quot;code id_token&quot;,
+        &quot;code token id_token&quot;,
+        &quot;id_token&quot;,
+        &quot;id_token token&quot;
+    ],
+    &quot;subject_types_supported&quot;: [
+        &quot;public&quot;
+    ],
+    &quot;id_token_signing_alg_values_supported&quot;: [
+        &quot;HS256&quot;
+    ]
+}
+</code></pre></div>
+<p>What's the matter?</p>
+
+
+
+<a name="425165394"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425165394" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425165394">(Mar 06 2024 at 19:44)</a>:</h4>
+<div class="codehilite" data-code-language="Batchfile"><pre><span></span><code>❯ cat /etc/nsswitch.conf
+───────┬────────────────────────────────────────────────────────────────────────
+       │ File: /etc/nsswitch.conf
+───────┼────────────────────────────────────────────────────────────────────────
+   1   │ passwd:    files systemd
+   2   │ group:     files [success=merge] systemd
+   3   │ shadow:    files
+   4   │
+   5   │ hosts:     mymachines resolve [!UNAVAIL=return] files myhostname dns
+   6   │ networks:  files
+   7   │
+   8   │ ethers:    files
+   9   │ services:  files
+  10   │ protocols: files
+  11   │ rpc:       files
+───────┴────────────────────────────────────────────────────────────────────────
+</code></pre></div>
+<p>^^ it doesn't matter whether I use <code>systemd-resolved</code> or not...</p>
+<div class="codehilite" data-code-language="Batchfile"><pre><span></span><code>❯ cat /etc/hosts
+───────┬────────────────────────────────────────────────────────────────────────
+       │ File: /etc/hosts
+───────┼────────────────────────────────────────────────────────────────────────
+   1   │ 127.0.0.1 localhost
+   2   │ ::1 localhost
+───────┴────────────────────────────────────────────────────────────────────────
+</code></pre></div>
+<div class="codehilite" data-code-language="Batchfile"><pre><span></span><code>❯ cat /etc/hostname
+───────┬────────────────────────────────────────────────────────────────────────
+       │ File: /etc/hostname
+───────┼────────────────────────────────────────────────────────────────────────
+   1   │ frx
+───────┴────────────────────────────────────────────────────────────────────────
+</code></pre></div>
+
+
+
+<a name="425165782"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425165782" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425165782">(Mar 06 2024 at 19:47)</a>:</h4>
+<p>is the systemd service configured in a private network namespace or something?</p>
+
+
+
+<a name="425167618"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425167618" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425167618">(Mar 06 2024 at 19:57)</a>:</h4>
+<p>I'm not really sure if I can tell anything apart here:</p>
+<div class="codehilite"><pre><span></span><code>  17   │ ExecStartPre=/nix/store/l9f43mkpwah0md2gi4hhzmsxxdlc56qm-unit-script-ma
+       │ trix-synapse-pre-start/bin/matrix-synapse-pre-start
+  18   │ ExecStartPre=+/nix/store/680aj7bs2gbr5q18dgapzwy04vicn1q9-matrix-synaps
+       │ e-fix-permissions
+  19   │ Group=matrix-synapse
+  30   │ ProtectKernelLogs=true
+  20   │ LockPersonality=true
+  21   │ NoNewPrivileges=true
+  22   │ PrivateDevices=true
+  23   │ PrivateTmp=true
+  24   │ PrivateUsers=true
+  25   │ ProcSubset=pid
+  26   │ ProtectClock=true
+  27   │ ProtectControlGroups=true
+  28   │ ProtectHome=true
+  29   │ ProtectHostname=true
+  30   │ ProtectKernelLogs=true
+  31   │ ProtectKernelModules=true
+  32   │ ProtectKernelTunables=true
+  33   │ ProtectProc=invisible
+  34   │ ProtectSystem=strict
+  35   │ ReadWritePaths=/var/lib/matrix-synapse
+  36   │ ReadWritePaths=/var/lib/matrix-synapse/media_store
+  37   │ RemoveIPC=true
+  38   │ Restart=on-failure
+  39   │ RestrictAddressFamilies=AF_INET
+  40   │ RestrictAddressFamilies=AF_INET6
+  41   │ RestrictAddressFamilies=AF_UNIX
+:
+  43   │ RestrictRealtime=true
+  44   │ RestrictSUIDSGID=true
+  45   │ SystemCallArchitectures=native
+  46   │ SystemCallFilter=@system-service
+  47   │ SystemCallFilter=~@resources
+  48   │ SystemCallFilter=~@privileged
+  49   │ Type=notify
+  50   │ UMask=0077
+  51   │ User=matrix-synapse
+  52   │ WorkingDirectory=/var/lib/matrix-synapse
+───────┴────────────────────────────────────────────────────────────────────────
+</code></pre></div>
+
+
+
+<a name="425168801"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425168801" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425168801">(Mar 06 2024 at 20:04)</a>:</h4>
+<p>From what I gather, assuming you are trying to run Synapse with OIDC, there might be some issues on Synapse's GitHub related to this:</p>
+<p><a href="https://github.com/matrix-org/synapse/issues/9662">https://github.com/matrix-org/synapse/issues/9662</a><br>
+<a href="https://github.com/matrix-org/synapse/issues/8741">https://github.com/matrix-org/synapse/issues/8741</a><br>
+<a href="https://github.com/matrix-org/synapse/issues/16004">https://github.com/matrix-org/synapse/issues/16004</a></p>
+<p>Judging from a first look, it might have something to do with TLS certificates.</p>
+
+
+
+<a name="425169147"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425169147" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425169147">(Mar 06 2024 at 20:07)</a>:</h4>
+<p>Oh! What a deceiving traceback! <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="425169185"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425169185" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425169185">(Mar 06 2024 at 20:07)</a>:</h4>
+<p><code>PrivateNetwork=true</code> would indicate a private network namespace, so looks like that is not it. TLS would have been my next guess, but that usually doesn't result in a 504 <span aria-label="thinking" class="emoji emoji-1f914" role="img" title="thinking">:thinking:</span></p>
+
+
+
+<a name="425169373"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425169373" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andreas <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425169373">(Mar 06 2024 at 20:08)</a>:</h4>
+<p>It appears Synapse has a <code>use_insecure_ssl_client_just_for_testing_do_not_use: true</code> parameter setting you might try and see if it works...</p>
+
+
+
+<a name="425169390"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425169390" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425169390">(Mar 06 2024 at 20:08)</a>:</h4>
+<p>Yeah, it just doesn't work with my <code>frx.localhost</code> test domain in VM...</p>
+<p>I'm setting up static certs, but it seams python doesn't acquire the root properly... I remember this is a pita and one might readily have to patch half of nixpkgs to get it into one of these <code>certify</code> packages that are a transitive dependency to half of the tree.</p>
+
+
+
+<a name="425173862"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425173862" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425173862">(Mar 06 2024 at 20:39)</a>:</h4>
+<div class="codehilite" data-code-language="Python"><pre><span></span><code><span class="kn">from</span> <span class="nn">twisted.internet.ssl</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CertificateOptions</span><span class="p">,</span>
+    <span class="n">ContextFactory</span><span class="p">,</span>
+    <span class="n">TLSVersion</span><span class="p">,</span>
+    <span class="n">platformTrust</span><span class="p">,</span> <span class="c1"># this one is twisted :-)</span>
+<span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><code>platformTrus</code>: [...] any process where the SSL_CERT_FILE environment variable is set to the path of a file containing your desired CA certificates bundle.</p>
+</blockquote>
+
+
+
+<a name="425174243"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425174243" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim DeHerrera <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425174243">(Mar 06 2024 at 20:42)</a>:</h4>
+<p>if you are running this service on localhost, perhaps tls isn't necessary anyway?</p>
+
+
+
+<a name="425174497"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425174497" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425174497">(Mar 06 2024 at 20:44)</a>:</h4>
+<p>Unfortunately, it's a requirement that is part of the oidc stack, which otherwise would just error out, somewhat reasonably, actually.</p>
+
+
+
+<a name="425177103"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425177103" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425177103">(Mar 06 2024 at 21:00)</a>:</h4>
+<p>This seemed to have ultimately appeased twisted:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code><span class="p">{</span>
+    systemd<span class="o">.</span>services<span class="o">.</span>matrix-synapse<span class="o">.</span><span class="ss">environment</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">SSL_CERT_FILE</span> <span class="o">=</span> config<span class="o">.</span>environment<span class="o">.</span>etc<span class="o">.</span><span class="s2">"ssl/certs/ca-certificates.crt"</span><span class="o">.</span>source<span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Thanks for the hint about certs! <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="425177486"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425177486" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Arnold <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425177486">(Mar 06 2024 at 21:03)</a>:</h4>
+<p>This is what honors the effect of:</p>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>      security<span class="o">.</span>pki<span class="o">.</span><span class="ss">certificateFiles</span> <span class="o">=</span> <span class="p">[</span>myca<span class="p">];</span>
+</code></pre></div>
+
+
+
+<a name="425178703"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413948-nixos/topic/%E2%9C%94%20systemd%20host%20resolve%20%28matrix/twisted%29/near/425178703" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://chat.nixos.asia/stream/413948-nixos/topic/.E2.9C.94.20systemd.20host.20resolve.20.28matrix.2Ftwisted.29.html#425178703">(Mar 06 2024 at 21:11)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="678738">David Arnold</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>

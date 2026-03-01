@@ -1,0 +1,89 @@
+<html>
+<head><meta charset="utf-8"><title>OOM during compilation? · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/OOM.20during.20compilation.3F.html">OOM during compilation?</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="448835129"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/OOM%20during%20compilation%3F/near/448835129" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> JamesM <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/OOM.20during.20compilation.3F.html#448835129">(Jul 03 2024 at 12:27)</a>:</h4>
+<p>My builds are failing and it seems to be because cabal builds multiple packages in parallel and runs out of memory. I've had this issue before when using Docker and solved it by passing <code>-j1</code> to <code>cabal build</code>. How do I do the same using <code>haskell-flake</code>?</p>
+<p>I tried sprinkling <code>extraBuildFlags</code> with <code>"-j1"</code> everywhere to see if it'd have an effect, but it seems it does not. I'm new to nix and haskell-flake so I'm sure I'm using it incorrectly.</p>
+<p>How would I pass a "global" cabal build flag like this?</p>
+<p>Here's my flake:</p>
+<div class="codehilite"><pre><span></span><code>{
+  inputs = {
+    nixpkgs.url = &quot;github:nixos//nixpkgs/00d80d13810dbfea8ab4ed1009b09100cca86ba8&quot;;
+    flake-parts.url = &quot;github:hercules-ci/flake-parts&quot;;
+    haskell-flake.url = &quot;github:srid/haskell-flake&quot;;
+  };
+  outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = nixpkgs.lib.systems.flakeExposed;
+      imports = [ inputs.haskell-flake.flakeModule ];
+      perSystem = { self&#39;, system, lib, config, pkgs, ... }: {
+        haskellProjects.default = {
+          basePackages = pkgs.haskell.packages.ghc982;
+
+          settings = {
+            all.extraBuildFlags = [ &quot;-j1&quot; ];
+            overall.extraBuildFlags = [ &quot;-j1&quot; ];
+          };
+
+          devShell = {
+            hlsCheck.enable = false;
+          };
+
+          defaults.settings.default = {
+            check = false;
+            extraBuildFlags = [ &quot;-j1&quot; ];
+          };
+
+          autoWire = [ &quot;packages&quot; ];
+        };
+
+        packages.default = self&#39;.packages.overall;
+
+        devShells.default = pkgs.mkShell {
+          name = &quot;Haskell devShell&quot;;
+          inputsFrom = [
+            config.haskellProjects.default.outputs.devShell
+          ];
+          nativeBuildInputs = with pkgs; [
+          ];
+        };
+      };
+    };
+}
+</code></pre></div>
+
+
+
+<a name="448863738"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/OOM%20during%20compilation%3F/near/448863738" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/OOM.20during.20compilation.3F.html#448863738">(Jul 03 2024 at 14:26)</a>:</h4>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>          <span class="ss">settings</span> <span class="o">=</span> <span class="p">{</span>
+            all<span class="o">.</span><span class="ss">extraBuildFlags</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"-j1"</span> <span class="p">];</span>
+            overall<span class="o">.</span><span class="ss">extraBuildFlags</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"-j1"</span> <span class="p">];</span>
+          <span class="p">};</span>
+</code></pre></div>
+<p>What's <code>all</code> and <code>overall</code>? Are you using latest haskell-flake?</p>
+
+
+
+<a name="448864579"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/OOM%20during%20compilation%3F/near/448864579" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/OOM.20during.20compilation.3F.html#448864579">(Jul 03 2024 at 14:28)</a>:</h4>
+<div class="codehilite" data-code-language="Nix"><pre><span></span><code>          defaults<span class="o">.</span>settings<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="ss">check</span> <span class="o">=</span> <span class="no">false</span><span class="p">;</span>
+            <span class="ss">extraBuildFlags</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">"-j1"</span> <span class="p">];</span>
+          <span class="p">};</span>
+</code></pre></div>
+<p>In <a href="https://github.com/srid/haskell-flake/pull/275">recent haskell-flake</a>, this should be <code>defaults.settings.local</code></p>
+
+
+
+<hr><p>Last updated: Mar 01 2026 at 18:33 UTC</p>
+</html>
