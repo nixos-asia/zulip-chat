@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>Is there any way to get the graph of a dependency used in a project even though it’s not a direct input in the current project flakes.</p>",
+        "id": 421480256,
+        "sender_full_name": "Aravind Gopal",
+        "timestamp": 1707927109
+    },
+    {
+        "content": "<p><code>nix path-info -r</code> will give runtime deps, add <code>--derivation</code> to calculate build time deps, or <code>nix-store - --requisites</code> on a derivation will be buildtime deps on an output path will be runtime deps closure</p>",
+        "id": 421483628,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707928049
+    },
+    {
+        "content": "<p>Thanks <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> the above command returned all runtime deps. Is there any way to find the dependency graph . currently looking into nix-output-monitor (srid bro suggestion)</p>",
+        "id": 421523184,
+        "sender_full_name": "Aravind Gopal",
+        "timestamp": 1707941048
+    },
+    {
+        "content": "<p>There are these two flags you can add to the <code>nix-store</code> variant I suggested. From the man page:</p>\n<div class=\"codehilite\"><pre><span></span><code>*        • --graph\n*          Prints the references graph of the store paths paths in the format of the dot tool of AT&amp;T’s Graphviz package. This  can  be\n*          used  to visualise dependency graphs. To obtain a build-time dependency graph, apply this to a store derivation. To obtain a\n*          runtime dependency graph, apply it to an output path.\n</code></pre></div>\n<div class=\"codehilite\"><pre><span></span><code>*        • --graphml\n*          Prints the references graph of the store paths paths in the GraphML file format. This can be used  to  visualise  dependency\n*          graphs. To obtain a build-time dependency graph, apply this to a store derivation. To obtain a runtime dependency graph, ap‐\n           ply it to an output path.\n</code></pre></div>\n<p>If that is what you are looking for.</p>",
+        "id": 421523969,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707941346
+    },
+    {
+        "content": "<p>Thank you so much <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span>, This helped.</p>",
+        "id": 421527413,
+        "sender_full_name": "Aravind Gopal",
+        "timestamp": 1707942624
+    },
+    {
+        "content": "<p>Nice, TIL!</p>\n<div class=\"codehilite\"><pre><span></span><code>nix-store --query --graph $(nix build --no-link --print-out-paths github:srid/emanote) | dot -Tsvg &gt; output.svg\n</code></pre></div>\n<p><a href=\"/user_uploads/60244/x037rrXnkXvHZnxmm8PCJDeY/output.svg\">output.svg</a></p>\n<p><a href=\"/user_uploads/60244/QvOazxtLiAq68nMmr_duplU9/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/QvOazxtLiAq68nMmr_duplU9/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/QvOazxtLiAq68nMmr_duplU9/image.png\"></a></div>",
+        "id": 421626827,
+        "sender_full_name": "Srid",
+        "timestamp": 1707993937
+    },
+    {
+        "content": "<p>This is worth a candidate to <a href=\"https://nixos.asia/en/tips\">https://nixos.asia/en/tips</a></p>",
+        "id": 421627004,
+        "sender_full_name": "Srid",
+        "timestamp": 1707993988
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/nix.20dependency/near/421626827\">said</a>:</p>\n<blockquote>\n<p>Nice, TIL!</p>\n<div class=\"codehilite\"><pre><span></span><code>nix-store --query --graph $(nix build --no-link --print-out-paths github:srid/emanote) | dot -Tsvg &gt; output.svg\n</code></pre></div>\n<p><a href=\"/user_uploads/60244/x037rrXnkXvHZnxmm8PCJDeY/output.svg\">output.svg</a></p>\n<p><a href=\"/user_uploads/60244/vspBt5P1XximCwiztk-IFzJ5/output.png\">output.png</a></p>\n</blockquote>\n<p>Incidentally, this revealed to me that much of the bloat in emanote's closure is coming from nodejs (via tailwind).</p>",
+        "id": 421627672,
+        "sender_full_name": "Srid",
+        "timestamp": 1707994235
+    }
+]
