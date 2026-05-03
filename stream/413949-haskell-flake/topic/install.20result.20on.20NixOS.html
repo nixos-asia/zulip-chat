@@ -1,0 +1,25 @@
+<html>
+<head><meta charset="utf-8"><title>install result on NixOS · haskell-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/index.html">haskell-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/install.20result.20on.20NixOS.html">install result on NixOS</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="582789729"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/install%20result%20on%20NixOS/near/582789729" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> tharnival <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/install.20result.20on.20NixOS.html#582789729">(Mar 31 2026 at 12:41)</a>:</h4>
+<p>Hi, I am able to build the haskell-template project (<a href="https://github.com/srid/haskell-template">https://github.com/srid/haskell-template</a>) using <code>nix run nixpkgs#omnix ci</code>, and I get a <code>result</code> symlink to a text file with some /nix/store/ paths, but how do I include the built program in my system config so I can run it like any other command without entering the devshell each time? I am on NixOS, and I have a flake-based config.</p>
+
+
+
+<a name="585066002"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/413949-haskell-flake/topic/install%20result%20on%20NixOS/near/585066002" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/413949-haskell-flake/topic/install.20result.20on.20NixOS.html#585066002">(Apr 12 2026 at 21:06)</a>:</h4>
+<p><span class="user-mention" data-user-id="1062965">@tharnival</span> You can just use <code>packages.default</code> output of the flake.</p>
+
+
+
+<hr><p>Last updated: May 03 2026 at 23:44 UTC</p>
+</html>
