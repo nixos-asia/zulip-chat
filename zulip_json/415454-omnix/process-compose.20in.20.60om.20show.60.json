@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"871998\">Nikhil Singh</span> [said]:</p>\n<blockquote>\n<p><a href=\"/user_uploads/60244/tXmH8r5WUGO4ft-SEZcNeLwx/image.png\">image.png</a><br>\nThis is currently a dirty commit in my local repo. I just wanted to confirm that this is the expected output—<br>\nI mean, <code>yada, yada</code> will be replaced (ignore that) XD.</p>\n</blockquote>",
+        "id": 498798031,
+        "sender_full_name": "Srid",
+        "timestamp": 1739202568
+    },
+    {
+        "content": "<p><a href=\"https://github.com/juspay/omnix/pull/415\">https://github.com/juspay/omnix/pull/415</a></p>",
+        "id": 498798102,
+        "sender_full_name": "Srid",
+        "timestamp": 1739202586
+    },
+    {
+        "content": "<p>Regarding <code>debug</code>, one way to tackle is to make <code>process-compose-flake</code> to output a <code>schemas</code> output (see <a href=\"https://github.com/DeterminateSystems/flake-schemas/blob/b960fc9779e9b29b01bcb4db81b236387ad7e5c8/flake.nix#L17-L18\">here</a>) hardcoded for that specific process-compose configuration. And then <code>om show</code> can merge that flake's schemas output.</p>",
+        "id": 498798298,
+        "sender_full_name": "Srid",
+        "timestamp": 1739202627
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> just tested on a new cloned <code>juspay/services-flakes/llm</code>, working fine. <br>\ncan you test if <code>allSystems</code> is exposed in <code>nix repl</code> after you enable <code>debug</code> flag?<br>\ndid a flake update in <code>llm</code> too and also enabled <code>debug = true</code>.</p>\n<p><a href=\"/user_uploads/60244/79NhsQYxeIBnHamsk1ZZ__f0/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/79NhsQYxeIBnHamsk1ZZ__f0/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1114x601\" src=\"/user_uploads/thumbnail/60244/79NhsQYxeIBnHamsk1ZZ__f0/image.png/840x560.webp\"></a></div><p>about <code>juspay/vira</code></p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>      evalChecks<span class=\"o\">.</span><span class=\"ss\">isValidProcess</span> <span class=\"o\">=</span>\n                      definition <span class=\"o\">?</span> settings<span class=\"p\">;</span>\n</code></pre></div>\n<p>changing the <code>evalChecks.isValidProcess</code> to the above snippet in the omnix/flake-schemas will get it working.</p>\n<p>below is a working screenshot<br>\n<a href=\"/user_uploads/60244/TGtO4aLC10DGG9GSWVyFpBOR/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/TGtO4aLC10DGG9GSWVyFpBOR/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1920x1080\" src=\"/user_uploads/thumbnail/60244/TGtO4aLC10DGG9GSWVyFpBOR/image.png/840x560.webp\"></a></div>",
+        "id": 498803957,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1739204051
+    },
+    {
+        "content": "<blockquote>\n<p>one way to tackle is to make <code>process-compose-flake</code> to output a <code>schemas</code> output.</p>\n</blockquote>\n<p>Yes, this was my thought too. If it is a custom flake with a non standard output it should expose it's own schema.</p>",
+        "id": 498804557,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1739204229
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/EU18AZyLZnIwlvUD5YzK6OGk/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/EU18AZyLZnIwlvUD5YzK6OGk/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"2088x2110\" src=\"/user_uploads/thumbnail/60244/EU18AZyLZnIwlvUD5YzK6OGk/image.png/840x560.webp\"></a></div>",
+        "id": 498883495,
+        "sender_full_name": "Srid",
+        "timestamp": 1739228886
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"871998\">Nikhil Singh</span> <a href=\"#narrow/channel/415454-omnix/topic/process-compose.20in.20.60om.20show.60/near/498804557\">said</a>:</p>\n<blockquote>\n<blockquote>\n<p>one way to tackle is to make <code>process-compose-flake</code> to output a <code>schemas</code> output.</p>\n</blockquote>\n<p>Yes, this was my thought too. If it is a custom flake with a non standard output it should expose it's own schema.</p>\n</blockquote>\n<p>Go ahead with this, by making <a href=\"https://github.com/Platonic-Systems/process-compose-flake\">https://github.com/Platonic-Systems/process-compose-flake</a> export the schema automatically which we can then use.</p>",
+        "id": 498883840,
+        "sender_full_name": "Srid",
+        "timestamp": 1739229018
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/LHyqQOaf1cippj5qNOEJQ2gB/image.png\">image.png</a><br>\n<span class=\"user-mention\" data-user-id=\"667408\">@Srid</span>  Screenshot is with newly spined up nix os in virtual.</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/LHyqQOaf1cippj5qNOEJQ2gB/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1920x1080\" src=\"/user_uploads/thumbnail/60244/LHyqQOaf1cippj5qNOEJQ2gB/image.png/840x560.webp\"></a></div><p>please share <code>nix --version</code> as i am unable to reproduce this. </p>\n<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> can you please try <code>nix --no-accept-flake-config --refresh run github:niksingh710/omnix/arbitrary-flake-schemas show .</code> in <code>juspay/services-flake/example/llm</code>. make sure to enable <code>debug</code> flag for llm services flake.</p>",
+        "id": 498962978,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1739265726
+    },
+    {
+        "content": "<p>You need to add aarch64-darwin to the list, as I'm on M1 mac.</p>\n<p>That's another issue that needs to be resolved as well; systems should not be hardcoded like this.</p>",
+        "id": 499069175,
+        "sender_full_name": "Srid",
+        "timestamp": 1739297076
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> </p>\n<blockquote>\n<p>Go ahead with this, by making <a href=\"https://github.com/Platonic-Systems/process-compose-flake\">https://github.com/Platonic-Systems/process-compose-flake</a> export the schema automatically which we can then use.</p>\n</blockquote>\n<p>By this you meant me to integrate the schema with debug one to be added in process-compose?</p>\n<p>We can make <code>process-compose-flake</code> output a schema but i don't feel like with <code>debug</code> it is the correct way to solve it.</p>\n<p>as in <a href=\"https://determinate.systems/posts/flake-schemas/\">https://determinate.systems/posts/flake-schemas/</a></p>\n<p><a href=\"/user_uploads/60244/kD4ACGTY_KzToYduFH0KXIB5/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/kD4ACGTY_KzToYduFH0KXIB5/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"783x233\" src=\"/user_uploads/thumbnail/60244/kD4ACGTY_KzToYduFH0KXIB5/image.png/840x560.webp\"></a></div><p>it states that <code>flake-schemas</code> are there to enumerate and check the content of <code>flake *outputs*</code>.<br>\nbut in case of <code>process-compose-flake</code>, it doesn't expose itself via flake output. it is exposed by <code>perSystem</code> Option of flake-parts.</p>\n<p>Imo the right way to solve this will be making <code>process-compose</code> also expose a flake output named <code>process-compose</code> under which the perSystem definition can exist.</p>\n<p>it should be something like <code>process-compose.${system}.default = {}</code> but right now it is like <code>${system}.process-compose.default</code>  in the repl.</p>",
+        "id": 499331060,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1739395341
+    },
+    {
+        "content": "<p>You don't need <code>debug</code>, because when you generate the <code>schemas</code> it already has access to <code>config</code> anyway. If that's not viable for any reason, you can explore alternate ideas - for eg., perhaps something in <code>meta</code> attribute of the packages? </p>\n<p>A big part of this task involves research and experimenting :-)</p>",
+        "id": 499332638,
+        "sender_full_name": "Srid",
+        "timestamp": 1739395992
+    }
+]

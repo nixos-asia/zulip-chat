@@ -1,0 +1,236 @@
+[
+    {
+        "content": "<p>For macOS builds, the answer to what \"the simplest and space efficient &amp; portable way to setup a CI machine at home\" is clearly the Mac Mini.</p>\n<p>What would be the answer for x86 Linux (NixOS) builds? Is there an equivalent hardware? I'd like to move away from Hetzner Dedicated to something hosted at home. </p>\n<p>cc <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span></p>",
+        "id": 422415894,
+        "sender_full_name": "Srid",
+        "timestamp": 1708435222
+    },
+    {
+        "content": "<p>Note: 'portable' as in I can throw it all in an international-flight allowed luggage.</p>",
+        "id": 422416151,
+        "sender_full_name": "Srid",
+        "timestamp": 1708435296
+    },
+    {
+        "content": "<p>I have only experience of self-hosting a raspberry pi model 4 and an old ASUS fx503vd laptop of mine. I host DNS server, password manager, file syncing service and a reverse proxy on my pi. I use the Asus laptop to play around with GitHub runners.</p>",
+        "id": 422447076,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708444272
+    },
+    {
+        "content": "<p>I am looking for a portable Linux box as well, in the same form factor as the Mac mini</p>",
+        "id": 422447195,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708444314
+    },
+    {
+        "content": "<p>For portability, I tend to carry around the SSD, I got an SSD enclosure that supports upto 10gbps of transfer speeds if I want to carry only the data around. I am still yet to play around with encrypting the disk for security and hardware RAID for redundancy</p>",
+        "id": 422447905,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708444516
+    },
+    {
+        "content": "<p>Have you looked at intel's NUC boxes? Some of those have fairly decent compute and are basically the same size as a mac mini.</p>",
+        "id": 422469515,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708450896
+    },
+    {
+        "content": "<p>Interesting, I think I'll buy one of those NUCs.</p>",
+        "id": 422469888,
+        "sender_full_name": "Srid",
+        "timestamp": 1708451055
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/it8HDgRMGEgrsmVSxQmTp6fb/66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg\">66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/it8HDgRMGEgrsmVSxQmTp6fb/66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg\" title=\"66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg\"><img src=\"/user_uploads/60244/it8HDgRMGEgrsmVSxQmTp6fb/66500FAF-187B-4E03-94B1-59F7EB30DB24.jpg\"></a></div>",
+        "id": 422470540,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708451307
+    },
+    {
+        "content": "<p>Great, I am getting one as well</p>",
+        "id": 422470560,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708451317
+    },
+    {
+        "content": "<p>Oh wait, let me see if I can even buy this in India <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 422470635,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708451349
+    },
+    {
+        "content": "<p>Okay, I can.</p>",
+        "id": 422470840,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708451422
+    },
+    {
+        "content": "<p>Which NUC will you be getting?</p>",
+        "id": 422471003,
+        "sender_full_name": "Srid",
+        "timestamp": 1708451496
+    },
+    {
+        "content": "<p>Intel NUC 13 pro is what I was thinking</p>",
+        "id": 422471656,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708451740
+    },
+    {
+        "content": "<p><a href=\"https://amzn.eu/d/bTINAUA\">https://amzn.eu/d/bTINAUA</a></p>",
+        "id": 422471668,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708451744
+    },
+    {
+        "content": "<p>This looks like barebones configuration without memory/SSD?</p>\n<p>I'm looking at the same, but with memory/SSD installed: <a href=\"https://www.amazon.ca/Canyon-i5-1340P-Support-Thunderbolt-Windows/dp/B0CC2P1TVH/\">https://www.amazon.ca/Canyon-i5-1340P-Support-Thunderbolt-Windows/dp/B0CC2P1TVH/</a></p>\n<p>Though it makes sense to get the barebones one and install whatever you need on top.</p>",
+        "id": 422472498,
+        "sender_full_name": "Srid",
+        "timestamp": 1708452028
+    },
+    {
+        "content": "<p>Yeah, I want to swap stuff based on need</p>",
+        "id": 422472708,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708452109
+    },
+    {
+        "content": "<p>NUCs are dead?</p>\n<blockquote>\n<p>The popular Intel NUC Mini PCs were to be scrapped - an austerity measure that was necessary after Intel's mounting losses. The processor giant has now reached an agreement with Asus to continue manufacturing existing NUC models and to develop new mini PCs. <a href=\"https://www.notebookcheck.com/Intel-NUC-Mini-PCs-werden-kuenftig-von-Asus-entwickelt-und-vertrieben.735057.0.html\">https://www.notebookcheck.com/Intel-NUC-Mini-PCs-werden-kuenftig-von-Asus-entwickelt-und-vertrieben.735057.0.html</a></p>\n</blockquote>",
+        "id": 422473928,
+        "sender_full_name": "Srid",
+        "timestamp": 1708452527
+    },
+    {
+        "content": "<p>That's a German article, but I learned of it from <a href=\"https://www.notebookcheck.net/Intel-NUC-13-Pro-Kit-Vivid-Canyon-review-The-last-Intel-NUC-has-a-new-case-and-a-Core-i7-1360P.741490.0.html\">this English one</a></p>",
+        "id": 422474009,
+        "sender_full_name": "Srid",
+        "timestamp": 1708452558
+    },
+    {
+        "content": "<p>Huh, well you can still buy them on Amazon for now at least <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 422474020,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708452562
+    },
+    {
+        "content": "<p>I wish the world switched to ARM, then I can just run a Linux VM on my arm Mac.</p>",
+        "id": 422474088,
+        "sender_full_name": "Srid",
+        "timestamp": 1708452585
+    },
+    {
+        "content": "<p>Well, it is really easy to setup an x86 NixOS box to emulate arm at least. I know that's the opposite of what you want though <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 422474399,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708452691
+    },
+    {
+        "content": "<p>I am thinking that the NUC is a little too expensive for only the CPU, ports and the box. I might go scavenging in the local market nearby, see if I can find something cheap</p>",
+        "id": 422475164,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708452939
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"679006\">Tim DeHerrera</span> <a href=\"#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422474399\">said</a>:</p>\n<blockquote>\n<p>Well, it is really easy to setup an x86 NixOS box to emulate arm at least. I know that's the opposite of what you want though <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>\n</blockquote>\n<p>You know what I am thinking? Just get a Mac Studio and setup a x86 Linux VM on it providing Linux CI.</p>\n<p>But if I'm going with that option, I should probably just wait for the M3 studio in <a href=\"https://www.macrumors.com/roundup/mac-studio/#whats_next_for_the_mac_studio\">second half of this year</a>.</p>",
+        "id": 422476776,
+        "sender_full_name": "Srid",
+        "timestamp": 1708453553
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422475164\">said</a>:</p>\n<blockquote>\n<p>I am thinking that the NUC is a little too expensive for only the CPU, ports and the box. I might go scavenging in the local market nearby, see if I can find something cheap</p>\n</blockquote>\n<p>You will find cheaper alternative. I found some in Canada,</p>\n<ul>\n<li>12th gen, <a href=\"https://www.amazon.ca/KAMRUI-Windows-Ethernet-Business-Computer/dp/B0BS8DDNG4/\">https://www.amazon.ca/KAMRUI-Windows-Ethernet-Business-Computer/dp/B0BS8DDNG4/</a></li>\n<li>AMD: <a href=\"https://www.amazon.ca/Beelink-Versatile-Computer-Desktop-Display/dp/B0B1DBVXY1/\">https://www.amazon.ca/Beelink-Versatile-Computer-Desktop-Display/dp/B0B1DBVXY1/</a></li>\n</ul>",
+        "id": 422477027,
+        "sender_full_name": "Srid",
+        "timestamp": 1708453648
+    },
+    {
+        "content": "<p>Yes, I was also considering getting all teh parts separately and assembling myself.</p>\n<p>I am literally getting i5 13th gen 14 core CPU for half the price of what the NUC with 12 core variant costed.</p>",
+        "id": 422477280,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708453755
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422476776\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"679006\">Tim DeHerrera</span> <a href=\"#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/422474399\">said</a>:</p>\n<blockquote>\n<p>Well, it is really easy to setup an x86 NixOS box to emulate arm at least. I know that's the opposite of what you want though <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>\n</blockquote>\n<p>You know what I am thinking? Just get a Mac Studio and setup a x86 Linux VM on it providing Linux CI.</p>\n<p>But if I'm going with that option, I should probably just wait for the M3 studio in <a href=\"https://www.macrumors.com/roundup/mac-studio/#whats_next_for_the_mac_studio\">second half of this year</a>.</p>\n</blockquote>\n<p>I'll try this in the meanwhile: repurpose my M1 Max (macbook pro) to run intel x86 VM providing CI for my github projects, in addition to having a native macOS runner (maybe in a VM too) providing macOS CI for the same projects. If nothing else, it would put a good use of my  mostly unused 64GB of RAM and CPU cycles.</p>",
+        "id": 422477469,
+        "sender_full_name": "Srid",
+        "timestamp": 1708453837
+    },
+    {
+        "content": "<p>Actually I don't even need a separate VM for it. Just use the arm NixOS VM, and setup <code>boot.binfmt.emulatedSystems</code>. Then I can build for intel using <code>--option system</code>. Parallels allows the use of rosetta somehow.</p>\n<p><a href=\"/user_uploads/60244/sV6ubCtJTuAjdOrkTV9Tti3p/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/sV6ubCtJTuAjdOrkTV9Tti3p/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/sV6ubCtJTuAjdOrkTV9Tti3p/image.png\"></a></div>",
+        "id": 422482237,
+        "sender_full_name": "Srid",
+        "timestamp": 1708455579
+    },
+    {
+        "content": "<p>The linux-builder in nix-darwin would streamline it even further,</p>\n<p><a href=\"https://nixcademy.com/2024/02/12/macos-linux-builder/\">https://nixcademy.com/2024/02/12/macos-linux-builder/</a></p>\n<p>However, it:</p>\n<ul>\n<li>does not support rosetta</li>\n<li>does not build packages with IFD</li>\n</ul>",
+        "id": 422484121,
+        "sender_full_name": "Srid",
+        "timestamp": 1708456120
+    },
+    {
+        "content": "<p>What is the overhead of running parallels NixOS VM? Running a qemu NixOS VM consumes additional 600 MB RAM (on my M1 Pro Mac) to keep the VM running, didn’t check the CPU usage though</p>",
+        "id": 422485373,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708456413
+    },
+    {
+        "content": "<p>~850 MB</p>",
+        "id": 422486439,
+        "sender_full_name": "Srid",
+        "timestamp": 1708456901
+    },
+    {
+        "content": "<p>(That's the total usage, not just overhead, as NixOS boots up)</p>",
+        "id": 422486708,
+        "sender_full_name": "Srid",
+        "timestamp": 1708457011
+    },
+    {
+        "content": "<p>yeah the binfmt.emulatedSystems is what I was referring to. As for VM overhead I am currently using <a href=\"https://astro.github.io/microvm.nix/\">https://astro.github.io/microvm.nix/</a>.</p>\n<p>The cloud-hypervisor instance I'm running seems to reserve all the memory I allocated for the machine up front, but I believe there are ways to configure it so that it doesn't do that. According to this post though, the memory overhead should be miniscule:<br>\n<a href=\"https://github.com/cloud-hypervisor/cloud-hypervisor/issues/1729#issuecomment-1158573430\">https://github.com/cloud-hypervisor/cloud-hypervisor/issues/1729#issuecomment-1158573430</a></p>",
+        "id": 422487830,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708457410
+    },
+    {
+        "content": "<p>A message was moved from this topic to <a class=\"stream-topic\" data-stream-id=\"413948\" href=\"/#narrow/stream/413948-nixos/topic/Darwin.27s.20linux-builder\">#nixos &gt; Darwin's linux-builder</a> by <span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span>.</p>",
+        "id": 422873412,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1708624859
+    },
+    {
+        "content": "<p>for portable home CI (linux), I am planning to assemble myself. I will be using mini-itx motherboard for mac-mini like form factor.<br>\nThis guy on youtube has some pretty cool builds: <a href=\"https://www.youtube.com/watch?v=WN6DUjML8Eo\">https://www.youtube.com/watch?v=WN6DUjML8Eo</a></p>\n<div class=\"youtube-video message_inline_image\"><a data-id=\"WN6DUjML8Eo\" href=\"https://www.youtube.com/watch?v=WN6DUjML8Eo\"><img src=\"https://uploads.zulipusercontent.net/c2a8b4765104e3dd54d3a109d640514ac3d9eae0/68747470733a2f2f692e7974696d672e636f6d2f76692f574e3644556a4d4c38456f2f64656661756c742e6a7067\"></a></div>",
+        "id": 423472967,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708977304
+    },
+    {
+        "content": "<p>Take pictures along the way for a great blog post.</p>",
+        "id": 423488452,
+        "sender_full_name": "Srid",
+        "timestamp": 1708983717
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/413948-nixos/topic/Home.20CI.20machine.20.28portable.29/near/423472967\">said</a>:</p>\n<blockquote>\n<p>This guy on youtube has some pretty cool builds: <a href=\"https://www.youtube.com/watch?v=WN6DUjML8Eo\">https://www.youtube.com/watch?v=WN6DUjML8Eo</a></p>\n</blockquote>\n<p>That looks very portable indeed!</p>",
+        "id": 423653527,
+        "sender_full_name": "Andreas",
+        "timestamp": 1709052639
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/cDpL777nyw1WiYKRexGHSmL3/1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg\">1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/cDpL777nyw1WiYKRexGHSmL3/1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg\" title=\"1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg\"><img src=\"/user_uploads/60244/cDpL777nyw1WiYKRexGHSmL3/1243781E-3B6F-4E7F-9B9E-ED75CF220836.jpg\"></a></div><p>Got my mac mini to self-host CI and other misc. stuff. Next up, linux build that I spoke of earlier. That might take a while though, temporarily I will use another rog strix laptop I got with i9 13th gen and 3070ti. </p>\n<p>Only problem is power consumption, I will try to hack my way through to have something like WOL for mac mini and also on the rog strix for now.</p>",
+        "id": 423751250,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709099305
+    },
+    {
+        "content": "<blockquote>\n<p>Only problem is power consumption</p>\n</blockquote>\n<p>I power expensive where you live? In any case it is hard to beat the Mac Mini when you put in a dedicated GPU I guess...</p>",
+        "id": 423795568,
+        "sender_full_name": "Andreas",
+        "timestamp": 1709118486
+    },
+    {
+        "content": "<p>It’s not expensive, but I like to be efficient <span aria-label=\"laughing\" class=\"emoji emoji-1f606\" role=\"img\" title=\"laughing\">:laughing:</span></p>",
+        "id": 423795819,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709118594
+    }
+]

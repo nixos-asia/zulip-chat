@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Noob question: Is there no easier way to access list items than <code>builtins.elemAt</code> supplied with list and position?</p>\n<p>Attribute sets are somewhat easier to handle I feel.</p>",
+        "id": 444701572,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718371986
+    },
+    {
+        "content": "<p>Usually you want to map over a list to do something with each item or fold it into a different data structure. Very rare that I need just a single item, but there is a lib function to access a list item based on equality somewhere iirc</p>",
+        "id": 444703975,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1718372703
+    }
+]

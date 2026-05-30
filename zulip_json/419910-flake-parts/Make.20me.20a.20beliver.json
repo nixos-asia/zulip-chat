@@ -1,0 +1,80 @@
+[
+    {
+        "content": "<p>I've used flake parts twice - by requirement of other things using it.<br>\nI've seen people describe it as a \"flake-cancer that's spreading faster than flake-utils\"</p>\n<p>and... I just don't get it.</p>\n<p>Why would I want flake parts; what's it going to do for me besides add dependencies to evaluation?</p>\n<p>SELL ME YOUR TOOLZ</p>",
+        "id": 449441366,
+        "sender_full_name": "John Bargman",
+        "timestamp": 1720244294
+    },
+    {
+        "content": "<blockquote>\n<p>and... I just don't get it.</p>\n</blockquote>\n<p>Frankly, I have the same problem. Maybe we can have this thread and go for an explanation?</p>",
+        "id": 449467011,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720258519
+    },
+    {
+        "content": "<p>Because <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> and been working with it for a while now, and is working fairly closely with <span class=\"user-mention\" data-user-id=\"679956\">@Robert Hensing</span>, the author of it. (But he hasn't been logged in here for a while I think)</p>",
+        "id": 449467089,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720258582
+    },
+    {
+        "content": "<p>Module system</p>",
+        "id": 449467233,
+        "sender_full_name": "Srid",
+        "timestamp": 1720258654
+    },
+    {
+        "content": "<p>I don't get it either - you can do it as easily without the library</p>",
+        "id": 449484539,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720267380
+    },
+    {
+        "content": "<p>The module system already handles stuff for system abstractions, so <span aria-label=\"man shrugging\" class=\"emoji emoji-1f937-200d-2642\" role=\"img\" title=\"man shrugging\">:man_shrugging:</span></p>",
+        "id": 449484613,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720267437
+    },
+    {
+        "content": "<p>Hi <span aria-label=\"wave\" class=\"emoji emoji-1f44b\" role=\"img\" title=\"wave\">:wave:</span> </p>\n<p>To quote <a href=\"https://flake.parts\">https://flake.parts</a></p>\n<blockquote>\n<p>Flakes are configuration. The module system lets you refactor configuration into modules that can be shared.</p>\n<p>It reduces the proliferation of custom Nix glue code, similar to what the module system has done for NixOS configurations.</p>\n</blockquote>\n<p>It makes it easier to add Nix logic that other people have already written to a flake that uses it.</p>\n<p>Flake parts by itself doesn't do much, because it's only an interface. Nobody <em>needs</em> it. Everyone <em>could</em> write their flakes by hand, and that's fine, especially when the flakes are simple.</p>\n<p>Now suppose you're adding pre-commit hooks to five flakes. If those are all framework-less flakes that only depend on Nixpkgs or whatever, you'll have to figure out for each of them how their Nix code is structured, to find where to put the <code>checks.&lt;system&gt;.pre-commit-run</code> derivation and where to put the <code>shellHook</code>, which variables are in scope in those places, etc.<br>\nWith flake parts, that's reduced to simpler steps: add its module to <code>inputs</code> and <code>imports</code>, then find the shell, add <code>[config.pre-commit.installationScript](https://flake.parts/options/pre-commit-hooks-nix#opt-perSystem.pre-commit.installationScript)</code> to <code>shellHook</code> and you're done. Always the same.</p>\n<p>It doesn't standardize a nix shell interface yet, but that could totally be done, and the \"gluing\" part of the job is just <code>inputs</code> and <code>imports</code>.</p>\n<p>@Srid is working on a CLI so that it's just a single command to add a module with some defaults (forget about inputs/imports).<br>\nIt will also find the right modules based on the files you already have, and have templates for things you want to create in your flake, like a new custom python package for example.</p>",
+        "id": 449490307,
+        "sender_full_name": "Robert Hensing",
+        "timestamp": 1720270461
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/419910-flake-parts/topic/Make.20me.20a.20beliver/near/449467089\">said</a>:</p>\n<blockquote>\n<p>Because <span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> and been working with it for a while now, and is working fairly closely with <span class=\"user-mention silent\" data-user-id=\"679956\">Robert Hensing</span>, the author of it. (But he hasn't been logged in here for a while I think)</p>\n</blockquote>\n<p>I'm always available for flake-parts related questions. Srid asks good questions, but I don't have much time to contribute to his projects.<br>\nI've only really contributed a bit of code to <code>haskell-flake</code>, which I use in <code>hercules-ci-agent</code>.</p>",
+        "id": 449491621,
+        "sender_full_name": "Robert Hensing",
+        "timestamp": 1720270889
+    },
+    {
+        "content": "<p>Thanks for coming by <span class=\"user-mention\" data-user-id=\"679956\">@Robert Hensing</span> ! It's always good to have the author of a project to talk to <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 449495819,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720272826
+    },
+    {
+        "content": "<p>That's a good explanation <span aria-label=\"+1\" class=\"emoji emoji-1f44d\" role=\"img\" title=\"+1\">:+1:</span></p>\n<p>Essentially flake-parts moves us a substantial way towards better DX, especially in non-trivial flakes. In the long run, a total solution may emerge. Upstream could get a flake module system and/or something better than Nix can emerge (the idea David was talking about).</p>\n<p><span class=\"user-mention silent\" data-user-id=\"679956\">Robert Hensing</span> <a href=\"#narrow/stream/419910-flake-parts/topic/Make.20me.20a.20beliver/near/449490307\">said</a>:</p>\n<blockquote>\n<p>It doesn't standardize a nix shell interface yet,</p>\n</blockquote>\n<p><a href=\"https://community.flake.parts/haskell-flake/devshell#composing-devshells\"><code>inputsFrom</code></a> can be used to somehow mitigate that.</p>",
+        "id": 449498671,
+        "sender_full_name": "Srid",
+        "timestamp": 1720274453
+    },
+    {
+        "content": "<p>Ah, I get it now. I do have a lot of glue code in my repositories, and I suppose I could swap that with flake-parts</p>",
+        "id": 449647706,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720353914
+    },
+    {
+        "content": "<p>yeah the glue code problem is a real issue, I get that. But I might have to look a bit harder at flake-parts to see if I can envision it being the go-to solution for me.</p>",
+        "id": 449648963,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720354610
+    },
+    {
+        "content": "<p>Because just from my subjective impression on this one here from <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> </p>\n<blockquote>\n<p>Essentially flake-parts moves us a substantial way towards better DX, especially in non-trivial flakes.</p>\n</blockquote>\n<p>To me looking at the non-trivial flake repos using flake-parts, it still looks like a lot of glue code tbh.</p>",
+        "id": 449649085,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720354702
+    }
+]

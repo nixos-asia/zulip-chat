@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>deleting unused links...\nnote: currently hard linking saves 0.00 MiB\n176353 store paths deleted, 308004.80 MiB freed\n\n~ took 10m21s\n</code></pre></div>",
+        "id": 444903481,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718481848
+    },
+    {
+        "content": "<p>You can use <a href=\"https://github.com/nix-community/home-manager/blob/master/modules/services/nix-gc.nix\">https://github.com/nix-community/home-manager/blob/master/modules/services/nix-gc.nix</a> to regularly do it in the background for you.</p>",
+        "id": 445164894,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1718639075
+    }
+]
