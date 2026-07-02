@@ -1,0 +1,67 @@
+<html>
+<head><meta charset="utf-8"><title>suppression of the deprecation warning. · rust-flake · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://chat.nixos.asia/stream/446608-rust-flake/index.html">rust-flake</a></h2>
+<h3>Topic: <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/suppression.20of.20the.20deprecation.20warning.2E.html">suppression of the deprecation warning.</a></h3>
+
+<hr>
+
+<base href="https://nixos.zulipchat.com">
+
+<head><link href="http://chat.nixos.asia/style.css" rel="stylesheet"></head>
+
+<a name="603855719"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/suppression%20of%20the%20deprecation%20warning./near/603855719" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> akileshas <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/suppression.20of.20the.20deprecation.20warning.2E.html#603855719">(Jun 16 2026 at 17:14)</a>:</h4>
+<p>The of nested list has been deprecated in the recent release of the NixOS 26.05 "Yarara" (nixpkgs 26.05).<br>
+So, it shoutouts an deprecation warning on each time while developing an application via the <code>rust-flake</code></p>
+<p><img alt="image.png" class="inline-image" data-original-content-type="image/png" data-original-dimensions="1712x315" data-original-src="/user_uploads/60244/NyUOAgwTaf1WVAvLyYqJYW_F/image.png" src="/user_uploads/thumbnail/60244/NyUOAgwTaf1WVAvLyYqJYW_F/image.png/840x560.webp"><br>
+( refs - <a href="https://nixos.org/manual/nixpkgs/stable/release-notes#sec-nixpkgs-release-26.05-lib-deprecations">https://nixos.org/manual/nixpkgs/stable/release-notes#sec-nixpkgs-release-26.05-lib-deprecations</a> )</p>
+<p>And, examples of warning i am getting on an <code>x86 64-bit linux</code> system.</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'buildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'buildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'buildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'buildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'nativeBuildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'nativeBuildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'nativeBuildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+evaluation<span class="w"> </span>warning:<span class="w"> </span>Dependency<span class="w"> </span>of<span class="w"> </span>package<span class="w"> </span><span class="s1">'rust-flake-devshell'</span><span class="w"> </span>uses<span class="w"> </span>a<span class="w"> </span>nested<span class="w"> </span>list<span class="w"> </span><span class="k">in</span><span class="w"> </span>attribute<span class="w"> </span><span class="s1">'nativeBuildInputs'</span>.
+<span class="w">                    </span>This<span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>as<span class="w"> </span>of<span class="w"> </span>Nixpkgs<span class="w"> </span>release<span class="w"> </span><span class="m">26</span>.05,<span class="w"> </span>and<span class="w"> </span>support<span class="w"> </span>will
+<span class="w">                    </span>be<span class="w"> </span>removed<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>nixpkgs<span class="w"> </span>release.
+</code></pre></div>
+<p>an PR has been made for supress this warning in the repo - <a href="https://github.com/juspay/rust-flake/pull/84/">https://github.com/juspay/rust-flake/pull/84/</a><br>
+take an look at it.</p>
+<p>references:</p>
+<ul>
+<li><a href="https://nixos.org/blog/announcements/2026/nixos-2605/">https://nixos.org/blog/announcements/2026/nixos-2605/</a></li>
+<li><a href="https://nixos.org/manual/nixpkgs/stable/release-notes/">https://nixos.org/manual/nixpkgs/stable/release-notes/</a></li>
+</ul>
+
+
+
+<a name="603897834"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/suppression%20of%20the%20deprecation%20warning./near/603897834" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Srid <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/suppression.20of.20the.20deprecation.20warning.2E.html#603897834">(Jun 16 2026 at 19:47)</a>:</h4>
+<p>Sorry, this got slipped. I've merged it now.</p>
+
+
+
+<a name="603899016"></a>
+<h4><a href="https://nixos.zulipchat.com#narrow/stream/446608-rust-flake/topic/suppression%20of%20the%20deprecation%20warning./near/603899016" class="zl"><img src="http://chat.nixos.asia/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> akileshas <a href="http://chat.nixos.asia/stream/446608-rust-flake/topic/suppression.20of.20the.20deprecation.20warning.2E.html#603899016">(Jun 16 2026 at 19:52)</a>:</h4>
+<p>thanks for the quick action <span aria-label="heart" class="emoji emoji-2764" role="img" title="heart">:heart:</span></p>
+
+
+
+<hr><p>Last updated: Jul 02 2026 at 21:36 UTC</p>
+</html>

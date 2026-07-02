@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>My builds are failing and it seems to be because cabal builds multiple packages in parallel and runs out of memory. I've had this issue before when using Docker and solved it by passing <code>-j1</code> to <code>cabal build</code>. How do I do the same using <code>haskell-flake</code>?</p>\n<p>I tried sprinkling <code>extraBuildFlags</code> with <code>\"-j1\"</code> everywhere to see if it'd have an effect, but it seems it does not. I'm new to nix and haskell-flake so I'm sure I'm using it incorrectly.</p>\n<p>How would I pass a \"global\" cabal build flag like this?</p>\n<p>Here's my flake:</p>\n<div class=\"codehilite\"><pre><span></span><code>{\n  inputs = {\n    nixpkgs.url = &quot;github:nixos//nixpkgs/00d80d13810dbfea8ab4ed1009b09100cca86ba8&quot;;\n    flake-parts.url = &quot;github:hercules-ci/flake-parts&quot;;\n    haskell-flake.url = &quot;github:srid/haskell-flake&quot;;\n  };\n  outputs = inputs@{ self, nixpkgs, flake-parts, ... }:\n    flake-parts.lib.mkFlake { inherit inputs; } {\n      systems = nixpkgs.lib.systems.flakeExposed;\n      imports = [ inputs.haskell-flake.flakeModule ];\n      perSystem = { self&#39;, system, lib, config, pkgs, ... }: {\n        haskellProjects.default = {\n          basePackages = pkgs.haskell.packages.ghc982;\n\n          settings = {\n            all.extraBuildFlags = [ &quot;-j1&quot; ];\n            overall.extraBuildFlags = [ &quot;-j1&quot; ];\n          };\n\n          devShell = {\n            hlsCheck.enable = false;\n          };\n\n          defaults.settings.default = {\n            check = false;\n            extraBuildFlags = [ &quot;-j1&quot; ];\n          };\n\n          autoWire = [ &quot;packages&quot; ];\n        };\n\n        packages.default = self&#39;.packages.overall;\n\n        devShells.default = pkgs.mkShell {\n          name = &quot;Haskell devShell&quot;;\n          inputsFrom = [\n            config.haskellProjects.default.outputs.devShell\n          ];\n          nativeBuildInputs = with pkgs; [\n          ];\n        };\n      };\n    };\n}\n</code></pre></div>",
+        "id": 448835129,
+        "sender_full_name": "JamesM",
+        "timestamp": 1720009633
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>          <span class=\"ss\">settings</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n            all<span class=\"o\">.</span><span class=\"ss\">extraBuildFlags</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"-j1\"</span> <span class=\"p\">];</span>\n            overall<span class=\"o\">.</span><span class=\"ss\">extraBuildFlags</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"-j1\"</span> <span class=\"p\">];</span>\n          <span class=\"p\">};</span>\n</code></pre></div>\n<p>What's <code>all</code> and <code>overall</code>? Are you using latest haskell-flake?</p>",
+        "id": 448863738,
+        "sender_full_name": "Srid",
+        "timestamp": 1720016779
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>          defaults<span class=\"o\">.</span>settings<span class=\"o\">.</span><span class=\"ss\">default</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n            <span class=\"ss\">check</span> <span class=\"o\">=</span> <span class=\"no\">false</span><span class=\"p\">;</span>\n            <span class=\"ss\">extraBuildFlags</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"-j1\"</span> <span class=\"p\">];</span>\n          <span class=\"p\">};</span>\n</code></pre></div>\n<p>In <a href=\"https://github.com/srid/haskell-flake/pull/275\">recent haskell-flake</a>, this should be <code>defaults.settings.local</code></p>",
+        "id": 448864579,
+        "sender_full_name": "Srid",
+        "timestamp": 1720016929
+    }
+]

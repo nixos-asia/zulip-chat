@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Working on an alternative to <code>mission-control</code>, basically, but allowing sharing <a href=\"https://just.systems\">https://just.systems</a> targets across projects:</p>\n<p><a href=\"https://github.com/juspay/just-flake/pull/1\">https://github.com/juspay/just-flake/pull/1</a></p>",
+        "id": 432842431,
+        "sender_full_name": "Srid",
+        "timestamp": 1712906028
+    },
+    {
+        "content": "<p>Merged, <a href=\"https://github.com/juspay/just-flake\">https://github.com/juspay/just-flake</a></p>",
+        "id": 433454207,
+        "sender_full_name": "Srid",
+        "timestamp": 1713250659
+    },
+    {
+        "content": "<p>Works pretty much like pre-commit-hooks.nix in that we can write custom targets in Nix as well</p>",
+        "id": 433454298,
+        "sender_full_name": "Srid",
+        "timestamp": 1713250686
+    }
+]

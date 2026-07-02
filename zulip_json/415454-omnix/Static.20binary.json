@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Should also provide <code>om</code> as a static binary, which can run <code>nix-health</code> without depending on Nix per se, and can even manage the user's Nix install (DetSys installer). A bit long-term though.</p>",
+        "id": 451050666,
+        "sender_full_name": "Srid",
+        "timestamp": 1720810722
+    },
+    {
+        "content": "<p>Yes:</p>\n<p><a href=\"https://github.com/juspay/omnix/issues/149\">https://github.com/juspay/omnix/issues/149</a></p>",
+        "id": 451665513,
+        "sender_full_name": "Srid",
+        "timestamp": 1721095924
+    },
+    {
+        "content": "<p>About this: <a href=\"https://github.com/juspay/omnix/pull/158#issuecomment-2233484730\">https://github.com/juspay/omnix/pull/158#issuecomment-2233484730</a></p>\n<p>Doesn’t most of the commands in omnix depend on <code>Nix</code> being present in the user’s system? The only thing the static binary can help is to direct people to install Nix via DetSys installer?</p>",
+        "id": 452163491,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1721243039
+    },
+    {
+        "content": "<p>Since omnix works at a level \"above\" that of Nix, yes - directing people to install Nix, or even fix their Nix issues is part of it.</p>\n<p>Employee John joins company Foo, with a new macbook, and <code>git clone</code>'s project Qux whose README mentions <code>curl https://omnix.io/install | sh -</code> followed by <code>om setup</code> or something such thing to setup the environment. This is one vision.</p>",
+        "id": 452171496,
+        "sender_full_name": "Srid",
+        "timestamp": 1721245174
+    }
+]

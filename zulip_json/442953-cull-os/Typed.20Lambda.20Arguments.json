@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>I was thinking about this yesterday. Even though a lot of the stdlib will be in Rust, which eagerly checks for types, we need a way to do it in userspace too.</p>\n<p>So I decided on this:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  <span class=\"ss\">filter</span> <span class=\"o\">=</span> x <span class=\"p\">::</span> lambda any boolean<span class=\"p\">:</span> y <span class=\"p\">::</span> list <span class=\"p\">(</span>typeOf x<span class=\"p\">)</span><span class=\"o\">.</span>input<span class=\"p\">:</span> <span class=\"o\">&lt;</span>impl here<span class=\"o\">&gt;</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>This would sugar down into something that's equivalent to this but with better error messages:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  <span class=\"ss\">filter</span> <span class=\"o\">=</span> x<span class=\"p\">:</span> <span class=\"k\">assert</span> <span class=\"p\">(</span>typeOf x<span class=\"p\">)</span> <span class=\"o\">==</span> lambda any <span class=\"ss\">boolean</span> <span class=\"o\">==&gt;</span> y<span class=\"p\">:</span> <span class=\"k\">assert</span> <span class=\"p\">(</span>typeOf y<span class=\"p\">)</span> <span class=\"o\">==</span> <span class=\"p\">(</span>typeOf x<span class=\"p\">)</span><span class=\"o\">.</span><span class=\"ss\">input</span> <span class=\"o\">==&gt;</span> <span class=\"o\">&lt;</span>impl here<span class=\"o\">&gt;</span><span class=\"p\">;</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>How this works is you can specify expressions between the <code>::</code> and <code>:</code>, and they get compared to the type of the argument every time the lambda is called.</p>\n<p><code>==&gt;</code> is normally for importing namespaces, but it can be used for an equivalent of Nix's <code>builtins.seq</code> without the parens by making functions return empty attribute sets or maybe even some information in that attribute set when they pass and <code>throw</code> if they don't, making it bubble up with a trace.</p>",
+        "id": 451146419,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720861133
+    },
+    {
+        "content": "<p>I want to take a shot at implementing this in Nix. It's backwards compatible syntax and shouldn't be that hard to implement, and having a nice demo would be neat</p>",
+        "id": 451146837,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720861373
+    },
+    {
+        "content": "<p>This will now be done with pattern matching and will work everywhere. <code>&lt;pat&gt; :: &lt;expr&gt;</code> is a valid pattern match: <code>\\x :: number: x + 1</code></p>",
+        "id": 479074939,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729972201
+    }
+]
