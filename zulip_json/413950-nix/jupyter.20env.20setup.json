@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Found <a href=\"https://gist.github.com/agoose77/9c63dc19d8671455cc6faae01228f485\">https://gist.github.com/agoose77/9c63dc19d8671455cc6faae01228f485</a> to have a simple env where I can install extensions using jupyter UI. Will be using this while I figure out the Nix way to get things!</p>",
+        "id": 424197562,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1709287728
+    },
+    {
+        "content": "<p>There's also <a href=\"https://github.com/tweag/jupyenv\">https://github.com/tweag/jupyenv</a></p>",
+        "id": 424224832,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296227
+    },
+    {
+        "content": "<p>I tried jupyenv before the linked gist, but I wasn't able to get jupyenv working with extensions (vim mode, execute-time)</p>",
+        "id": 425656880,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1709966857
+    },
+    {
+        "content": "<p>What problems did you run into? Maybe I can try it out myself... you are talking vscode extensions I assume?</p>",
+        "id": 425674824,
+        "sender_full_name": "Andreas",
+        "timestamp": 1709979562
+    }
+]

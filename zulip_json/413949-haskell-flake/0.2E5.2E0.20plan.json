@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>Mainly I want to tighten up docs &amp; stability of this thing.</p>\n<p>Let me know if anything else should go into this release.</p>\n<p><a href=\"https://github.com/srid/haskell-flake/milestone/1\">https://github.com/srid/haskell-flake/milestone/1</a></p>\n<p>Will aim to release something in a week or two.</p>",
+        "id": 423171464,
+        "sender_full_name": "Srid",
+        "timestamp": 1708782563
+    },
+    {
+        "content": "<p>I guess we'll add <a href=\"https://github.com/srid/haskell-flake/issues/261\">https://github.com/srid/haskell-flake/issues/261</a> to this release.</p>",
+        "id": 424226954,
+        "sender_full_name": "Srid",
+        "timestamp": 1709297005
+    },
+    {
+        "content": "<p>Pending PRs for 0.5:</p>\n<ul>\n<li><a href=\"https://github.com/srid/haskell-flake/pull/275\">https://github.com/srid/haskell-flake/pull/275</a></li>\n<li><a href=\"https://github.com/srid/haskell-flake/pull/277\">https://github.com/srid/haskell-flake/pull/277</a></li>\n</ul>",
+        "id": 429871023,
+        "sender_full_name": "Srid",
+        "timestamp": 1711549414
+    },
+    {
+        "content": "<p>Oh, and I should give <a href=\"https://github.com/srid/haskell-flake/issues/262\">https://github.com/srid/haskell-flake/issues/262</a> another attempt as well</p>",
+        "id": 429871820,
+        "sender_full_name": "Srid",
+        "timestamp": 1711549607
+    },
+    {
+        "content": "<p>Also this:</p>\n<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/Can.E2.80.99t.20assign.20custom.20library.20packages.20in.20settings/near/429917075\">said</a>:</p>\n<blockquote>\n<p>I'll take a look later today. Actually, this may be related to the ordering of settings,</p>\n<p><a href=\"https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77\">https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77</a></p>\n</blockquote>",
+        "id": 429917103,
+        "sender_full_name": "Srid",
+        "timestamp": 1711562183
+    },
+    {
+        "content": "<p>#275 is close to being complete, here are the tests: <a href=\"https://github.com/srid/haskell-flake/pull/275#issuecomment-2063903367\">https://github.com/srid/haskell-flake/pull/275#issuecomment-2063903367</a></p>",
+        "id": 434050808,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713447936
+    },
+    {
+        "content": "<p>documentation should be last thing to do. Also, need to rethink the naming conventions for the defaults</p>",
+        "id": 434053966,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713448814
+    }
+]

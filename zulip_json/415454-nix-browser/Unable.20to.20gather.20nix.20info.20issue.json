@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Getting the following error after the same command got interrupted due to network issue. <br>\ncc: <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> </p>\n<div class=\"codehilite\"><pre><span></span><code>❯ nix --accept-flake-config run github:juspay/nix-browser#nix-health\nError: Unable to gather nix info\n\nCaused by:\n    0: Nix command error: Failed to decode command stdout (json error): invalid type: integer `1`, expected a string at line 1 column 11309\n    1: Failed to decode command stdout (json error): invalid type: integer `1`, expected a string at line 1 column 11309\n    2: invalid type: integer `1`, expected a string at line 1 column 11309\n</code></pre></div>",
+        "id": 423547625,
+        "sender_full_name": "Jishnu Prakash",
+        "timestamp": 1709019253
+    },
+    {
+        "content": "<p>You got it working after a <code>nix nix-upgrade</code> right? You Nix version must have been old, in which case it would be good to know what it was, because it looks like we probably should do the version check first before running anything else.</p>",
+        "id": 423631692,
+        "sender_full_name": "Srid",
+        "timestamp": 1709047571
+    }
+]

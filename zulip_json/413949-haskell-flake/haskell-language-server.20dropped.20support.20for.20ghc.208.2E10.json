@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>failed with</p>\n<div class=\"codehilite\"><pre><span></span><code>error: haskell-language-server dropped support for ghc 8.10 in version 2.3.0.0\nplease use a newer ghc version or an older nixpkgs version\n</code></pre></div>",
+        "id": 422779918,
+        "sender_full_name": "Neeraj",
+        "timestamp": 1708594934
+    },
+    {
+        "content": "<p>You may have to downgrade your nixpkgs then.</p>\n<p>Try perhaps <code>96ba1c52e54e74c3197f4d43026b3f3d92e83ff9</code> from when nammayatri was using it before this PR:</p>\n<p><a href=\"https://github.com/nammayatri/common/pull/18/files#diff-216b2b7bfde9416c79d133bacb031e95702a20bdedb548c0b055c837aa4f6a9c\">https://github.com/nammayatri/common/pull/18/files#diff-216b2b7bfde9416c79d133bacb031e95702a20bdedb548c0b055c837aa4f6a9c</a></p>",
+        "id": 422788213,
+        "sender_full_name": "Srid",
+        "timestamp": 1708598001
+    },
+    {
+        "content": "<p><code>nixpkgs.url = \"github:nixos/nixpkgs/96ba1c52e54e74c3197f4d43026b3f3d92e83ff9</code></p>",
+        "id": 422788263,
+        "sender_full_name": "Srid",
+        "timestamp": 1708598026
+    }
+]

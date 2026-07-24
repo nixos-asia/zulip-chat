@@ -1,0 +1,218 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/lvnilesh/nix-one-click\">https://github.com/lvnilesh/nix-one-click</a></p>\n<p>is this enough? will it autogenerate the lock file?</p>",
+        "id": 444066472,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718128905
+    },
+    {
+        "content": "<p>You should generate the lock file by running <code>nix flake lock</code>, and commit that to the repo.</p>",
+        "id": 444067012,
+        "sender_full_name": "Srid",
+        "timestamp": 1718129051
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>nixpkgs.url = &quot;github:NixOS/nixpkgs/nixos-23.11&quot;;\n</code></pre></div>\n<p>Also, 24.05 was recently released.</p>",
+        "id": 444067058,
+        "sender_full_name": "Srid",
+        "timestamp": 1718129073
+    },
+    {
+        "content": "<p>Don't forget to add your ssh key to <code>rootAuthorizedKeys</code></p>",
+        "id": 444067146,
+        "sender_full_name": "Srid",
+        "timestamp": 1718129104
+    },
+    {
+        "content": "<p>Assuming this is for <a href=\"https://nixos.asia/en/nixos-install-oneclick\">https://nixos.asia/en/nixos-install-oneclick</a></p>",
+        "id": 444067228,
+        "sender_full_name": "Srid",
+        "timestamp": 1718129128
+    },
+    {
+        "content": "<p>I added my pubkey.<br>\nI did not generate lock. I could not generate lock because the git repo is remote. <br>\nInstall finished when I used my README in my git repo <a href=\"https://github.com/lvnilesh/nix-one-click\">https://github.com/lvnilesh/nix-one-click</a><br>\nThen the new nix machine wont boot after a power cycle.</p>\n<p>I am now debugging.</p>\n<p>Thanks for your help.</p>",
+        "id": 444068238,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718129445
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"728037\">@LV Nilesh</span> It is not advisable to ignore generating the lock file. You won't get the reproducibility benefits of NixOS.</p>",
+        "id": 444070058,
+        "sender_full_name": "Srid",
+        "timestamp": 1718130043
+    },
+    {
+        "content": "<p>Just clone the git repo and add it</p>",
+        "id": 444070086,
+        "sender_full_name": "Srid",
+        "timestamp": 1718130054
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"728037\">LV Nilesh</span> <a href=\"#narrow/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial/near/444068238\">said</a>:</p>\n<blockquote>\n<p>Then the new nix machine wont boot after a power cycle.</p>\n<p>I am now debugging.</p>\n</blockquote>\n<p>Let me know how that goes. Probably something to do with boot loader configuration. I've tested that flake only on Parallels VM on mac.</p>",
+        "id": 444075089,
+        "sender_full_name": "Srid",
+        "timestamp": 1718131687
+    },
+    {
+        "content": "<p>can’t clone without git</p>",
+        "id": 444078380,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718132856
+    },
+    {
+        "content": "<p>Newbie does not know how to get git in a USB booted live nix environment</p>",
+        "id": 444078573,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718132914
+    },
+    {
+        "content": "<p><code>nix run nixpkgs#git clone &lt;url&gt;</code></p>",
+        "id": 444078642,
+        "sender_full_name": "Srid",
+        "timestamp": 1718132939
+    },
+    {
+        "content": "<p>(For more on that nifty <code>nix run</code> command, see <a href=\"https://nixos.asia/en/nix-first\">https://nixos.asia/en/nix-first</a>)</p>",
+        "id": 444078759,
+        "sender_full_name": "Srid",
+        "timestamp": 1718132982
+    },
+    {
+        "content": "<p><span aria-label=\"+1\" class=\"emoji emoji-1f44d\" role=\"img\" title=\"+1\">:+1:</span></p>",
+        "id": 444078898,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718133021
+    },
+    {
+        "content": "<p>nix --extra-experimental-features \"nix-command flakes\" run nixpkgs#git clone git@github:lvnilesh/nix-one-click</p>\n<p>Thanks.</p>",
+        "id": 444080588,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718133574
+    },
+    {
+        "content": "<p>nix --extra-experimental-features \"nix-command flakes\" run nix flake lock <br>\nnix --extra-experimental-features \"nix-command flakes\" run flake lock <br>\nnix --extra-experimental-features \"nix-command flakes\" flake lock </p>\n<p>all fail LOL</p>",
+        "id": 444081951,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718134001
+    },
+    {
+        "content": "<p>I cloned git - then CD into it and then don't yet know how to <code>nix flake lock</code></p>",
+        "id": 444082153,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718134063
+    },
+    {
+        "content": "<blockquote>\n<p>all fail LOL</p>\n</blockquote>\n<p>Post the error message. Your 3rd command is correct.</p>",
+        "id": 444083915,
+        "sender_full_name": "Srid",
+        "timestamp": 1718134624
+    },
+    {
+        "content": "<p>git cloned <a href=\"https://github.com/lvnilesh/nix-one-click\">https://github.com/lvnilesh/nix-one-click</a>  /tmp/nix-one-click<br>\ncd /tmp/nix-one-click<br>\nnix --extra-experimental-features \"nix-command flakes\" flake lock</p>\n<p>error: while fetching the input git+file://tmp/nix-one-click<br>\nerror: getting the HEAD of the git tree /tmp/nix-one-click failed with exit code 1<br>\nerror executing git: no such file or directory</p>",
+        "id": 444086188,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718135395
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png\"></a></div>",
+        "id": 444089646,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718136585
+    },
+    {
+        "content": "<p>this screenshot when I try UEFI</p>",
+        "id": 444089876,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718136666
+    },
+    {
+        "content": "<p>and <br>\n<a href=\"/user_uploads/60244/A2XLfjR1gSjMEkHelTOP2XHi/image.png\">image.png</a><br>\nthis screenshot when I try SeaBIOS</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/A2XLfjR1gSjMEkHelTOP2XHi/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/A2XLfjR1gSjMEkHelTOP2XHi/image.png\"></a></div>",
+        "id": 444089925,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718136686
+    },
+    {
+        "content": "<p>Ah, try this.</p>\n<p>First, run <code>nix shell nixpkgs#git</code> to enter a shell with <code>git</code> on PATH.</p>\n<p>Then, you can run <code>nix flake lock</code>, etc. normally.</p>",
+        "id": 444093574,
+        "sender_full_name": "Srid",
+        "timestamp": 1718137452
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>nix --extra-experimental-features &quot;nix-command flakes&quot; run nixpkgs#git clone git@github.com:lvnilesh/nix-one-click\n\ncd nix-one-click\n\nnix --extra-experimental-features &quot;nix-command flakes&quot;  shell nixpkgs#git\nnix --extra-experimental-features &quot;nix-command flakes&quot; flake lock\n\ngit status\ngit add flake.lock\ngit commit -am &quot;add flake lock&quot;\ngit push\n\nbash README.md\n</code></pre></div>\n<p>power off and reboot from disk and be greeted by <br>\n<a href=\"/user_uploads/60244/n1nMQdcwLKAeuVpN1ER4o7P8/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/n1nMQdcwLKAeuVpN1ER4o7P8/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/n1nMQdcwLKAeuVpN1ER4o7P8/image.png\"></a></div>",
+        "id": 444096472,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718138311
+    },
+    {
+        "content": "<p>README.md contains</p>\n<div class=\"codehilite\"><pre><span></span><code># Assuming\n# - your system is x86_64-linux\n# - your harddrive device is /dev/sda\nFLAKE=&quot;github:lvnilesh/nix-one-click#nixoneclick&quot;\nDISK_DEVICE=/dev/sda\nsudo nix \\\n    --extra-experimental-features &#39;flakes nix-command&#39; \\\n    run github:nix-community/disko#disko-install -- \\\n    --flake &quot;$FLAKE&quot; \\\n    --write-efi-boot-entries \\\n    --disk main &quot;$DISK_DEVICE&quot;\n</code></pre></div>",
+        "id": 444099387,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718139421
+    },
+    {
+        "content": "<p>Can you say more about the machine you are installing to?</p>",
+        "id": 444106524,
+        "sender_full_name": "Srid",
+        "timestamp": 1718142548
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/avS26MH7GYSJVeLDzIwrmhu8/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/avS26MH7GYSJVeLDzIwrmhu8/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/avS26MH7GYSJVeLDzIwrmhu8/image.png\"></a></div>",
+        "id": 444118646,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718148635
+    },
+    {
+        "content": "<p>Was <code>/dev/sda</code> the right disk ?</p>",
+        "id": 444120400,
+        "sender_full_name": "Srid",
+        "timestamp": 1718149852
+    },
+    {
+        "content": "<p>yes</p>",
+        "id": 444127104,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718154689
+    },
+    {
+        "content": "<p>Try the graphical installer, and see what configuration.nix it generates. Then adopt that config into your flake:</p>\n<p><a href=\"https://nixos.asia/en/nixos-install-flake\">https://nixos.asia/en/nixos-install-flake</a></p>",
+        "id": 444136019,
+        "sender_full_name": "Srid",
+        "timestamp": 1718160704
+    },
+    {
+        "content": "<p>Did that. It created <a href=\"https://github.com/lvnilesh/nixos-config/blob/master/configuration.nix\">https://github.com/lvnilesh/nixos-config/blob/master/configuration.nix</a></p>\n<p>How would I add that to this <a href=\"https://github.com/lvnilesh/nix-one-click/blob/master/flake.nix\">https://github.com/lvnilesh/nix-one-click/blob/master/flake.nix</a></p>",
+        "id": 444139775,
+        "sender_full_name": "LV Nilesh",
+        "timestamp": 1718163477
+    },
+    {
+        "content": "<p>Add it to <a href=\"https://github.com/lvnilesh/nix-one-click/blob/d2ae0985386a61add52cb48b6c4a928719b423cd/flake.nix#L20\">the <code>modules</code> list</a></p>",
+        "id": 444141176,
+        "sender_full_name": "Srid",
+        "timestamp": 1718164349
+    },
+    {
+        "content": "<p>Just like how you are importing <code>./disk-config.nix</code></p>",
+        "id": 444141191,
+        "sender_full_name": "Srid",
+        "timestamp": 1718164364
+    },
+    {
+        "content": "<p>Make sure to <code>git add</code> the new file (Nix won't see it otherwise)</p>",
+        "id": 444141201,
+        "sender_full_name": "Srid",
+        "timestamp": 1718164371
+    },
+    {
+        "content": "<p>Though at this point you can get rid of <code>./disk-config.nix</code>, and the existing boot config from flake.</p>",
+        "id": 444141259,
+        "sender_full_name": "Srid",
+        "timestamp": 1718164423
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"728037\">LV Nilesh</span> <a href=\"#narrow/stream/413948-nixos/topic/NixOS.20oneclick.20install.20tutorial/near/444089646\">said</a>:</p>\n<blockquote>\n<p><a href=\"/user_uploads/60244/M_a2DBi4sIBsT8fg-2A4yWRl/image.png\">image.png</a></p>\n</blockquote>\n<p>I recall facing this while setting up a server at Juspay. It is most likely due to Intel VMD being enabled in your BIOS, which would require the proprietary intel drivers to get it working in NixOS. I recommend just disabling it if that’s the case and you can use <code>mdadm</code> for raid configuration instead.</p>",
+        "id": 445164540,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1718638984
+    }
+]

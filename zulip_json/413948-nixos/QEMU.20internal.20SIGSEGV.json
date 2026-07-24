@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>Looks like we can't emulate x86_64-linux builds on aarch64-linux for all packages, like the treefmt-nix check,</p>\n<div class=\"codehilite\"><pre><span></span><code>treefmt-check&gt; qemu-x86_64: QEMU internal SIGSEGV {code=MAPERR, addr=0x20}\ntreefmt-check&gt; /build/.attr-0l2nkwhif96f51f4amnlf414lhl4rv9vh8iffyp431v6s28gsr90: line 22:    31 Segmentation fault      (core dumped) treefmt --version\nerror: builder for &#39;/nix/store/rwsarq4sga22kchk3k2rhi30mjv6f4zd-treefmt-check.drv&#39; failed with exit code 139;\n       last 3 log lines:\n       &gt; Initialized empty Git repository in /build/project/.git/\n       &gt; qemu-x86_64: QEMU internal SIGSEGV {code=MAPERR, addr=0x20}\n       &gt; /build/.attr-0l2nkwhif96f51f4amnlf414lhl4rv9vh8iffyp431v6s28gsr90: line 22:    31 Segmentation fault      (core dumped) treefmt --version\n       For full logs, run &#39;nix log /nix/store/rwsarq4sga22kchk3k2rhi30mjv6f4zd-treefmt-check.drv&#39;.\n</code></pre></div>\n<p><a href=\"https://github.com/srid/emanote/actions/runs/7980820965/job/21791270125\">https://github.com/srid/emanote/actions/runs/7980820965/job/21791270125</a></p>",
+        "id": 422512044,
+        "sender_full_name": "Srid",
+        "timestamp": 1708468155
+    },
+    {
+        "content": "<p>is this using the <code>binfmt.emulatedSystems</code>?</p>",
+        "id": 422512728,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708468545
+    },
+    {
+        "content": "<p>Yes.</p>",
+        "id": 422513382,
+        "sender_full_name": "Srid",
+        "timestamp": 1708468839
+    },
+    {
+        "content": "<p><a href=\"https://github.com/srid/nixos-config/blob/df99c7efb60b93233ef6e626d4053afba0887ea0/systems/here.nix#L14\">https://github.com/srid/nixos-config/blob/df99c7efb60b93233ef6e626d4053afba0887ea0/systems/here.nix#L14</a></p>",
+        "id": 422513408,
+        "sender_full_name": "Srid",
+        "timestamp": 1708468854
+    },
+    {
+        "content": "<p>Another instance when building <code>neovim-ruby-env</code></p>\n<div class=\"codehilite\"><pre><span></span><code>error: builder for &#39;/nix/store/zyh6qa2nvjp9hnm0i1biv1lfzbixwmy8-neovim-ruby-env.drv&#39; failed with exit code 139;\n       last 3 log lines:\n       &gt; created 12 symlinks in user environment\n       &gt; qemu-x86_64: QEMU internal SIGSEGV {code=MAPERR, addr=0x20}\n       &gt; /build/.attr-0l2nkwhif96f51f4amnlf414lhl4rv9vh8iffyp431v6s28gsr90: line 8:    13 Segmentation fault      (core dumped) /nix/store/lpp53qxl39gc5vwvd8qn6ps6nh6kkffk-ruby-3.1.4/bin/ruby /nix/store/bcjdfm46ck1qfgc3vqkxxvp8jfwfprjl-gen-bin-stubs.rb &quot;/nix/store/lpp53qxl39gc5vwvd8qn6ps6nh6kkffk-ruby-3.1.4/bin/ruby&quot; &quot;/nix/store/vljdmnfbkn57ld6n0p3kfjpxs8cmgv6b-gemfile-and-lockfile/Gemfile&quot; &quot;$out/lib/ruby/gems/3.1.0&quot; &quot;/nix/store/nfrdd8k4q5qwwhnghkvxaap96vlxmbmm-bundler-2.5.5/lib/ruby/gems/3.1.0/gems/bundler-2.5.5&quot; &#39;/nix/store/gpi0yf9rmzk18p3q421hajjk0iiwgm2c-ruby3.1-msgpack-1.5.1 /nix/store/c3p395d3p9w5ri0a8pb0nb0r37mda35l-ruby3.1-multi_json-1.15.0 /nix/store/mj9z389y61dvva11fi5nhf51caf6kpmk-ruby3.1-neovim-0.9.0 /nix/store/nfrdd8k4q5qwwhnghkvxaap96vlxmbmm-bundler-2.5.5&#39; &#39;&#39;\n       For full logs, run &#39;nix log /nix/store/zyh6qa2nvjp9hnm0i1biv1lfzbixwmy8-neovim-ruby-env.drv&#39;.\n</code></pre></div>\n<p>This is just arm64 build (no emulation). So I don't know where <code>qemu-x86_64</code> is coming into picture. :-/</p>\n<p><a href=\"https://github.com/srid/nixos-config/actions/runs/7989424170/job/21816714621\">https://github.com/srid/nixos-config/actions/runs/7989424170/job/21816714621</a></p>",
+        "id": 422616382,
+        "sender_full_name": "Srid",
+        "timestamp": 1708521814
+    },
+    {
+        "content": "<p>Huh, why is it using x86 ruby as build dependency?</p>\n<div class=\"codehilite\"><pre><span></span><code># nix run nixpkgs#file /nix/store/lpp53qxl39gc5vwvd8qn6ps6nh6kkffk-ruby-3.1.4/bin/ruby\n/nix/store/lpp53qxl39gc5vwvd8qn6ps6nh6kkffk-ruby-3.1.4/bin/ruby: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /nix/store/cyrrf49i2hm1w7vn2j945ic3rrzgxbqs-glibc-2.38-44/lib/ld-linux-x86-64.so.2, for GNU/Linux 3.10.0, not stripped\n</code></pre></div>",
+        "id": 422617589,
+        "sender_full_name": "Srid",
+        "timestamp": 1708522161
+    },
+    {
+        "content": "<p>Because <code>zyh6qa2nvjp9hnm0i1biv1lfzbixwmy8-neovim-ruby-env.drv</code> is being built for that system<br>\n.</p>",
+        "id": 422617939,
+        "sender_full_name": "Srid",
+        "timestamp": 1708522258
+    },
+    {
+        "content": "<p>Oh, it is building the x86 configuration, because nixci (via devour-flake) will return all Linux systems,</p>\n<p><a href=\"https://github.com/srid/devour-flake/blob/c89ad7a611caef31899292bc8f9aae9e7aa251cb/flake.nix#L34-L35\">https://github.com/srid/devour-flake/blob/c89ad7a611caef31899292bc8f9aae9e7aa251cb/flake.nix#L34-L35</a></p>",
+        "id": 422618646,
+        "sender_full_name": "Srid",
+        "timestamp": 1708522471
+    }
+]

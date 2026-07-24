@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Hi everyone.</p>\n<p>Horizon Haskell (<a href=\"https://horizon-haskell.net/\">https://horizon-haskell.net/</a>) is a publishing system for Haskell on Nix package sets targeting new GHC versions.</p>\n<p>We currently support over 1100 packages in horizon-platform at GHC 9.8. (<a href=\"https://gitlab.horizon-haskell.net/package-sets/horizon-platform\">https://gitlab.horizon-haskell.net/package-sets/horizon-platform</a> )</p>\n<p>Nothing is ever marked as broken in a horizon package set. If it is listed, it should build.</p>\n<p>Horizon package sets are API compatible with nixpkgs' <code>haskellPackages</code>. You can swap out <code>pkgs,haskellPackages</code> for <code>horizon-platform.legacyPackages.${system}</code></p>\n<p>we aim to target new GHC releases on the day of launch. So we do forward compatibility work far in advance against GHC mainline.</p>\n<p>If you'd like to try it out, use the templates at <a href=\"https://gitlab.horizon-haskell.net/templates/horizon-templates\">https://gitlab.horizon-haskell.net/templates/horizon-templates</a></p>\n<p>If there's a package you'd like us to support, just drop us a link. We keep open source packages up to date for you.</p>\n<p>Thanks, Dan</p>",
+        "id": 420618968,
+        "sender_full_name": "locallycompact",
+        "timestamp": 1707472851
+    },
+    {
+        "content": "<p>Follow on twitter at <a href=\"https://twitter.com/horizonhaskell\">https://twitter.com/horizonhaskell</a></p>",
+        "id": 420635248,
+        "sender_full_name": "locallycompact",
+        "timestamp": 1707478809
+    },
+    {
+        "content": "<p>Congrats on now supporting haskell-flake fully, along with macOS support!</p>\n<p><a href=\"#narrow/stream/413949-haskell-flake/topic/Non-standard.20package.20set\">https://nixos.zulipchat.com/#narrow/stream/413949-haskell-flake/topic/Non-standard.20package.20set</a></p>",
+        "id": 424227564,
+        "sender_full_name": "Srid",
+        "timestamp": 1709297230
+    }
+]

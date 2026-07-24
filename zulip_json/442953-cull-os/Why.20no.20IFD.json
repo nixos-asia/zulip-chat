@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<h1>Why no IFD is Good, Actually</h1>\n<ul>\n<li>Faster evaluation</li>\n<li>No need to have a configured builder to evaluate the derivation graph</li>\n<li>Evaluator simplicity</li>\n<li>It will also enable me or someone else to create a LSP that interprets the expression with intermediate steps and gives you suggestions, without taking a year or doing anything impure or requiring a builder</li>\n</ul>",
+        "id": 476503496,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728719445
+    },
+    {
+        "content": "<p>Indeed, this is also the reason I am (eventually) planning to add a language agnostic plugin boundary to eka. I imagine most things you might want IFD for you can do more easily in the native language of concern, and then just feed them into the evaluation via a json stream or something</p>",
+        "id": 476528151,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728743332
+    }
+]

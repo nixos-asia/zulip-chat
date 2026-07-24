@@ -1,0 +1,86 @@
+[
+    {
+        "content": "<blockquote>\n<p>Extending ELF to link dynamic libraries via a content addressed URI</p>\n</blockquote>\n<p>Could you elaborate? Sounds interesting.</p>",
+        "id": 446163533,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719000626
+    },
+    {
+        "content": "<p>If I'm understanding correctly, if that was possible it wouldn't matter where the dynamic libraries are, as long as the dynamic linker can find them? So you wouldn't have to rebuild the whole world if you decided to use <code>/nux/store</code> instead of <code>/nix/store</code> as the path isn't referenced anywhere in the ELF</p>",
+        "id": 446164026,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719000749
+    },
+    {
+        "content": "<p>It shouldn't be that much work to make it run, all that needs to work is the systems dynamic linker resolving the URI to a path on the FS. I wonder how it would affect other tools, though. Do binaries even rely on the \"paths\"(in this case, the uri that's served as a path) they dynamically loaded existing?</p>",
+        "id": 446164360,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719000878
+    },
+    {
+        "content": "<p>It's one of my crazier ideas, but hypothetically the binaries would have no reliance on the filepath at all, and could simply load from the URI if it exists (could still fall back on a path, potentially).</p>\n<p>I've thought about this a bit, may need some explicit support from the file-system as well. I've wanted to look further into it for a bit though, get a more solid plan</p>",
+        "id": 446175376,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1719004774
+    },
+    {
+        "content": "<p>Why would you need filesystem support? The dynamic linker could check for a prefix or a format match on the path field. Like if a library \"path\" starts with <code>uri:</code> it could treat that as a uri and find the equivalent path</p>",
+        "id": 446179448,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719006451
+    },
+    {
+        "content": "<p>Maybe not for binaries, but probably for interpreted languages. I'm actually not 100% sure on that either though. There might be a clever way to avoid it</p>",
+        "id": 446181903,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1719007403
+    },
+    {
+        "content": "<p>I know someone gave a talk on a similar idea at nixcon maybe 2 years ago or so. Going over how one could extend ELF to suit Nix</p>",
+        "id": 446182200,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1719007581
+    },
+    {
+        "content": "<p>The point of the fs being aware is mostly so that files can be stored via their content URI and not have any true file path whatever, and every file exposed is just a virtual path to a hard uri, roughly speaking</p>",
+        "id": 446202875,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1719018771
+    },
+    {
+        "content": "<p>Ah I understand</p>",
+        "id": 446275046,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719064708
+    },
+    {
+        "content": "<p>Would this be possible to implement as a kernel module? without modifying every filesystem in existence</p>",
+        "id": 446275058,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719064731
+    },
+    {
+        "content": "<p>Perhaps something like /proc/$PID but for /file/$HASH (/file is up for debate, doesn't sound that good)</p>",
+        "id": 446275231,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719064858
+    },
+    {
+        "content": "<p>But then that's the Nix store we're talking about. Another level of indirection doesn't sound appealing</p>",
+        "id": 446276193,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719065633
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"679006\">Tim DeHerrera</span> <a href=\"#narrow/stream/442953-cull-os/topic/Content.20addressed.20dynamic.20libraries/near/446182200\">said</a>:</p>\n<blockquote>\n<p>I know someone gave a talk on a similar idea at nixcon maybe 2 years ago or so. Going over how one could extend ELF to suit Nix</p>\n</blockquote>\n<p>Do you have a link to this?</p>",
+        "id": 446277956,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719066734
+    },
+    {
+        "content": "<p>I tried to find it but failed. I should be able to track it down later when I have more time though. I'll post when I do</p>",
+        "id": 446306294,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1719081163
+    }
+]
