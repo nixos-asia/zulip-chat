@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I'm trying to find the best way to deploy NixOS to DigitalOcean.</p>\n<h3>Traditional way</h3>\n<ul>\n<li>Create a Ubuntu 22.04 droplet</li>\n<li>Install NixOS atop using <a href=\"https://github.com/elitak/nixos-infect\">nixos-infect</a></li>\n<li>Enable flakes, copy hardware configuration to Git repo, refactor the flake</li>\n</ul>\n<h3>New way</h3>\n<p>In particular, can all of this be automated by directly installing from a Git flake input? Similar to <code>nixos-anywhere</code>.</p>\n<p>(Will update this topic based on what I find out)</p>",
+        "id": 405388696,
+        "sender_full_name": "Srid",
+        "timestamp": 1701445221
+    },
+    {
+        "content": "<h2>Building DigitalOcean NixOS Image</h2>\n<p>In <code>flake.nix</code>,</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>      <span class=\"ss\">perSystem =</span> <span class=\"p\">{</span> pkgs<span class=\"p\">,</span> <span class=\"o\">...</span> <span class=\"p\">}:</span> <span class=\"p\">{</span>\n        packages<span class=\"o\">.</span><span class=\"ss\">doImage =</span>\n          <span class=\"k\">let</span>\n            <span class=\"ss\">config =</span> <span class=\"p\">{</span>\n              <span class=\"ss\">imports =</span> <span class=\"p\">[</span>\n                <span class=\"s2\">\"</span><span class=\"si\">${</span>pkgs<span class=\"o\">.</span>path<span class=\"si\">}</span><span class=\"s2\">/nixos/modules/virtualisation/digital-ocean-image.nix\"</span>\n              <span class=\"p\">];</span>\n              nix<span class=\"o\">.</span>settings<span class=\"o\">.</span><span class=\"ss\">experimental-features =</span> <span class=\"p\">[</span> <span class=\"s2\">\"nix-command\"</span> <span class=\"s2\">\"flakes\"</span> <span class=\"p\">];</span>\n              users<span class=\"o\">.</span>users<span class=\"o\">.</span><span class=\"ss\">admin =</span> <span class=\"p\">{</span>\n                <span class=\"ss\">isNormalUser =</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n                openssh<span class=\"o\">.</span>authorizedKeys<span class=\"o\">.</span><span class=\"ss\">keys =</span> <span class=\"p\">[</span>\n                  <span class=\"c1\"># Srid's public key</span>\n                  <span class=\"s2\">\"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQRxPoqlThDrkR58pKnJgmeWPY9/wleReRbZ2MOZRyd\"</span>\n                <span class=\"p\">];</span>\n              <span class=\"p\">};</span>\n              system<span class=\"o\">.</span><span class=\"ss\">stateVersion =</span> <span class=\"s2\">\"23.11\"</span><span class=\"p\">;</span>\n            <span class=\"p\">};</span>\n          <span class=\"k\">in</span>\n          <span class=\"p\">(</span>pkgs<span class=\"o\">.</span>nixos config<span class=\"p\">)</span><span class=\"o\">.</span>digitalOceanImage<span class=\"p\">;</span>\n      <span class=\"p\">};</span>\n</code></pre></div>\n<p><code>nix build .#doImage</code> =&gt; <code>./result/nixos.qcow2.gz</code></p>\n<p><a href=\"/user_uploads/60244/3gsDCMmR3WujGxyEHDr64_2n/image.png\">Then you upload it to DO console</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/3gsDCMmR3WujGxyEHDr64_2n/image.png\" title=\"Then you upload it to DO console\"><img src=\"/user_uploads/60244/3gsDCMmR3WujGxyEHDr64_2n/image.png\"></a></div>",
+        "id": 405409825,
+        "sender_full_name": "Srid",
+        "timestamp": 1701452282
+    },
+    {
+        "content": "<p>Needs a <code>services.openssh.enable = true;</code> in the config, but yes - that works to one-click install the latest NixOS with flakes enabled.</p>\n<p><a href=\"/user_uploads/60244/4sNuvRFpj1UvnTEqI1-Wurp7/image.png\">SSH session on droplet</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/4sNuvRFpj1UvnTEqI1-Wurp7/image.png\" title=\"SSH session on droplet\"><img src=\"/user_uploads/60244/4sNuvRFpj1UvnTEqI1-Wurp7/image.png\"></a></div>",
+        "id": 405419902,
+        "sender_full_name": "Srid",
+        "timestamp": 1701456571
+    },
+    {
+        "content": "<h2>Deployment</h2>\n<p>Next, need to figure out deployment ...</p>\n<p>Gonna try colmena, rather than deploy-rs, this time because it has built-in support for secrets: <a href=\"https://colmena.cli.rs/unstable/features/keys.html\">https://colmena.cli.rs/unstable/features/keys.html</a></p>",
+        "id": 405421361,
+        "sender_full_name": "Srid",
+        "timestamp": 1701457194
+    },
+    {
+        "content": "<p>Needed to add <code>admin</code> to Nix's trusted-users in the DO image. Then deployment works. </p>\n<p>Proof of concept: <a href=\"https://github.com/fpindia/fpindia-chat/pull/1\">https://github.com/fpindia/fpindia-chat/pull/1</a></p>\n<p><a href=\"/user_uploads/60244/6ZUJeW9qAd51ynKVvOzZ1wvL/image.png\">colmena deployment</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/6ZUJeW9qAd51ynKVvOzZ1wvL/image.png\" title=\"colmena deployment\"><img src=\"/user_uploads/60244/6ZUJeW9qAd51ynKVvOzZ1wvL/image.png\"></a></div>",
+        "id": 405429704,
+        "sender_full_name": "Srid",
+        "timestamp": 1701460778
+    },
+    {
+        "content": "<p>Two potential shortcomings of colmena, per <a href=\"https://lobste.rs/s/pka4na/nixops_is_easier_than_i_thought\">https://lobste.rs/s/pka4na/nixops_is_easier_than_i_thought</a></p>\n<ul>\n<li>No automatic rollbacks</li>\n<li>Doesn't recognize <code>nixosConfigurations</code> output like deploy-rs does</li>\n</ul>",
+        "id": 405432026,
+        "sender_full_name": "Srid",
+        "timestamp": 1701461762
+    },
+    {
+        "content": "<h2>Secrets</h2>\n<p><a href=\"https://colmena.cli.rs/unstable/features/keys.html\">https://colmena.cli.rs/unstable/features/keys.html</a></p>\n<p>colmena configured to read secrets form 1Password during deployment:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>  deployment<span class=\"o\">.</span>keys<span class=\"o\">.</span><span class=\"s2\">\"matrix-shared-secret.secret\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">keyCommand =</span> <span class=\"p\">[</span> <span class=\"s2\">\"op\"</span> <span class=\"s2\">\"read\"</span> <span class=\"s2\">\"op://Juspay/fpindia-chat secrets/matrix-shared-secret\"</span> <span class=\"p\">];</span>\n    <span class=\"ss\">user =</span> config<span class=\"o\">.</span>systemd<span class=\"o\">.</span>services<span class=\"o\">.</span>matrix-synapse<span class=\"o\">.</span>serviceConfig<span class=\"o\">.</span>User<span class=\"p\">;</span>\n  <span class=\"p\">};</span>\n</code></pre></div>\n<p>(This could be any secret manager of course; in 1Password's case I get prompted to use TouchID)</p>\n<p>We don't really need the complexity of sops-nix!</p>",
+        "id": 405440088,
+        "sender_full_name": "Srid",
+        "timestamp": 1701465821
+    }
+]

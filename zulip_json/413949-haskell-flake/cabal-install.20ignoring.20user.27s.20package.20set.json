@@ -1,0 +1,368 @@
+[
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> I am trying to build <a href=\"https://hackage.haskell.org/package/rings\">https://hackage.haskell.org/package/rings</a> on GHC 9.8.1, I have a flake set up with <code>haskell-flake</code>.  I am trying to get <code>singleton-bool</code> (used in the test suite of <code>lukko</code>, a dependency of <code>hackage-security</code>) to be version 0.1.7 (Hackage latest).  but no matter what I do, including using <code>jailbreak = true</code> for <code>lukko</code>, overriding the source of <code>singleton-bool</code> to be either github <code>master</code> or hackage 0.1.7, or <code>check = false</code> for lukko to avoid building the test suite altogether, my build fails building <code>singleton-bool-0.1.6</code></p>",
+        "id": 418969697,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706677910
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/8Yd4A1aT68V6WcWYTG9XZXsG/flake.nix\">flake.nix</a><br>\nhere is the flake I'm using</p>",
+        "id": 418970076,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706678274
+    },
+    {
+        "content": "<p>I can't figure out why version 0.1.6 is getting built at all, but <code>nix-output-monitor</code> shows it as a dependency of <code>lukko</code></p>",
+        "id": 418970130,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706678308
+    },
+    {
+        "content": "<p>I know just enough nix to get myself into trouble, so I'm having trouble digging deeper into what's going on</p>",
+        "id": 418970184,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706678387
+    },
+    {
+        "content": "<p>Can you paste the build log?</p>",
+        "id": 418970480,
+        "sender_full_name": "Srid",
+        "timestamp": 1706678645
+    },
+    {
+        "content": "<p>sure, is there a way to make a collapsible text snippet in zulip?</p>",
+        "id": 418970516,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706678693
+    },
+    {
+        "content": "<p>Yes, via spoilers: <a href=\"https://zulip.com/help/format-your-message-using-markdown#spoilers\">https://zulip.com/help/format-your-message-using-markdown#spoilers</a></p>\n<p>But you can use regular Markdown code blocks as well</p>",
+        "id": 418970542,
+        "sender_full_name": "Srid",
+        "timestamp": 1706678732
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/Xke_KYFbbFkk93l1-TAQ5saU/build.log\">build.log</a><br>\nI'll just do it as a file</p>",
+        "id": 418970634,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706678798
+    },
+    {
+        "content": "<p>Is that full build log? Can you paste the entire output of <code>nix develop -L</code> or <code>nix build -L</code>?</p>",
+        "id": 418970689,
+        "sender_full_name": "Srid",
+        "timestamp": 1706678863
+    },
+    {
+        "content": "<p>it's pretty close.  let's try a spoiler block</p>\n<div class=\"spoiler-block\"><div class=\"spoiler-header\">\n<p>nix build -L</p>\n</div><div class=\"spoiler-content\" aria-hidden=\"true\">\n<p>warning: Git tree '/home/peddie/programming/rings' is dirty<br>\nsingleton-bool&gt; Running phase: setupCompilerEnvironmentPhase<br>\nsingleton-bool&gt; Build with /nix/store/0i135sf11k1vy8l181jkxamq18jfasjy-ghc-9.8.1.<br>\nsingleton-bool&gt; Running phase: unpackPhase<br>\nsingleton-bool&gt; unpacking source archive /nix/store/aya82ycp978lffwr5dhlxdikkihqjnp2-singleton-bool-0.1.6.tar.gz<br>\nsingleton-bool&gt; source root is singleton-bool-0.1.6<br>\nsingleton-bool&gt; setting SOURCE_DATE_EPOCH to timestamp 1000000000 of file singleton-bool-0.1.6/src/Data/Singletons/Bool.hs<br>\nsingleton-bool&gt; Running phase: patchPhase<br>\nsingleton-bool&gt; Replace Cabal file with edited version from mirror://hackage/singleton-bool-0.1.6/revision/2.cabal.<br>\nsingleton-bool&gt; Running phase: compileBuildDriverPhase<br>\nsingleton-bool&gt; setupCompileFlags: -package-db=/build/tmp.z1b55ghRmQ/setup-package.conf.d -j16 +RTS -A64M -RTS -threaded -rtsopts<br>\nsingleton-bool&gt; [1 of 2] Compiling Main             ( Setup.hs, /build/tmp.z1b55ghRmQ/Main.o )<br>\nsingleton-bool&gt; [2 of 2] Linking Setup<br>\nsingleton-bool&gt; Running phase: updateAutotoolsGnuConfigScriptsPhase<br>\nsingleton-bool&gt; Running phase: configurePhase<br>\nsingleton-bool&gt; configureFlags: --verbose --prefix=/nix/store/9shs4z4ym0wyqs8dks47r40a70rvhxrl-singleton-bool-0.1.6 --libdir=$prefix/lib/$compiler/lib --libsubdir=$abi/$libname --docdir=/nix/store/6qk15snibs3b47m51xv82gws889rz54a-singleton-bool-0.1.6-doc/share/doc/singleton-bool-0.1.6 --with-gcc=gcc --package-db=/build/tmp.z1b55ghRmQ/package.conf.d --ghc-options=-j16 +RTS -A64M -RTS --disable-split-objs --enable-library-profiling --profiling-detail=exported-functions --disable-profiling --enable-shared --disable-coverage --enable-static --disable-executable-dynamic --enable-tests --disable-benchmarks --enable-library-vanilla --disable-library-for-ghci --ghc-option=-split-sections --ghc-options=-haddock --extra-lib-dirs=/nix/store/2dla9whd0hgqi4ygywrmv933bs8w8k7m-ncurses-6.4/lib --extra-lib-dirs=/nix/store/npfpil5nswlaqy7y56dwp0csj91pjiyd-libffi-3.4.4/lib --extra-lib-dirs=/nix/store/qnlgnpvh94xw2j3pm5f02iw102lx6llc-elfutils-0.190/lib --extra-lib-dirs=/nix/store/b5r5rikbdpr6qs4wfm6dxz9dbrmyvps6-gmp-with-cxx-6.3.0/lib<br>\nsingleton-bool&gt; Using Parsec parser<br>\nsingleton-bool&gt; Configuring singleton-bool-0.1.6...<br>\nsingleton-bool&gt; CallStack (from HasCallStack):<br>\nsingleton-bool&gt;   withMetadata, called at libraries/Cabal/Cabal/src/Distribution/Simple/Utils.hs:368:14 in Cabal-3.10.2.0-inplace:Distribution.Simple.Utils<br>\nsingleton-bool&gt; Error: Setup: Encountered missing or private dependencies:<br>\nsingleton-bool&gt; base &gt;=4.7 &amp;&amp; &lt;4.18, deepseq &gt;=1.3 &amp;&amp; &lt;1.5<br>\nerror: build of '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' on 'ssh://danboduo' failed: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>\nerror: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>\nerror: 1 dependencies of derivation '/nix/store/jff2ylcbkn4byb32zjxagnymmb3wlqw6-lukko-0.1.1.3.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/h6w86zn4wbh60r69w6bb63jzpphcsk2p-cabal-install-3.10.2.1.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/2hpj5jfyjbm6d7fnkm29kqar2vmc2blv-source-connections-sdist.tar.gz.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/9z7krhisrzcykv08fsbnxnqnnkrm6cp9-source-rings-sdist.tar.gz.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/97z6rwvxqpm6w5dyahx7082vkg4fflg2-rings-0.2.drv' failed to build</p>\n</div></div>",
+        "id": 418970761,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706678924
+    },
+    {
+        "content": "<p>I can do <code>nom build</code> if you want to see the graph I was looking at</p>",
+        "id": 418970810,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706678975
+    },
+    {
+        "content": "<p>This one's better as it gives you a package stacktrace.  Look at the last few lines:</p>\n<ul>\n<li>singleton-bool</li>\n<li>lukko</li>\n<li>cabal-install</li>\n</ul>\n<p>In your flake, if you set <code>lukka.check = false;</code> it should disable building singleton-bool (assuming that's its test dependency)</p>",
+        "id": 418970892,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679020
+    },
+    {
+        "content": "<p>The flake you attached above only sets <code>lukko.jailbreak</code></p>",
+        "id": 418970913,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679043
+    },
+    {
+        "content": "<p>(All <code>jailbreak</code> does is make cabal disrespect the version constraints in dependencies)</p>",
+        "id": 418970929,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679053
+    },
+    {
+        "content": "<p>yes -- same error when setting <code>lukko.check = false</code> as I mentioned in the first message</p>",
+        "id": 418970951,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679068
+    },
+    {
+        "content": "<p>Are you sure it is the exact same log lines as well (not just same error message)?</p>",
+        "id": 418970971,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679096
+    },
+    {
+        "content": "<p>My guess is something else depends on singleton-bool, and you'll see this in the nix build log</p>",
+        "id": 418971020,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679124
+    },
+    {
+        "content": "<p>no, I'm not sure, here is the output with <code>lukko.check</code> set to <code>false</code></p>\n<div class=\"spoiler-block\"><div class=\"spoiler-header\">\n<p>nix build -L</p>\n</div><div class=\"spoiler-content\" aria-hidden=\"true\">\n<p>singleton-bool&gt; Running phase: setupCompilerEnvironmentPhase<br>\nsingleton-bool&gt; Build with /nix/store/0i135sf11k1vy8l181jkxamq18jfasjy-ghc-9.8.1.<br>\nsingleton-bool&gt; Running phase: unpackPhase<br>\nsingleton-bool&gt; unpacking source archive /nix/store/aya82ycp978lffwr5dhlxdikkihqjnp2-singleton-bool-0.1.6.tar.gz<br>\nsingleton-bool&gt; source root is singleton-bool-0.1.6<br>\nsingleton-bool&gt; setting SOURCE_DATE_EPOCH to timestamp 1000000000 of file singleton-bool-0.1.6/src/Data/Singletons/Bool.hs<br>\nsingleton-bool&gt; Running phase: patchPhase<br>\nsingleton-bool&gt; Replace Cabal file with edited version from mirror://hackage/singleton-bool-0.1.6/revision/2.cabal.<br>\nsingleton-bool&gt; Running phase: compileBuildDriverPhase<br>\nsingleton-bool&gt; setupCompileFlags: -package-db=/build/tmp.zzip926rdA/setup-package.conf.d -j16 +RTS -A64M -RTS -threaded -rtsopts<br>\nsingleton-bool&gt; [1 of 2] Compiling Main             ( Setup.hs, /build/tmp.zzip926rdA/Main.o )<br>\nsingleton-bool&gt; [2 of 2] Linking Setup<br>\nsingleton-bool&gt; Running phase: updateAutotoolsGnuConfigScriptsPhase<br>\nsingleton-bool&gt; Running phase: configurePhase<br>\nsingleton-bool&gt; configureFlags: --verbose --prefix=/nix/store/9shs4z4ym0wyqs8dks47r40a70rvhxrl-singleton-bool-0.1.6 --libdir=$prefix/lib/$compiler/lib --libsubdir=$abi/$libname --docdir=/nix/store/6qk15snibs3b47m51xv82gws889rz54a-singleton-bool-0.1.6-doc/share/doc/singleton-bool-0.1.6 --with-gcc=gcc --package-db=/build/tmp.zzip926rdA/package.conf.d --ghc-options=-j16 +RTS -A64M -RTS --disable-split-objs --enable-library-profiling --profiling-detail=exported-functions --disable-profiling --enable-shared --disable-coverage --enable-static --disable-executable-dynamic --enable-tests --disable-benchmarks --enable-library-vanilla --disable-library-for-ghci --ghc-option=-split-sections --ghc-options=-haddock --extra-lib-dirs=/nix/store/2dla9whd0hgqi4ygywrmv933bs8w8k7m-ncurses-6.4/lib --extra-lib-dirs=/nix/store/npfpil5nswlaqy7y56dwp0csj91pjiyd-libffi-3.4.4/lib --extra-lib-dirs=/nix/store/qnlgnpvh94xw2j3pm5f02iw102lx6llc-elfutils-0.190/lib --extra-lib-dirs=/nix/store/b5r5rikbdpr6qs4wfm6dxz9dbrmyvps6-gmp-with-cxx-6.3.0/lib<br>\nsingleton-bool&gt; Using Parsec parser<br>\nsingleton-bool&gt; Configuring singleton-bool-0.1.6...<br>\nsingleton-bool&gt; CallStack (from HasCallStack):<br>\nsingleton-bool&gt;   withMetadata, called at libraries/Cabal/Cabal/src/Distribution/Simple/Utils.hs:368:14 in Cabal-3.10.2.0-inplace:Distribution.Simple.Utils<br>\nsingleton-bool&gt; Error: Setup: Encountered missing or private dependencies:<br>\nsingleton-bool&gt; base &gt;=4.7 &amp;&amp; &lt;4.18, deepseq &gt;=1.3 &amp;&amp; &lt;1.5<br>\nerror: build of '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' on 'ssh://danboduo' failed: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>\nerror: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>\nerror: 1 dependencies of derivation '/nix/store/jff2ylcbkn4byb32zjxagnymmb3wlqw6-lukko-0.1.1.3.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/h6w86zn4wbh60r69w6bb63jzpphcsk2p-cabal-install-3.10.2.1.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/2hpj5jfyjbm6d7fnkm29kqar2vmc2blv-source-connections-sdist.tar.gz.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/ainss91nhn73kfkdbksfk23q806nsq9v-source-rings-sdist.tar.gz.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/pfwqipvwwc2afvyxlqv6h33w50grlwqw-rings-0.2.drv' failed to build</p>\n</div></div>",
+        "id": 418971053,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679143
+    },
+    {
+        "content": "<p>to me it still looked as if it's due to <code>lukko</code></p>",
+        "id": 418971081,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679177
+    },
+    {
+        "content": "<p>Why are you jailbreaking cabal-install btw?</p>",
+        "id": 418971186,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679252
+    },
+    {
+        "content": "<p>just another random thing I tried at some point</p>",
+        "id": 418971216,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679281
+    },
+    {
+        "content": "<p>All of this happening as a result of overriding cabal-install as that. If you don't know why you did it, just remove it and try again.</p>",
+        "id": 418971257,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679320
+    },
+    {
+        "content": "<p>I did remove it, it looks like the same problem</p>",
+        "id": 418971266,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679333
+    },
+    {
+        "content": "<p>Logs?</p>",
+        "id": 418971280,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679345
+    },
+    {
+        "content": "<div class=\"spoiler-block\"><div class=\"spoiler-header\">\n<p>nix build -L (without cabal overridden)</p>\n</div><div class=\"spoiler-content\" aria-hidden=\"true\">\n<p>warning: Git tree '/home/peddie/programming/rings' is dirty<br>\nsingleton-bool&gt; Running phase: setupCompilerEnvironmentPhase<br>\nsingleton-bool&gt; Build with /nix/store/0i135sf11k1vy8l181jkxamq18jfasjy-ghc-9.8.1.<br>\nsingleton-bool&gt; Running phase: unpackPhase<br>\nsingleton-bool&gt; unpacking source archive /nix/store/aya82ycp978lffwr5dhlxdikkihqjnp2-singleton-bool-0.1.6.tar.gz<br>\nsingleton-bool&gt; source root is singleton-bool-0.1.6<br>\nsingleton-bool&gt; setting SOURCE_DATE_EPOCH to timestamp 1000000000 of file singleton-bool-0.1.6/src/Data/Singletons/Bool.hs<br>\nsingleton-bool&gt; Running phase: patchPhase<br>\nsingleton-bool&gt; Replace Cabal file with edited version from mirror://hackage/singleton-bool-0.1.6/revision/2.cabal.<br>\nsingleton-bool&gt; Running phase: compileBuildDriverPhase<br>\nsingleton-bool&gt; setupCompileFlags: -package-db=/build/tmp.vuGByZQCdA/setup-package.conf.d -j16 +RTS -A64M -RTS -threaded -rtsopts<br>\nsingleton-bool&gt; [1 of 2] Compiling Main             ( Setup.hs, /build/tmp.vuGByZQCdA/Main.o )<br>\nsingleton-bool&gt; [2 of 2] Linking Setup<br>\nsingleton-bool&gt; Running phase: updateAutotoolsGnuConfigScriptsPhase<br>\nsingleton-bool&gt; Running phase: configurePhase<br>\nsingleton-bool&gt; configureFlags: --verbose --prefix=/nix/store/9shs4z4ym0wyqs8dks47r40a70rvhxrl-singleton-bool-0.1.6 --libdir=$prefix/lib/$compiler/lib --libsubdir=$abi/$libname --docdir=/nix/store/6qk15snibs3b47m51xv82gws889rz54a-singleton-bool-0.1.6-doc/share/doc/singleton-bool-0.1.6 --with-gcc=gcc --package-db=/build/tmp.vuGByZQCdA/package.conf.d --ghc-options=-j16 +RTS -A64M -RTS --disable-split-objs --enable-library-profiling --profiling-detail=exported-functions --disable-profiling --enable-shared --disable-coverage --enable-static --disable-executable-dynamic --enable-tests --disable-benchmarks --enable-library-vanilla --disable-library-for-ghci --ghc-option=-split-sections --ghc-options=-haddock --extra-lib-dirs=/nix/store/2dla9whd0hgqi4ygywrmv933bs8w8k7m-ncurses-6.4/lib --extra-lib-dirs=/nix/store/npfpil5nswlaqy7y56dwp0csj91pjiyd-libffi-3.4.4/lib --extra-lib-dirs=/nix/store/qnlgnpvh94xw2j3pm5f02iw102lx6llc-elfutils-0.190/lib --extra-lib-dirs=/nix/store/b5r5rikbdpr6qs4wfm6dxz9dbrmyvps6-gmp-with-cxx-6.3.0/lib<br>\nsingleton-bool&gt; Using Parsec parser<br>\nsingleton-bool&gt; Configuring singleton-bool-0.1.6...<br>\nsingleton-bool&gt; CallStack (from HasCallStack):<br>\nsingleton-bool&gt;   withMetadata, called at libraries/Cabal/Cabal/src/Distribution/Simple/Utils.hs:368:14 in Cabal-3.10.2.0-inplace:Distribution.Simple.Utils<br>\nsingleton-bool&gt; Error: Setup: Encountered missing or private dependencies:<br>\nsingleton-bool&gt; base &gt;=4.7 &amp;&amp; &lt;4.18, deepseq &gt;=1.3 &amp;&amp; &lt;1.5<br>\nerror: build of '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' on 'ssh://danboduo' failed: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>\nerror: builder for '/nix/store/rp57ihgmwx4fjipapyjbrfi7pwq3hqjp-singleton-bool-0.1.6.drv' failed with exit code 1<br>\nerror: 1 dependencies of derivation '/nix/store/jff2ylcbkn4byb32zjxagnymmb3wlqw6-lukko-0.1.1.3.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/h6w86zn4wbh60r69w6bb63jzpphcsk2p-cabal-install-3.10.2.1.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/2hpj5jfyjbm6d7fnkm29kqar2vmc2blv-source-connections-sdist.tar.gz.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/224qy6xglcxmzrgwd5f7x4i1faw0p4l4-source-rings-sdist.tar.gz.drv' failed to build<br>\nerror: 1 dependencies of derivation '/nix/store/5srwd2dfdqj1rayrlbf20s2lji77bmm9-rings-0.2.drv' failed to build</p>\n</div></div>",
+        "id": 418971294,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679357
+    },
+    {
+        "content": "<p>Is this something I can reproduce locally on my machine?</p>",
+        "id": 418971355,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679385
+    },
+    {
+        "content": "<p>I would hope so, that is the idea of nix, right?  :)  I can send you my <code>flake.lock</code>, I just have the flake files inside my local checkout of <code>rings</code> with no other changes<br>\n<a href=\"/user_uploads/60244/FZgTZek-DVBM0xLARjem0wsa/flake.nix\">flake.nix</a><br>\n<a href=\"/user_uploads/60244/jvZSQ-ujyIwZX3eDEKyCnK3F/flake.lock\">flake.lock</a></p>",
+        "id": 418971401,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679440
+    },
+    {
+        "content": "<p>A minimal repro as git repo would be nice</p>",
+        "id": 418971402,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679441
+    },
+    {
+        "content": "<p>OK I can make my own copy of <code>rings</code> and add those files if that is that much easier</p>",
+        "id": 418971497,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679513
+    },
+    {
+        "content": "<p><a href=\"https://github.com/peddie/rings\">https://github.com/peddie/rings</a>  branch <code>flake</code></p>",
+        "id": 418971696,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679704
+    },
+    {
+        "content": "<p>On macOS or Linux?</p>",
+        "id": 418971715,
+        "sender_full_name": "Srid",
+        "timestamp": 1706679716
+    },
+    {
+        "content": "<p>linux</p>",
+        "id": 418971720,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706679719
+    },
+    {
+        "content": "<p>It is building the world ...</p>",
+        "id": 418972136,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680046
+    },
+    {
+        "content": "<p>that seems like the normal process for using nix, so I'll interpret that as a good thing</p>",
+        "id": 418972227,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680093
+    },
+    {
+        "content": "<p>nixos cache caches only <code>pkgs.haskellPackages</code> I think</p>",
+        "id": 418972249,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680119
+    },
+    {
+        "content": "<p>thanks for taking a look.  I hope it's not something dumb caused by my lack of nix knowledge</p>",
+        "id": 418972255,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680124
+    },
+    {
+        "content": "<p>By the way, <span class=\"user-mention\" data-user-id=\"682919\">@locallycompact</span> is working on Horizon Haskell which provides package sets with caching, but there's one minor issue to resolve first: <a href=\"#narrow/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake\">https://nixos.zulipchat.com/#narrow/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake</a></p>",
+        "id": 418972278,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680149
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"688147\">Matt Peddie</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/problem.20with.20dependency.20versions/near/418972255\">said</a>:</p>\n<blockquote>\n<p>thanks for taking a look.  I hope it's not something dumb caused by my lack of nix knowledge</p>\n</blockquote>\n<p>We are actually writing a tutorial series to introduce Haskellers to Nix:</p>\n<p><a href=\"https://nixos.asia/en/nixify-haskell\">https://nixos.asia/en/nixify-haskell</a></p>",
+        "id": 418972311,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680188
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/problem.20with.20dependency.20versions/near/418972249\">said</a>:</p>\n<blockquote>\n<p>nixos cache caches only <code>pkgs.haskellPackages</code> I think</p>\n</blockquote>\n<p>ah, damn, OK.  I have a big remote builder under my desk and occasionally try to use CUDA with nix, so I long ago gave up paying attention to whether and how the caches were working</p>",
+        "id": 418972340,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680204
+    },
+    {
+        "content": "<p>(on top of the <a href=\"https://nixos.asia/en/nix-tutorial\">Nix series</a>)</p>",
+        "id": 418972363,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680208
+    },
+    {
+        "content": "<p>Alright, your repo failed on Linux for me with a different error:</p>\n<p><a href=\"/user_uploads/60244/y9UemkKJqBzIldlG6dKrlCjS/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/y9UemkKJqBzIldlG6dKrlCjS/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/y9UemkKJqBzIldlG6dKrlCjS/image.png\"></a></div>",
+        "id": 418972401,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680238
+    },
+    {
+        "content": "<p>very cool about the tutorial!  I'll give it a read.  I already appreciated your good <code>haskell-flake</code> docs many times</p>",
+        "id": 418972404,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680242
+    },
+    {
+        "content": "<p>I haven't seen that error.  what happened to reproducibility?</p>",
+        "id": 418972447,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680279
+    },
+    {
+        "content": "<p>That ^ was the result of running <code>nix develop -L</code>.</p>\n<p>Let me try <code>nix build -L</code> now.</p>",
+        "id": 418972450,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680281
+    },
+    {
+        "content": "<p>the shell builds more packages than the package, necessarily. like HLS</p>",
+        "id": 418972475,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680308
+    },
+    {
+        "content": "<p>Okay, I see it now: <br>\n<a href=\"/user_uploads/60244/EAmoxB1G_mWF1c2Lm1-EHcB7/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/EAmoxB1G_mWF1c2Lm1-EHcB7/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/EAmoxB1G_mWF1c2Lm1-EHcB7/image.png\"></a></div>",
+        "id": 418972539,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680331
+    },
+    {
+        "content": "<p>I am guessing HLS doesn't work with 9.8.1 yet, or at least requires significant tweaking (in my experience it's a miracle when HLS runs OK)</p>",
+        "id": 418972557,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680355
+    },
+    {
+        "content": "<p>right so <code>singleton-bool-0.1.7</code> has those upper version bounds relaxed and I think should work, but I can't figure out why the package set contains <code>singleton-bool-0.1.6</code> at all . . .</p>",
+        "id": 418972602,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680400
+    },
+    {
+        "content": "<p>Regarding jailbreaking finite-typelits, you probably need latest anyway: <a href=\"https://github.com/mniip/finite-typelits/commit/03600fbac084e6bc6b95957665d6ceedb3722358\">https://github.com/mniip/finite-typelits/commit/03600fbac084e6bc6b95957665d6ceedb3722358</a></p>",
+        "id": 418972736,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680492
+    },
+    {
+        "content": "<p>But it is just test change, so we can check=false it</p>",
+        "id": 418972762,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680515
+    },
+    {
+        "content": "<p>thanks for the tip, I'll just get that from git then</p>",
+        "id": 418972781,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680533
+    },
+    {
+        "content": "<p>I see what's happening. <span class=\"user-mention\" data-user-id=\"688147\">@Matt Peddie</span> Try the <code>no-fromSdist</code> branch of haskell-flake for now.</p>",
+        "id": 418972988,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680694
+    },
+    {
+        "content": "<p>And looks like we need to do this after all:</p>\n<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/Using.20horizon.20package.20set.20with.20haskell-flake/near/416022231\">said</a>:</p>\n<blockquote>\n<p>One thing we should do is allow the user to disable the use of cabalSdist (toggle on/off module option).</p>\n</blockquote>",
+        "id": 418973027,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680736
+    },
+    {
+        "content": "<p>trying now.  what exactly is going on, if you don't mind?  how did, for example, disabling <code>lukko</code> tests not solve the problem?</p>",
+        "id": 418973072,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680762
+    },
+    {
+        "content": "<p>cc <span class=\"user-mention\" data-user-id=\"679956\">@Robert Hensing</span> - looks like our use of fromSdist is building its own <code>cabal-install</code> ignoring what's in the user's package set. Which was causing this problem.</p>",
+        "id": 418973099,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680781
+    },
+    {
+        "content": "<p>This ^ was going on I think. I'll file an issue on github.</p>",
+        "id": 418973141,
+        "sender_full_name": "Srid",
+        "timestamp": 1706680802
+    },
+    {
+        "content": "<p>cool, I appreciate you taking the time for this.  keep up the good work on <code>haskell-flake</code>.  I look forward to learning to wield it more effectively from your tutorials</p>",
+        "id": 418973264,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706680866
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"688147\">@Matt Peddie</span> Can you let me know if <a href=\"https://github.com/srid/haskell-flake/pull/220\">https://github.com/srid/haskell-flake/pull/220</a> fixes it?</p>",
+        "id": 419005309,
+        "sender_full_name": "Srid",
+        "timestamp": 1706695661
+    },
+    {
+        "content": "<p>trying it now, but I'm not quite sure from looking at the patch and the discussion for which component I should be setting this new flag.  <code>cabal-install</code>?  at a meta-level, this confusion may be supporting evidence for </p>\n<blockquote>\n<p>Because these kinds of issues are not straightforward to debug without knowledge of the nixpkgs Haskell infrastructure.</p>\n</blockquote>",
+        "id": 419134097,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706739816
+    },
+    {
+        "content": "<p><a href=\"https://github.com/srid/haskell-flake/pull/221\">https://github.com/srid/haskell-flake/pull/221</a> seems to work OK, though</p>",
+        "id": 419137068,
+        "sender_full_name": "Matt Peddie",
+        "timestamp": 1706741067
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"688147\">Matt Peddie</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/cabal-install.20ignoring.20user's.20package.20set/near/419137068\">said</a>:</p>\n<blockquote>\n<p><a href=\"https://github.com/srid/haskell-flake/pull/221\">https://github.com/srid/haskell-flake/pull/221</a> seems to work OK, though</p>\n</blockquote>\n<p>Awesome, we are planning to merge 221 only (not 220).</p>",
+        "id": 419165943,
+        "sender_full_name": "Srid",
+        "timestamp": 1706757901
+    }
+]

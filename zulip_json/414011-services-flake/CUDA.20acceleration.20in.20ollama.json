@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>Guys, adding </p>\n<div class=\"codehilite\"><pre><span></span><code>            **acceleration = &quot;cuda&quot;;**\n</code></pre></div>\n<p>has turned into a bit of an inside joke fr me. The resulting error is why I almost gave up on NixOS when I first picked it up a few weeks ago, namely I get the ... has an unfree license (‘CUDA EULA’), refusing to evaluate. whith a prescription for solutions. </p>\n<p>I have set the env variable</p>\n<div class=\"codehilite\"><pre><span></span><code> $env.NIXPKGS_ALLOW_UNFREE\n1\n</code></pre></div>\n<p>added to my flake</p>\n<div class=\"codehilite\"><pre><span></span><code>  packages.config.allowUnfree = true;\n</code></pre></div>\n<p>It is my understanding that the allowUnfree property I'm setting is not scoped correctly, but I'm having a tough time figuring out the correct scope. </p>\n<p>Found a thread on <a href=\"https://stackoverflow.com/questions/77585228/how-to-allow-unfree-packages-in-nix-for-each-situation-nixos-nix-nix-wit\">stackoverflow</a> that probably has the answer but I can't follow it. (square peg/round hole). </p>\n<p>My biggest issue is the dissonance between calling a nix file a configuration and what it actually is (IMO) a program. I have yet to crack the language.</p>\n<p>I'm going to start <a href=\"https://nix.dev/tutorials/nix-language.html\">here</a>. With some luck I'll be able to fix this by the end of the week :)</p>",
+        "id": 446588010,
+        "sender_full_name": "Ayrton Mercado",
+        "timestamp": 1719227854
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> has marked this topic as unresolved.</p>",
+        "id": 446588377,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1719227997
+    },
+    {
+        "content": "<p><a href=\"#narrow/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama/near/446588010\">A message</a> was moved here from <a class=\"stream-topic\" data-stream-id=\"426237\" href=\"/#narrow/stream/426237-nixify-llm/topic/.E2.9C.94.20Issues.20with.20ollama.20flake\">#nixify-llm &gt; ✔ Issues with ollama flake</a> by <span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span>.</p>",
+        "id": 446588378,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1719227997
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"730377\">@Ayrton Mercado</span> I have to document this, you can use this for now:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"c1\"># Inside perSystem</span>\n<span class=\"p\">{</span>\n  <span class=\"ss\">imports</span> <span class=\"o\">=</span> <span class=\"p\">[</span>\n    <span class=\"s2\">\"</span><span class=\"si\">${</span>inputs<span class=\"o\">.</span>nixpkgs<span class=\"si\">}</span><span class=\"s2\">/nixos/modules/misc/nixpkgs.nix\"</span>\n  <span class=\"p\">];</span>\n  <span class=\"ss\">nixpkgs</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"c1\"># Required for CUDA</span>\n    config<span class=\"o\">.</span><span class=\"ss\">allowUnfree</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n  <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 446589054,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719228199
+    },
+    {
+        "content": "<p><a href=\"https://github.com/shivaraj-bh/ollama-flake/blob/46091264c576c57dabad3c52779ce43db094ad40/modules/nixpkgs.nix#L25\">ollama-flake exports a <code>nixpkgs</code> module</a> that would handle this, but since that’s not the case after upstreaming to <code>services-flake</code>, it wasn’t working out of the box for you.</p>",
+        "id": 446589557,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719228319
+    },
+    {
+        "content": "<p>Hold on, there seems to a bug in <code>services-flake</code> that I just fixed: <a href=\"https://github.com/juspay/services-flake/commit/8145ba10cb02dc0a843bba371fc2d42cea7fd226\">https://github.com/juspay/services-flake/commit/8145ba10cb02dc0a843bba371fc2d42cea7fd226</a></p>",
+        "id": 446592759,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719229412
+    },
+    {
+        "content": "<p>This commit demonstrates how to do it in the current services-flake’s <code>example/llm</code>: <a href=\"https://github.com/shivaraj-bh/services-flake/commit/bf3bf65a920dc6e3b4eb749ec3809fdeaf4b9360\">https://github.com/shivaraj-bh/services-flake/commit/bf3bf65a920dc6e3b4eb749ec3809fdeaf4b9360</a></p>",
+        "id": 446594731,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719230055
+    },
+    {
+        "content": "<p>Also documented it: <a href=\"https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7\">https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7</a></p>",
+        "id": 446595962,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719230440
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/414011-services-flake/topic/CUDA.20acceleration.20in.20ollama/near/446595962\">said</a>:</p>\n<blockquote>\n<p>Also documented it: <a href=\"https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7\">https://github.com/juspay/services-flake/commit/fb6de01eb6e7d2ac1c540fd399b9c0f447ce0ab7</a></p>\n</blockquote>\n<p>Confirmed on my end, the flake compiles</p>",
+        "id": 446607084,
+        "sender_full_name": "Ayrton Mercado",
+        "timestamp": 1719233861
+    }
+]
