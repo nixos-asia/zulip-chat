@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Hey all, I recently tried to update my system nix flake after a few months, and ran into an issue I haven't been able to find much about:</p>\n<div class=\"codehilite\"><pre><span></span><code>          419|               The module `${m._file or m.key}` (class: ${lib.strings.escapeNixString m._class}) cannot be imported into a module evaluation that expects class ${lib.strings.escapeNixString class}.\n\n       error: The module `/nix/store/xm3nq4fadri4jcc3ms6vhc4nx5rgi27z-source/flake.nix#nixosModules.common` (class: &quot;nixos&quot;) cannot be imported into a module evaluation that expects class &quot;darwin&quot;.\n\n       Help:\n       - Ensure that you are importing the correct module.\n       - Verify that the module&#39;s `_class`, &quot;nixos&quot; matches the expected `class` &quot;darwin&quot;.\n       - If you are using a custom class, make sure it is correctly defined and used consistently across your modules.\n</code></pre></div>\n<p>Here is my current flake: <a href=\"https://github.com/arulagrawal/nix/blob/fixing/flake.nix\">https://github.com/arulagrawal/nix/blob/fixing/flake.nix</a><br>\nThe only thing I did was run <code>nix flake update</code> (no config changes) so I'm not really sure where things changed.<br>\nAny help appreciated!!</p>",
+        "id": 562467201,
+        "sender_full_name": "Arul Agrawal",
+        "timestamp": 1765200751
+    },
+    {
+        "content": "<p>Probably coming from new flake-parts.</p>\n<p>Don't run <code>nix flake update</code>. Instead only update the relevant inputs (nixpkgs, nix-darwin, home-manager, etc.) by passing them as arguments.</p>",
+        "id": 562524410,
+        "sender_full_name": "Srid",
+        "timestamp": 1765215795
+    },
+    {
+        "content": "<p>And since you use nixos-unified:</p>\n<p><a href=\"/user_uploads/60244/4y3UJ596T2Mdp6xiBuNYNHmi/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/4y3UJ596T2Mdp6xiBuNYNHmi/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1256x908\" src=\"/user_uploads/thumbnail/60244/4y3UJ596T2Mdp6xiBuNYNHmi/image.png/840x560.webp\"></a></div>",
+        "id": 562524965,
+        "sender_full_name": "Srid",
+        "timestamp": 1765216002
+    }
+]

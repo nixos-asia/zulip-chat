@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>This is just a very experimental idea, but I mentioned before that realizers will support WASM execution (for truly cross platform island-&gt;derivation conversion) and I thought: Why not do this for Cab itself?</p>",
+        "id": 479061234,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729959089
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Haskell\"><pre><span></span><code><span class=\"nf\">\\</span><span class=\"n\">program</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"n\">runtime</span><span class=\"w\"> </span><span class=\"o\">==&gt;</span><span class=\"w\"> </span><span class=\"p\">(</span>\n<span class=\"w\">  </span><span class=\"n\">execute</span><span class=\"w\"> </span><span class=\"s\">\"${lib.getExe packages.cargo}\"</span><span class=\"w\"> </span><span class=\"p\">[</span><span class=\"w\"> </span><span class=\"s\">\"build\"</span><span class=\"w\"> </span><span class=\"p\">];</span>\n<span class=\"w\">  </span><span class=\"n\">exit</span><span class=\"w\"> </span><span class=\"mi\">0</span>\n<span class=\"p\">);</span>\n\n<span class=\"nf\">derive</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">  </span><span class=\"n\">features</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"p\">[</span><span class=\"w\"> </span><span class=\"s\">\"wasm\"</span><span class=\"w\"> </span><span class=\"p\">],</span>\n\n<span class=\"w\">  </span><span class=\"n\">command</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"o\">./</span><span class=\"n\">cab</span><span class=\"o\">-</span><span class=\"n\">runtime</span><span class=\"o\">.</span><span class=\"n\">wasm</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"n\">arguments</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"p\">[</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"n\">lib</span><span class=\"o\">.</span><span class=\"n\">compile</span><span class=\"w\"> </span><span class=\"n\">program</span><span class=\"p\">)</span><span class=\"o\">.</span><span class=\"n\">wasmExecutablePath</span><span class=\"w\"> </span><span class=\"p\">],</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 479061677,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729959448
+    },
+    {
+        "content": "<p>This is definitely worth exploring IMO</p>",
+        "id": 479061757,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729959496
+    },
+    {
+        "content": "<p>Here we have a minimal WASM runtime for Cab (via Rust WASM cross compilation) that runs Cab bytecode (made to be tiny)</p>",
+        "id": 479062098,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729959896
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> <span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> what do you guys think?</p>",
+        "id": 479062524,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729960282
+    },
+    {
+        "content": "<p>so the \"builder\" is a wasm binary, essentialy?</p>",
+        "id": 479062709,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1729960454
+    },
+    {
+        "content": "<p>Yup</p>",
+        "id": 479074791,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729972005
+    },
+    {
+        "content": "<p>looks like someone just asked a similar question to the tvix guys, might be good to review their response:<br>\n<a href=\"https://matrix.to/#/!YUnRYAzgytLSZbBhbx:hackint.org/$Sbspe2NOL3nYD2MQnmARWrnQ0SI2tOfT0GuK3s6qQck?via=hackint.org&amp;via=matrix.org&amp;via=envs.net\">https://matrix.to/#/!YUnRYAzgytLSZbBhbx:hackint.org/$Sbspe2NOL3nYD2MQnmARWrnQ0SI2tOfT0GuK3s6qQck?via=hackint.org&amp;via=matrix.org&amp;via=envs.net</a></p>",
+        "id": 479080469,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1729978153
+    },
+    {
+        "content": "<p>Missed this message; that link is malformed for some reason (at least Element thinks so...)</p>",
+        "id": 484352408,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1732554492
+    }
+]

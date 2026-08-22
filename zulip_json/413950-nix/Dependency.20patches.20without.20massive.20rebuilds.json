@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>TIL about:<br>\n<a href=\"https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/replace-dependency.nix\">https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/replace-dependency.nix</a></p>\n<p>I have never seen this in the wild but sounds useful for quick security patches without rebuilding all of nixpkgs (say for the recent glibc vulnerabilities).</p>",
+        "id": 422122692,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708284744
+    }
+]
