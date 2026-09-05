@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>An article submission on HN on \"Nix is a better image builder than Docker's image builder\" triggered a big <a href=\"https://news.ycombinator.com/item?id=39720007\">discussion thread</a> with a lot of good feedback on the Nix experience. The steep onboarding ramp-up is mentioned as a hurdle, but also more general \"you-either-love-it-or-hate-it\" sentiments. The former can be dealt with by improving ecosystem support and tech maturity level, but latter is more insidious and may cause something of an \"opportunity window\" to close on the Nix technology landscape and make it significantly harder to increase adoption rates afterwards.</p>\n<p>As an example of where this happened before, is with Linked Data technology standards. Linked Data refers to a whole host of open technology standards in different levels of maturity and completeness, and with RDF at their basis. It's popularity boomed when Tim Berners-Lee's vision of a \"Semantic Web\" caused a huge hype cycle. Semantic Web has theoretically 'magic' qualities, but it didn't deliver in time as was seen to have failed. It left the entire dev community with simmering resentment and aversion to adopt to this day (\"too complex\", \"been there, done that, not needed\"). Linked Data has continued to mature, but _veeery_ slowly and mostly in niche circles and use cases.</p>",
+        "id": 426890927,
+        "sender_full_name": "Arnold Schrijver",
+        "timestamp": 1710595532
+    },
+    {
+        "content": "<p>Perhaps this can be posted to <a class=\"stream\" data-stream-id=\"413950\" href=\"/#narrow/stream/413950-nix\">#nix</a> , <span class=\"user-mention\" data-user-id=\"690566\">@Arnold Schrijver</span> ?</p>",
+        "id": 426891902,
+        "sender_full_name": "Srid",
+        "timestamp": 1710596360
+    },
+    {
+        "content": "<p>Sure <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> .. can you move? I don't see an option to do that.</p>",
+        "id": 426892092,
+        "sender_full_name": "Arnold Schrijver",
+        "timestamp": 1710596517
+    }
+]

@@ -1,0 +1,164 @@
+[
+    {
+        "content": "<p>I looked through documentation of Weaviate but I cant find how to run Weaviate locally.</p>",
+        "id": 440079291,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716380451
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>run<span class=\"w\"> </span>nixpkgs#weaviate<span class=\"w\"> </span>--<span class=\"w\"> </span>--scheme<span class=\"o\">=</span>http\n</code></pre></div>",
+        "id": 440085062,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716382439
+    },
+    {
+        "content": "<p>That uses all the default configs, except I ask it not to use TLS, otherwise you will have to provide the location to the certificates and a bunch of other TLS related stuff</p>",
+        "id": 440085236,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716382496
+    },
+    {
+        "content": "<p>In services-flake, we can assume it is <code>http</code> by default  — as we only target local development and <code>CI</code> workflows.</p>",
+        "id": 440085525,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716382588
+    },
+    {
+        "content": "<p>I wrote this basic weaviate process:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  settings<span class=\"o\">.</span>processes<span class=\"o\">.</span>weaviate1<span class=\"o\">.</span><span class=\"ss\">command</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>writeShellApplication <span class=\"p\">{</span>\n    <span class=\"ss\">name</span> <span class=\"o\">=</span> <span class=\"s2\">\"start-weaviate\"</span><span class=\"p\">;</span>\n    <span class=\"ss\">runtimeInputs</span> <span class=\"o\">=</span> <span class=\"p\">[</span> pkgs<span class=\"o\">.</span>weaviate <span class=\"p\">];</span>\n    <span class=\"ss\">text</span> <span class=\"o\">=</span> <span class=\"s s-Multiline\">''</span>\n<span class=\"s s-Multiline\">      exec weaviate --scheme=http --host 0.0.0.0 --port 8080</span>\n<span class=\"s s-Multiline\">    ''</span><span class=\"p\">;</span>\n  <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>But I don't know why running it doesn't always produce logs<br>\n<a href=\"/user_uploads/60244/f88TPN8kWy_pi7D4AhV3sMne/swappy-20240522_175414.png\">swappy-20240522_175414.png</a><br>\n<a href=\"/user_uploads/60244/sd-E6KCsDC4AM3mtqm_4eag5/swappy-20240522_175259.png\">swappy-20240522_175259.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/f88TPN8kWy_pi7D4AhV3sMne/swappy-20240522_175414.png\" title=\"swappy-20240522_175414.png\"><img src=\"/user_uploads/60244/f88TPN8kWy_pi7D4AhV3sMne/swappy-20240522_175414.png\"></a></div><div class=\"message_inline_image\"><a href=\"/user_uploads/60244/sd-E6KCsDC4AM3mtqm_4eag5/swappy-20240522_175259.png\" title=\"swappy-20240522_175259.png\"><img src=\"/user_uploads/60244/sd-E6KCsDC4AM3mtqm_4eag5/swappy-20240522_175259.png\"></a></div>",
+        "id": 440106578,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716388308
+    },
+    {
+        "content": "<p>I am not very certain, but it could be an upstream process-compose bug. I have noticed that when you switch back to the process you see logs, you can do that if there are more than one processes</p>",
+        "id": 440126817,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716393531
+    },
+    {
+        "content": "<p>Anyways, you could also pass “-t=false” to process-compose to disable TUI mode</p>",
+        "id": 440126943,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716393565
+    },
+    {
+        "content": "<p>That should do that job as well</p>",
+        "id": 440126962,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716393570
+    },
+    {
+        "content": "<p>Right now this is my <code>weaviate.nix</code> file:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span> pkgs<span class=\"p\">,</span> lib<span class=\"p\">,</span> name<span class=\"p\">,</span> config<span class=\"p\">,</span> <span class=\"o\">...</span> <span class=\"p\">}:</span>\n<span class=\"k\">let</span>\n  <span class=\"k\">inherit</span> <span class=\"p\">(</span>lib<span class=\"p\">)</span> types<span class=\"p\">;</span>\n<span class=\"k\">in</span>\n<span class=\"p\">{</span>\n  <span class=\"ss\">options</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">enable</span> <span class=\"o\">=</span> lib<span class=\"o\">.</span>mkEnableOption name<span class=\"p\">;</span>\n\n    <span class=\"ss\">package</span> <span class=\"o\">=</span> lib<span class=\"o\">.</span>mkPackageOption pkgs <span class=\"s2\">\"weaviate\"</span> <span class=\"p\">{</span> <span class=\"p\">};</span>\n\n    outputs<span class=\"o\">.</span><span class=\"ss\">settings</span> <span class=\"o\">=</span> lib<span class=\"o\">.</span>mkOption <span class=\"p\">{</span>\n      <span class=\"ss\">type</span> <span class=\"o\">=</span> types<span class=\"o\">.</span>deferredModule<span class=\"p\">;</span>\n      <span class=\"ss\">internal</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n      <span class=\"ss\">readOnly</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n      <span class=\"ss\">default</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n        <span class=\"ss\">processes</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n          <span class=\"s2\">\"</span><span class=\"si\">${</span>name<span class=\"si\">}</span><span class=\"s2\">\"</span> <span class=\"o\">=</span>\n            <span class=\"k\">let</span>\n              <span class=\"ss\">startScript</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>writeShellApplication <span class=\"p\">{</span>\n                <span class=\"ss\">name</span> <span class=\"o\">=</span> <span class=\"s2\">\"start-weaviate\"</span><span class=\"p\">;</span>\n                <span class=\"ss\">runtimeInputs</span> <span class=\"o\">=</span> <span class=\"p\">[</span> config<span class=\"o\">.</span>package <span class=\"p\">];</span>\n                <span class=\"ss\">text</span> <span class=\"o\">=</span> <span class=\"s s-Multiline\">''</span>\n<span class=\"s s-Multiline\">                  exec weaviate --scheme=http --host 0.0.0.0 --port 8080</span>\n<span class=\"s s-Multiline\">                ''</span><span class=\"p\">;</span>\n              <span class=\"p\">};</span>\n\n              <span class=\"ss\">readyScript</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>writeText <span class=\"s2\">\"ready.py\"</span> <span class=\"s s-Multiline\">''</span>\n<span class=\"s s-Multiline\">                import weaviate</span>\n<span class=\"s s-Multiline\">                client = weaviate.connect_to_local(port=8080)</span>\n<span class=\"s s-Multiline\">                client.close()</span>\n<span class=\"s s-Multiline\">              ''</span><span class=\"p\">;</span>\n            <span class=\"k\">in</span>\n            <span class=\"p\">{</span>\n              <span class=\"ss\">command</span> <span class=\"o\">=</span> startScript<span class=\"p\">;</span>\n\n              <span class=\"ss\">readiness_probe</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n                exec<span class=\"o\">.</span><span class=\"ss\">command</span> <span class=\"o\">=</span> <span class=\"s2\">\"</span><span class=\"si\">${</span><span class=\"p\">(</span>pkgs<span class=\"o\">.</span>python3<span class=\"o\">.</span>withPackages <span class=\"p\">(</span>p<span class=\"p\">:</span> <span class=\"p\">[</span> p<span class=\"o\">.</span>weaviate-client <span class=\"p\">]))</span><span class=\"si\">}</span><span class=\"s2\">/bin/python </span><span class=\"si\">${</span>readyScript<span class=\"si\">}</span><span class=\"s2\">\"</span><span class=\"p\">;</span>\n                <span class=\"ss\">initial_delay_seconds</span> <span class=\"o\">=</span> <span class=\"mi\">2</span><span class=\"p\">;</span>\n                <span class=\"ss\">period_seconds</span> <span class=\"o\">=</span> <span class=\"mi\">10</span><span class=\"p\">;</span>\n                <span class=\"ss\">timeout_seconds</span> <span class=\"o\">=</span> <span class=\"mi\">4</span><span class=\"p\">;</span>\n                <span class=\"ss\">success_threshold</span> <span class=\"o\">=</span> <span class=\"mi\">1</span><span class=\"p\">;</span>\n                <span class=\"ss\">failure_threshold</span> <span class=\"o\">=</span> <span class=\"mi\">5</span><span class=\"p\">;</span>\n              <span class=\"p\">};</span>\n              <span class=\"ss\">namespace</span> <span class=\"o\">=</span> name<span class=\"p\">;</span>\n\n              <span class=\"c1\"># https://github.com/F1bonacc1/process-compose#-auto-restart-if-not-healthy</span>\n              availability<span class=\"o\">.</span><span class=\"ss\">restart</span> <span class=\"o\">=</span> <span class=\"s2\">\"on_failure\"</span><span class=\"p\">;</span>\n            <span class=\"p\">};</span>\n        <span class=\"p\">};</span>\n      <span class=\"p\">};</span>\n    <span class=\"p\">};</span>\n  <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>and this is <code>weaviate_test.nix</code> file:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span> pkgs<span class=\"p\">,</span> config<span class=\"p\">,</span> <span class=\"o\">...</span> <span class=\"p\">}:</span> <span class=\"p\">{</span>\n  services<span class=\"o\">.</span>weaviate<span class=\"o\">.</span><span class=\"s2\">\"weaviate1\"</span><span class=\"o\">.</span><span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n\n  settings<span class=\"o\">.</span>processes<span class=\"o\">.</span><span class=\"ss\">test</span> <span class=\"o\">=</span>\n    <span class=\"k\">let</span>\n      <span class=\"ss\">cfg</span> <span class=\"o\">=</span> config<span class=\"o\">.</span>services<span class=\"o\">.</span>weaviate<span class=\"o\">.</span><span class=\"s2\">\"weaviate1\"</span><span class=\"p\">;</span>\n      <span class=\"ss\">testScript</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>writeText <span class=\"s2\">\"test.py\"</span> <span class=\"s s-Multiline\">''</span>\n<span class=\"s s-Multiline\">        import weaviate</span>\n\n<span class=\"s s-Multiline\">        client = weaviate.connect_to_local(</span>\n<span class=\"s s-Multiline\">            port=8080,</span>\n<span class=\"s s-Multiline\">        )</span>\n<span class=\"s s-Multiline\">        client.close()</span>\n<span class=\"s s-Multiline\">      ''</span><span class=\"p\">;</span>\n    <span class=\"k\">in</span>\n    <span class=\"p\">{</span>\n      <span class=\"ss\">command</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>writeShellApplication <span class=\"p\">{</span>\n        <span class=\"ss\">runtimeInputs</span> <span class=\"o\">=</span> <span class=\"p\">[</span>\n          cfg<span class=\"o\">.</span>package\n          <span class=\"p\">(</span>pkgs<span class=\"o\">.</span>python3<span class=\"o\">.</span>withPackages <span class=\"p\">(</span>python-pkgs<span class=\"p\">:</span> <span class=\"p\">[</span>\n            python-pkgs<span class=\"o\">.</span>weaviate-client\n          <span class=\"p\">]))</span>\n        <span class=\"p\">];</span>\n        <span class=\"ss\">text</span> <span class=\"o\">=</span> <span class=\"s s-Multiline\">''</span>\n<span class=\"s s-Multiline\">          exec python3 </span><span class=\"si\">${</span>testScript<span class=\"si\">}</span>\n<span class=\"s s-Multiline\">        ''</span><span class=\"p\">;</span>\n        <span class=\"ss\">name</span> <span class=\"o\">=</span> <span class=\"s2\">\"weaviate-test\"</span><span class=\"p\">;</span>\n      <span class=\"p\">};</span>\n      depends_on<span class=\"o\">.</span><span class=\"s2\">\"weaviate1\"</span><span class=\"o\">.</span><span class=\"ss\">condition</span> <span class=\"o\">=</span> <span class=\"s2\">\"process_healthy\"</span><span class=\"p\">;</span>\n    <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>command <code>just run weaviate</code> works fine but when i run <code>just test weaviate</code> I get error:<br>\n<a href=\"/user_uploads/60244/g30SMSseATBuAHG0PdJ56Btc/swappy-20240522_235102.png\">swappy-20240522_235102.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/g30SMSseATBuAHG0PdJ56Btc/swappy-20240522_235102.png\" title=\"swappy-20240522_235102.png\"><img src=\"/user_uploads/60244/g30SMSseATBuAHG0PdJ56Btc/swappy-20240522_235102.png\"></a></div>",
+        "id": 440178687,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716410270
+    },
+    {
+        "content": "<p>can’t reproduce. Tried it on macOS the test is passing.</p>",
+        "id": 440316022,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716468731
+    },
+    {
+        "content": "<p>I added other config options and even doc in this <a href=\"https://github.com/jedimahdi/services-flake/commit/ea2115f9938a49fcdacd32555206d7b21cb6381b\">commit</a>. Can you see if there is anything missing</p>",
+        "id": 440316261,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716468806
+    },
+    {
+        "content": "<p>I can reproduce your error on linux</p>",
+        "id": 440316504,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716468887
+    },
+    {
+        "content": "<blockquote>\n<p>I added other config options and even doc in this <a href=\"https://github.com/jedimahdi/services-flake/commit/ea2115f9938a49fcdacd32555206d7b21cb6381b\">commit</a>. Can you see if there is anything missing</p>\n</blockquote>\n<p>Looks neat! Only missing piece will be the test failing on linux. Weaviate is doing something different on macOS, it works there.</p>",
+        "id": 440317226,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716469110
+    },
+    {
+        "content": "<p>It works with <code>just run weaviate</code> right?</p>",
+        "id": 440317460,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716469188
+    },
+    {
+        "content": "<p>And the only difference i can see is running process-compose with -t=false flag</p>",
+        "id": 440318378,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716469457
+    },
+    {
+        "content": "<p>I added --no-sandbox to </p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code><span class=\"nb\">test</span><span class=\"w\"> </span>service:\n<span class=\"w\">    </span>nix<span class=\"w\"> </span>--no-sandbox<span class=\"w\"> </span>build<span class=\"w\"> </span>./test#checks.<span class=\"k\">$(</span>nix<span class=\"w\"> </span><span class=\"nb\">eval</span><span class=\"w\"> </span>--impure<span class=\"w\"> </span>--expr<span class=\"w\"> </span><span class=\"s2\">\"builtins.currentSystem\"</span><span class=\"k\">)</span>.<span class=\"o\">{{</span>service<span class=\"o\">}}</span><span class=\"w\"> </span>--override-input<span class=\"w\"> </span>services-flake<span class=\"w\"> </span>.<span class=\"w\"> </span>-L\n</code></pre></div>\n<p>and it works</p>",
+        "id": 440335675,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716474515
+    },
+    {
+        "content": "<blockquote>\n<p>I added other config options and even doc in this <a href=\"https://github.com/jedimahdi/services-flake/commit/ea2115f9938a49fcdacd32555206d7b21cb6381b\">commit</a>. Can you see if there is anything missing</p>\n</blockquote>\n<p>You are missing <code>dataDir</code> option for the service</p>",
+        "id": 440465935,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716540182
+    },
+    {
+        "content": "<p>Also, <code>Usage of the weaviate.conf.json file is deprecated and will be removed in the future. Please use environment variables.</code></p>",
+        "id": 440471909,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716542405
+    },
+    {
+        "content": "<p>I changed the configs to use environment variables <a href=\"https://github.com/jedimahdi/services-flake/commit/e45010ef99833fb3ec177025853fb1e07e999d4e\">commit</a> also added dataDir option.</p>\n<p>and found a better way to check for readiness and for test without the python scripts. <a href=\"https://github.com/jedimahdi/services-flake/commit/a228b5bb8b809d1160a2eecb411c56133fb9577b\">commit</a></p>",
+        "id": 440514571,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716558911
+    },
+    {
+        "content": "<p>Great! </p>\n<blockquote>\n<p>I added --no-sandbox to and it works</p>\n</blockquote>\n<p>I don’t why weaviate would require to disable sandbox mode.</p>",
+        "id": 440529968,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716564062
+    },
+    {
+        "content": "<p>I thought it was because of weaviate telemetry but even after disabling it, test won't pass.</p>",
+        "id": 440531175,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716564572
+    },
+    {
+        "content": "<p>I think I figured it out. It has to do with <a href=\"https://github.com/hashicorp/memberlist\">https://github.com/hashicorp/memberlist</a>. Although I am yet to find the exact reason, but setting this ENV makes the test pass: </p>\n<div class=\"codehilite\"><pre><span></span><code>diff --git a/nix/weaviate_test.nix b/nix/weaviate_test.nix\nindex a766c58..31d7975 100644\n--- a/nix/weaviate_test.nix\n+++ b/nix/weaviate_test.nix\n@@ -1,5 +1,10 @@\n { pkgs, config, ... }: {\n-  services.weaviate.&quot;weaviate1&quot;.enable = true;\n+  services.weaviate.&quot;weaviate1&quot; = {\n+    enable = true;\n+    envs = {\n+      CLUSTER_ADVERTISE_ADDR = &quot;127.0.0.1&quot;;\n+    };\n+  };\n\n   settings.processes.test =\n     let\n</code></pre></div>",
+        "id": 440532050,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716564828
+    },
+    {
+        "content": "<p>This is what lead me to it: <a href=\"https://github.com/weaviate/weaviate/blob/9e924cc88933b3042e27e30ad4abf26ab9ab78f8/usecases/cluster/state.go#L84-L86\">https://github.com/weaviate/weaviate/blob/9e924cc88933b3042e27e30ad4abf26ab9ab78f8/usecases/cluster/state.go#L84-L86</a></p>",
+        "id": 440532706,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716565068
+    },
+    {
+        "content": "<p>I think it has to do with the fact that the default value for <code>AdvertiseAddr</code> config is an empty string: <a href=\"https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/config.go#L308\">https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/config.go#L308</a></p>\n<p>But what I fail to understand is, how does it work when sandbox is disabled. I think the question can be better framed as: What does empty addr translate to?</p>",
+        "id": 440533450,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716565407
+    },
+    {
+        "content": "<p>When <code>AdvertiseAddr</code> is empty it goes to this path:<br>\n<a href=\"https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/net_transport.go#L160\">https://github.com/hashicorp/memberlist/blob/3f82dc10a89f82efe300228752f7077d0d9f87e4/net_transport.go#L160</a></p>\n<p>and calls <code>GetPrivateIP</code> function which I guess in sandbox mode can't find any ip</p>",
+        "id": 440542394,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716568718
+    },
+    {
+        "content": "<p>Should i use types.raw as type of value of environment? other than int, str, list of str and bool, is there anything else? at least for environment values of weaviate</p>",
+        "id": 440759946,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716775309
+    },
+    {
+        "content": "<p>I forgot to update envs to environment in weaviate.md file<br>\n<a href=\"https://github.com/juspay/services-flake/blob/main/doc/weaviate.md?plain=1#L32\">https://github.com/juspay/services-flake/blob/main/doc/weaviate.md?plain=1#L32</a></p>",
+        "id": 441010077,
+        "sender_full_name": "Mahdi Seyedan",
+        "timestamp": 1716892334
+    }
+]

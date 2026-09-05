@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>hey everyone, just starting out with haskell and trying to make a toy project with hyperbole. When override the package version with <code> haskellProjects.default.packages.hyperbole.source = \"0.5.0\";</code> I get following error:</p>\n<div class=\"codehilite\" data-code-language=\"Bash Session\"><pre><span></span><code><span class=\"go\">&gt; nix develop</span>\n<span class=\"go\">warning: Git tree '/home/a/projects/haskell-exercises' is dirty</span>\n<span class=\"go\">error: builder for '/nix/store/qb5jz3a8jn03khibmfjxp8sq8mx6d98b-all-cabal-hashes-component-hyperbole-0.5.0.drv' failed with exit code 2;</span>\n<span class=\"go\">       last 3 log lines:</span>\n<span class=\"go\">       &gt; tar: */hyperbole/0.5.0/hyperbole.json: Not found in archive</span>\n<span class=\"go\">       &gt; tar: */hyperbole/0.5.0/hyperbole.cabal: Not found in archive</span>\n<span class=\"go\">       &gt; tar: Exiting with failure status due to previous errors</span>\n<span class=\"go\">       For full logs, run:</span>\n<span class=\"go\">         nix log /nix/store/qb5jz3a8jn03khibmfjxp8sq8mx6d98b-all-cabal-hashes-component-hyperbole-0.5.0.drv</span>\n<span class=\"go\">error:</span>\n<span class=\"go\">       … while calling the 'derivationStrict' builtin</span>\n<span class=\"go\">         at &lt;nix/derivation-internal.nix&gt;:37:12:</span>\n<span class=\"go\">           36|</span>\n<span class=\"go\">           37|   strict = derivationStrict drvAttrs;</span>\n<span class=\"go\">             |            ^</span>\n<span class=\"go\">           38|</span>\n\n<span class=\"go\">       … while evaluating derivation 'ghc-shell-for-packages-0'</span>\n<span class=\"go\">         whose name attribute is located at /nix/store/ybmnblw90230yl4p0l18ghwx9ry597bz-source/pkgs/stdenv/generic/make-derivation.nix:544:13</span>\n\n<span class=\"go\">       … while evaluating attribute 'NIX_GHC' of derivation 'ghc-shell-for-packages-0'</span>\n\n<span class=\"go\">       (stack trace truncated; use '--show-trace' to show the full, detailed trace)</span>\n\n<span class=\"go\">       error: 1 dependencies of derivation '/nix/store/z8nd9zdv0za59irx46mnv5swvsydjpqg-cabal2nix-hyperbole-0.5.0.drv' failed to build</span>\n</code></pre></div>\n<p>what am I doing wrong? </p>\n<p><a href=\"/user_uploads/60244/U-cfHoCqTk96YD9gEUljcLyM/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/U-cfHoCqTk96YD9gEUljcLyM/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1902x1023\" src=\"/user_uploads/thumbnail/60244/U-cfHoCqTk96YD9gEUljcLyM/image.png/840x560.webp\"></a></div>",
+        "id": 543301340,
+        "sender_full_name": "Pavel Anpin",
+        "timestamp": 1759754027
+    },
+    {
+        "content": "<p>I tried setting it up via flake input, but that fails due to a broken test in the dependency  flake input atomic-css. Yikes!</p>",
+        "id": 543301723,
+        "sender_full_name": "Pavel Anpin",
+        "timestamp": 1759754127
+    },
+    {
+        "content": "<p>ok I figured out how to overcome this, run cabal2nix for a package and then use that instead of overriding the source number<br>\n<code>hyperbole = { super, ...}: { custom = _:  super.callPackage ./hyperbole.nix {}; };</code></p>",
+        "id": 543358210,
+        "sender_full_name": "Pavel Anpin",
+        "timestamp": 1759766637
+    },
+    {
+        "content": "<blockquote>\n<p>tar: */hyperbole/0.5.0/hyperbole.json: Not found in archive<br>\ntar: */hyperbole/0.5.0/hyperbole.cabal: Not found in archive</p>\n</blockquote>\n<p><span class=\"user-mention\" data-user-id=\"709111\">@Pavel Anpin</span> </p>\n<p>It means that hyperbole 0.5.0 is not in the <code>all-cabal-hashes</code> registry.</p>\n<p>To fix the error, you will have to update the <code>all-cabal-hashes</code> revision to latest. You can do that by either updating <code>nixpkgs</code> (assuming someone has updated it upstream) or DIY:</p>\n<div class=\"codehilite\"><pre><span></span><code># In haskellProjects.&lt;name&gt;\n{\n   basePackages = pkgs.haskellPackages.override {\n     all-cabal-hashes = builtins.fetchurl { url = &quot;https://github.com/commercialhaskell/all-cabal-hashes/archive/LATEST-COMMIT-HERE.tar.gz&quot;; sha256 = lib.fakeHash; };\n   };\n }\n</code></pre></div>",
+        "id": 543473388,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1759826220
+    },
+    {
+        "content": "<p>brilliant! I knew I was missing something out. Quick search pointed on updating cabal, but I went into fetching derivations manually. Thanks!</p>",
+        "id": 543484128,
+        "sender_full_name": "Pavel Anpin",
+        "timestamp": 1759829469
+    },
+    {
+        "content": "<p>Alternatively, you can directly point to the source:  <a href=\"https://community.flake.parts/haskell-flake/dependency#source\">https://community.flake.parts/haskell-flake/dependency#source</a></p>\n<p><a href=\"/user_uploads/60244/YMiuonxOg8AFJgjd4SSCuLF4/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/YMiuonxOg8AFJgjd4SSCuLF4/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"944x1244\" src=\"/user_uploads/thumbnail/60244/YMiuonxOg8AFJgjd4SSCuLF4/image.png/840x560.webp\"></a></div>",
+        "id": 543627305,
+        "sender_full_name": "Srid",
+        "timestamp": 1759873879
+    }
+]

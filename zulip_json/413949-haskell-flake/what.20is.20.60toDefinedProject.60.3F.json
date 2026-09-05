@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>As far as I can see, both <code>local.toCurrentProject</code> and <code>local.toDefinedProject</code> call the same function, only at different times. But I don’t seem to wrap my head around when <code>toDefinedProject</code> must be true.<br>\nIn my  observation, it is true when a haskell package gets its source from <code>inputs</code> but it is not from <code>cabal.project</code> (which makes it non-local).</p>",
+        "id": 426336965,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1710335615
+    },
+    {
+        "content": "<p>when would this information be useful?</p>",
+        "id": 426337174,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1710335682
+    },
+    {
+        "content": "<p>Maybe now I get it, <code>toDefinedProject</code> is true if a project that you are importing is also defined using <code>haskell-flake</code>.</p>",
+        "id": 426347484,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1710338688
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> They are described in the option docs <a href=\"https://github.com/srid/haskell-flake/blob/02c71dfb51ca9f6bd1ee56435e32b9aae491e85c/nix/modules/project/packages/package.nix#L53-L74\">here</a></p>",
+        "id": 426354361,
+        "sender_full_name": "Srid",
+        "timestamp": 1710340633
+    },
+    {
+        "content": "<p>(But they are not visible in <a href=\"https://flake.parts/options/haskell-flake\">https://flake.parts/options/haskell-flake</a> due to <a href=\"https://github.com/srid/haskell-flake/issues/272\">https://github.com/srid/haskell-flake/issues/272</a> )</p>",
+        "id": 426354509,
+        "sender_full_name": "Srid",
+        "timestamp": 1710340669
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/what.20is.20.60toDefinedProject.60.3F/near/426354361\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> They are described in the option docs <a href=\"https://github.com/srid/haskell-flake/blob/02c71dfb51ca9f6bd1ee56435e32b9aae491e85c/nix/modules/project/packages/package.nix#L53-L74\">here</a></p>\n</blockquote>\n<p>Feel free to improve the <code>description</code> if you think that will be more clear.</p>",
+        "id": 426354714,
+        "sender_full_name": "Srid",
+        "timestamp": 1710340722
+    }
+]
