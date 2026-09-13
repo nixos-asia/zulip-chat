@@ -1,0 +1,92 @@
+[
+    {
+        "content": "<p>within a systemd service</p>\n<div class=\"codehilite\"><pre><span></span><code>synapse.http.client: [sentinel] Error sending request to  GET https://sistema.frx.localhost/.well-known/openid-configuration: RequestTimedOutError 504: Timeout [...]\n</code></pre></div>\n<p>From the host:</p>\n<div class=\"codehilite\"><pre><span></span><code>❯ curl -L https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.openid_configuration\nHTTP/2 200\nserver: nginx\ndate: Wed, 06 Mar 2024 19:42:27 GMT\ncontent-type: application/json\ncontent-length: 763\nvary: Accept-Encoding\nset-cookie: sid=Guest; Expires=Sat, 09 Mar 2024 14:42:26 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\nset-cookie: system_user=no; Secure; Path=/; SameSite=Lax\nset-cookie: full_name=Guest; Secure; Path=/; SameSite=Lax\nset-cookie: user_id=Guest; Secure; Path=/; SameSite=Lax\nset-cookie: user_image=; Secure; Path=/; SameSite=Lax\nx-frame-options: SAMEORIGIN\nx-content-type-options: nosniff\nx-xss-protection: 1; mode=block\nstrict-transport-security: max-age=63072000; includeSubDomains; preload\nreferrer-policy: same-origin, strict-origin-when-cross-origin\n\n{\n    &quot;issuer&quot;: &quot;https://sistema.frx.localhost&quot;,\n    &quot;authorization_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.authorize&quot;,\n    &quot;token_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.get_token&quot;,\n    &quot;userinfo_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.openid_profile&quot;,\n    &quot;revocation_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.revoke_token&quot;,\n    &quot;introspection_endpoint&quot;: &quot;https://sistema.frx.localhost/api/method/frappe.integrations.oauth2.introspect_token&quot;,\n    &quot;response_types_supported&quot;: [\n        &quot;code&quot;,\n        &quot;token&quot;,\n        &quot;code id_token&quot;,\n        &quot;code token id_token&quot;,\n        &quot;id_token&quot;,\n        &quot;id_token token&quot;\n    ],\n    &quot;subject_types_supported&quot;: [\n        &quot;public&quot;\n    ],\n    &quot;id_token_signing_alg_values_supported&quot;: [\n        &quot;HS256&quot;\n    ]\n}\n</code></pre></div>\n<p>What's the matter?</p>",
+        "id": 425165093,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709754172
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Batchfile\"><pre><span></span><code>❯ cat /etc/nsswitch.conf\n───────┬────────────────────────────────────────────────────────────────────────\n       │ File: /etc/nsswitch.conf\n───────┼────────────────────────────────────────────────────────────────────────\n   1   │ passwd:    files systemd\n   2   │ group:     files [success=merge] systemd\n   3   │ shadow:    files\n   4   │\n   5   │ hosts:     mymachines resolve [!UNAVAIL=return] files myhostname dns\n   6   │ networks:  files\n   7   │\n   8   │ ethers:    files\n   9   │ services:  files\n  10   │ protocols: files\n  11   │ rpc:       files\n───────┴────────────────────────────────────────────────────────────────────────\n</code></pre></div>\n<p>^^ it doesn't matter whether I use <code>systemd-resolved</code> or not...</p>\n<div class=\"codehilite\" data-code-language=\"Batchfile\"><pre><span></span><code>❯ cat /etc/hosts\n───────┬────────────────────────────────────────────────────────────────────────\n       │ File: /etc/hosts\n───────┼────────────────────────────────────────────────────────────────────────\n   1   │ 127.0.0.1 localhost\n   2   │ ::1 localhost\n───────┴────────────────────────────────────────────────────────────────────────\n</code></pre></div>\n<div class=\"codehilite\" data-code-language=\"Batchfile\"><pre><span></span><code>❯ cat /etc/hostname\n───────┬────────────────────────────────────────────────────────────────────────\n       │ File: /etc/hostname\n───────┼────────────────────────────────────────────────────────────────────────\n   1   │ frx\n───────┴────────────────────────────────────────────────────────────────────────\n</code></pre></div>",
+        "id": 425165394,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709754284
+    },
+    {
+        "content": "<p>is the systemd service configured in a private network namespace or something?</p>",
+        "id": 425165782,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709754425
+    },
+    {
+        "content": "<p>I'm not really sure if I can tell anything apart here:</p>\n<div class=\"codehilite\"><pre><span></span><code>  17   │ ExecStartPre=/nix/store/l9f43mkpwah0md2gi4hhzmsxxdlc56qm-unit-script-ma\n       │ trix-synapse-pre-start/bin/matrix-synapse-pre-start\n  18   │ ExecStartPre=+/nix/store/680aj7bs2gbr5q18dgapzwy04vicn1q9-matrix-synaps\n       │ e-fix-permissions\n  19   │ Group=matrix-synapse\n  30   │ ProtectKernelLogs=true\n  20   │ LockPersonality=true\n  21   │ NoNewPrivileges=true\n  22   │ PrivateDevices=true\n  23   │ PrivateTmp=true\n  24   │ PrivateUsers=true\n  25   │ ProcSubset=pid\n  26   │ ProtectClock=true\n  27   │ ProtectControlGroups=true\n  28   │ ProtectHome=true\n  29   │ ProtectHostname=true\n  30   │ ProtectKernelLogs=true\n  31   │ ProtectKernelModules=true\n  32   │ ProtectKernelTunables=true\n  33   │ ProtectProc=invisible\n  34   │ ProtectSystem=strict\n  35   │ ReadWritePaths=/var/lib/matrix-synapse\n  36   │ ReadWritePaths=/var/lib/matrix-synapse/media_store\n  37   │ RemoveIPC=true\n  38   │ Restart=on-failure\n  39   │ RestrictAddressFamilies=AF_INET\n  40   │ RestrictAddressFamilies=AF_INET6\n  41   │ RestrictAddressFamilies=AF_UNIX\n:\n  43   │ RestrictRealtime=true\n  44   │ RestrictSUIDSGID=true\n  45   │ SystemCallArchitectures=native\n  46   │ SystemCallFilter=@system-service\n  47   │ SystemCallFilter=~@resources\n  48   │ SystemCallFilter=~@privileged\n  49   │ Type=notify\n  50   │ UMask=0077\n  51   │ User=matrix-synapse\n  52   │ WorkingDirectory=/var/lib/matrix-synapse\n───────┴────────────────────────────────────────────────────────────────────────\n</code></pre></div>",
+        "id": 425167618,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709755063
+    },
+    {
+        "content": "<p>From what I gather, assuming you are trying to run Synapse with OIDC, there might be some issues on Synapse's GitHub related to this:</p>\n<p><a href=\"https://github.com/matrix-org/synapse/issues/9662\">https://github.com/matrix-org/synapse/issues/9662</a><br>\n<a href=\"https://github.com/matrix-org/synapse/issues/8741\">https://github.com/matrix-org/synapse/issues/8741</a><br>\n<a href=\"https://github.com/matrix-org/synapse/issues/16004\">https://github.com/matrix-org/synapse/issues/16004</a></p>\n<p>Judging from a first look, it might have something to do with TLS certificates.</p>",
+        "id": 425168801,
+        "sender_full_name": "Andreas",
+        "timestamp": 1709755496
+    },
+    {
+        "content": "<p>Oh! What a deceiving traceback! <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 425169147,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709755640
+    },
+    {
+        "content": "<p><code>PrivateNetwork=true</code> would indicate a private network namespace, so looks like that is not it. TLS would have been my next guess, but that usually doesn't result in a 504 <span aria-label=\"thinking\" class=\"emoji emoji-1f914\" role=\"img\" title=\"thinking\">:thinking:</span></p>",
+        "id": 425169185,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709755656
+    },
+    {
+        "content": "<p>It appears Synapse has a <code>use_insecure_ssl_client_just_for_testing_do_not_use: true</code> parameter setting you might try and see if it works...</p>",
+        "id": 425169373,
+        "sender_full_name": "Andreas",
+        "timestamp": 1709755730
+    },
+    {
+        "content": "<p>Yeah, it just doesn't work with my <code>frx.localhost</code> test domain in VM...</p>\n<p>I'm setting up static certs, but it seams python doesn't acquire the root properly... I remember this is a pita and one might readily have to patch half of nixpkgs to get it into one of these <code>certify</code> packages that are a transitive dependency to half of the tree.</p>",
+        "id": 425169390,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709755739
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Python\"><pre><span></span><code><span class=\"kn\">from</span> <span class=\"nn\">twisted.internet.ssl</span> <span class=\"kn\">import</span> <span class=\"p\">(</span>\n    <span class=\"n\">CertificateOptions</span><span class=\"p\">,</span>\n    <span class=\"n\">ContextFactory</span><span class=\"p\">,</span>\n    <span class=\"n\">TLSVersion</span><span class=\"p\">,</span>\n    <span class=\"n\">platformTrust</span><span class=\"p\">,</span> <span class=\"c1\"># this one is twisted :-)</span>\n<span class=\"p\">)</span>\n</code></pre></div>\n<blockquote>\n<p><code>platformTrus</code>: [...] any process where the SSL_CERT_FILE environment variable is set to the path of a file containing your desired CA certificates bundle.</p>\n</blockquote>",
+        "id": 425173862,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709757592
+    },
+    {
+        "content": "<p>if you are running this service on localhost, perhaps tls isn't necessary anyway?</p>",
+        "id": 425174243,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709757751
+    },
+    {
+        "content": "<p>Unfortunately, it's a requirement that is part of the oidc stack, which otherwise would just error out, somewhat reasonably, actually.</p>",
+        "id": 425174497,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709757858
+    },
+    {
+        "content": "<p>This seemed to have ultimately appeased twisted:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n    systemd<span class=\"o\">.</span>services<span class=\"o\">.</span>matrix-synapse<span class=\"o\">.</span><span class=\"ss\">environment</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n      <span class=\"ss\">SSL_CERT_FILE</span> <span class=\"o\">=</span> config<span class=\"o\">.</span>environment<span class=\"o\">.</span>etc<span class=\"o\">.</span><span class=\"s2\">\"ssl/certs/ca-certificates.crt\"</span><span class=\"o\">.</span>source<span class=\"p\">;</span>\n    <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>Thanks for the hint about certs! <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 425177103,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709758852
+    },
+    {
+        "content": "<p>This is what honors the effect of:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>      security<span class=\"o\">.</span>pki<span class=\"o\">.</span><span class=\"ss\">certificateFiles</span> <span class=\"o\">=</span> <span class=\"p\">[</span>myca<span class=\"p\">];</span>\n</code></pre></div>",
+        "id": 425177486,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1709759017
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678738\">David Arnold</span> has marked this topic as resolved.</p>",
+        "id": 425178703,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1709759516
+    }
+]

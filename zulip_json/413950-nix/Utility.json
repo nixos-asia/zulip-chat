@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/3timeslazy/nix-search-tv\"><code>3timeslazy/nix-search-tv</code></a> is a very nice CLI-based tool for searching <code>nixpkgs</code>, <code>nixos-options</code>, <code>home-manager</code> options, and more.</p>\n<p>I’ve grabbed their <code>nixpkgs.sh</code> script — if anyone wants to try it:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>run<span class=\"w\"> </span>github:niksingh710/nsearch#nsearch-adv\n</code></pre></div>",
+        "id": 528466820,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1752334666
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"871998\">@Nikhil Singh</span> Create a small video demo (&lt;1 min), and we'll post it to <a href=\"https://x.com/nixos_asia\">https://x.com/nixos_asia</a></p>",
+        "id": 528566009,
+        "sender_full_name": "Srid",
+        "timestamp": 1752450277
+    },
+    {
+        "content": "<p>![Image](<a href=\"https://github.com/user-attachments/assets/efa9edba-4d77-4916-8ff7-e8a0b92cee6e\">https://github.com/user-attachments/assets/efa9edba-4d77-4916-8ff7-e8a0b92cee6e</a>)</p>",
+        "id": 530083856,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1753169261
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/wQZcbHOwSvJKO2SQTZjcDi5F/Screen-Recording-2025-07-22-at-12.50.14.gif\">Screen Recording 2025-07-22 at 12.50.14.gif</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/wQZcbHOwSvJKO2SQTZjcDi5F/Screen-Recording-2025-07-22-at-12.50.14.gif\" title=\"Screen Recording 2025-07-22 at 12.50.14.gif\"><img data-animated=\"true\" data-original-content-type=\"image/gif\" data-original-dimensions=\"4096x2304\" src=\"/user_uploads/thumbnail/60244/wQZcbHOwSvJKO2SQTZjcDi5F/Screen-Recording-2025-07-22-at-12.50.14.gif/840x560-anim.webp\"></a></div>",
+        "id": 530084061,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1753169346
+    }
+]

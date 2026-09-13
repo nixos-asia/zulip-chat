@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>I would like to call nix-store.</p>\n<p>The full command goes like <code>nix-store -qR —include-outputs &lt;drv&gt;</code>. I am aware that in the new-cli there is a command equivalent to this and it is <code>nix path-info —recursive &lt;drv&gt;</code>, but there is no <code>—include-outputs</code> equivalent. Neither can I iterate over all the drv’s generated using <code>nix path-info —recursive &lt;drv&gt;</code> to get the outPath, see: <a href=\"https://github.com/NixOS/nix/issues/5895\">https://github.com/NixOS/nix/issues/5895</a></p>",
+        "id": 436660646,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714645036
+    },
+    {
+        "content": "<p>We could also add a <code>pub struct NixStoreCmd</code> to <code>nix-rs</code></p>",
+        "id": 436671109,
+        "sender_full_name": "Srid",
+        "timestamp": 1714649063
+    },
+    {
+        "content": "<p>Just now discovering <code>juspay/nix-rs</code>. Does this have all/most of the \"bindings\" to nix/nix-v3?</p>",
+        "id": 436673018,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1714649734
+    },
+    {
+        "content": "<p>What's nix-v3?</p>",
+        "id": 436673162,
+        "sender_full_name": "Srid",
+        "timestamp": 1714649777
+    },
+    {
+        "content": "<p><code>nix-build</code> are the \"old\" (non-flake) commands while <code>nix build</code> is part of the v3 of Nix's CLI</p>",
+        "id": 436673348,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1714649858
+    },
+    {
+        "content": "<p><code>nix-rs</code> uses new-style Nix commands (what you call v3 Nix's CLI), yes ... but it only has those things we use in other projects (nix-browser, nix-health) right now. We should add the rest as needed, or as people contribute.</p>",
+        "id": 436674318,
+        "sender_full_name": "Srid",
+        "timestamp": 1714650210
+    },
+    {
+        "content": "<p>ack, I don't really have much use for a \"Rust wrapper\" but it sounds like something I might toy with sometime soon :D</p>",
+        "id": 436674542,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1714650290
+    },
+    {
+        "content": "<p><a href=\"https://github.com/juspay/nix-rs/pull/6\">https://github.com/juspay/nix-rs/pull/6</a></p>",
+        "id": 436747438,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714672596
+    }
+]

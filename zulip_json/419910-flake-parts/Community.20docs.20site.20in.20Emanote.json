@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"679956\">@Robert Hensing</span> </p>\n<p>I managed to get Emanote working quite well for multi-repo documentation rendering!</p>\n<p><a href=\"https://github.com/flake-parts/community.flake.parts/pull/5\">https://github.com/flake-parts/community.flake.parts/pull/5</a></p>\n<p>Try it out (it just has two modules for now):</p>\n<div class=\"codehilite\"><pre><span></span><code>nix run github:flake-parts/community.flake.parts/emanote#preview\n</code></pre></div>\n<p>What do you think? I'm thrilled to go with this.</p>\n<p>Multi-repo support means the docs are totally independent, with no intertwining (unlike with Docusaurus and mdBook). Later down the line, I would be able to implement proper cross-linking support as well (for now, we don't have strong need for it though).</p>",
+        "id": 412720246,
+        "sender_full_name": "Srid",
+        "timestamp": 1705161363
+    },
+    {
+        "content": "<p>Deployed!</p>\n<p><span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span></p>\n<p><a href=\"https://community.flake.parts/\">https://community.flake.parts/</a></p>",
+        "id": 417370295,
+        "sender_full_name": "Srid",
+        "timestamp": 1705985197
+    }
+]

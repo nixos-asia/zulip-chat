@@ -1,0 +1,1964 @@
+[
+    {
+        "content": "<h2>Source filtering with file sets</h2>\n<p>Date: Tue, 28 Nov 2023 07:52:33 -0600<br>\nLink: <a href=\"https://www.tweag.io/blog/2023-11-28-file-sets/\">https://www.tweag.io/blog/2023-11-28-file-sets/</a><br>\nComments: <a href=\"https://lobste.rs/s/3yltn4/source_filtering_with_file_sets\">https://lobste.rs/s/3yltn4/source_filtering_with_file_sets</a></p>",
+        "id": 404985529,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701308812
+    },
+    {
+        "content": "<h2>nixpkgs 23.11</h2>\n<p>Date: Wed, 29 Nov 2023 20:55:06 -0600<br>\nLink: <a href=\"https://github.com/NixOS/nixpkgs/tree/23.11\">https://github.com/NixOS/nixpkgs/tree/23.11</a><br>\nComments: <a href=\"https://lobste.rs/s/q26ap9/nixpkgs_23_11\">https://lobste.rs/s/q26ap9/nixpkgs_23_11</a></p>",
+        "id": 404999940,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701313152
+    },
+    {
+        "content": "<h2>Release: garn version v0.0.17 and v0.0.18</h2>\n<p>Date: Fri, 01 Dec 2023 05:15:05 -0600<br>\nLink: <a href=\"https://garnix.io/blog/garn-v0_0_18\">https://garnix.io/blog/garn-v0_0_18</a><br>\nComments: <a href=\"https://lobste.rs/s/wmfyob/release_garn_version_v0_0_17_v0_0_18\">https://lobste.rs/s/wmfyob/release_garn_version_v0_0_17_v0_0_18</a></p>",
+        "id": 405341116,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701429778
+    },
+    {
+        "content": "<h2>Unveiling the Power of the NixOS Integration Test Driver (Part 2)</h2>\n<p>Date: Sat, 02 Dec 2023 03:58:55 -0600<br>\nLink: <a href=\"https://nixcademy.com/2023/12/01/nixos-integration-tests-part-2/\">https://nixcademy.com/2023/12/01/nixos-integration-tests-part-2/</a><br>\nComments: <a href=\"https://lobste.rs/s/2bayti/unveiling_power_nixos_integration_test\">https://lobste.rs/s/2bayti/unveiling_power_nixos_integration_test</a></p>",
+        "id": 405519736,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701511864
+    },
+    {
+        "content": "<h2>Efficient Nix Derivations with File Sets</h2>\n<p>Date: Sat, 02 Dec 2023 15:29:37 -0600<br>\nLink: <a href=\"https://johns.codes/blog/efficient-nix-derivations-with-file-sets\">https://johns.codes/blog/efficient-nix-derivations-with-file-sets</a><br>\nComments: <a href=\"https://lobste.rs/s/wvd8hg/efficient_nix_derivations_with_file_sets\">https://lobste.rs/s/wvd8hg/efficient_nix_derivations_with_file_sets</a></p>",
+        "id": 405568292,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701552607
+    },
+    {
+        "content": "<h2>Nix-snapshotter: Native understanding of Nix packages for containerd</h2>\n<p>Date: Sat, 02 Dec 2023 17:52:31 -0600<br>\nLink: <a href=\"https://discourse.nixos.org/t/nix-snapshotter-native-understanding-of-nix-packages-for-containerd/32696\">https://discourse.nixos.org/t/nix-snapshotter-native-understanding-of-nix-packages-for-containerd/32696</a><br>\nComments: <a href=\"https://lobste.rs/s/nogwtn/nix_snapshotter_native_understanding\">https://lobste.rs/s/nogwtn/nix_snapshotter_native_understanding</a></p>",
+        "id": 405577785,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701561615
+    },
+    {
+        "content": "<h2>Announcing - First NixCon North America</h2>\n<p>Date: Sun, 03 Dec 2023 11:21:09 -0600<br>\nLink: <a href=\"https://discourse.nixos.org/t/announcing-first-nixcon-north-america/35874?u=zmitchell\">https://discourse.nixos.org/t/announcing-first-nixcon-north-america/35874?u=zmitchell</a><br>\nComments: <a href=\"https://lobste.rs/s/kmcuf4/announcing_first_nixcon_north_america\">https://lobste.rs/s/kmcuf4/announcing_first_nixcon_north_america</a></p>",
+        "id": 405683452,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701625016
+    },
+    {
+        "content": "<h2>Nix Super</h2>\n<p>Date: Tue, 05 Dec 2023 12:15:13 -0600<br>\nLink: <a href=\"https://github.com/privatevoid-net/nix-super\">https://github.com/privatevoid-net/nix-super</a><br>\nComments: <a href=\"https://lobste.rs/s/i7k7zv/nix_super\">https://lobste.rs/s/i7k7zv/nix_super</a></p>",
+        "id": 406120326,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701800716
+    },
+    {
+        "content": "<h2>nix-ld: Run unpatched dynamic binaries on NixOS</h2>\n<p>Date: Thu, 07 Dec 2023 04:27:01 -0600<br>\nLink: <a href=\"https://github.com/Mic92/nix-ld\">https://github.com/Mic92/nix-ld</a><br>\nComments: <a href=\"https://lobste.rs/s/zz9au3/nix_ld_run_unpatched_dynamic_binaries_on\">https://lobste.rs/s/zz9au3/nix_ld_run_unpatched_dynamic_binaries_on</a></p>",
+        "id": 406515089,
+        "sender_full_name": "Zapier",
+        "timestamp": 1701945563
+    },
+    {
+        "content": "<h2>Run macOS, Windows and more via a single Nix command</h2>\n<p>Date: Sat, 09 Dec 2023 20:06:07 -0600<br>\nLink: <a href=\"https://github.com/MatthewCroughan/NixThePlanet\">https://github.com/MatthewCroughan/NixThePlanet</a><br>\nComments: <a href=\"https://lobste.rs/s/epvubb/run_macos_windows_more_via_single_nix\">https://lobste.rs/s/epvubb/run_macos_windows_more_via_single_nix</a></p>",
+        "id": 406997360,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702174582
+    },
+    {
+        "content": "<h2>Install NixOS with Flake configuration on Git</h2>\n<p>Date: Mon, 11 Dec 2023 09:23:47 -0600<br>\nLink: <a href=\"https://nixos.asia/en/tutorial/nixos-install\">https://nixos.asia/en/tutorial/nixos-install</a><br>\nComments: <a href=\"https://lobste.rs/s/sd9kqb/install_nixos_with_flake_configuration\">https://lobste.rs/s/sd9kqb/install_nixos_with_flake_configuration</a></p>",
+        "id": 407264499,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702308599
+    },
+    {
+        "content": "<h2>openwrt - dewclaw.git - the second-worst way to configure openwrt, by some metric</h2>\n<p>Date: Wed, 13 Dec 2023 07:42:19 -0600<br>\nLink: <a href=\"https://git.eno.space/dewclaw.git/tree/openwrt\">https://git.eno.space/dewclaw.git/tree/openwrt</a><br>\nComments: <a href=\"https://lobste.rs/s/7qwq4g/openwrt_dewclaw_git_second_worst_way\">https://lobste.rs/s/7qwq4g/openwrt_dewclaw_git_second_worst_way</a></p>",
+        "id": 407730514,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702475397
+    },
+    {
+        "content": "<h2>NixOS-DNS: Manage your dns zones with NixOS</h2>\n<p>Date: Wed, 13 Dec 2023 07:41:01 -0600<br>\nLink: <a href=\"https://github.com/Janik-Haag/nixos-dns/\">https://github.com/Janik-Haag/nixos-dns/</a><br>\nComments: <a href=\"https://lobste.rs/s/q29msm/nixos_dns_manage_your_dns_zones_with_nixos\">https://lobste.rs/s/q29msm/nixos_dns_manage_your_dns_zones_with_nixos</a></p>",
+        "id": 407730519,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702475398
+    },
+    {
+        "content": "<h2>What I Like About Nix</h2>\n<p>Date: Wed, 13 Dec 2023 07:55:03 -0600<br>\nLink: <a href=\"https://davi.sh/blog/2023/12/what-i-like-about-nix/\">https://davi.sh/blog/2023/12/what-i-like-about-nix/</a><br>\nComments: <a href=\"https://lobste.rs/s/k53l1s/what_i_like_about_nix\">https://lobste.rs/s/k53l1s/what_i_like_about_nix</a></p>",
+        "id": 407734333,
+        "sender_full_name": "Zapier",
+        "timestamp": 1702476417
+    },
+    {
+        "content": "<h2>Some notes on NixOS</h2>\n<p>January 01, 2024 at 09:09AM</p>\n<p><a href=\"https://jvns.ca/blog/2024/01/01/some-notes-on-nixos/\">https://jvns.ca/blog/2024/01/01/some-notes-on-nixos/</a></p>",
+        "id": 410739598,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704129030
+    },
+    {
+        "content": "<h2>Comrak on Akkoma</h2>\n<p>January 01, 2024 at 08:52PM</p>\n<p><a href=\"https://lottia.net/notes/0006-comrak-on-akkoma.html\">https://lottia.net/notes/0006-comrak-on-akkoma.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/qhcjmk/comrak_on_akkoma&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 410794654,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704171349
+    },
+    {
+        "content": "<h2>Flakes aren't real and cannot hurt you: a guide to using Nix flakes the non-flake way</h2>\n<p>January 02, 2024 at 05:58AM</p>\n<p><a href=\"https://jade.fyi/blog/flakes-arent-real/\">https://jade.fyi/blog/flakes-arent-real/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/exlaeq/flakes_aren_t_real_cannot_hurt_you_guide&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 410849638,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704204054
+    },
+    {
+        "content": "<h2>The Nix Thesis</h2>\n<p>January 02, 2024 at 09:25AM</p>\n<p><a href=\"https://jonathanlorimer.dev/posts/nix-thesis.html\">https://jonathanlorimer.dev/posts/nix-thesis.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/kgvnxd/nix_thesis&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 410880127,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704216678
+    },
+    {
+        "content": "<h2>Elixir Dev Environment With Nix Flakes</h2>\n<p>January 02, 2024 at 09:28PM</p>\n<p><a href=\"https://www.mathiaspolligkeit.com/elixir-dev-environment-with-nix-flakes/\">https://www.mathiaspolligkeit.com/elixir-dev-environment-with-nix-flakes/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/4loezq/elixir_dev_environment_with_nix_flakes&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 410959389,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704259826
+    },
+    {
+        "content": "<h2>I'm speaking at NixCon North America 2024! - Xe Iaso</h2>\n<p>January 04, 2024 at 02:32PM</p>\n<p><a href=\"https://xeiaso.net//blog/2024/nixcon-na/\">https://xeiaso.net//blog/2024/nixcon-na/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/wqeu4r/i_m_speaking_at_nixcon_north_america_2024&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 411272297,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704407735
+    },
+    {
+        "content": "<h2>Typing \"nix-env -i\" should not try to install every single package [2014]</h2>\n<p>January 05, 2024 at 01:38AM</p>\n<p><a href=\"https://github.com/NixOS/nix/issues/308\">https://github.com/NixOS/nix/issues/308</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/hekyng/typing_nix_env_i_should_not_try_install&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 411335954,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704447637
+    },
+    {
+        "content": "<h2>Nix Evaluation Performance &amp; Thunks</h2>\n<p>January 11, 2024 at 10:24AM</p>\n<p><a href=\"https://nixos.wiki/wiki/Nix_Evaluation_Performance\">https://nixos.wiki/wiki/Nix_Evaluation_Performance</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/5y768y/nix_evaluation_performance_thunks&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 412399058,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1704997848
+    },
+    {
+        "content": "<h2>Cachix: v1.7</h2>\n<p>January 12, 2024 at 05:32AM</p>\n<p><a href=\"https://blog.cachix.org/posts/2024-01-12-cachix-v1-7/\">https://blog.cachix.org/posts/2024-01-12-cachix-v1-7/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/otv02n/cachix_v1_7&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 412545832,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705066543
+    },
+    {
+        "content": "<h2>Using the Nix post-build-hook</h2>\n<p>January 15, 2024 at 01:43AM</p>\n<p><a href=\"https://nixos.org/manual/nix/stable/advanced-topics/post-build-hook\">https://nixos.org/manual/nix/stable/advanced-topics/post-build-hook</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/pphmcp/using_nix_post_build_hook&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 412919355,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705311950
+    },
+    {
+        "content": "<h2>Setting up Nix on macOS</h2>\n<p>January 15, 2024 at 11:09AM</p>\n<p><a href=\"https://nixcademy.com/2024/01/15/nix-on-macos/\">https://nixcademy.com/2024/01/15/nix-on-macos/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/wv6hs3/setting_up_nix_on_macos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 413016172,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705345847
+    },
+    {
+        "content": "<h2>First steps with Nix</h2>\n<p>January 19, 2024 at 01:06AM</p>\n<p><a href=\"https://nixos.asia/en/nix-first\">https://nixos.asia/en/nix-first</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/jgezbz/first_steps_with_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 416736656,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1705655743
+    },
+    {
+        "content": "<h2>The History of Nix at Bellroy</h2>\n<p>January 24, 2024 at 02:54PM</p>\n<p><a href=\"https://exploring-better-ways.bellroy.com/the-history-of-nix-at-bellroy.html\">https://exploring-better-ways.bellroy.com/the-history-of-nix-at-bellroy.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/wmhctu/history_nix_at_bellroy&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 417978504,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706137234
+    },
+    {
+        "content": "<h2>Nix from the bottom up</h2>\n<p>January 25, 2024 at 03:56AM</p>\n<p><a href=\"http://www.chriswarbo.net/projects/nixos/bottom_up.html\">http://www.chriswarbo.net/projects/nixos/bottom_up.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/spdccn/nix_from_bottom_up&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 418064583,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706184053
+    },
+    {
+        "content": "<h2>Project IDX</h2>\n<p>January 26, 2024 at 06:13AM</p>\n<p><a href=\"https://idx.dev/\">https://idx.dev/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>      &lt;p&gt;Here’s where it uses Nix, for the curious: &lt;a href=&quot;https://developers.google.com/idx/guides/customize-idx-env&quot; rel=&quot;ugc&quot;&gt;https://developers.google.com/idx/guides/customize-idx-env&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>\n\n<p>&lt;p&gt;Just went Public Access.&lt;/p&gt;</p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/xpsh0y/project_idx&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 418283953,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706278537
+    },
+    {
+        "content": "<h2>Enhancing trust for SGX enclaves</h2>\n<p>January 29, 2024 at 09:00AM</p>\n<p><a href=\"https://blog.trailofbits.com/2024/01/26/enhancing-trust-for-sgx-enclaves/\">https://blog.trailofbits.com/2024/01/26/enhancing-trust-for-sgx-enclaves/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/qkuc4t/enhancing_trust_for_sgx_enclaves&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 418682035,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706547954
+    },
+    {
+        "content": "<h2>How to Learn Nix, Part 49: nix-direnv is a huge quality of life improvement</h2>\n<p>January 30, 2024 at 03:31PM</p>\n<p><a href=\"https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/\">https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/wmr4x0/how_learn_nix_part_49_nix_direnv_is_huge&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 418940562,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706658025
+    },
+    {
+        "content": "<h2>Separation of Concerns in Cross-Compilation</h2>\n<p>January 31, 2024 at 01:10AM</p>\n<p><a href=\"https://nixcademy.com/2024/01/30/cross-compilation-with-nix/\">https://nixcademy.com/2024/01/30/cross-compilation-with-nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/kh6mxo/separation_concerns_cross_compilation&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 418995625,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1706692524
+    },
+    {
+        "content": "<h2>Overview of Nix Formatters Ecosystem</h2>\n<p>February 05, 2024 at 01:30AM</p>\n<p><a href=\"https://drakerossman.com/blog/overview-of-nix-formatters-ecosystem\">https://drakerossman.com/blog/overview-of-nix-formatters-ecosystem</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/sri4bn/overview_nix_formatters_ecosystem&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 419797002,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707125713
+    },
+    {
+        "content": "<h2>Build and Deploy Linux Systems from macOS</h2>\n<p>February 12, 2024 at 11:29PM</p>\n<p><a href=\"https://nixcademy.com/2024/02/12/macos-linux-builder/\">https://nixcademy.com/2024/02/12/macos-linux-builder/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/meyrl2/build_deploy_linux_systems_from_macos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 421188733,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707809443
+    },
+    {
+        "content": "<h2>Integration testing with NixOS in Github Actions</h2>\n<p>February 13, 2024 at 12:26PM</p>\n<p><a href=\"https://jnsgr.uk/2024/02/nixos-vms-in-github-actions/\">https://jnsgr.uk/2024/02/nixos-vms-in-github-actions/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/xwekng/integration_testing_with_nixos_github&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 421320606,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1707856249
+    },
+    {
+        "content": "<h2>Tvix Status - February '24</h2>\n<p>February 15, 2024 at 12:03PM</p>\n<p><a href=\"https://tvl.fyi/blog/tvix-update-february-24\">https://tvl.fyi/blog/tvix-update-february-24</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/lnf8op/tvix_status_february_24&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 421731811,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708027571
+    },
+    {
+        "content": "<h2>Dependency solving in Nix</h2>\n<p>February 15, 2024 at 04:24PM</p>\n<p><a href=\"http://www.chriswarbo.net/projects/nixos/nix_dependencies.html\">http://www.chriswarbo.net/projects/nixos/nix_dependencies.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/3blthf/dependency_solving_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 421765895,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708043435
+    },
+    {
+        "content": "<h2>guix on the framework 13 amd</h2>\n<p>February 16, 2024 at 08:02AM</p>\n<p><a href=\"https://wingolog.org/archives/2024/02/16/guix-on-the-framework-13-amd\">https://wingolog.org/archives/2024/02/16/guix-on-the-framework-13-amd</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/mb6xlm/guix_on_framework_13_amd&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 421890618,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708099605
+    },
+    {
+        "content": "<h2>Packaging Scrutiny for NixOS</h2>\n<p>February 16, 2024 at 09:06AM</p>\n<p><a href=\"https://jnsgr.uk/2024/02/packaging-scrutiny-for-nixos/\">https://jnsgr.uk/2024/02/packaging-scrutiny-for-nixos/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/oumrhu/packaging_scrutiny_for_nixos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 421903562,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708103725
+    },
+    {
+        "content": "<h2>Managing dotfiles on macOS with Nix</h2>\n<p>February 18, 2024 at 05:55AM</p>\n<p><a href=\"https://davi.sh/blog/2024/02/nix-home-manager/\">https://davi.sh/blog/2024/02/nix-home-manager/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/usq8dk/managing_dotfiles_on_macos_with_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 422099473,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708264538
+    },
+    {
+        "content": "<h2>evil-nix: a Nix library to download files from the internet without requiring a hash</h2>\n<p>February 20, 2024 at 07:33AM</p>\n<p><a href=\"https://github.com/cdepillabout/evil-nix\">https://github.com/cdepillabout/evil-nix</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ghaphp/evil_nix_nix_library_download_files_from&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 422443867,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708443374
+    },
+    {
+        "content": "<h2>Contributing Scrutiny to nixpkgs</h2>\n<p>February 24, 2024 at 12:39AM</p>\n<p><a href=\"https://jnsgr.uk/2024/02/contributing-scrutiny-to-nixpkgs/\">https://jnsgr.uk/2024/02/contributing-scrutiny-to-nixpkgs/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/qhxh4b/contributing_scrutiny_nixpkgs&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 423150714,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708764340
+    },
+    {
+        "content": "<h2>How I use Nix on macOS</h2>\n<p>February 26, 2024 at 08:42AM</p>\n<p><a href=\"https://blog.6nok.org/how-i-use-nix-on-macos/\">https://blog.6nok.org/how-i-use-nix-on-macos/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/jliiye/how_i_use_nix_on_macos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 423438706,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1708965960
+    },
+    {
+        "content": "<h2>Explainix: Explain Nix syntax visually</h2>\n<p>February 27, 2024 at 03:23AM</p>\n<p><a href=\"https://zaynetro.com/explainix\">https://zaynetro.com/explainix</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/cvqvff/explainix_explain_nix_syntax_visually&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 423586932,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709033441
+    },
+    {
+        "content": "<h2>Test Your Apps and Services with GitHub Actions Quickly and for Free</h2>\n<p>March 01, 2024 at 04:35AM</p>\n<p><a href=\"https://nixcademy.com/2024/03/01/nixos-integration-test-on-github/\">https://nixcademy.com/2024/03/01/nixos-integration-test-on-github/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/qmmdve/test_your_apps_services_with_github&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424226596,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709296878
+    },
+    {
+        "content": "<h2>Saved by NixOS Integration Tests, Surprisingly</h2>\n<p>March 01, 2024 at 07:43PM</p>\n<p><a href=\"https://boinkor.net/2024/02/saved-by-nixos-integration-tests-surprisingly/\">https://boinkor.net/2024/02/saved-by-nixos-integration-tests-surprisingly/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/by7kxq/saved_by_nixos_integration_tests&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424360526,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709351126
+    },
+    {
+        "content": "<h2>Pyproject.nix - Nix tooling for Python project metadata</h2>\n<p>March 03, 2024 at 02:19AM</p>\n<p><a href=\"https://nix-community.github.io/pyproject.nix/\">https://nix-community.github.io/pyproject.nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/fcvtpi/pyproject_nix_nix_tooling_for_python&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424495223,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709461236
+    },
+    {
+        "content": "<h2>rpypkgs: A Nix flake for RPython interpreters</h2>\n<p>March 03, 2024 at 12:34PM</p>\n<p><a href=\"https://osdn.net/users/corbin/pf/rpypkgs/wiki/FrontPage\">https://osdn.net/users/corbin/pf/rpypkgs/wiki/FrontPage</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ffhqcr/rpypkgs_nix_flake_for_rpython&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424541241,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709498109
+    },
+    {
+        "content": "<h2>HTMNIX: HTML for Nix to rule them all</h2>\n<p>March 04, 2024 at 04:09AM</p>\n<p><a href=\"https://github.com/RGBCube/HTMNIX\">https://github.com/RGBCube/HTMNIX</a></p>\n<div class=\"codehilite\"><pre><span></span><code>      &lt;p&gt;Here is the blog post that explains how it works: &lt;a href=&quot;https://rgbcu.be/blog/htmnix&quot; rel=&quot;ugc&quot;&gt;https://rgbcu.be/blog/htmnix&lt;/a&gt; :-)&lt;/p&gt;\n</code></pre></div>\n\n<p>&lt;p&gt;I would also love some feedback on my writing style!&lt;/p&gt;</p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/isblfq/htmnix_html_for_nix_rule_them_all&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424640250,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709554535
+    },
+    {
+        "content": "<h2>Anatomy of a NixOS Config</h2>\n<p>March 04, 2024 at 04:51AM</p>\n<p><a href=\"https://unmovedcentre.com/technology/2024/02/24/anatomy-of-a-nixos-config.html\">https://unmovedcentre.com/technology/2024/02/24/anatomy-of-a-nixos-config.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/tag7u5/anatomy_nixos_config&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424647393,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709556955
+    },
+    {
+        "content": "<h2>nixbsd: An unofficial NixOS fork with a FreeBSD kernel</h2>\n<p>March 04, 2024 at 11:14PM</p>\n<p><a href=\"https://github.com/nixos-bsd/nixbsd\">https://github.com/nixos-bsd/nixbsd</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/lrdkd5/nixbsd_unofficial_nixos_fork_with&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424808574,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709623031
+    },
+    {
+        "content": "<h2>A homelab dashboard for NixOS</h2>\n<p>March 05, 2024 at 12:25PM</p>\n<p><a href=\"https://jnsgr.uk/2024/03/a-homelab-dashboard-for-nixos/\">https://jnsgr.uk/2024/03/a-homelab-dashboard-for-nixos/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/bi5koy/homelab_dashboard_for_nixos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424952035,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709670650
+    },
+    {
+        "content": "<h2>Bazel remote execution with rules_nixpkgs</h2>\n<p>March 05, 2024 at 12:35PM</p>\n<p><a href=\"https://www.tweag.io/blog/2024-02-29-remote-execution-rules-nixpkgs/\">https://www.tweag.io/blog/2024-02-29-remote-execution-rules-nixpkgs/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/joycvk/bazel_remote_execution_with_rules&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 424953303,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709671235
+    },
+    {
+        "content": "<h2>nh: Yet another nix cli helper</h2>\n<p>March 05, 2024 at 11:42PM</p>\n<p><a href=\"https://github.com/viperML/nh\">https://github.com/viperML/nh</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/5mo3g7/nh_yet_another_nix_cli_helper&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 425023869,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709711149
+    },
+    {
+        "content": "<h2>Run NixOS Integration Tests on macOS</h2>\n<p>March 08, 2024 at 03:57AM</p>\n<p><a href=\"https://nixcademy.com/2024/03/08/running-nixos-integration-tests-on-macos/\">https://nixcademy.com/2024/03/08/running-nixos-integration-tests-on-macos/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/wwwbgc/run_nixos_integration_tests_on_macos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 425504380,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1709899258
+    },
+    {
+        "content": "<h2>Kākāpō - A web bundler for Nix strings with context</h2>\n<p>March 10, 2024 at 05:56AM</p>\n<p><a href=\"https://github.com/adisbladis/kakapo\">https://github.com/adisbladis/kakapo</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/xo0x0f/kakapo_web_bundler_for_nix_strings_with&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 425771565,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710075622
+    },
+    {
+        "content": "<h2>How we replaced Vagrant with devenv</h2>\n<p>March 10, 2024 at 09:02PM</p>\n<p><a href=\"https://2li.ch/blog/2024-03-10-how-we-replaced-vagrant-with-devenv\">https://2li.ch/blog/2024-03-10-how-we-replaced-vagrant-with-devenv</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/mdipuc/how_we_replaced_vagrant_with_devenv&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 425833770,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710129918
+    },
+    {
+        "content": "<h2>Identifying software</h2>\n<p>March 12, 2024 at 07:58AM</p>\n<p><a href=\"https://guix.gnu.org/en/blog/2024/identifying-software/\">https://guix.gnu.org/en/blog/2024/identifying-software/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/io0xpg/identifying_software&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 426145740,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710255698
+    },
+    {
+        "content": "<h2>Introducing FlakeHub Cache</h2>\n<p>March 13, 2024 at 07:50AM</p>\n<p><a href=\"https://determinate.systems/posts/flakehub-cache-beta\">https://determinate.systems/posts/flakehub-cache-beta</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/sqnezh/introducing_flakehub_cache&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 426358873,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710341767
+    },
+    {
+        "content": "<h2>Call by hash</h2>\n<p>March 13, 2024 at 05:27PM</p>\n<p><a href=\"https://garnix.io/blog/call-by-hash\">https://garnix.io/blog/call-by-hash</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/aari0g/call_by_hash&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 426448072,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710376228
+    },
+    {
+        "content": "<h2>Today we launched Flox 1.0</h2>\n<p>March 14, 2024 at 11:20AM</p>\n<p><a href=\"https://tinkering.xyz/releasing-flox/\">https://tinkering.xyz/releasing-flox/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/dlpl1r/today_we_launched_flox_1_0&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 426602958,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710440734
+    },
+    {
+        "content": "<h2>Bellroy Technology Team: 2023 in Review</h2>\n<p>March 14, 2024 at 08:41PM</p>\n<p><a href=\"https://exploring-better-ways.bellroy.com/bellroy-technology-team-2023-in-review.html\">https://exploring-better-ways.bellroy.com/bellroy-technology-team-2023-in-review.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/hhfs13/bellroy_technology_team_2023_review&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 426669053,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710474342
+    },
+    {
+        "content": "<h2>Nix is a better Docker image builder than Docker's image builder</h2>\n<p>March 15, 2024 at 07:45PM</p>\n<p><a href=\"https://xeiaso.net/talks/2024/nix-docker-build/\">https://xeiaso.net/talks/2024/nix-docker-build/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/j7c4rw/nix_is_better_docker_image_builder_than&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 426853532,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710557442
+    },
+    {
+        "content": "<h2>Nix is a better Docker image builder than Docker's image builder - Xe Iaso</h2>\n<p>March 17, 2024 at 03:47PM</p>\n<p><a href=\"https://xeiaso.net//talks/2024/nix-docker-build/\">https://xeiaso.net//talks/2024/nix-docker-build/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/phw65v/nix_is_better_docker_image_builder_than&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 427245750,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710715848
+    },
+    {
+        "content": "<h2>devenv 1.0: Rewrite in Rust</h2>\n<p>March 20, 2024 at 06:41AM</p>\n<p><a href=\"https://devenv.sh/blog/2023/03/20/devenv-10-rewrite-in-rust/\">https://devenv.sh/blog/2023/03/20/devenv-10-rewrite-in-rust/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/jdki6m/devenv_1_0_rewrite_rust&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 427931067,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710942320
+    },
+    {
+        "content": "<h2>KalmarCTF: Reproducible Pwning writeup</h2>\n<p>March 20, 2024 at 03:17PM</p>\n<p><a href=\"https://jade.fyi/blog/reproducible-pwning-writeup/\">https://jade.fyi/blog/reproducible-pwning-writeup/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/isscpb/kalmarctf_reproducible_pwning_writeup&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 428024710,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1710973248
+    },
+    {
+        "content": "<h2>Nix The Planet</h2>\n<p>March 22, 2024 at 01:14PM</p>\n<p><a href=\"https://m.youtube.com/watch?v=6iviTZfiLGU\">https://m.youtube.com/watch?v=6iviTZfiLGU</a></p>\n<div class=\"youtube-video message_inline_image\"><a data-id=\"6iviTZfiLGU\" href=\"https://m.youtube.com/watch?v=6iviTZfiLGU\"><img src=\"https://uploads.zulipusercontent.net/dd4be4bf6d3de33cdfd56c485b021d5a8f8fb405/68747470733a2f2f692e7974696d672e636f6d2f76692f36697669545a66694c47552f64656661756c742e6a7067\"></a></div><div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/zwemnj/nix_planet&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 428403875,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711138812
+    },
+    {
+        "content": "<h2>Centerpiece – Your trusty omnibox search</h2>\n<p>March 26, 2024 at 02:23PM</p>\n<p><a href=\"https://github.com/friedow/centerpiece\">https://github.com/friedow/centerpiece</a></p>\n<div class=\"codehilite\"><pre><span></span><code>      &lt;p&gt;Today we are happy to annouce the v1.0.0 release of centerpiece 🎉!&lt;/p&gt;\n</code></pre></div>\n\n<p>&lt;p&gt;What began as a small personal project with the goal to remove all bars in my desktop environment has transformed into a full featured application launcher with a variety of plugins. A special shoutout to @a-kenji who pushed the development along a great deal. This is the first of my personal projects to reach the 1.0 milestone!&lt;/p&gt;<br>\n&lt;p&gt;Now, without further ado, enjoy this release and find us many bugs.<br>\n– @a-kenji &amp; &lt;a href=\"<a href=\"https://lobste.rs/~friedow\">https://lobste.rs/~friedow</a>\" rel=\"ugc\"&gt;@friedow&lt;/a&gt;&lt;/p&gt;</p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/fb5w7u/centerpiece_your_trusty_omnibox_search&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 429742468,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711488313
+    },
+    {
+        "content": "<h2>Switching between code variants using comments</h2>\n<p>April 01, 2024 at 01:27AM</p>\n<p><a href=\"https://linus.schreibt.jetzt/posts/toggle-comments.html\">https://linus.schreibt.jetzt/posts/toggle-comments.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ugvvay/switching_between_code_variants_using&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 430561446,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1711960246
+    },
+    {
+        "content": "<h2>NixOS is not reproducible</h2>\n<p>April 02, 2024 at 10:24AM</p>\n<p><a href=\"https://linderud.dev/blog/nixos-is-not-reproducible/\">https://linderud.dev/blog/nixos-is-not-reproducible/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/jpoy4q/nixos_is_not_reproducible&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 430840033,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712079007
+    },
+    {
+        "content": "<h2>Searching Nixpkgs in Under 30 Milliseconds</h2>\n<p>April 03, 2024 at 07:01AM</p>\n<p><a href=\"https://blog.replit.com/nixpkgs-search\">https://blog.replit.com/nixpkgs-search</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/4dgdkj/searching_nixpkgs_under_30_milliseconds&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 431012069,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712153180
+    },
+    {
+        "content": "<h2>Running Fava on NixOS</h2>\n<p>April 04, 2024 at 02:09PM</p>\n<p><a href=\"https://pta2002.com/blog/fava-on-nixos/\">https://pta2002.com/blog/fava-on-nixos/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/lr31cl/running_fava_on_nixos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 431402848,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712265034
+    },
+    {
+        "content": "<h2>NixOS/nixpkgs: There isn't a clear canonical way to refer to a specific package version [2020]</h2>\n<p>April 09, 2024 at 01:44PM</p>\n<p><a href=\"https://github.com/NixOS/nixpkgs/issues/93327\">https://github.com/NixOS/nixpkgs/issues/93327</a></p>\n<div class=\"codehilite\"><pre><span></span><code>      &lt;p&gt;Ran a channel update on nixOS for the first time to upgrade all my packages. Eclipse broke; this is unsurprising because it broke on Arch too. “No problem!” thinks I, “I am on nixOS, the OS of declarative &amp;amp; repeatable package management! Certainly it must be a simple and routine operation to downgrade a specific package!”&lt;/p&gt;\n\n        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/9fmqmz/nixos_nixpkgs_there_isn_t_clear_canonical&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 432337164,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712695521
+    },
+    {
+        "content": "<h2>Fast, Declarative, Reproduble and Composable Developer Environments using Nix</h2>\n<p>April 12, 2024 at 03:05AM</p>\n<p><a href=\"https://devenv.sh/\">https://devenv.sh/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/8xagju/fast_declarative_reproduble_composable&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 432871926,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1712916360
+    },
+    {
+        "content": "<h2>Minimal Kotlin and Nix flake example (with Gradle 8 support)</h2>\n<p>April 13, 2024 at 04:39AM</p>\n<p><a href=\"https://github.com/owickstrom/minimal-kotlin-nix-example\">https://github.com/owickstrom/minimal-kotlin-nix-example</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ljhoc8/minimal_kotlin_nix_flake_example_with&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 433040393,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713008438
+    },
+    {
+        "content": "<h2>Colima k8s nix setup</h2>\n<p>April 16, 2024 at 11:00AM</p>\n<p><a href=\"https://dev.to/doriancodes/colima-k8s-nix-setup-mpn\">https://dev.to/doriancodes/colima-k8s-nix-setup-mpn</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ixaerf/colima_k8s_nix_setup&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 433579515,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713291044
+    },
+    {
+        "content": "<h2>libnix mingw status</h2>\n<p>April 17, 2024 at 03:04PM</p>\n<p><a href=\"https://lastlog.de/blog/libnix_mingw_status.html\">https://lastlog.de/blog/libnix_mingw_status.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/bhignf/libnix_mingw_status&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 433882691,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713391816
+    },
+    {
+        "content": "<h2>Open letter to the NixOS foundation</h2>\n<p>April 21, 2024 at 11:18AM</p>\n<p><a href=\"https://save-nix-together.org/\">https://save-nix-together.org/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/0qvtim/open_letter_nixos_foundation&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 434608758,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713723617
+    },
+    {
+        "content": "<h2>Secure Boot &amp; TPM-backed Full Disk Encryption on NixOS</h2>\n<p>April 22, 2024 at 06:27AM</p>\n<p><a href=\"https://jnsgr.uk/2024/04/nixos-secure-boot-tpm-fde/\">https://jnsgr.uk/2024/04/nixos-secure-boot-tpm-fde/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ebt4ys/secure_boot_tpm_backed_full_disk&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 434750148,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1713792625
+    },
+    {
+        "content": "<h2>Package management on macOS with nix-darwin</h2>\n<p>April 25, 2024 at 08:51AM</p>\n<p><a href=\"https://davi.sh/blog/2024/01/nix-darwin/\">https://davi.sh/blog/2024/01/nix-darwin/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/m8hd8k/package_management_on_macos_with_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 435419949,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714060504
+    },
+    {
+        "content": "<h2>On community in Nix</h2>\n<p>April 26, 2024 at 10:26AM</p>\n<p><a href=\"https://determinate.systems/posts/on-community-in-nix/\">https://determinate.systems/posts/on-community-in-nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/pntava/on_community_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 435630634,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714152622
+    },
+    {
+        "content": "<h2><a href=\"http://nixpkgs.news\">nixpkgs.news</a></h2>\n<p>April 27, 2024 at 10:00AM</p>\n<p><a href=\"https://nixpkgs.news/\">https://nixpkgs.news/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/sda151/nixpkgs_news&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 435773416,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714237219
+    },
+    {
+        "content": "<h2>What Nix Will Have Been</h2>\n<p>April 27, 2024 at 11:08AM</p>\n<p><a href=\"https://boinkor.net/2024/04/what-nix-will-have-been/\">https://boinkor.net/2024/04/what-nix-will-have-been/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/jrssna/what_nix_will_have_been&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 435779287,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714241411
+    },
+    {
+        "content": "<h2>Nix: The Breaking Point</h2>\n<p>April 29, 2024 at 01:47AM</p>\n<p><a href=\"https://kilo.bytesize.xyz/nix-the-breaking-point\">https://kilo.bytesize.xyz/nix-the-breaking-point</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/3brztz/nix_breaking_point&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 435989628,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714380940
+    },
+    {
+        "content": "<h2><a href=\"http://aux.computer\">aux.computer</a>: an alternative to the Nix ecosystem</h2>\n<p>April 29, 2024 at 12:20PM</p>\n<p><a href=\"https://aux.computer/\">https://aux.computer/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/qnmzre/aux_computer_alternative_nix_ecosystem&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 436122710,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714418771
+    },
+    {
+        "content": "<h2>NixOS Foundation board: Giving power to the community</h2>\n<p>April 30, 2024 at 06:35PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixos-foundation-board-giving-power-to-the-community/44552\">https://discourse.nixos.org/t/nixos-foundation-board-giving-power-to-the-community/44552</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/lfkjat/nixos_foundation_board_giving_power&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 436379613,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714527629
+    },
+    {
+        "content": "<h2>Framework &amp; NixOS Communities Join Forces</h2>\n<p>May 02, 2024 at 05:10AM</p>\n<p><a href=\"https://discourse.nixos.org/t/exciting-partnership-announcement-framework-community-nixos-communities-join-forces/44640?u=asymmetric\">https://discourse.nixos.org/t/exciting-partnership-announcement-framework-community-nixos-communities-join-forces/44640?u=asymmetric</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/iykxwu/framework_nixos_communities_join_forces&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 436679966,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714652154
+    },
+    {
+        "content": "<h2>Lix</h2>\n<p>May 06, 2024 at 01:50AM</p>\n<p><a href=\"https://lix.systems/\">https://lix.systems/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/5vlgf4/lix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 437221074,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714985742
+    },
+    {
+        "content": "<h2>Re-implementing the Nix protocol in Rust</h2>\n<p>May 06, 2024 at 02:47AM</p>\n<p><a href=\"https://www.tweag.io/blog/2024-04-25-nix-protocol-in-rust/\">https://www.tweag.io/blog/2024-04-25-nix-protocol-in-rust/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/4mdzfa/re_implementing_nix_protocol_rust&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 437229561,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1714989008
+    },
+    {
+        "content": "<h2>Broken Promises: The Nix Governance Discussions</h2>\n<p>May 08, 2024 at 01:14PM</p>\n<p><a href=\"https://shealevy.com/blog/2024/05/08/broken-promises-the-nix-governance-discussions/\">https://shealevy.com/blog/2024/05/08/broken-promises-the-nix-governance-discussions/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/zfo0x9/broken_promises_nix_governance&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 437723567,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715199645
+    },
+    {
+        "content": "<h2>It's not about “Flakes vs. Channels”</h2>\n<p>May 08, 2024 at 04:20PM</p>\n<p><a href=\"https://samuel.dionne-riel.com/blog/2024/05/07/its-not-flakes-vs-channels.html\">https://samuel.dionne-riel.com/blog/2024/05/07/its-not-flakes-vs-channels.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/c3hbh6/it_s_not_about_flakes_vs_channels&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 437746197,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715210726
+    },
+    {
+        "content": "<h2>Distributed system daemons with Shepherd and Goblins funded by NLnet</h2>\n<p>May 09, 2024 at 11:02AM</p>\n<p><a href=\"https://spritely.institute/news/spritely-nlnet-grants-december-2023.html\">https://spritely.institute/news/spritely-nlnet-grants-december-2023.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/kfwcxs/distributed_system_daemons_with&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 437862780,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715277961
+    },
+    {
+        "content": "<h2>Nix on Windows</h2>\n<p>May 10, 2024 at 08:36AM</p>\n<p><a href=\"https://lastlog.de/blog/libnix_volth%27s_work.html\">https://lastlog.de/blog/libnix_volth%27s_work.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>      &lt;p&gt;I had to moderate the title, as the fetched one does not reflect the content of the page.&lt;/p&gt;\n\n        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/9ijkgu/nix_on_windows&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 438002884,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715355630
+    },
+    {
+        "content": "<h2>Bye Opam, Hello Nix</h2>\n<p>May 14, 2024 at 12:48AM</p>\n<p><a href=\"https://priver.dev/blog/ocaml/bye-opam-hello-nix/\">https://priver.dev/blog/ocaml/bye-opam-hello-nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/05vks5/bye_opam_hello_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 438519538,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715673055
+    },
+    {
+        "content": "<h2>A Rust + WASM development environment with Nix</h2>\n<p>May 15, 2024 at 06:24AM</p>\n<p><a href=\"https://jordankaye.dev/posts/rust-wasm-nix/\">https://jordankaye.dev/posts/rust-wasm-nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/mgnifo/rust_wasm_development_environment_with&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 438801391,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1715779552
+    },
+    {
+        "content": "<h2>NixOS 24.05 released</h2>\n<p>May 31, 2024 at 12:31PM</p>\n<p><a href=\"https://nixos.org/blog/announcements/2024/nixos-2405/\">https://nixos.org/blog/announcements/2024/nixos-2405/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/vyprdq/nixos_24_05_released&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 441789422,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717184471
+    },
+    {
+        "content": "<h2>Centerpiece now supports Firefox! Whats Next?</h2>\n<p>June 02, 2024 at 08:46AM</p>\n<p><a href=\"https://lobste.rs/s/8ddzid/centerpiece_now_supports_firefox_whats\">https://lobste.rs/s/8ddzid/centerpiece_now_supports_firefox_whats</a></p>\n<div class=\"codehilite\"><pre><span></span><code>      &lt;p&gt;With the release of version v1.1.0 Centerpiece (&lt;a href=&quot;https://github.com/friedow/centerpiece&quot; rel=&quot;ugc&quot;&gt;https://github.com/friedow/centerpiece&lt;/a&gt;) supports searching in your Firefox bookmarks and history.&lt;/p&gt;\n</code></pre></div>\n\n<p>&lt;p&gt;Now, we would like to know which features you need to switch to Centerpiece! Please leave your feature requests in the comments down below :).&lt;/p&gt;</p>",
+        "id": 442066806,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717343410
+    },
+    {
+        "content": "<h2>Announcing Brioche</h2>\n<p>June 03, 2024 at 07:49PM</p>\n<p><a href=\"https://brioche.dev/blog/announcing-brioche/\">https://brioche.dev/blog/announcing-brioche/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/fbgsoc/announcing_brioche&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 442424393,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1717469717
+    },
+    {
+        "content": "<h2>Development Environments with <a href=\"http://devenv.sh\">devenv.sh</a></h2>\n<p>June 13, 2024 at 08:25AM</p>\n<p><a href=\"https://www.youtube.com/watch?v=unW1zk8terk&amp;t=7s\">https://www.youtube.com/watch?v=unW1zk8terk&amp;t=7s</a></p>\n<div class=\"youtube-video message_inline_image\"><a data-id=\"unW1zk8terk\" href=\"https://www.youtube.com/watch?v=unW1zk8terk&amp;t=7s\"><img src=\"https://uploads.zulipusercontent.net/da0796005c3a14642fd1c0bcf27ff32524a30889/68747470733a2f2f692e7974696d672e636f6d2f76692f756e57317a6b387465726b2f64656661756c742e6a7067\"></a></div><div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/q18f4k/development_environments_with_devenv_sh&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 444493965,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718292608
+    },
+    {
+        "content": "<h2>Nix as a WebAssembly build tool</h2>\n<p>June 13, 2024 at 08:31AM</p>\n<p><a href=\"https://determinate.systems/posts/nix-wasm/\">https://determinate.systems/posts/nix-wasm/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/xnsp3d/nix_as_webassembly_build_tool&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 444495401,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718292902
+    },
+    {
+        "content": "<h2>libnix fixPath</h2>\n<p>June 13, 2024 at 12:39PM</p>\n<p><a href=\"https://lastlog.de/blog/libnix_fixPath.html\">https://lastlog.de/blog/libnix_fixPath.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/jtrlcy/libnix_fixpath&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 444548320,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718307913
+    },
+    {
+        "content": "<h2>Optimizing Python Development: Virtualenv Kernels with Nix and Jupyter</h2>\n<p>June 17, 2024 at 06:07AM</p>\n<p><a href=\"https://acalustra.com/optimizing-python-development-virtualenv-kernels-with-nix-and-jupyter.html\">https://acalustra.com/optimizing-python-development-virtualenv-kernels-with-nix-and-jupyter.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/fuhrcz/optimizing_python_development&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 445129264,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718629814
+    },
+    {
+        "content": "<h2>Securing our software supply-chain better with reproducible builds for enclaves</h2>\n<p>June 20, 2024 at 07:36AM</p>\n<p><a href=\"https://monzo.com/blog/securing-our-software-supply-chain-better-with-reproducible-builds-for\">https://monzo.com/blog/securing-our-software-supply-chain-better-with-reproducible-builds-for</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/clhvj1/securing_our_software_supply_chain&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 445867564,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718894403
+    },
+    {
+        "content": "<h2>Nickel modules</h2>\n<p>June 21, 2024 at 02:59AM</p>\n<p><a href=\"https://www.tweag.io/blog/2024-06-20-nickel-modules/\">https://www.tweag.io/blog/2024-06-20-nickel-modules/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/dfy9kq/nickel_modules&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 446049010,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1718964062
+    },
+    {
+        "content": "<h2>Simple text Editor for X</h2>\n<p>June 22, 2024 at 01:05PM</p>\n<p><a href=\"https://chronicles.mad-scientist.club/sex/\">https://chronicles.mad-scientist.club/sex/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/j9jtyq/simple_text_editor_for_x&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 446318099,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719087044
+    },
+    {
+        "content": "<h2>The Proxmox Hypervisor, on NixOS</h2>\n<p>June 24, 2024 at 04:29AM</p>\n<p><a href=\"https://github.com/SaumonNet/proxmox-nixos\">https://github.com/SaumonNet/proxmox-nixos</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/hp0llm/proxmox_hypervisor_on_nixos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 446590487,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719228658
+    },
+    {
+        "content": "<h2>Running DBT in Github using Nix</h2>\n<p>June 26, 2024 at 06:14AM</p>\n<p><a href=\"https://github.com/CedricLeong/dbt-action-nix\">https://github.com/CedricLeong/dbt-action-nix</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/pdxgyb/running_dbt_github_using_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 447218053,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719408036
+    },
+    {
+        "content": "<h2>Adding parallel evaluation to Nix, by Eelco Dolstra</h2>\n<p>June 27, 2024 at 08:19AM</p>\n<p><a href=\"https://determinate.systems/posts/parallel-nix-eval\">https://determinate.systems/posts/parallel-nix-eval</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/yh1qls/adding_parallel_evaluation_nix_by_eelco&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 447506483,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1719501651
+    },
+    {
+        "content": "<h2>Practical Nix flake anatomy: a guided tour of flake.nix</h2>\n<p>July 05, 2024 at 10:47PM</p>\n<p><a href=\"https://vtimofeenko.com/posts/practical-nix-flake-anatomy-a-guided-tour-of-flake.nix/\">https://vtimofeenko.com/posts/practical-nix-flake-anatomy-a-guided-tour-of-flake.nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ugdatz/practical_nix_flake_anatomy_guided_tour&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 449442046,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1720245023
+    },
+    {
+        "content": "<h2>Learn Flakes the Fun Way</h2>\n<p>July 09, 2024 at 10:00AM</p>\n<p><a href=\"https://lyte.dev/blog/learn-flakes-the-fun-way/\">https://lyte.dev/blog/learn-flakes-the-fun-way/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/uvnjqj/learn_flakes_fun_way&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 450230387,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1720544755
+    },
+    {
+        "content": "<h2>Announcing Lix 2.90 \"Vanilla Ice Cream\"</h2>\n<p>July 10, 2024 at 06:20PM</p>\n<p><a href=\"https://lix.systems/blog/2024-07-10-lix-2.90-release/\">https://lix.systems/blog/2024-07-10-lix-2.90-release/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/1hrh4a/announcing_lix_2_90_vanilla_ice_cream&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 450604475,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1720661145
+    },
+    {
+        "content": "<h2>Nix on MacOS - The Good, the Bad and the Ugly</h2>\n<p>July 11, 2024 at 03:46AM</p>\n<p><a href=\"https://drakerossman.com/blog/nix-on-macos-the-good-the-bad-and-the-ugly\">https://drakerossman.com/blog/nix-on-macos-the-good-the-bad-and-the-ugly</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/eojt4t/nix_on_macos_good_bad_ugly&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 450677081,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1720695047
+    },
+    {
+        "content": "<h2>Using Nix as a Yocto Alternative</h2>\n<p>July 11, 2024 at 09:38AM</p>\n<p><a href=\"https://www.kdab.com/using-nix-as-a-yocto-alternative/\">https://www.kdab.com/using-nix-as-a-yocto-alternative/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/yzi2q2/using_nix_as_yocto_alternative&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 450757702,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1720716053
+    },
+    {
+        "content": "<h2>At the Mountains of Madness</h2>\n<p>July 12, 2024 at 07:46AM</p>\n<p><a href=\"https://antithesis.com/blog/madness/\">https://antithesis.com/blog/madness/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/xkfl2i/at_mountains_madness&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 450998857,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1720795834
+    },
+    {
+        "content": "<h2>vyxos: My laptop and server Nix configuration</h2>\n<p>July 19, 2024 at 04:22AM</p>\n<p><a href=\"https://github.com/kivikakk/vyxos\">https://github.com/kivikakk/vyxos</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/u9ugid/vyxos_my_laptop_server_nix_configuration&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 452550599,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1721388318
+    },
+    {
+        "content": "<h2>Nix Camp 2024 is On</h2>\n<p>July 22, 2024 at 06:22AM</p>\n<p><a href=\"https://nix.camp/\">https://nix.camp/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>      &lt;p&gt;Bring your friends :)&lt;/p&gt;\n\n        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/uqqtiy/nix_camp_2024_is_on&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 453175567,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1721654753
+    },
+    {
+        "content": "<h2>Writing NixOS tests for fun and profit</h2>\n<p>July 25, 2024 at 06:46PM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/writing-nixos-tests-for-fun-and-profit/\">https://kokada.capivaras.dev/blog/writing-nixos-tests-for-fun-and-profit/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/yqjmul/writing_nixos_tests_for_fun_profit&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 454142918,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1721958623
+    },
+    {
+        "content": "<h2>Quick bits: nix-shell is cursed</h2>\n<p>July 27, 2024 at 10:45AM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/quick-bits-nix-shell-is-cursed/\">https://kokada.capivaras.dev/blog/quick-bits-nix-shell-is-cursed/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/gkcgza/quick_bits_nix_shell_is_cursed&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 454503557,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722102647
+    },
+    {
+        "content": "<h2>Hashbang hacking for fun and, maybe in the future, profit</h2>\n<p>July 27, 2024 at 11:29AM</p>\n<p><a href=\"https://lucasew.capivaras.dev/blog/hashbang-hacking-for-fun-and-maybe-in-the-future-profit/\">https://lucasew.capivaras.dev/blog/hashbang-hacking-for-fun-and-maybe-in-the-future-profit/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/pdutgi/hashbang_hacking_for_fun_maybe_future&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 454511400,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722105331
+    },
+    {
+        "content": "<h2>NixOS Option Inspection</h2>\n<p>July 29, 2024 at 11:53PM</p>\n<p><a href=\"https://fzakaria.com/2024/07/28/nixos-option-inspection.html\">https://fzakaria.com/2024/07/28/nixos-option-inspection.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/zgrtbd/nixos_option_inspection&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 455043593,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722322514
+    },
+    {
+        "content": "<h2>Generating YAML files with Nix</h2>\n<p>July 31, 2024 at 05:12AM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/generating-yaml-files-with-nix/\">https://kokada.capivaras.dev/blog/generating-yaml-files-with-nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/yt1dsb/generating_yaml_files_with_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 455362486,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722428143
+    },
+    {
+        "content": "<h2>Nix Community Survey 2024</h2>\n<p>July 31, 2024 at 05:23AM</p>\n<p><a href=\"https://survey.nixos.org/2024\">https://survey.nixos.org/2024</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/uj7y4n/nix_community_survey_2024&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 455364867,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722429021
+    },
+    {
+        "content": "<h2>Mastering Nixpkgs Overlays: Techniques and Best Practice</h2>\n<p>August 01, 2024 at 06:03AM</p>\n<p><a href=\"https://nixcademy.com/posts/mastering-nixpkgs-overlays-techniques-and-best-practice/\">https://nixcademy.com/posts/mastering-nixpkgs-overlays-techniques-and-best-practice/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/miquoc/mastering_nixpkgs_overlays_techniques&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 455642900,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722517522
+    },
+    {
+        "content": "<h2>Troubleshoting: ZSH lag and solutions with Nix</h2>\n<p>August 01, 2024 at 09:08AM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/troubleshoting-zsh-lag-and-solutions-with-nix/\">https://kokada.capivaras.dev/blog/troubleshoting-zsh-lag-and-solutions-with-nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/nkbkvl/troubleshoting_zsh_lag_solutions_with&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 455692049,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722528680
+    },
+    {
+        "content": "<h2>Quick bits: realise Nix symlinks</h2>\n<p>August 01, 2024 at 03:32PM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/quick-bits-realise-nix-symlinks/\">https://kokada.capivaras.dev/blog/quick-bits-realise-nix-symlinks/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ahmi0i/quick_bits_realise_nix_symlinks&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 455768056,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722551737
+    },
+    {
+        "content": "<h2>My favorite device is a Chromebook</h2>\n<p>August 05, 2024 at 02:45PM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/my-favorite-device-is-a-chromebook/\">https://kokada.capivaras.dev/blog/my-favorite-device-is-a-chromebook/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/alojvh/my_favorite_device_is_chromebook&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 456714156,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1722894633
+    },
+    {
+        "content": "<h2>TVL's blog: Tvix Status - August '24</h2>\n<p>August 09, 2024 at 10:18AM</p>\n<p><a href=\"https://tvl.fyi/blog/tvix-update-august-24\">https://tvl.fyi/blog/tvix-update-august-24</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/2o4rwd/tvl_s_blog_tvix_status_august_24&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 459529924,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1723224052
+    },
+    {
+        "content": "<h2>Building static binaries in Nix</h2>\n<p>August 11, 2024 at 12:35PM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/building-static-binaries-in-nix/\">https://kokada.capivaras.dev/blog/building-static-binaries-in-nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/snjs8q/building_static_binaries_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 459934652,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1723405250
+    },
+    {
+        "content": "<h2>A Flexible Minimalist Neovim for 2024</h2>\n<p>August 12, 2024 at 08:18AM</p>\n<p><a href=\"https://wickstrom.tech/2024-08-12-a-flexible-minimalist-neovim.html\">https://wickstrom.tech/2024-08-12-a-flexible-minimalist-neovim.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/nbtc9i/flexible_minimalist_neovim_for_2024&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 460104693,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1723476317
+    },
+    {
+        "content": "<h2>Announcing Lix 2.91 \"Dragon's Breath\"</h2>\n<p>August 12, 2024 at 06:52PM</p>\n<p><a href=\"https://lix.systems/blog/2024-08-12-lix-2.91-release/\">https://lix.systems/blog/2024-08-12-lix-2.91-release/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/pqgy8b/announcing_lix_2_91_dragon_s_breath&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 461994837,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1723514126
+    },
+    {
+        "content": "<h2>Libations: Tailscale on the Rocks</h2>\n<p>August 21, 2024 at 06:04AM</p>\n<p><a href=\"https://jnsgr.uk/2024/08/tailscale-on-the-rocks/\">https://jnsgr.uk/2024/08/tailscale-on-the-rocks/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/yitsls/libations_tailscale_on_rocks&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 464052886,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724245853
+    },
+    {
+        "content": "<h2>An unordered list of hidden gems inside NixOS</h2>\n<p>August 21, 2024 at 11:21AM</p>\n<p><a href=\"https://kokada.capivaras.dev/blog/an-unordered-list-of-hidden-gems-inside-nixos/\">https://kokada.capivaras.dev/blog/an-unordered-list-of-hidden-gems-inside-nixos/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ymmale/unordered_list_hidden_gems_inside_nixos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 464132641,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724264730
+    },
+    {
+        "content": "<h2>Hands-on NixOS servers</h2>\n<p>August 22, 2024 at 11:03AM</p>\n<p><a href=\"https://garnix.io/blog/hosting-nixos\">https://garnix.io/blog/hosting-nixos</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/frgtzy/hands_on_nixos_servers&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 464447498,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724349947
+    },
+    {
+        "content": "<h2>vpsAdminOS</h2>\n<p>August 23, 2024 at 12:22AM</p>\n<p><a href=\"https://vpsadminos.org/\">https://vpsadminos.org/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ldc0bw/vpsadminos&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 464570083,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724397931
+    },
+    {
+        "content": "<h2>Poor man's Package Manager (only Statically Linked Binaries)</h2>\n<p>August 23, 2024 at 05:57AM</p>\n<p><a href=\"https://github.com/xplshn/dbin\">https://github.com/xplshn/dbin</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/iqxjee/poor_man_s_package_manager_only&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 464645467,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724418117
+    },
+    {
+        "content": "<h2>Function Types in Nix</h2>\n<p>August 27, 2024 at 10:49AM</p>\n<p><a href=\"https://garnix.io/blog/typed-function-types\">https://garnix.io/blog/typed-function-types</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/bfsatm/function_types_nix&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 465518580,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724781055
+    },
+    {
+        "content": "<h2>Immutable Systems: NixOS + systemd-repart + systemd-sysupdate</h2>\n<p>August 29, 2024 at 01:45AM</p>\n<p><a href=\"https://x86.lol/generic/2024/08/28/systemd-sysupdate.html\">https://x86.lol/generic/2024/08/28/systemd-sysupdate.html</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/qhafyy/immutable_systems_nixos_systemd_repart&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 465948316,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724921451
+    },
+    {
+        "content": "<h2>Getting Started with Nix for Haskell</h2>\n<p>August 29, 2024 at 08:11AM</p>\n<p><a href=\"https://abhinavsarkar.net/posts/nix-for-haskell/\">https://abhinavsarkar.net/posts/nix-for-haskell/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/7puewz/getting_started_with_nix_for_haskell&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 466044662,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1724944539
+    },
+    {
+        "content": "<h2>Interactive NixOS tests</h2>\n<p>September 04, 2024 at 12:32AM</p>\n<p><a href=\"https://paperless.blog/interactive-nixos-tests\">https://paperless.blog/interactive-nixos-tests</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/qr5v7q/interactive_nixos_tests&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 467440936,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1725435326
+    },
+    {
+        "content": "<h2>Nix 2.24+ is vulnerable to (remote) privilege escalation</h2>\n<p>September 09, 2024 at 01:03PM</p>\n<p><a href=\"https://puckipedia.com/7hkj-98sq/qixt\">https://puckipedia.com/7hkj-98sq/qixt</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/ixb3v7/nix_2_24_is_vulnerable_remote_privilege&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 468905886,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1725912388
+    },
+    {
+        "content": "<h2>Adding algebraic data types to Nickel</h2>\n<p>September 09, 2024 at 01:09PM</p>\n<p><a href=\"https://tweag.io/blog/2024-09-05-algebraic-data-types-nickel/\">https://tweag.io/blog/2024-09-05-algebraic-data-types-nickel/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/gsi9zk/adding_algebraic_data_types_nickel&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 468906675,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1725912645
+    },
+    {
+        "content": "<h2>Bending Zed to render my beautiful fonts with Nix</h2>\n<p>September 09, 2024 at 03:11PM</p>\n<p><a href=\"https://nazrin.limited/phame/live/1/post/1/bending_zed_to_render_my_beautiful_fonts_with_nix/\">https://nazrin.limited/phame/live/1/post/1/bending_zed_to_render_my_beautiful_fonts_with_nix/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/4ar6eu/bending_zed_render_my_beautiful_fonts&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 468927597,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1725920160
+    },
+    {
+        "content": "<h2>devenv 1.1: Nested Nix outputs using the module system</h2>\n<p>September 11, 2024 at 03:38AM</p>\n<p><a href=\"https://devenv.sh/blog/2024/09/11/devenv-11-nested-nix-outputs-using-the-module-system/\">https://devenv.sh/blog/2024/09/11/devenv-11-nested-nix-outputs-using-the-module-system/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/nvx2xb/devenv_1_1_nested_nix_outputs_using_module&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 469359403,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1726051250
+    },
+    {
+        "content": "<h2>NixOS server up in minutes</h2>\n<p>September 16, 2024 at 11:12AM</p>\n<p><a href=\"https://gvolpe.com/blog/nixos-server/\">https://gvolpe.com/blog/nixos-server/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/txrmqm/nixos_server_up_minutes&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 470702198,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1726510896
+    },
+    {
+        "content": "<h2>Nix Steering Committee Election 2024</h2>\n<p>September 16, 2024 at 11:27AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nix-steering-committee-election-2024/52232\">https://discourse.nixos.org/t/nix-steering-committee-election-2024/52232</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/j73ada/nix_steering_committee_election_2024&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 470704393,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1726511482
+    },
+    {
+        "content": "<h2>zb: An Early-Stage Build System</h2>\n<p>September 19, 2024 at 10:24PM</p>\n<p><a href=\"https://www.zombiezen.com/blog/2024/09/zb-early-stage-build-system/\">https://www.zombiezen.com/blog/2024/09/zb-early-stage-build-system/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>        &lt;p&gt;&lt;a href=&quot;https://lobste.rs/s/lnfmcn/zb_early_stage_build_system&quot;&gt;Comments&lt;/a&gt;&lt;/p&gt;\n</code></pre></div>",
+        "id": 471620723,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1726809924
+    },
+    {
+        "content": "<h2>devenv 1.2: Tasks for convergent configuration with Nix</h2>\n<p>September 24, 2024 at 06:11AM</p>\n<p><a href=\"https://devenv.sh/blog/2024/09/24/devenv-12-tasks-for-convergent-configuration-with-nix/\">https://devenv.sh/blog/2024/09/24/devenv-12-tasks-for-convergent-configuration-with-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/j0kz8g/devenv_1_2_tasks_for_convergent\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 472492212,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1727183740
+    },
+    {
+        "content": "<h2>Reproducible Data Science Environments with Nix</h2>\n<p>September 26, 2024 at 01:53AM</p>\n<p><a href=\"https://cran.r-project.org/web/packages/rix/index.html\">https://cran.r-project.org/web/packages/rix/index.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/r1vvqf/reproducible_data_science_environments\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 472846905,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1727340945
+    },
+    {
+        "content": "<h2>NixOS is a good server OS, except when it isn't</h2>\n<p>October 01, 2024 at 11:39PM</p>\n<p><a href=\"https://sidhion.com/blog/posts/nixos_server_issues/\">https://sidhion.com/blog/posts/nixos_server_issues/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/qpbnhc/nixos_is_good_server_os_except_when_it_isn_t\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 474207116,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1727851531
+    },
+    {
+        "content": "<h2>devenv 1.3: Instant developer environments with Nix caching</h2>\n<p>October 03, 2024 at 06:44AM</p>\n<p><a href=\"https://devenv.sh/blog/2024/10/03/devenv-13-instant-developer-environments-with-nix-caching/\">https://devenv.sh/blog/2024/10/03/devenv-13-instant-developer-environments-with-nix-caching/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/rdksqy/devenv_1_3_instant_developer\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 474594573,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1727963154
+    },
+    {
+        "content": "<h2>Adapting Plan 9's listen to GNU Guix</h2>\n<p>October 11, 2024 at 03:17AM</p>\n<p><a href=\"https://the-dam.org/docs/explanations/Plan9ListenOnLinux.html\">https://the-dam.org/docs/explanations/Plan9ListenOnLinux.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/tl0yuh/adapting_plan_9_s_listen_gnu_guix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 476356901,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1728642047
+    },
+    {
+        "content": "<h2>Packaging an Elixir/Phoenix application with Nix</h2>\n<p>October 11, 2024 at 12:54PM</p>\n<p><a href=\"https://curiosum.com/blog/packaging-elixir-application-with-nix\">https://curiosum.com/blog/packaging-elixir-application-with-nix</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/q1j6ng/packaging_elixir_phoenix_application\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 476450296,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1728676558
+    },
+    {
+        "content": "<h2>Guix Build User Takeover Vulnerability</h2>\n<p>October 21, 2024 at 04:01AM</p>\n<p><a href=\"https://guix.gnu.org/blog/2024/build-user-takeover-vulnerability//\">https://guix.gnu.org/blog/2024/build-user-takeover-vulnerability//</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/eerewn/guix_build_user_takeover_vulnerability\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 478025307,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1729509046
+    },
+    {
+        "content": "<h2>GNU Guix - Build User Takeover Vulnerability</h2>\n<p>October 21, 2024 at 05:13AM</p>\n<p><a href=\"https://guix.gnu.org/blog/2024/build-user-takeover-vulnerability/\">https://guix.gnu.org/blog/2024/build-user-takeover-vulnerability/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/qejgdm/gnu_guix_build_user_takeover\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 478044828,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1729512972
+    },
+    {
+        "content": "<h2>devenv is switching Nix implementation to Tvix</h2>\n<p>October 22, 2024 at 06:35AM</p>\n<p><a href=\"https://devenv.sh/blog/2024/10/22/devenv-is-switching-nix-implementation-to-tvix/\">https://devenv.sh/blog/2024/10/22/devenv-is-switching-nix-implementation-to-tvix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/czlbno/devenv_is_switching_nix_implementation\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 478288201,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1729604474
+    },
+    {
+        "content": "<h2>Announcing Determinate Nix</h2>\n<p>October 22, 2024 at 07:08AM</p>\n<p><a href=\"https://determinate.systems/posts/announcing-determinate-nix/\">https://determinate.systems/posts/announcing-determinate-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/t0ange/announcing_determinate_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 478295014,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1729606263
+    },
+    {
+        "content": "<h2>Using Nix to Fuzz Test a PDF Parser</h2>\n<p>October 23, 2024 at 07:57AM</p>\n<p><a href=\"https://mtlynch.io/nix-fuzz-testing-1/\">https://mtlynch.io/nix-fuzz-testing-1/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/9rvhdm/using_nix_fuzz_test_pdf_parser\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 478517384,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1729695651
+    },
+    {
+        "content": "<h2>Nix Team member suggests dropping flakes; data suggest otherwise</h2>\n<p>October 25, 2024 at 05:42PM</p>\n<p><a href=\"https://discourse.nixos.org/t/announcing-determinate-nix/54709/72\">https://discourse.nixos.org/t/announcing-determinate-nix/54709/72</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/magfhw/nix_team_member_suggests_dropping_flakes\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 479007136,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1729903550
+    },
+    {
+        "content": "<h2>Building our Astro Starlight page with Nix &amp; <a href=\"http://flake.parts\">flake.parts</a></h2>\n<p>October 31, 2024 at 08:02PM</p>\n<p><a href=\"https://blog.eigenvalue.net/2024-astro-starlight-with-nix/\">https://blog.eigenvalue.net/2024-astro-starlight-with-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ynv3ua/building_our_astro_starlight_page_with\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 479988641,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1730430383
+    },
+    {
+        "content": "<h2>The rise of advanced build systems</h2>\n<p>November 05, 2024 at 02:58AM</p>\n<p><a href=\"https://www.scalevp.com/insights/the-rise-of-advanced-build-systems/\">https://www.scalevp.com/insights/the-rise-of-advanced-build-systems/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/wzmpkd/rise_advanced_build_systems\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 480693790,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1730804446
+    },
+    {
+        "content": "<h2>comin: GitOps For NixOS Machines</h2>\n<p>November 05, 2024 at 02:59AM</p>\n<p><a href=\"https://github.com/nlewo/comin\">https://github.com/nlewo/comin</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/bfg7ll/comin_gitops_for_nixos_machines\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 480693791,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1730804446
+    },
+    {
+        "content": "<h2>Announcing Planet Nix</h2>\n<p>November 08, 2024 at 11:00AM</p>\n<p><a href=\"https://discourse.nixos.org/t/announcing-planet-nix/55350\">https://discourse.nixos.org/t/announcing-planet-nix/55350</a></p>\n<p>&lt;p&gt;We’re doing another Nix conference in North America this year, and we’re calling it &lt;a href=\"<a href=\"https://planetnix.com\">https://planetnix.com</a>\" rel=\"ugc\"&gt;Planet Nix&lt;/a&gt;!. We’re co-located with &lt;a href=\"<a href=\"https://www.socallinuxexpo.org/scale/22x\">https://www.socallinuxexpo.org/scale/22x</a>\" rel=\"ugc\"&gt;SCaLE&lt;/a&gt; in Pasadena, CA. The conference will take place over March 6-7th, and the CFP deadline is approaching (December 9th). I know we have some Nix-appreciators in here and we’d love to have you!&lt;/p&gt;<br>\n&lt;p&gt;I’m one of the organizers (mostly on the program side), so feel free ask questions.&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/0vipec/announcing_planet_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 481370657,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1731092456
+    },
+    {
+        "content": "<h2>Using Nix to Fuzz Test a PDF Parser (Part Two)</h2>\n<p>November 10, 2024 at 02:27AM</p>\n<p><a href=\"https://mtlynch.io/nix-fuzz-testing-2/\">https://mtlynch.io/nix-fuzz-testing-2/</a></p>\n<p>&lt;p&gt;Follow up to &lt;a href=\"<a href=\"https://lobste.rs/s/9rvhdm/using_nix_fuzz_test_pdf_parser\">https://lobste.rs/s/9rvhdm/using_nix_fuzz_test_pdf_parser</a>\" rel=\"ugc\"&gt;https://lobste.rs/s/9rvhdm/using_nix_fuzz_test_pdf_parser&lt;/a&gt;&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ahshld/using_nix_fuzz_test_pdf_parser_part_two\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 481548887,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1731234656
+    },
+    {
+        "content": "<h2>Zig Reproduced Without Binaries</h2>\n<p>November 12, 2024 at 10:43PM</p>\n<p><a href=\"https://jakstys.lt/2024/zig-reproduced-without-binaries/\">https://jakstys.lt/2024/zig-reproduced-without-binaries/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/xlmejv/zig_reproduced_without_binaries\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 482139395,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1731494149
+    },
+    {
+        "content": "<h2>Incremental builds in Nix and garnix</h2>\n<p>November 16, 2024 at 08:28AM</p>\n<p><a href=\"https://garnix.io/blog/incremental-builds\">https://garnix.io/blog/incremental-builds</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/zbjnlh/incremental_builds_nix_garnix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 482783661,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1731774642
+    },
+    {
+        "content": "<h2>How to use Common Lisp on NixOS with C libraries</h2>\n<p>November 19, 2024 at 12:54PM</p>\n<p><a href=\"https://honza.pokorny.ca/2024/11/how-to-use-common-lisp-on-nixos-with-c-libraries/\">https://honza.pokorny.ca/2024/11/how-to-use-common-lisp-on-nixos-with-c-libraries/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/b2vubm/how_use_common_lisp_on_nixos_with_c\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 483351702,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1732049753
+    },
+    {
+        "content": "<h2>Configuring VSCode with Nix on macOS</h2>\n<p>November 24, 2024 at 11:20AM</p>\n<p><a href=\"https://davi.sh/blog/2024/11/nix-vscode/\">https://davi.sh/blog/2024/11/nix-vscode/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/gqvbsb/configuring_vscode_with_nix_on_macos\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 484174122,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1732476337
+    },
+    {
+        "content": "<h2>Guix User and Contributor Survey</h2>\n<p>November 26, 2024 at 08:43AM</p>\n<p><a href=\"https://guix.gnu.org/blog/2024/guix-user-contributor-survey-2024//\">https://guix.gnu.org/blog/2024/guix-user-contributor-survey-2024//</a></p>\n<p>&lt;p&gt;Guix is gathering feedback from users and contributors on their experiences; what they love and what they’ve found challenging. Whether you’re new or a veteran we’d love to have your opinion and comments!&lt;/p&gt;<br>\n&lt;p&gt;As the projects never done this before it should be super interesting. So submitted this for anyone that’s a current user, or tried it in the past.&lt;/p&gt;<br>\n&lt;p&gt;For those that don’t know Guix is like Nix, but uses a single language (Guile Scheme) to define and configure the system. It’s has four elements:&lt;/p&gt;<br>\n&lt;ul&gt;<br>\n&lt;li&gt;<br>\n&lt;p&gt;a package manager that can runs on top of any Linux distribution (e.g. like homebrew)&lt;/p&gt;<br>\n&lt;/li&gt;<br>\n&lt;li&gt;<br>\n&lt;p&gt;a dotfiles and home environment manager&lt;/p&gt;<br>\n&lt;/li&gt;<br>\n&lt;li&gt;<br>\n&lt;p&gt;a complete GNU/Linux distribution&lt;/p&gt;<br>\n&lt;/li&gt;<br>\n&lt;li&gt;<br>\n&lt;p&gt;a way to create isolated development environments&lt;/p&gt;<br>\n&lt;/li&gt;<br>\n&lt;/ul&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ehxie4/guix_user_contributor_survey\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 484555527,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1732639531
+    },
+    {
+        "content": "<h2>Experimenting with Rust, Nix, K6 and Parca</h2>\n<p>December 02, 2024 at 05:33AM</p>\n<p><a href=\"https://jnsgr.uk/2024/11/experiments-with-rust-nix-k6-parca/\">https://jnsgr.uk/2024/11/experiments-with-rust-nix-k6-parca/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/vvkrl9/experimenting_with_rust_nix_k6_parca\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 485626041,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1733146574
+    },
+    {
+        "content": "<h2>Experimenting with Rust, Nix, K6 and Parca</h2>\n<p>December 02, 2024 at 06:03AM</p>\n<p><a href=\"https://jnsgr.uk/2024/12/experiments-with-rust-nix-k6-parca/\">https://jnsgr.uk/2024/12/experiments-with-rust-nix-k6-parca/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/r3dfxy/experimenting_with_rust_nix_k6_parca\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 485632139,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1733148395
+    },
+    {
+        "content": "<h2>Run a Simple Go Web Service on NixOS</h2>\n<p>December 02, 2024 at 05:11PM</p>\n<p><a href=\"https://mtlynch.io/notes/simple-go-web-service-nixos/\">https://mtlynch.io/notes/simple-go-web-service-nixos/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/lsnkfy/run_simple_go_web_service_on_nixos\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 485735506,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1733188522
+    },
+    {
+        "content": "<h2>Advent Of Code 2024 in Nix - Day 01-03</h2>\n<p>December 05, 2024 at 06:45AM</p>\n<p><a href=\"https://johns.codes/blog/aoc2024/nix/part01\">https://johns.codes/blog/aoc2024/nix/part01</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/klcng5/advent_code_2024_nix_day_01_03\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 486323135,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1733410272
+    },
+    {
+        "content": "<h2>Home Manager: dotfiles management</h2>\n<p>December 18, 2024 at 06:03AM</p>\n<p><a href=\"https://gvolpe.com/blog/home-manager-dotfiles-management/\">https://gvolpe.com/blog/home-manager-dotfiles-management/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/r5khln/home_manager_dotfiles_management\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 489764889,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1734530792
+    },
+    {
+        "content": "<h2>Nix is a build system</h2>\n<p>December 21, 2024 at 11:35AM</p>\n<p><a href=\"http://www.chriswarbo.net/blog/2024-05-24-nix_build_system.html\">http://www.chriswarbo.net/blog/2024-05-24-nix_build_system.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/pt1p9w/nix_is_build_system\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 490324115,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1734810018
+    },
+    {
+        "content": "<h2>From Nix to Eos</h2>\n<p>December 23, 2024 at 08:09AM</p>\n<p><a href=\"https://nrd.sh/blog/nix-to-eos/\">https://nrd.sh/blog/nix-to-eos/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/3f9jfg/from_nix_eos\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 490544167,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1734970532
+    },
+    {
+        "content": "<h2>Migrating Immich from Docker to NixOS</h2>\n<p>December 31, 2024 at 05:18AM</p>\n<p><a href=\"https://diogotc.com/blog/immich-docker-to-nixos/\">https://diogotc.com/blog/immich-docker-to-nixos/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ebbded/migrating_immich_from_docker_nixos\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 491403770,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1735651505
+    },
+    {
+        "content": "<h2>sixos: a nix os without systemd</h2>\n<p>January 01, 2025 at 04:14PM</p>\n<p><a href=\"https://media.ccc.de/v/38c3-sixos-a-nix-os-without-systemd#t=2133\">https://media.ccc.de/v/38c3-sixos-a-nix-os-without-systemd#t=2133</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/kgqpqy/sixos_nix_os_without_systemd\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 491539724,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1735776951
+    },
+    {
+        "content": "<h2>Installing NixOS with the latest kernel</h2>\n<p>January 08, 2025 at 04:39AM</p>\n<p><a href=\"https://silky.github.io/posts/nixos-latest-kernel.html\">https://silky.github.io/posts/nixos-latest-kernel.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/6jebmo/installing_nixos_with_latest_kernel\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 492467165,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1736329237
+    },
+    {
+        "content": "<h2>Nix - Death by a thousand cuts</h2>\n<p>January 14, 2025 at 07:52PM</p>\n<p><a href=\"https://www.dgt.is/blog/2025-01-10-nix-death-by-a-thousand-cuts/\">https://www.dgt.is/blog/2025-01-10-nix-death-by-a-thousand-cuts/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/viyhqi/nix_death_by_thousand_cuts\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 493696666,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1736902546
+    },
+    {
+        "content": "<h2>Laptop archeology or how to install NixOS 24.11 on a 25 year old laptop</h2>\n<p>January 16, 2025 at 04:17AM</p>\n<p><a href=\"https://blog.mynacol.xyz/en/nixos-on-fossils/\">https://blog.mynacol.xyz/en/nixos-on-fossils/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/fllbl0/laptop_archeology_how_install_nixos_24_11\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 494099471,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737019549
+    },
+    {
+        "content": "<h2>Packaging the Multipass Flutter GUI for NixOS</h2>\n<p>January 16, 2025 at 07:18AM</p>\n<p><a href=\"https://jnsgr.uk/2025/01/packaging-multipass-flutter-app-for-nix/\">https://jnsgr.uk/2025/01/packaging-multipass-flutter-app-for-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/nidkrn/packaging_multipass_flutter_gui_for\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 494131546,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737030053
+    },
+    {
+        "content": "<h2>Guix User and Contributor Survey 2024: The Results (part 1)</h2>\n<p>January 16, 2025 at 10:27AM</p>\n<p><a href=\"https://guix.gnu.org/en/blog/2025/guix-user-and-contributor-survey-2024-the-results-part-1/\">https://guix.gnu.org/en/blog/2025/guix-user-and-contributor-survey-2024-the-results-part-1/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ydrrgk/guix_user_contributor_survey_2024\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 494175019,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737041450
+    },
+    {
+        "content": "<h2>Bypassing disk encryption on systems with automatic TPM2 unlock</h2>\n<p>January 17, 2025 at 09:32AM</p>\n<p><a href=\"https://oddlama.org/blog/bypassing-disk-encryption-with-tpm2-unlock/\">https://oddlama.org/blog/bypassing-disk-encryption-with-tpm2-unlock/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/kllhgb/bypassing_disk_encryption_on_systems\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 494374446,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737124562
+    },
+    {
+        "content": "<h2>Announcing Lix 2.92 \"Bombe glacée\"</h2>\n<p>January 18, 2025 at 10:13PM</p>\n<p><a href=\"https://lix.systems/blog/2025-01-18-lix-2.92-release/\">https://lix.systems/blog/2025-01-18-lix-2.92-release/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/qyd4pk/announcing_lix_2_92_bombe_glacee\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 494596874,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737256528
+    },
+    {
+        "content": "<h2>Encrypted NixOS home server with passwordless reboot</h2>\n<p>January 20, 2025 at 01:34PM</p>\n<p><a href=\"https://log.pfad.fr/2025/fde-nixos-colmena-passwordless-reboot/\">https://log.pfad.fr/2025/fde-nixos-colmena-passwordless-reboot/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/hktw8t/encrypted_nixos_home_server_with\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 494891499,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737398405
+    },
+    {
+        "content": "<h2>Building a tiny Linux from scratch</h2>\n<p>January 21, 2025 at 11:23AM</p>\n<p><a href=\"https://blinry.org/tiny-linux/\">https://blinry.org/tiny-linux/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/pyejlx/building_tiny_linux_from_scratch\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 495132143,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737488744
+    },
+    {
+        "content": "<h2>Guix User and Contributor Survey 2024: The Results (part 2)</h2>\n<p>January 24, 2025 at 06:36AM</p>\n<p><a href=\"https://guix.gnu.org/en/blog/2025/guix-user-and-contributor-survey-2024-the-results-part-2/\">https://guix.gnu.org/en/blog/2025/guix-user-and-contributor-survey-2024-the-results-part-2/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cgvvhc/guix_user_contributor_survey_2024\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 495694343,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737718813
+    },
+    {
+        "content": "<h2>Is NixOS truly reproducible?</h2>\n<p>January 27, 2025 at 09:22AM</p>\n<p><a href=\"https://luj.fr/blog/is-nixos-truly-reproducible.html\">https://luj.fr/blog/is-nixos-truly-reproducible.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/j9iugq/is_nixos_truly_reproducible\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 496134906,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1737987935
+    },
+    {
+        "content": "<h2>Nix: string interpolation of directories gone awry</h2>\n<p>February 03, 2025 at 03:54AM</p>\n<p><a href=\"https://fzakaria.com/2025/02/02/nix-string-interpolation-of-directories-gone-awry.html\">https://fzakaria.com/2025/02/02/nix-string-interpolation-of-directories-gone-awry.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/e7clsc/nix_string_interpolation_directories\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 497369041,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1738573251
+    },
+    {
+        "content": "<h2>Three Years of Ephemeral NixOS: My Experience Resetting Root on Every Boot</h2>\n<p>February 08, 2025 at 07:38AM</p>\n<p><a href=\"https://b.tuxes.uk/three-years-of-ephemeral-nixos.html\">https://b.tuxes.uk/three-years-of-ephemeral-nixos.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ejwdhq/three_years_ephemeral_nixos_my\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 498498840,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1739018423
+    },
+    {
+        "content": "<h2>NixOS and Actually Portable Executables</h2>\n<p>February 11, 2025 at 12:50AM</p>\n<p><a href=\"http://jackkelly.name/blog/archives/2025/01/15/nixos_and_actually_portable_executables/index.html\">http://jackkelly.name/blog/archives/2025/01/15/nixos_and_actually_portable_executables/index.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/oitgiq/nixos_actually_portable_executables\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 498933568,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1739253021
+    },
+    {
+        "content": "<h2>Persistent packages on Steam Deck using Nix</h2>\n<p>February 11, 2025 at 03:00AM</p>\n<p><a href=\"https://chrastecky.dev/gaming/persistent-packages-on-steam-deck-using-nix\">https://chrastecky.dev/gaming/persistent-packages-on-steam-deck-using-nix</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/vqprux/persistent_packages_on_steam_deck_using\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 498948924,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1739260858
+    },
+    {
+        "content": "<h2>devenv 1.4: Generating Nix Developer Environments Using AI</h2>\n<p>February 13, 2025 at 05:53AM</p>\n<p><a href=\"https://devenv.sh/blog/2025/02/13/devenv-14-generating-nix-developer-environments-using-ai/\">https://devenv.sh/blog/2025/02/13/devenv-14-generating-nix-developer-environments-using-ai/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/bfvovo/devenv_1_4_generating_nix_developer\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 499441132,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1739444148
+    },
+    {
+        "content": "<h2>Devenv telemetry warning</h2>\n<p>February 15, 2025 at 12:35PM</p>\n<p><a href=\"https://chaos.social/@hexa/114009069746212598\">https://chaos.social/@hexa/114009069746212598</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cvxhqu/devenv_telemetry_warning\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 499933643,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1739641213
+    },
+    {
+        "content": "<h2>Being a happy Nixer on a Mac</h2>\n<p>February 19, 2025 at 08:17AM</p>\n<p><a href=\"https://paretosecurity.com/blog/being-a-happy-nixer-on-a-mac\">https://paretosecurity.com/blog/being-a-happy-nixer-on-a-mac</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/utonjg/being_happy_nixer_on_mac\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 500648600,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1739971252
+    },
+    {
+        "content": "<h2>NixOS: the power of VM tests</h2>\n<p>February 21, 2025 at 05:49PM</p>\n<p><a href=\"https://bmcgee.ie/posts/2025/02/nixos-the-power-of-vm-tests/\">https://bmcgee.ie/posts/2025/02/nixos-the-power-of-vm-tests/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/9a3noh/nixos_power_vm_tests\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 501199477,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1740178249
+    },
+    {
+        "content": "<h2>garnix modules</h2>\n<p>February 28, 2025 at 07:58AM</p>\n<p><a href=\"https://garnix.io/blog/garnix-modules\">https://garnix.io/blog/garnix-modules</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ptr2k3/garnix_modules\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 502573056,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1740747702
+    },
+    {
+        "content": "<h2>Pinning NixOS with npins, or how to kill channels forever without flakes</h2>\n<p>March 01, 2025 at 11:49AM</p>\n<p><a href=\"https://jade.fyi/blog/pinning-nixos-with-npins/\">https://jade.fyi/blog/pinning-nixos-with-npins/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ifczmp/pinning_nixos_with_npins_how_kill\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 502765479,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1740848134
+    },
+    {
+        "content": "<h2>Nix pragmatism: nix-ld and envfs</h2>\n<p>March 02, 2025 at 10:09AM</p>\n<p><a href=\"https://fzakaria.com/2025/02/27/nix-pragmatism-nix-ld-and-envfs\">https://fzakaria.com/2025/02/27/nix-pragmatism-nix-ld-and-envfs</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/hrfun0/nix_pragmatism_nix_ld_envfs\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 502869435,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1740928253
+    },
+    {
+        "content": "<h2>Thaiger Sprint 2025: Starring H2O, the HTTP server (&amp; dropping Nginx)</h2>\n<p>March 04, 2025 at 09:48AM</p>\n<p><a href=\"https://toast.al/posts/softwarecraft/2025-03-04_thaiger-sprint-2025-starring-h2o/\">https://toast.al/posts/softwarecraft/2025-03-04_thaiger-sprint-2025-starring-h2o/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/uxhwyb/thaiger_sprint_2025_starring_h2o_http\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 503287026,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1741099813
+    },
+    {
+        "content": "<h2>Determinate Nix 3.0</h2>\n<p>March 05, 2025 at 07:13PM</p>\n<p><a href=\"https://determinate.systems/posts/determinate-nix-30/\">https://determinate.systems/posts/determinate-nix-30/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/fsc8ki/determinate_nix_3_0\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 503664157,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1741220159
+    },
+    {
+        "content": "<h2>An early look at Nix Dynamic Derivations</h2>\n<p>March 11, 2025 at 03:51AM</p>\n<p><a href=\"https://fzakaria.com/2025/03/10/an-early-look-at-nix-dynamic-derivations\">https://fzakaria.com/2025/03/10/an-early-look-at-nix-dynamic-derivations</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/fwcnkf/early_look_at_nix_dynamic_derivations\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 504764459,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1741679709
+    },
+    {
+        "content": "<h2>Announcing Snix</h2>\n<p>March 17, 2025 at 01:36PM</p>\n<p><a href=\"https://snix.dev/blog/announcing-snix/\">https://snix.dev/blog/announcing-snix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/s5p1ng/announcing_snix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 506221757,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1742233545
+    },
+    {
+        "content": "<h2>How NixOS and reproducible builds could have detected the xz backdoorfor the benefit of all</h2>\n<p>March 20, 2025 at 10:02AM</p>\n<p><a href=\"https://luj.fr/blog/how-nixos-could-have-detected-xz.html\">https://luj.fr/blog/how-nixos-could-have-detected-xz.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/84qcvn/how_nixos_reproducible_builds_could_have\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 506982882,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1742479532
+    },
+    {
+        "content": "<h2>What Comes After GitHub Actions?</h2>\n<p>March 21, 2025 at 12:26PM</p>\n<p><a href=\"https://garnix.io/blog/what-comes-after-gha\">https://garnix.io/blog/what-comes-after-gha</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/patoqt/what_comes_after_github_actions\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 507319714,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1742574647
+    },
+    {
+        "content": "<h2>ClickHaskell-0.2: 2 Years Anniversary pre-stable releas</h2>\n<p>March 23, 2025 at 04:40PM</p>\n<p><a href=\"https://discourse.haskell.org/t/clickhaskell-0-2-2-years-anniversary-pre-stable-release/11692\">https://discourse.haskell.org/t/clickhaskell-0-2-2-years-anniversary-pre-stable-release/11692</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/xjvqy0/clickhaskell_0_2_2_years_anniversary_pre\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 507604390,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1742763028
+    },
+    {
+        "content": "<h2>Nix derivations by hand</h2>\n<p>March 24, 2025 at 08:07AM</p>\n<p><a href=\"https://fzakaria.com/2025/03/23/nix-derivations-by-hand\">https://fzakaria.com/2025/03/23/nix-derivations-by-hand</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/sff5iz/nix_derivations_by_hand\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 507740758,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1742818213
+    },
+    {
+        "content": "<h2>Best practices for Nix at work</h2>\n<p>March 24, 2025 at 04:13PM</p>\n<p><a href=\"https://determinate.systems/posts/best-practices-for-nix-at-work/\">https://determinate.systems/posts/best-practices-for-nix-at-work/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/rlo6v0/best_practices_for_nix_at_work\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 507867862,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1742847329
+    },
+    {
+        "content": "<h2>Sécurix, a NixOS-based secure operating system tailored for small to medium-sized teams</h2>\n<p>March 27, 2025 at 01:31PM</p>\n<p><a href=\"https://github.com/cloud-gouv/securix\">https://github.com/cloud-gouv/securix</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/9tmwpa/securix_nixos_based_secure_operating\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 508581721,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743096971
+    },
+    {
+        "content": "<h2>Nix vanity store paths</h2>\n<p>March 30, 2025 at 03:18PM</p>\n<p><a href=\"https://fzakaria.com/2025/03/27/nix-vanity-store-paths\">https://fzakaria.com/2025/03/27/nix-vanity-store-paths</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/pxt8lj/nix_vanity_store_paths\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 509056725,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743362410
+    },
+    {
+        "content": "<h2>Ekapkgs, a poly-repo fork of Nixpkgs</h2>\n<p>March 31, 2025 at 02:00PM</p>\n<p><a href=\"https://nixcademy.com/posts/ekala-project/\">https://nixcademy.com/posts/ekala-project/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/bks2qz/ekapkgs_poly_repo_fork_nixpkgs\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 509268993,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743444057
+    },
+    {
+        "content": "<h2>What’s in a Nix store path</h2>\n<p>March 31, 2025 at 06:00PM</p>\n<p><a href=\"https://fzakaria.com/2025/03/28/what-s-in-a-nix-store-path\">https://fzakaria.com/2025/03/28/what-s-in-a-nix-store-path</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/hw3kpz/what_s_nix_store_path\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 509311470,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743458770
+    },
+    {
+        "content": "<h2>Introducing Nix Ninja – open-source Ninja-compatible build system for Nix</h2>\n<p>April 03, 2025 at 07:10AM</p>\n<p><a href=\"https://github.com/pdtpartners/nix-ninja\">https://github.com/pdtpartners/nix-ninja</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/0jxkj4/introducing_nix_ninja_open_source_ninja\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 509908522,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743678925
+    },
+    {
+        "content": "<h2>Nix that looks like Bazel</h2>\n<p>April 03, 2025 at 12:01PM</p>\n<p><a href=\"https://fzakaria.com/2025/04/02/nix-that-looks-like-bazel\">https://fzakaria.com/2025/04/02/nix-that-looks-like-bazel</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/jopsqd/nix_looks_like_bazel\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 509982621,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743696638
+    },
+    {
+        "content": "<h2>html.nix (2021)</h2>\n<p>April 04, 2025 at 10:29PM</p>\n<p><a href=\"https://code.tvl.fyi/tree/users/sterni/nix/html/README.md\">https://code.tvl.fyi/tree/users/sterni/nix/html/README.md</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/t24ppw/html_nix_2021\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 510323086,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743821121
+    },
+    {
+        "content": "<h2>Nix derivations by hand, without guessing</h2>\n<p>April 06, 2025 at 09:18AM</p>\n<p><a href=\"https://bernsteinbear.com/blog/nix-by-hand/\">https://bernsteinbear.com/blog/nix-by-hand/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/1ldtix/nix_derivations_by_hand_without_guessing\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 510486255,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1743948638
+    },
+    {
+        "content": "<h2>RNG and Cosine in Nix</h2>\n<p>April 12, 2025 at 08:27PM</p>\n<p><a href=\"https://unnamed.website/posts/rng-cosine-nix/\">https://unnamed.website/posts/rng-cosine-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/sugnms/rng_cosine_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 511857238,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1744504243
+    },
+    {
+        "content": "<h2>Nix Trigonometric Math Library from Ground Zero</h2>\n<p>April 12, 2025 at 10:21PM</p>\n<p><a href=\"https://lantian.pub/en/article/modify-computer/nix-trigonometric-math-library-from-zero.lantian/\">https://lantian.pub/en/article/modify-computer/nix-trigonometric-math-library-from-zero.lantian/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/maun4k/nix_trigonometric_math_library_from\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 511864818,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1744511140
+    },
+    {
+        "content": "<h2>Where Flakes Fall Off: an Eval Cache Tale</h2>\n<p>April 22, 2025 at 04:48PM</p>\n<p><a href=\"https://santi.net.br/blog/where-flakes-fall-off-an-eval-cache-tale/\">https://santi.net.br/blog/where-flakes-fall-off-an-eval-cache-tale/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/iqiglx/where_flakes_fall_off_eval_cache_tale\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 513725250,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1745355026
+    },
+    {
+        "content": "<h2>devenv 1.6: Extensible Ad-Hoc Nix Environments</h2>\n<p>April 25, 2025 at 11:28AM</p>\n<p><a href=\"https://devenv.sh/blog/2025/04/25/devenv-16-extensible-ad-hoc-nix-environments/\">https://devenv.sh/blog/2025/04/25/devenv-16-extensible-ad-hoc-nix-environments/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/1dy62n/devenv_1_6_extensible_ad_hoc_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 514404746,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1745595026
+    },
+    {
+        "content": "<h2>Opam's Nix system dependency mechanism</h2>\n<p>May 02, 2025 at 08:36AM</p>\n<p><a href=\"https://ryan.freumh.org/opam-nix.html\">https://ryan.freumh.org/opam-nix.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cpjlaz/opam_s_nix_system_dependency_mechanism\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 515704234,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1746189622
+    },
+    {
+        "content": "<h2>Stop Fighting Your ROS 2 Environment: Build Faster, Reproducibly, Anywhere</h2>\n<p>May 05, 2025 at 06:10AM</p>\n<p><a href=\"https://index.0x77.dev/blog/ros-devenv\">https://index.0x77.dev/blog/ros-devenv</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/okbblr/stop_fighting_your_ros_2_environment\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 516157180,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1746440147
+    },
+    {
+        "content": "<h2>Rusty Nu POSIX</h2>\n<p>May 09, 2025 at 03:48AM</p>\n<p><a href=\"https://mort.io/blog/nu-posix/\">https://mort.io/blog/nu-posix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ysqymn/rusty_nu_posix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 517050128,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1746777045
+    },
+    {
+        "content": "<h2>Announcing Lix 2.93 “Bici Bici”</h2>\n<p>May 09, 2025 at 08:33PM</p>\n<p><a href=\"https://lix.systems/blog/2025-05-06-lix-2.93-release/\">https://lix.systems/blog/2025-05-06-lix-2.93-release/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/safxge/announcing_lix_2_93_bici_bici\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 517206034,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1746837325
+    },
+    {
+        "content": "<h2>Announcing Lix 2.93 “Bici Bici”</h2>\n<p>May 10, 2025 at 12:31PM</p>\n<p><a href=\"https://lix.systems/blog/2025-05-06-lix-2.93-release/\">https://lix.systems/blog/2025-05-06-lix-2.93-release/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/azcfyx/announcing_lix_2_93_bici_bici\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 517273389,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1746895211
+    },
+    {
+        "content": "<h2>Flakes Have Failed</h2>\n<p>May 12, 2025 at 01:54AM</p>\n<p><a href=\"https://kilo.bytesize.xyz/flakes-have-failed\">https://kilo.bytesize.xyz/flakes-have-failed</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/6js1hj/flakes_have_failed\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 517436725,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1747029653
+    },
+    {
+        "content": "<h2>Demonstrably Secure Software Supply Chains with Nix</h2>\n<p>May 12, 2025 at 10:51AM</p>\n<p><a href=\"https://nixcademy.com/posts/secure-supply-chain-with-nix/\">https://nixcademy.com/posts/secure-supply-chain-with-nix/</a></p>\n<p>&lt;p&gt;An explanation how Nix can revolutionize your software supply chain security, enabling verifiable integrity and offline rebuilds from source.&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/xmv5um/demonstrably_secure_software_supply\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 517574435,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1747061710
+    },
+    {
+        "content": "<h2>Introducing lazy trees in Determinate Nix 3.5</h2>\n<p>May 15, 2025 at 01:43PM</p>\n<p><a href=\"https://determinate.systems/posts/changelog-determinate-nix-352/\">https://determinate.systems/posts/changelog-determinate-nix-352/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/wgn94m/introducing_lazy_trees_determinate_nix_3\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 518364980,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1747331133
+    },
+    {
+        "content": "<h2>Artiflakery, an easy way to distribute static Nix flake artifacts</h2>\n<p>May 21, 2025 at 09:26AM</p>\n<p><a href=\"https://luj.fr/blog/artiflakery-webserver-flake-artifacts.html\">https://luj.fr/blog/artiflakery-webserver-flake-artifacts.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/rff4fc/artiflakery_easy_way_distribute_static\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 519613374,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1747834239
+    },
+    {
+        "content": "<h2>NixOS 25.05 released</h2>\n<p>May 23, 2025 at 03:47PM</p>\n<p><a href=\"https://nixos.org/blog/announcements/2025/nixos-2505/\">https://nixos.org/blog/announcements/2025/nixos-2505/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/unlqyd/nixos_25_05_released\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 520119929,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1748029815
+    },
+    {
+        "content": "<h2>Sandboxing AI Tools with Guix Containers</h2>\n<p>May 24, 2025 at 07:43AM</p>\n<p><a href=\"https://200ok.ch/posts/2025-05-23_sandboxing_ai_tools:_how_guix_containers_keep_your_host_safe_while_empowering_llms.html\">https://200ok.ch/posts/2025-05-23_sandboxing_ai_tools:_how_guix_containers_keep_your_host_safe_while_empowering_llms.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ggrjtg/sandboxing_ai_tools_with_guix_containers\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 520189999,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1748087130
+    },
+    {
+        "content": "<h2>How I like to install NixOS (declaratively)</h2>\n<p>June 01, 2025 at 02:23AM</p>\n<p><a href=\"https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/\">https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cyan5l/how_i_like_install_nixos_declaratively\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 521516689,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1748759134
+    },
+    {
+        "content": "<h2>Nix 2.29.0 with Nix Team members</h2>\n<p>June 07, 2025 at 12:08PM</p>\n<p><a href=\"https://fulltimenix.com/episodes/nix-2-29-0-with-nix-team-members\">https://fulltimenix.com/episodes/nix-2-29-0-with-nix-team-members</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/chmlid/nix_2_29_0_with_nix_team_members\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 522904324,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1749312638
+    },
+    {
+        "content": "<h2>Pijul - Elpe. Yaks big. Razors bigger</h2>\n<p>June 08, 2025 at 04:09PM</p>\n<p><a href=\"https://pijul.org/posts/2025-06-08-elpe/\">https://pijul.org/posts/2025-06-08-elpe/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/fwldgj/pijul_elpe_yaks_big_razors_bigger\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 523004672,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1749423334
+    },
+    {
+        "content": "<h2>Why We’re Moving on From Nix</h2>\n<p>June 10, 2025 at 12:15PM</p>\n<p><a href=\"https://blog.railway.com/p/introducing-railpack\">https://blog.railway.com/p/introducing-railpack</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/vnvrv8/why_we_re_moving_on_from_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 523328333,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1749572413
+    },
+    {
+        "content": "<h2>zb beta released</h2>\n<p>June 17, 2025 at 09:18AM</p>\n<p><a href=\"https://www.zombiezen.com/blog/2025/06/zb-beta-release/\">https://www.zombiezen.com/blog/2025/06/zb-beta-release/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/endekb/zb_beta_released\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 524451944,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1750166452
+    },
+    {
+        "content": "<h2>Moving on from Nix</h2>\n<p>June 18, 2025 at 11:06AM</p>\n<p><a href=\"https://carlosbecker.com/posts/bye-nix/\">https://carlosbecker.com/posts/bye-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/lalc7r/moving_on_from_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 524729990,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1750259448
+    },
+    {
+        "content": "<h2>files: In-repository file generation flake-parts module</h2>\n<p>June 19, 2025 at 03:26AM</p>\n<p><a href=\"https://github.com/mightyiam/files\">https://github.com/mightyiam/files</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/6wndbg/files_repository_file_generation_flake\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 524830056,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1750318223
+    },
+    {
+        "content": "<h2>Nix Development Setup for Factor</h2>\n<p>June 24, 2025 at 11:28AM</p>\n<p><a href=\"https://toast.al/posts/softwarecraft/2025-06-24_factor-nix-dev-environment/\">https://toast.al/posts/softwarecraft/2025-06-24_factor-nix-dev-environment/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/xzoth8/nix_development_setup_for_factor\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 525544705,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1750779034
+    },
+    {
+        "content": "<h2>Fixes for five Lix CVEs</h2>\n<p>June 24, 2025 at 11:31AM</p>\n<p><a href=\"https://lix.systems/blog/2025-06-24-lix-cves/\">https://lix.systems/blog/2025-06-24-lix-cves/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ihlmb2/fixes_for_five_lix_cves\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 525546991,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1750779654
+    },
+    {
+        "content": "<h2>Nix/NixOS is the new “dotfiles golf” - and that’s awesome</h2>\n<p>June 24, 2025 at 02:35PM</p>\n<p><a href=\"https://whynot.fail/nixos/the-new-dotfile-golf/\">https://whynot.fail/nixos/the-new-dotfile-golf/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/vxkduy/nix_nixos_is_new_dotfiles_golf_s_awesome\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 525574522,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1750790146
+    },
+    {
+        "content": "<h2>Critical correctness bug in Lix</h2>\n<p>June 30, 2025 at 08:35AM</p>\n<p><a href=\"https://lix.systems/blog/2025-06-27-lix-critical-bug/\">https://lix.systems/blog/2025-06-27-lix-critical-bug/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/hci9kg/critical_correctness_bug_lix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 526391820,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1751287221
+    },
+    {
+        "content": "<h2>input-branches: Workflow and flake-part for flake input patching using imported git branches</h2>\n<p>July 01, 2025 at 10:08AM</p>\n<p><a href=\"https://github.com/mightyiam/input-branches\">https://github.com/mightyiam/input-branches</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ftudlh/input_branches_workflow_flake_part_for\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 526617844,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1751379050
+    },
+    {
+        "content": "<h2>Three Years of Nix and NixOS: The Good, the Bad, and the Ugly</h2>\n<p>July 02, 2025 at 11:10AM</p>\n<p><a href=\"https://pierrezemb.fr/posts/nixos-good-bad-ugly/\">https://pierrezemb.fr/posts/nixos-good-bad-ugly/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/at4gob/three_years_nix_nixos_good_bad_ugly\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 526826260,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1751469350
+    },
+    {
+        "content": "<h2>You don't have to use Nix to manage your dotfiles</h2>\n<p>July 07, 2025 at 05:50AM</p>\n<p><a href=\"https://jade.fyi/blog/use-nix-less/\">https://jade.fyi/blog/use-nix-less/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/wnnymx/you_don_t_have_use_nix_manage_your_dotfiles\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 527440962,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1751881849
+    },
+    {
+        "content": "<h2>Stop using nix-env</h2>\n<p>July 07, 2025 at 06:15AM</p>\n<p><a href=\"https://stop-using-nix-env.privatevoid.net/\">https://stop-using-nix-env.privatevoid.net/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/a55r0w/stop_using_nix_env\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 527446655,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1751883632
+    },
+    {
+        "content": "<h2>Stop putting nix setup in your checked-in .envrc files</h2>\n<p>July 07, 2025 at 02:28PM</p>\n<p><a href=\"https://offby1.website/posts/stop-putting-nix-setup-in-your-checked-in-envrc-files.html\">https://offby1.website/posts/stop-putting-nix-setup-in-your-checked-in-envrc-files.html</a></p>\n<p>&lt;p&gt;Nix-using developers who use direnv, please stop checking in your &lt;code&gt;.envrc&lt;/code&gt; files; they break your project for other contributors.&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/nm5lho/stop_putting_nix_setup_your_checked_envrc\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 527536095,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1751913026
+    },
+    {
+        "content": "<h2>Migrating my NAS from CoreOS/Flatcar Linux to NixOS</h2>\n<p>July 13, 2025 at 02:20AM</p>\n<p><a href=\"https://michael.stapelberg.ch/posts/2025-07-13-nixos-nas-network-storage-config/\">https://michael.stapelberg.ch/posts/2025-07-13-nixos-nas-network-storage-config/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ubpr2o/migrating_my_nas_from_coreos_flatcar\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 528507959,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1752387938
+    },
+    {
+        "content": "<h2>NixOS My Savior</h2>\n<p>July 14, 2025 at 02:32PM</p>\n<p><a href=\"https://basicbitch.software/posts/2025-07-12-NixOS-My-Savior.html\">https://basicbitch.software/posts/2025-07-12-NixOS-My-Savior.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/oj7zi4/nixos_my_savior\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 528719102,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1752518111
+    },
+    {
+        "content": "<h2>Trying Guix: A Nixer's Impressions</h2>\n<p>July 15, 2025 at 04:07AM</p>\n<p><a href=\"https://tazj.in/blog/trying-guix\">https://tazj.in/blog/trying-guix</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/87dpsv/trying_guix_nixer_s_impressions\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 528802567,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1752567031
+    },
+    {
+        "content": "<h2>Compiler bootstrapping in Nixpkgs</h2>\n<p>July 15, 2025 at 04:05PM</p>\n<p><a href=\"https://blog.obsidian.systems/compiler-bootstrapping-in-nixpkgs/\">https://blog.obsidian.systems/compiler-bootstrapping-in-nixpkgs/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cfkz4y/compiler_bootstrapping_nixpkgs\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 528934027,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1752610239
+    },
+    {
+        "content": "<h2>NixOS: Declarative Management, Imperative Privilege Escalation</h2>\n<p>July 15, 2025 at 08:42PM</p>\n<p><a href=\"https://labs.snyk.io/resources/nixos-deep-dive/\">https://labs.snyk.io/resources/nixos-deep-dive/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/3hklvn/nixos_declarative_management\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 528963601,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1752626738
+    },
+    {
+        "content": "<h2>home-manager with Austin Horstman (khaneliman)</h2>\n<p>July 17, 2025 at 10:59AM</p>\n<p><a href=\"https://fulltimenix.com/episodes/home-manager-with-austin-horstman-khaneliman\">https://fulltimenix.com/episodes/home-manager-with-austin-horstman-khaneliman</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/7hlkmf/home_manager_with_austin_horstman\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 529299538,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1752764477
+    },
+    {
+        "content": "<h2>devenv 1.8: Progress TUI, SecretSpec Integration, Listing Tasks, and Smaller Containers</h2>\n<p>July 22, 2025 at 12:27AM</p>\n<p><a href=\"https://devenv.sh/blog/2025/07/22/devenv-18-progress-tui-secretspec-integration-listing-tasks-and-smaller-containers\">https://devenv.sh/blog/2025/07/22/devenv-18-progress-tui-secretspec-integration-listing-tasks-and-smaller-containers</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/r79s3w/devenv_1_8_progress_tui_secretspec\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 529999176,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1753158628
+    },
+    {
+        "content": "<h2>Development shells with Nix: four quick examples</h2>\n<p>July 27, 2025 at 02:54AM</p>\n<p><a href=\"https://michael.stapelberg.ch/posts/2025-07-27-dev-shells-with-nix-4-quick-examples/\">https://michael.stapelberg.ch/posts/2025-07-27-dev-shells-with-nix-4-quick-examples/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/lfovd1/development_shells_with_nix_four_quick\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 531081872,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1753599646
+    },
+    {
+        "content": "<h2>From Frustration to Power: What We Learned at Nixcademy</h2>\n<p>July 31, 2025 at 09:52AM</p>\n<p><a href=\"https://niteo.co/blog/from-frustration-to-power-what-we-learned-at-nixcademy/\">https://niteo.co/blog/from-frustration-to-power-what-we-learned-at-nixcademy/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/udqowq/from_frustration_power_what_we_learned_at\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 532081386,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1753970145
+    },
+    {
+        "content": "<h2>How NixOS is built</h2>\n<p>August 01, 2025 at 07:03AM</p>\n<p><a href=\"https://blog.erethon.com/blog/2025/07/31/how-nixos-is-built/\">https://blog.erethon.com/blog/2025/07/31/how-nixos-is-built/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/nv7a9k/how_nixos_is_built\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 532282538,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1754046621
+    },
+    {
+        "content": "<h2>Minimal Scala Container Images using Nix</h2>\n<p>August 04, 2025 at 06:13AM</p>\n<p><a href=\"https://blog.aiono.dev/posts/minimal-scala-container-images-using-nix.html\">https://blog.aiono.dev/posts/minimal-scala-container-images-using-nix.html</a></p>\n<p>&lt;p&gt;I tagged it with &lt;code&gt;java&lt;/code&gt; because most of the article is about bundling a JRE which works the same way for any language that runs on JVM.&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ocqd8m/minimal_scala_container_images_using_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 532695086,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1754302532
+    },
+    {
+        "content": "<h2>Nixpkgs module system config modules graph</h2>\n<p>August 07, 2025 at 12:44PM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixpkgs-module-system-config-modules-graph/67722\">https://discourse.nixos.org/t/nixpkgs-module-system-config-modules-graph/67722</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/77oshx/nixpkgs_module_system_config_modules\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 533329174,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1754585140
+    },
+    {
+        "content": "<h2>devenv with Domen Kožar</h2>\n<p>August 08, 2025 at 09:53AM</p>\n<p><a href=\"https://fulltimenix.com/episodes/devenv-with-domen-kozar\">https://fulltimenix.com/episodes/devenv-with-domen-kozar</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ec20br/devenv_with_domen_kozar\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 533469089,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1754661313
+    },
+    {
+        "content": "<h2>Introducing spindle</h2>\n<p>August 08, 2025 at 05:51PM</p>\n<p><a href=\"https://blog.tangled.sh/ci\">https://blog.tangled.sh/ci</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/vzr1b1/introducing_spindle\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 533533268,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1754690121
+    },
+    {
+        "content": "<h2>nixidy: Kubernetes GitOps with nix and Argo CD</h2>\n<p>August 13, 2025 at 05:51PM</p>\n<p><a href=\"https://nixidy.dev\">https://nixidy.dev</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/jcpcvk/nixidy_kubernetes_gitops_with_nix_argo_cd\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 534310092,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1755122136
+    },
+    {
+        "content": "<h2>A Trick To Use mkMerge at The Top Level of a NixOS module</h2>\n<p>August 18, 2025 at 04:10AM</p>\n<p><a href=\"https://gist.github.com/udf/4d9301bdc02ab38439fd64fbda06ea43\">https://gist.github.com/udf/4d9301bdc02ab38439fd64fbda06ea43</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/pddgnt/trick_use_mkmerge_at_top_level_nixos\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 534893915,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1755504942
+    },
+    {
+        "content": "<h2>NixOS &amp; Flakes Book</h2>\n<p>August 18, 2025 at 05:03AM</p>\n<p><a href=\"https://nixos-and-flakes.thiscute.world/introduction/\">https://nixos-and-flakes.thiscute.world/introduction/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/bsyd6a/nixos_flakes_book\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 534903432,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1755507936
+    },
+    {
+        "content": "<h2>Using Nix as a library</h2>\n<p>August 18, 2025 at 05:01PM</p>\n<p><a href=\"https://fzakaria.com/2025/08/17/using-nix-as-a-library\">https://fzakaria.com/2025/08/17/using-nix-as-a-library</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/re6xka/using_nix_as_library\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 535021948,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1755551149
+    },
+    {
+        "content": "<h2>A New Rust Packaging Model</h2>\n<p>August 21, 2025 at 10:35AM</p>\n<p><a href=\"https://guix.gnu.org/en/blog/2025/a-new-rust-packaging-model/\">https://guix.gnu.org/en/blog/2025/a-new-rust-packaging-model/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/pnyraf/new_rust_packaging_model\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 535519490,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1755787229
+    },
+    {
+        "content": "<h2>Closing the Nix Gap: From Environments to Packaged Applications for Rust</h2>\n<p>August 22, 2025 at 12:07PM</p>\n<p><a href=\"https://devenv.sh/blog/2025/08/22/closing-the-nix-gap-from-environments-to-packaged-applications-for-rust/\">https://devenv.sh/blog/2025/08/22/closing-the-nix-gap-from-environments-to-packaged-applications-for-rust/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/u9v6jj/closing_nix_gap_from_environments\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 535714906,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1755879022
+    },
+    {
+        "content": "<h2>Secret Management on NixOS with sops-nix</h2>\n<p>August 24, 2025 at 04:02AM</p>\n<p><a href=\"https://michael.stapelberg.ch/posts/2025-08-24-secret-management-with-sops-nix/\">https://michael.stapelberg.ch/posts/2025-08-24-secret-management-with-sops-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/5tvmgp/secret_management_on_nixos_with_sops_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 535888364,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1756022743
+    },
+    {
+        "content": "<h2>Printing labels via SSH with Raspberry Pi Zero and Nix</h2>\n<p>August 28, 2025 at 04:25AM</p>\n<p><a href=\"https://nmattia.com/posts/2025-08-28-label-printer-rpi-nix/\">https://nmattia.com/posts/2025-08-28-label-printer-rpi-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/vb9bex/printing_labels_via_ssh_with_raspberry_pi\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 536554696,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1756369542
+    },
+    {
+        "content": "<h2>Nix Vegas 2025 Retrospective</h2>\n<p>September 01, 2025 at 03:37PM</p>\n<p><a href=\"https://nix.vegas/blog/2025-retrospective/\">https://nix.vegas/blog/2025-retrospective/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/mgbsij/nix_vegas_2025_retrospective\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 537163842,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1756755613
+    },
+    {
+        "content": "<h2>NixOS is the endgame of distrohopping</h2>\n<p>September 05, 2025 at 04:19AM</p>\n<p><a href=\"https://joshblais.com/blog/nixos-is-the-endgame-of-distrohopping/\">https://joshblais.com/blog/nixos-is-the-endgame-of-distrohopping/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/d30ska/nixos_is_endgame_distrohopping\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 537818303,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1757060713
+    },
+    {
+        "content": "<h2>NixCon Europe Live (2025)</h2>\n<p>September 05, 2025 at 08:45AM</p>\n<p><a href=\"https://2025.nixcon.org/live\">https://2025.nixcon.org/live</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/sb1glw/nixcon_europe_live_2025\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 537863193,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1757076621
+    },
+    {
+        "content": "<h2>Nix SC member @tomberek works for Anduril</h2>\n<p>September 07, 2025 at 01:41PM</p>\n<p><a href=\"https://discourse.nixos.org/t/sc-member-tomberek-works-for-anduril/68971\">https://discourse.nixos.org/t/sc-member-tomberek-works-for-anduril/68971</a></p>\n<p>&lt;p&gt;The SC has formally responded here:<br>\n&lt;a href=\"<a href=\"https://discourse.nixos.org/t/statement-on-a-steering-committee-member-joining-anduril/69007\">https://discourse.nixos.org/t/statement-on-a-steering-committee-member-joining-anduril/69007</a>\" rel=\"ugc\"&gt;https://discourse.nixos.org/t/statement-on-a-steering-committee-member-joining-anduril/69007&lt;/a&gt;&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/rxkpdl/nix_sc_member_tomberek_works_for_anduril\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 538095103,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1757267117
+    },
+    {
+        "content": "<h2>Flox, the Nix Foundation, and NVIDIA Partner for CUDA</h2>\n<p>September 10, 2025 at 12:35PM</p>\n<p><a href=\"https://flox.dev/blog/flox-the-nix-foundation-and-nvidia-partner-for-cuda/\">https://flox.dev/blog/flox-the-nix-foundation-and-nvidia-partner-for-cuda/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/wiwfvy/flox_nix_foundation_nvidia_partner_for\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 538697005,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1757522454
+    },
+    {
+        "content": "<h2>devenv 1.9: Scaling Nix projects using modules and profiles - devenv</h2>\n<p>September 17, 2025 at 10:17AM</p>\n<p><a href=\"https://devenv.sh/blog/2025/09/17/devenv-19-scaling-nix-projects-using-modules-and-profiles/\">https://devenv.sh/blog/2025/09/17/devenv-19-scaling-nix-projects-using-modules-and-profiles/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/3sqw4o/devenv_1_9_scaling_nix_projects_using\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 540028325,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1758118853
+    },
+    {
+        "content": "<h2>Steering Committee Retrospective</h2>\n<p>September 17, 2025 at 04:16PM</p>\n<p><a href=\"https://www.haskellforall.com/2025/09/steering-committee-retrospective.html\">https://www.haskellforall.com/2025/09/steering-committee-retrospective.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/pqt0mb/steering_committee_retrospective\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 540097298,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1758140729
+    },
+    {
+        "content": "<h2>Globally applying overlays onto Nixpkgs</h2>\n<p>September 18, 2025 at 09:30AM</p>\n<p><a href=\"https://piegames.de/dumps/nixpkgs-global-overlays/\">https://piegames.de/dumps/nixpkgs-global-overlays/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/tiv1ah/globally_applying_overlays_onto_nixpkgs\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 540235788,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1758202544
+    },
+    {
+        "content": "<h2>NixCon 2025 Trip Report</h2>\n<p>September 21, 2025 at 03:51AM</p>\n<p><a href=\"https://michael.stapelberg.ch/posts/2025-09-21-nixcon-2025-trip-report/\">https://michael.stapelberg.ch/posts/2025-09-21-nixcon-2025-trip-report/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ahvcd2/nixcon_2025_trip_report\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 540640039,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1758441341
+    },
+    {
+        "content": "<h2>Docker Was Too Slow, So We Replaced It: Nix in Production</h2>\n<p>September 27, 2025 at 02:53PM</p>\n<p><a href=\"https://www.youtube.com/watch?v=iPoL03tFBtU\">https://www.youtube.com/watch?v=iPoL03tFBtU</a></p>\n<div class=\"youtube-video message_inline_image\"><a data-id=\"iPoL03tFBtU\" href=\"https://www.youtube.com/watch?v=iPoL03tFBtU\"><img src=\"https://uploads.zulipusercontent.net/0769862eb005f149d630f44ba437f539266e6a7f/68747470733a2f2f692e7974696d672e636f6d2f76692f69506f4c303374464274552f6d7164656661756c742e6a7067\"></a></div><p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/fml20b/docker_was_too_slow_so_we_replaced_it_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 541830567,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1758999342
+    },
+    {
+        "content": "<h2>A statement from members of the NixOS moderation team</h2>\n<p>September 27, 2025 at 08:00PM</p>\n<p><a href=\"https://discourse.nixos.org/t/a-statement-from-members-of-the-moderation-team/69828\">https://discourse.nixos.org/t/a-statement-from-members-of-the-moderation-team/69828</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/e6jh5d/statement_from_members_nixos_moderation\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 541848202,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759017932
+    },
+    {
+        "content": "<h2>Nix Steering Committee vote of no confidence</h2>\n<p>October 01, 2025 at 09:59AM</p>\n<p><a href=\"https://www.haskellforall.com/2025/10/nix-steering-committee-vote-of-no.html\">https://www.haskellforall.com/2025/10/nix-steering-committee-vote-of-no.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/jai4yu/nix_steering_committee_vote_no\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 542503809,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759327270
+    },
+    {
+        "content": "<h2>Stop Trusting Nix Caches</h2>\n<p>October 01, 2025 at 11:40AM</p>\n<p><a href=\"https://garnix.io/blog/stop-trusting-nix-caches\">https://garnix.io/blog/stop-trusting-nix-caches</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/8nyk1p/stop_trusting_nix_caches\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 542529040,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759333555
+    },
+    {
+        "content": "<h2>Installing NixOS on Raspberry Pi 4</h2>\n<p>October 02, 2025 at 11:52AM</p>\n<p><a href=\"https://mtlynch.io/nixos-pi4/\">https://mtlynch.io/nixos-pi4/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/bzx3ue/installing_nixos_on_raspberry_pi_4\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 542779442,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759420876
+    },
+    {
+        "content": "<h2>Wombat’s Book of Nix</h2>\n<p>October 02, 2025 at 02:52PM</p>\n<p><a href=\"https://mhwombat.codeberg.page/nix-book/\">https://mhwombat.codeberg.page/nix-book/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cpersg/wombat_s_book_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 542810964,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759431335
+    },
+    {
+        "content": "<h2>Dropping upstream Nix from Determinate Nix Installer</h2>\n<p>October 02, 2025 at 08:44PM</p>\n<p><a href=\"https://determinate.systems/blog/installer-dropping-upstream/\">https://determinate.systems/blog/installer-dropping-upstream/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/be78ef/dropping_upstream_nix_from_determinate\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 542852268,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759452612
+    },
+    {
+        "content": "<h2>Fundraising campaign to sustain GNU Guix</h2>\n<p>October 03, 2025 at 10:43AM</p>\n<p><a href=\"https://guix.gnu.org/en/blog/2025/fundraising-campaign-to-sustain-gnu-guix/\">https://guix.gnu.org/en/blog/2025/fundraising-campaign-to-sustain-gnu-guix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ebared/fundraising_campaign_sustain_gnu_guix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 542962402,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759502749
+    },
+    {
+        "content": "<h2>devenv 1.10: monorepo Nix support with devenv.yaml imports - devenv</h2>\n<p>October 08, 2025 at 09:05AM</p>\n<p><a href=\"https://devenv.sh/blog/2025/10/07/devenv-110-monorepo-nix-support-with-devenvyaml-imports/\">https://devenv.sh/blog/2025/10/07/devenv-110-monorepo-nix-support-with-devenvyaml-imports/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/dzv8ff/devenv_1_10_monorepo_nix_support_with\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 543744270,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1759929048
+    },
+    {
+        "content": "<h2>Meta news on Lix in October 2025</h2>\n<p>October 14, 2025 at 09:42AM</p>\n<p><a href=\"https://lix.systems/blog/2025-10-13-meta-lix-news/\">https://lix.systems/blog/2025-10-13-meta-lix-news/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/pkowfh/meta_news_on_lix_october_2025\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 544753472,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1760449510
+    },
+    {
+        "content": "<h2>Pwning the Entire Nix Ecosystem</h2>\n<p>October 15, 2025 at 11:41AM</p>\n<p><a href=\"https://ptrpa.ws/nixpkgs-actions-abuse\">https://ptrpa.ws/nixpkgs-actions-abuse</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/gmjcf0/pwning_entire_nix_ecosystem\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 545002959,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1760543118
+    },
+    {
+        "content": "<h2>Nix: connecting to the Sandbox</h2>\n<p>October 16, 2025 at 06:19AM</p>\n<p><a href=\"https://bmcgee.ie/posts/2025/10/nix-connecting-to-the-sandbox/\">https://bmcgee.ie/posts/2025/10/nix-connecting-to-the-sandbox/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cucsmf/nix_connecting_sandbox\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 545256047,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1760610044
+    },
+    {
+        "content": "<h2>Nix CI Benchmarks</h2>\n<p>October 20, 2025 at 02:45PM</p>\n<p><a href=\"https://garnix-io.github.io/benchmarks\">https://garnix-io.github.io/benchmarks</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/yvebbf/nix_ci_benchmarks\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 546067636,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1760986248
+    },
+    {
+        "content": "<h2>Organizing your Nix configuration without flakes</h2>\n<p>October 22, 2025 at 03:28AM</p>\n<p><a href=\"https://somas.is/note-organizing-nix-configuration-without-flakes.html\">https://somas.is/note-organizing-nix-configuration-without-flakes.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ikcg1l/organizing_your_nix_configuration\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 546383577,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1761118231
+    },
+    {
+        "content": "<h2>Nixifying Kubernetes with nix-csi, easykubenix and dinix</h2>\n<p>October 24, 2025 at 09:36AM</p>\n<p><a href=\"https://discourse.nixos.org/t/nixifying-kubernetes-with-nix-csi-easykubenix-and-dinix/70899\">https://discourse.nixos.org/t/nixifying-kubernetes-with-nix-csi-easykubenix-and-dinix/70899</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/mirlh5/nixifying_kubernetes_with_nix_csi\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 546900024,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1761313211
+    },
+    {
+        "content": "<h2>Distroless Containers for corporate use: Nix Flakes vs Fedora</h2>\n<p>October 26, 2025 at 12:33PM</p>\n<p><a href=\"https://blog.riemann.cc/digitalisation/2025/10/26/distroless-containers-nix-flakes-vs-fedora/\">https://blog.riemann.cc/digitalisation/2025/10/26/distroless-containers-nix-flakes-vs-fedora/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cy3xwz/distroless_containers_for_corporate_use\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 547143417,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1761496537
+    },
+    {
+        "content": "<h2>yensid: A proxy for better Nix remote builds</h2>\n<p>October 28, 2025 at 03:27PM</p>\n<p><a href=\"https://github.com/garnix-io/yensid\">https://github.com/garnix-io/yensid</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/d5b8ke/yensid_proxy_for_better_nix_remote_builds\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 547574760,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1761680148
+    },
+    {
+        "content": "<h2>Nix derivation madness</h2>\n<p>October 30, 2025 at 05:25AM</p>\n<p><a href=\"https://fzakaria.com/2025/10/29/nix-derivation-madness\">https://fzakaria.com/2025/10/29/nix-derivation-madness</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/oiisxj/nix_derivation_madness\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 547886859,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1761816650
+    },
+    {
+        "content": "<h2>Fix your FODs</h2>\n<p>October 30, 2025 at 04:53PM</p>\n<p><a href=\"https://garnix.io/blog/fix-your-fods\">https://garnix.io/blog/fix-your-fods</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/r8jkz9/fix_your_fods\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 548031799,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1761857739
+    },
+    {
+        "content": "<h2>Changelog: introducing nix nario</h2>\n<p>October 31, 2025 at 03:53PM</p>\n<p><a href=\"https://determinate.systems/blog/changelog-determinate-nix-3120/\">https://determinate.systems/blog/changelog-determinate-nix-3120/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/s6sls6/changelog_introducing_nix_nario\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 548237205,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1761940855
+    },
+    {
+        "content": "<h2>LixCon in 2026</h2>\n<p>November 05, 2025 at 11:27AM</p>\n<p><a href=\"https://lix.systems/blog/2025-11-05-lixcon-2026/\">https://lix.systems/blog/2025-11-05-lixcon-2026/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/8vhdqn/lixcon_2026\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 553905460,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1762360252
+    },
+    {
+        "content": "<h2>Exposing Git Information in Rust Binaries Built With Nix</h2>\n<p>November 10, 2025 at 01:48PM</p>\n<p><a href=\"https://lgug2z.com/articles/exposing-git-information-in-rust-binaries-built-with-nix/\">https://lgug2z.com/articles/exposing-git-information-in-rust-binaries-built-with-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ii5opg/exposing_git_information_rust_binaries\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 554769968,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1762800614
+    },
+    {
+        "content": "<h2>Bundle Configuration with Binaries using Nix</h2>\n<p>November 16, 2025 at 03:44PM</p>\n<p><a href=\"https://www.robw.fyi/2025/11/15/bundle-configuration-with-binaries-using-nix/\">https://www.robw.fyi/2025/11/15/bundle-configuration-with-binaries-using-nix/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/iqsvk2/bundle_configuration_with_binaries\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 556713656,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1763325945
+    },
+    {
+        "content": "<h2>A 'small' vanilla Kubernetes install on NixOS</h2>\n<p>November 18, 2025 at 05:58AM</p>\n<p><a href=\"https://stephank.nl/p/2025-11-17-a-small-vanilla-kubernetes-install-on-nixos.html\">https://stephank.nl/p/2025-11-17-a-small-vanilla-kubernetes-install-on-nixos.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/i8ez2g/small_vanilla_kubernetes_install_on\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 557898947,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1763463670
+    },
+    {
+        "content": "<h2>Announcing Lix 2.94 “Açaí na tigela”</h2>\n<p>November 18, 2025 at 10:01AM</p>\n<p><a href=\"https://lix.systems/blog/2025-11-18-lix-2.94-release/\">https://lix.systems/blog/2025-11-18-lix-2.94-release/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/lqsrgo/announcing_lix_2_94_acai_na_tigela\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 557961852,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1763478648
+    },
+    {
+        "content": "<h2>Nix Sucks; Everything else is Worse: Building Better Software Supply Chains</h2>\n<p>November 21, 2025 at 03:43PM</p>\n<p><a href=\"https://www.youtube.com/watch?v=L8BBtBZXKac\">https://www.youtube.com/watch?v=L8BBtBZXKac</a></p>\n<div class=\"youtube-video message_inline_image\"><a data-id=\"L8BBtBZXKac\" href=\"https://www.youtube.com/watch?v=L8BBtBZXKac\"><img src=\"https://uploads.zulipusercontent.net/d1ce9d21df7b3474b978f9af563ac68720179fea/68747470733a2f2f692e7974696d672e636f6d2f76692f4c38424274425a584b61632f6d7164656661756c742e6a7067\"></a></div><p>&lt;p&gt;Mirror on Odysee &lt;a href=\"<a href=\"https://odysee.com/@nrdxp:6/Nix-Sucks-Everything-else-is-Worse:4\">https://odysee.com/@nrdxp:6/Nix-Sucks-Everything-else-is-Worse:4</a>\" rel=\"ugc\"&gt;https://odysee.com/@nrdxp:6/Nix-Sucks-Everything-else-is-Worse:4&lt;/a&gt;&lt;/p&gt;<br>\n&lt;p&gt;Tim DeHerrera, a Nix contributor since 2017, critiques the limitations of traditional package managers, virtual environments, and Docker in handling dependency conflicts, reproducibility, and supply-chain security.&lt;/p&gt;<br>\n&lt;p&gt;The core innovation presented is Atom — a packaging abstraction built on Git tree objects, but decoupled from full commit history. Each atom is a reproducible, detached Git commit referencing a specific tree object, enabling lightweight, cryptographically verifiable references to package outputs without requiring the entire repository history or unrelated files.&lt;/p&gt;<br>\n&lt;p&gt;Package sets are modeled as mathematical sets: collections of atoms with globally unique names and content-addressed identities, enforced via cryptographic hashes. This eliminates version conflicts and supports decentralized, mirrorable distribution.&lt;/p&gt;<br>\n&lt;p&gt;Eka is a Rust-based CLI providing a high-level interface to Nix, with:&lt;/p&gt;<br>\n&lt;pre&gt;&lt;code&gt;Atom creation and semantic versioning<br>\nDecentralized dependency resolution<br>\nDeterministic lock files with full provenance<br>\nCompatibility with existing Nix expressions<br>\n&lt;/code&gt;&lt;/pre&gt;<br>\n&lt;p&gt;Live demo: repository setup, atom publishing, dependency resolution, and lock-file generation.&lt;/p&gt;<br>\n&lt;p&gt;Project: &lt;a href=\"<a href=\"https://github.com/ekala-project/eka\">https://github.com/ekala-project/eka</a>\" rel=\"ugc\"&gt;https://github.com/ekala-project/eka&lt;/a&gt;&lt;/p&gt;<br>\n&lt;p&gt;Discord: &lt;a href=\"<a href=\"https://discord.gg/DgC9Snxmg7\">https://discord.gg/DgC9Snxmg7</a>\" rel=\"ugc\"&gt;https://discord.gg/DgC9Snxmg7&lt;/a&gt;<br>\nPresented on Tuesday, November 4, 2025&lt;/p&gt;<br>\n&lt;p&gt;Nix Sucks; Everything else is Worse: Building Better Software Supply Chains - Tim DeHerrera (nrdxp)&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/dkhkq9/nix_sucks_everything_else_is_worse\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 558748395,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1763757946
+    },
+    {
+        "content": "<h2>Imgur Geo-Blocked the UK, So I Geo-Unblocked My Entire Network</h2>\n<p>November 29, 2025 at 03:12PM</p>\n<p><a href=\"https://blog.tymscar.com/posts/imgurukproxy/\">https://blog.tymscar.com/posts/imgurukproxy/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/0u9ig2/imgur_geo_blocked_uk_so_i_geo_unblocked_my\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 560942004,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1764447350
+    },
+    {
+        "content": "<h2>NixOS 25.11 released</h2>\n<p>November 30, 2025 at 04:38PM</p>\n<p><a href=\"https://nixos.org/blog/announcements/2025/nixos-2511/\">https://nixos.org/blog/announcements/2025/nixos-2511/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/bvuwhl/nixos_25_11_released\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 561035125,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1764538835
+    },
+    {
+        "content": "<h2>Complex end-to-end tests using Guix G-expressions</h2>\n<p>December 01, 2025 at 06:16PM</p>\n<p><a href=\"https://systemreboot.net/post/complex-end-to-end-tests-using-guix-g-expressions.html\">https://systemreboot.net/post/complex-end-to-end-tests-using-guix-g-expressions.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/3mijhp/complex_end_end_tests_using_guix_g\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 561293994,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1764631237
+    },
+    {
+        "content": "<h2>nixtml: Static website and blog generator written in nix</h2>\n<p>December 02, 2025 at 09:52AM</p>\n<p><a href=\"https://github.com/arnarg/nixtml\">https://github.com/arnarg/nixtml</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/ysvvbi/nixtml_static_website_blog_generator\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 561435461,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1764687322
+    },
+    {
+        "content": "<h2>jail.nix - Easily wrap your nix derivation in bubblewrap jails</h2>\n<p>December 09, 2025 at 01:41PM</p>\n<p><a href=\"https://git.sr.ht/~alexdavid/jail.nix\">https://git.sr.ht/~alexdavid/jail.nix</a></p>\n<p>&lt;p&gt;There was a great talk at &lt;a href=\"<a href=\"https://talks.nixcon.org/nixcon-2025/talk/3QH3PZ/\">https://talks.nixcon.org/nixcon-2025/talk/3QH3PZ/</a>\" rel=\"ugc\"&gt;NixCon in Zürich&lt;/a&gt; about &lt;code&gt;jail.nix&lt;/code&gt;. I gave it a try since then, wrapping &lt;code&gt;sauerbraten&lt;/code&gt; with an NVIDIA gpu and it was quite a decent experience. The project is also a good source for studying a dependency-free nix library and the &lt;a href=\"<a href=\"https://alexdav.id/projects/jail-nix/\">https://alexdav.id/projects/jail-nix/</a>\" rel=\"ugc\"&gt;documentation&lt;/a&gt; is quite a charm as well.&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/lod9o8/jail_nix_easily_wrap_your_nix_derivation\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 562770005,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1765305946
+    },
+    {
+        "content": "<h2>Installing Every NixOS Package</h2>\n<p>December 11, 2025 at 02:48PM</p>\n<p><a href=\"https://unnamed.website/posts/installing-every-nixos-package/\">https://unnamed.website/posts/installing-every-nixos-package/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/u7yz80/installing_every_nixos_package\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 563271343,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1765482608
+    },
+    {
+        "content": "<h2>Stopping systemd services under memory pressure</h2>\n<p>December 15, 2025 at 09:18AM</p>\n<p><a href=\"https://blog.cyplo.dev/stopping-systemd-services-under-memory-pressure.html\">https://blog.cyplo.dev/stopping-systemd-services-under-memory-pressure.html</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/mldhwy/stopping_systemd_services_under_memory\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 563835916,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1765808421
+    },
+    {
+        "content": "<h2>Determinate Nix 3.0</h2>\n<p>December 16, 2025 at 12:25PM</p>\n<p><a href=\"https://determinate.systems/blog/determinate-nix-30/\">https://determinate.systems/blog/determinate-nix-30/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/avk8kz/determinate_nix_3_0\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 564097965,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1765906240
+    },
+    {
+        "content": "<h2>KDE Ni! OS Is a Playful Take on Immutable Linux Built on NixOS</h2>\n<p>December 17, 2025 at 02:58AM</p>\n<p><a href=\"https://linuxiac.com/kde-ni-os-is-a-playful-take-on-immutable-linux-built-on-nixos/\">https://linuxiac.com/kde-ni-os-is-a-playful-take-on-immutable-linux-built-on-nixos/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/4lvdl8/kde_ni_os_is_playful_take_on_immutable\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 564190428,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1765958454
+    },
+    {
+        "content": "<h2>A Planet for Guix</h2>\n<p>December 17, 2025 at 09:06AM</p>\n<p><a href=\"https://guix.gnu.org/blog/2025/planet-guix//\">https://guix.gnu.org/blog/2025/planet-guix//</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/uzujpg/planet_for_guix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 564261081,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1765980638
+    },
+    {
+        "content": "<h2>Hardware-Attested Nix Builds</h2>\n<p>December 18, 2025 at 11:31AM</p>\n<p><a href=\"https://garnix.io/blog/attested-nix-builds/\">https://garnix.io/blog/attested-nix-builds/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/8caabc/hardware_attested_nix_builds\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 564507256,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766075748
+    },
+    {
+        "content": "<h2>Towards a secure peer-to-peer app platform for Clan</h2>\n<p>December 22, 2025 at 01:14PM</p>\n<p><a href=\"https://clan.lol/blog/towards-app-platform-vmtech/\">https://clan.lol/blog/towards-app-platform-vmtech/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/4qm8zs/towards_secure_peer_peer_app_platform_for\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565050992,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766427342
+    },
+    {
+        "content": "<h2>Reproducing the NixOS 25.11 Minimal Installation ISO</h2>\n<p>December 23, 2025 at 10:47AM</p>\n<p><a href=\"https://arnout.engelen.eu/blog/reproducing-nixos-25.11-minimal-iso/\">https://arnout.engelen.eu/blog/reproducing-nixos-25.11-minimal-iso/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/kpvesz/reproducing_nixos_25_11_minimal\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565177436,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766505039
+    },
+    {
+        "content": "<h2>polyglot-image: A disk image that boots on multiple architectures</h2>\n<p>December 23, 2025 at 04:46PM</p>\n<p><a href=\"https://github.com/blitz/polyglot-image\">https://github.com/blitz/polyglot-image</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/fkjkjv/polyglot_image_disk_image_boots_on\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565216222,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766526640
+    },
+    {
+        "content": "<h2>Custom Cross Compiler with Nix</h2>\n<p>December 24, 2025 at 12:28AM</p>\n<p><a href=\"https://www.hobson.space/posts/nixcross/\">https://www.hobson.space/posts/nixcross/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/3fytym/custom_cross_compiler_with_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565244427,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766554249
+    },
+    {
+        "content": "<h2>Nix State of the SBOM</h2>\n<p>December 24, 2025 at 10:22AM</p>\n<p><a href=\"https://arnout.engelen.eu/blog/nix-state-of-the-sbom/\">https://arnout.engelen.eu/blog/nix-state-of-the-sbom/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/xgfhan/nix_state_sbom\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565294119,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766589942
+    },
+    {
+        "content": "<h2>Automating What Backblaze Lifecycle Rules Don't Do Instantly</h2>\n<p>December 25, 2025 at 07:59PM</p>\n<p><a href=\"https://blog.tymscar.com/posts/backblazeb2cleanup/\">https://blog.tymscar.com/posts/backblazeb2cleanup/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/abglcr/automating_what_backblaze_lifecycle\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565398619,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766710865
+    },
+    {
+        "content": "<h2>nix-prompt: a clean and modular bash prompt with just the right amount of customization options</h2>\n<p>December 26, 2025 at 07:01PM</p>\n<p><a href=\"https://github.com/nix-tricks/nix-prompt\">https://github.com/nix-tricks/nix-prompt</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/cmlfrr/nix_prompt_clean_modular_bash_prompt_with\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565479269,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766794248
+    },
+    {
+        "content": "<h2>Consider a Nix Flake for your windows-rs Project</h2>\n<p>December 28, 2025 at 09:34PM</p>\n<p><a href=\"https://lgug2z.com/articles/consider-a-nix-flake-for-your-windows-rs-project/\">https://lgug2z.com/articles/consider-a-nix-flake-for-your-windows-rs-project/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/wxgtha/consider_nix_flake_for_your_windows_rs\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 565607524,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1766976019
+    },
+    {
+        "content": "<h2>Linux: The Silent (Nix) Revolution</h2>\n<p>January 02, 2026 at 06:30PM</p>\n<p><a href=\"https://gg-solutions.hashnode.dev/linux-the-silent-revolution\">https://gg-solutions.hashnode.dev/linux-the-silent-revolution</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/59pd10/linux_silent_nix_revolution\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 566110083,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1767396917
+    },
+    {
+        "content": "<h2>Aurora Sprint 2026 - Hack on Embedded Nix in Iceland</h2>\n<p>January 06, 2026 at 05:50AM</p>\n<p><a href=\"https://aurorasprint.com/\">https://aurorasprint.com/</a></p>\n<p>&lt;p&gt;Last call to apply to Aurora Sprint <span aria-label=\"milky way\" class=\"emoji emoji-1f30c\" role=\"img\" title=\"milky way\">:milky_way:</span>&lt;/p&gt;<br>\n&lt;p&gt;Taking place February 23rd to 27th, the week before Planet Nix, the theme of &lt;a href=\"<a href=\"https://aurorasprint.com/\">https://aurorasprint.com/</a>\" rel=\"ugc\"&gt;Aurora Sprint&lt;/a&gt; is making Nix the perfect platform to develop and build embedded systems.&lt;/p&gt;<br>\n&lt;p&gt;Aurora Sprint is hosted by &lt;a href=\"<a href=\"https://genki.is\">https://genki.is</a>\" rel=\"ugc\"&gt;Genki&lt;/a&gt; and will take place at its downtown Reykjavík office. Throughout the week, there will be opportunities to go aurora hunting, hiking, and experience Icelandic swimming pools and cuisine. Seats are limited. The application deadline is January 11th, and invitations will be sent out the following week.&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"<a href=\"https://aurorasprint.com/\">https://aurorasprint.com/</a>\" rel=\"ugc\"&gt;Apply here&lt;/a&gt;.&lt;/p&gt;<br>\n&lt;p&gt;&lt;a href=\"https://lobste.rs/s/eb41bh/aurora_sprint_2026_hack_on_embedded_nix\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 566521335,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1767696905
+    },
+    {
+        "content": "<h2>Going immutable on macOS</h2>\n<p>January 15, 2026 at 10:16AM</p>\n<p><a href=\"https://carette.xyz/posts/going_immutable_macos/\">https://carette.xyz/posts/going_immutable_macos/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/2sl7bs/going_immutable_on_macos\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 568242553,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1768490448
+    },
+    {
+        "content": "<h2>Clan 2025 Wrap-Up: From Infrastructure to a New Computing Paradigm</h2>\n<p>January 18, 2026 at 04:35AM</p>\n<p><a href=\"https://clan.lol/blog/2025-wrap-up/\">https://clan.lol/blog/2025-wrap-up/</a></p>\n<p>&lt;p&gt;&lt;a href=\"https://lobste.rs/s/m5u098/clan_2025_wrap_up_from_infrastructure_new\"&gt;Comments&lt;/a&gt;&lt;/p&gt;</p>",
+        "id": 568651695,
+        "sender_full_name": "IFTTT",
+        "timestamp": 1768729245
+    }
+]

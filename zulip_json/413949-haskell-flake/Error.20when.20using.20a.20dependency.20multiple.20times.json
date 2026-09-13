@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>This discussion: <a href=\"https://github.com/srid/haskell-flake/discussions/430\">https://github.com/srid/haskell-flake/discussions/430</a></p>\n<p>When using a dependency that uses <code>settings.&lt;name&gt;.custom</code> more than once, an error is thrown saying it's a duplicate.</p>\n<p>Any ideas on how to address this would be greatly appreciated, as my apps do depend on the same libs that are built using <code>haskell-flake</code> and use <code>custom</code>.</p>",
+        "id": 525394055,
+        "sender_full_name": "Rene Vergara",
+        "timestamp": 1750706111
+    }
+]

@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>Inspired by <a href=\"#narrow/stream/413950-nix/topic/.60flake.2Elock.60.20auto-merge.20on.20GitHub/near/440720675\">https://nixos.zulipchat.com/#narrow/stream/413950-nix/topic/.60flake.2Elock.60.20auto-merge.20on.20GitHub/near/440720675</a></p>\n<p>I created a Github Actions configuration to auto update CHANGELOG in services-flake.</p>\n<p>configuration file: <a href=\"https://github.com/juspay/services-flake/blob/4dbb54612363a95dfa7d47750702664f1f3f1d9f/.github/workflows/update-changelog.yaml\">https://github.com/juspay/services-flake/blob/4dbb54612363a95dfa7d47750702664f1f3f1d9f/.github/workflows/update-changelog.yaml</a></p>\n<p>PR triggered using the configuration above: <a href=\"https://github.com/juspay/services-flake/pull/202\">https://github.com/juspay/services-flake/pull/202</a></p>",
+        "id": 441020519,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716896378
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>LWN just did an article on Nix &amp; Guix. It's a paid article but I'm a subscriber so I thought I'd share a free link:<br>\n<a href=\"https://lwn.net/SubscriberLink/962788/60448ccca97ce2d6/\">https://lwn.net/SubscriberLink/962788/60448ccca97ce2d6/</a></p>",
+        "id": 423738175,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709089506
+    },
+    {
+        "content": "<p>Thanks</p>",
+        "id": 423750959,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709099052
+    },
+    {
+        "content": "<p>I remember from years back, guix could run/build anything from nixpkgs with a subcommand, is that right?</p>",
+        "id": 424296051,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1709314671
+    },
+    {
+        "content": "<p>Perhaps, I've never used it for more than a few minutes</p>",
+        "id": 424296285,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709314749
+    },
+    {
+        "content": "<p>It was originally forked from Nix though, so in principle it would make sense</p>",
+        "id": 424296313,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709314763
+    }
+]

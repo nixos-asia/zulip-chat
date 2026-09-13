@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><strong>Public</strong> stream created by <span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span>. <strong>Description:</strong></p>\n<blockquote>\n<p>Here we talk about LLM breakthroughs in the open-source community and also try to nixify them</p>\n</blockquote>",
+        "id": 422465533,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1708449667
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> changed the <a href=\"/help/stream-permissions\">access permissions</a> for this stream from <strong>Public</strong> to <strong>Web-public</strong>.</p>",
+        "id": 422466250,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1708449862
+    }
+]

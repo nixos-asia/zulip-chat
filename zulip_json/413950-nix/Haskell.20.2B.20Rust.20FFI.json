@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"677935\">@Akhilesh Singh Bhadauriya</span> wants to nixify <a href=\"https://github.com/piyushKumar-1/haskell_cac_client\">https://github.com/piyushKumar-1/haskell_cac_client</a></p>\n<p>This is basically a Haskell library with FFI bindings to Rust code in the same repo. </p>\n<p>I have worked on a similar project two years ago: <a href=\"https://github.com/ArdanaLabs/yubihsm-ed-sign\">https://github.com/ArdanaLabs/yubihsm-ed-sign</a></p>\n<p>But now I'd like to use this opportunity to create a template repo for such projects, using <code>haskell-flake</code> and something for Rust.</p>",
+        "id": 411019670,
+        "sender_full_name": "Srid",
+        "timestamp": 1704290650
+    },
+    {
+        "content": "<p>I tried to move this repo to nammayatri(<a href=\"https://github.com/nammayatri/nammayatri\">https://github.com/nammayatri/nammayatri</a>) so I'm getting this following error:</p>\n<div class=\"codehilite\"><pre><span></span><code> … while calling the &#39;derivationStrict&#39; builtin\n         at /builtin/derivation.nix:9:12: (source not available)\n       … while evaluating derivation &#39;ny-backend&#39;\n         whose name attribute is located at /nix/store/aiv6rdld7d7smj3rrh72da2sssl6z2xl-source/pkgs/stdenv/generic/make-derivation.nix:300:7\n       … while evaluating attribute &#39;__impureHostDeps&#39; of derivation &#39;ny-backend&#39;\n         at /nix/store/aiv6rdld7d7smj3rrh72da2sssl6z2xl-source/pkgs/stdenv/generic/make-derivation.nix:435:7:\n          434|       __propagatedSandboxProfile = lib.unique (computedPropagatedSandboxProfile ++ [ propagatedSandboxProfile ]);\n          435|       __impureHostDeps = computedImpureHostDeps ++ computedPropagatedImpureHostDeps ++ __propagatedImpureHostDeps ++ __impureHostDeps ++ stdenv.__extraImpureHostDeps ++ [\n             |       ^\n          436|         &quot;/dev/zero&quot;\n       (stack trace truncated; use &#39;--show-trace&#39; to show the full trace)\n       error: function &#39;anonymous lambda&#39; called without required argument &#39;cac_client&#39;\n       at /nix/store/l8awdgyzg1zanisz6xb492r6ybzzrnfc-cabal2nix-haskell-cac/default.nix:1:1:\n            1| { mkDerivation, base, cac_client, lib }:\n             | ^\n            2| mkDerivation {\nrealpath: /Users/akhilesh.b/Desktop/nammayatri/.direnv/flake-profile.55906: No such file or directory\nerror: path &#39;/Users/akhilesh.b/Desktop/nammayatri&#39; is not in the Nix store\nwarning: Git tree &#39;/Users/akhilesh.b/Desktop/nammayatri&#39; is dirty\ndirenv: nix-direnv: renewed cache\ndirenv: export +XDG_DATA_DIRS ~PATH\n</code></pre></div>\n<p>Is this expected.</p>",
+        "id": 411029697,
+        "sender_full_name": "Akhilesh Singh Bhadauriya",
+        "timestamp": 1704294402
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"677935\">@Akhilesh Singh Bhadauriya</span> What is the diff, exactly? </p>\n<div class=\"codehilite\"><pre><span></span><code>error: path &#39;/Users/akhilesh.b/Desktop/nammayatri&#39; is not in the Nix store\n</code></pre></div>\n<p>Your Nix seems to be referring to some absolute path.</p>",
+        "id": 411031272,
+        "sender_full_name": "Srid",
+        "timestamp": 1704295039
+    },
+    {
+        "content": "<p>You can put post the link to the branch on GitHub</p>",
+        "id": 411034075,
+        "sender_full_name": "Srid",
+        "timestamp": 1704296147
+    },
+    {
+        "content": "<p>No but i'm trying to compile everything in local. This is just showing the path where my nammayatri repo is.</p>",
+        "id": 411164477,
+        "sender_full_name": "Akhilesh Singh Bhadauriya",
+        "timestamp": 1704364457
+    },
+    {
+        "content": "<p>It would be nice to see the code committed somewhere so that we can reproduce the issue</p>",
+        "id": 411165583,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704364921
+    },
+    {
+        "content": "<p>You can find this here <br>\n<a href=\"https://github.com/nammayatri/nammayatri/tree/Backend/FFI-RUst/issue\">https://github.com/nammayatri/nammayatri/tree/Backend/FFI-RUst/issue</a></p>",
+        "id": 411172846,
+        "sender_full_name": "Akhilesh Singh Bhadauriya",
+        "timestamp": 1704367772
+    },
+    {
+        "content": "<p>You should not commit compiled assets like the <code>target</code> folder <span class=\"user-mention\" data-user-id=\"677935\">@Akhilesh Singh Bhadauriya</span></p>",
+        "id": 411187260,
+        "sender_full_name": "Srid",
+        "timestamp": 1704374051
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"677935\">@Akhilesh Singh Bhadauriya</span> The CI is not showing the error you report. Instead it is showing something else:</p>\n<p><a href=\"https://jenkins-nix-ci.betta-gray.ts.net/job/nammayatri/job/Backend%252FFFI-RUst%252Fissue/2/pipeline-console/\">https://jenkins-nix-ci.betta-gray.ts.net/job/nammayatri/job/Backend%252FFFI-RUst%252Fissue/2/pipeline-console/</a></p>\n<div class=\"codehilite\"><pre><span></span><code>error: function &#39;anonymous lambda&#39; called without required argument &#39;cac_client&#39;\n</code></pre></div>",
+        "id": 411187620,
+        "sender_full_name": "Srid",
+        "timestamp": 1704374228
+    },
+    {
+        "content": "<p>Which is understandable as we haven't written any Nix to a) build the Rust package, and b) make it available to the Haskell packages. Which is exactly what I plan to do <em>next week</em>.</p>",
+        "id": 411187711,
+        "sender_full_name": "Srid",
+        "timestamp": 1704374276
+    },
+    {
+        "content": "<p>Nixified version of repo PR:<br>\n<a href=\"https://github.com/piyushKumar-1/haskell_cac_client/pull/2\">https://github.com/piyushKumar-1/haskell_cac_client/pull/2</a></p>",
+        "id": 411939258,
+        "sender_full_name": "Akhilesh Singh Bhadauriya",
+        "timestamp": 1704808497
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>How to?</p>\n<p>With Eka Type definitions and schemata at hand, we might just do a little extra work and fine tune a model, instead of relying purely on the system prompt.</p>\n<p>... if it's easy enough.</p>",
+        "id": 423166130,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708777771
+    },
+    {
+        "content": "<p>Yes, we might want to do something like that. I haven't yet practiced on this end.</p>",
+        "id": 423166542,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708778193
+    }
+]

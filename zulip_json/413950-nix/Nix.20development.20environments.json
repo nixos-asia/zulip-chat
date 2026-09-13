@@ -1,0 +1,74 @@
+[
+    {
+        "content": "<p>Hey everyone, </p>\n<p>I am interested in improving my <em>nix developer experience</em> and I'd just like to know how others are setting things up for Nix development. So not development of something else with the help of a Nix provided environment, but writing Nix code itself.</p>\n<ul>\n<li>Which formatters are you using?</li>\n<li>How about linters?</li>\n<li>Are you using pre-commit hooks or something similar on</li>\n<li>What about using LSPs in your editor of choice (mine being VSCode and Neovim, but I also tried Helix)</li>\n<li>What about CI integration for your projects? </li>\n<li>Automated unit testing? Possible other kinds of testing setup? </li>\n</ul>\n<p>Anyways, I'd like to come up with some nice or even best practices. </p>\n<p>I want to know how to make writing Nix code less of a guessing game for me.</p>",
+        "id": 430839732,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712078898
+    },
+    {
+        "content": "<p>This is something we want to document in the larger theme of <a href=\"https://nixos.asia/en/dev\">https://nixos.asia/en/dev</a></p>\n<p>For now, you want to:</p>\n<ul>\n<li>Use direnv, as it integrates well with VSCode: <a href=\"https://nixos.asia/en/direnv\">https://nixos.asia/en/direnv</a></li>\n<li>Any formatter will do (I use nixpkgs-fmt), but do it through treefmt-nix: <a href=\"https://nixos.asia/en/treefmt\">https://nixos.asia/en/treefmt</a></li>\n<li>For LSP, I have <code>nil</code> (<code>nil_ls.enable = true;</code> in nixvim config)</li>\n<li>For CI, self-hosted github runners (imaging running CI directly on my macbook from a coffee shop in a small Australian town!)</li>\n<li>For unit test, it is all adhoc now, but there's potential from creating something nice here. See <a href=\"https://twitter.com/sridca/status/1763528379188265314\">https://twitter.com/sridca/status/1763528379188265314</a></li>\n</ul>",
+        "id": 430868272,
+        "sender_full_name": "Srid",
+        "timestamp": 1712089866
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> Thanks for the reply!</p>\n<p>Yes, documenting various possible setups would be a real plus! </p>\n<p>Speaking of LSP, using <code>nil</code> do I get a good overview of available functions that I might wish to use? Does it pick up stuff from my project's own <code>lib</code> for instance? Or from the one defined in <code>nixpkgs</code>? </p>\n<p>On the CI side, do you have a nice github actions workflow for CI?</p>\n<p>Did you ever try running GitHub CI locally via something ike <a href=\"https://github.com/nektos/act\">https://github.com/nektos/act</a> ?</p>\n<p>Maybe some other experienced people might want to share their perspective, too? <span class=\"user-mention\" data-user-id=\"678738\">@David Arnold</span> or <span class=\"user-mention\" data-user-id=\"679505\">@Jonathan Ringer</span>  or <span class=\"user-mention\" data-user-id=\"670561\">@John Bargman</span> or <span class=\"user-mention\" data-user-id=\"679956\">@Robert Hensing</span> or <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> or <span class=\"user-mention\" data-user-id=\"678680\">@Las</span> <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> and <span class=\"user-mention\" data-user-id=\"671017\">@tgunnoe</span> ? I probably missed a few people who are also doing a lot of Nix here... feel free to chime in!</p>",
+        "id": 430955167,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712135313
+    },
+    {
+        "content": "<p><a href=\"https://github.com/nix-community/nixago\">nixago</a> is nice for config generation. I've used pre-commit hooks in the past though haven't used any lately. I use direnv most of the time unless the shell is annoyingly heavy.</p>\n<p>Nil is a good as an LSP so far. I've been thinking of trying nixd, which uses the C++ nix evaluator as a backend to see how it compares, but haven't tried it yet. I also use helix with <a href=\"https://github.com/helix-editor/helix/pull/2608\">#2608</a> patched in since there tend to be a lot of file paths in Nix files.</p>\n<p>FWIW, I have personally contributed some <a href=\"https://github.com/helix-editor/helix/pull/3970\">nice additions</a> to helix that make it particularly nice for working with Nix files.</p>",
+        "id": 431115171,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1712156756
+    },
+    {
+        "content": "<p>As for the CI question, I use <a href=\"https://github.com/divnix/std-action\">std-action</a> wherever I can. Hyrda is an annoying bloated beast. I have been thinking that it might be useful though, to take the same idea and architecture behind std-action and decouple it from relying on the std API so that you can just use it with any Nix project. Might do that at some point</p>",
+        "id": 431115669,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1712156891
+    },
+    {
+        "content": "<p>Do you guys <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> and <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> have some readily available actionable example flakes you could point me to that you are using?</p>",
+        "id": 431140845,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712164708
+    },
+    {
+        "content": "<p>For self-hosted runner? I have <a href=\"https://github.com/srid/nixos-config/tree/master/clusters/github-runner\">https://github.com/srid/nixos-config/tree/master/clusters/github-runner</a></p>\n<p>But it needs tidying up followed by a tutorial or something</p>",
+        "id": 431157863,
+        "sender_full_name": "Srid",
+        "timestamp": 1712171482
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"679006\">Tim DeHerrera</span> <a href=\"#narrow/stream/413950-nix/topic/Nix.20development.20environments/near/431115669\">said</a>:</p>\n<blockquote>\n<p>As for the CI question, I use <a href=\"https://github.com/divnix/std-action\">std-action</a> wherever I can. Hyrda is an annoying bloated beast. I have been thinking that it might be useful though, to take the same idea and architecture behind std-action and decouple it from relying on the std API so that you can just use it with any Nix project. Might do that at some point</p>\n</blockquote>\n<p>OT: I added an issue to consider <a href=\"https://github.com/divnix/std-action/issues/55\">Forge independence</a> to <code>std-action</code>, cc <span class=\"user-mention\" data-user-id=\"678738\">@David Arnold</span></p>",
+        "id": 431645899,
+        "sender_full_name": "Arnold Schrijver",
+        "timestamp": 1712385087
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> I think what keeps me from \"re-trying\" Helix right now is that i started playing a lot with A.I. these days, and Helix doesn't seem to have a good plugin system yet. Or does it? I don't know if there is a way to plug in my Ollama to Helix.</p>\n<p>Bottom line of this so far for me:</p>\n<ul>\n<li>I will start playing with <code>nil</code> and use <code>direnv</code> more widely than I do so far. </li>\n<li>I am somewhat familiar with <code>nixago</code> and <code>standard</code> now after David introduced them to me a while ago. </li>\n</ul>\n<p>But I was under the impression that <code>standard</code> is more for a generalized development setup <em>other than nix itself</em> right? Could I easily integrate these into my system config to drop me into a devShell for nix development proper? I guess I could, but does anyone have an example of something like this?</p>\n<p>CI I will have to revisit soon. Then I'll get back here <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 432016984,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712593428
+    },
+    {
+        "content": "<p>Just found this (rather new) CI/CD engine: <a href=\"https://github.com/fluentci-io/fluentci-engine\">https://github.com/fluentci-io/fluentci-engine</a></p>\n<blockquote>\n<p>FluentCI Engine is a programmable CI/CD engine that is designed to be simple, flexible, and easy to use. It is supposed to run on the host machine without containerization or virtualization, and it is designed to be used with <a href=\"https://nixos.org/\">Nix</a>, <a href=\"https://pkgx.sh/\">Pkgx</a>, <a href=\"https://www.jetpack.io/devbox/\">Devbox</a>, <a href=\"https://flox.dev/\">Flox</a>, <a href=\"https://devenv.sh/\">Devenv</a>, <a href=\"https://github.com/tsirysndr/envhub\">EnvHub</a>, <a href=\"https://pixi.sh/\">Pixi</a> and <a href=\"https://mise.jdx.dev/\">Mise</a>.</p>\n</blockquote>\n<p>Also it has a plugin architecture based on WebAssembly (via <a href=\"https://github.com/extism/extism/discussions/684#discussioncomment-9072628\">Extism</a>), and written in Rust.</p>",
+        "id": 432631726,
+        "sender_full_name": "Arnold Schrijver",
+        "timestamp": 1712814161
+    },
+    {
+        "content": "<p>That looks very interesting <span class=\"user-mention\" data-user-id=\"690566\">@Arnold Schrijver</span></p>",
+        "id": 432650683,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712823459
+    },
+    {
+        "content": "<p>Yeah, I'll have to dig in and see how (in)efficient the Nix eval code is <span aria-label=\"joy\" class=\"emoji emoji-1f602\" role=\"img\" title=\"joy\">:joy:</span></p>\n<p>Perhaps I could assist there</p>",
+        "id": 432732190,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1712849236
+    }
+]

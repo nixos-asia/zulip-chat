@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><strong>Public</strong> channel created by <span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span>. <strong>Description:</strong></p>\n<blockquote>\n<p>Discussions about <a href=\"https://github.com/juspay/rust-flake\">https://github.com/juspay/rust-flake</a></p>\n</blockquote>",
+        "id": 452304280,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1721297192
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> changed the <a href=\"/help/channel-permissions\">access permissions</a> for this channel from <strong>Public</strong> to <strong>Web-public</strong>.</p>",
+        "id": 452371699,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1721315733
+    }
+]

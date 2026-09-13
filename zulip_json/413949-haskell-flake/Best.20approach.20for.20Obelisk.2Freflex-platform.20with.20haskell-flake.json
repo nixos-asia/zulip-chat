@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Is there documentation or examples on how to run a hello-world reflex-frp app using haskell-flake?</p>\n<p>Optimally it would be cool to have Android, IOS and Web builds, but even just Web would be helpful.</p>",
+        "id": 528481673,
+        "sender_full_name": "Daniel Herrera Rendón",
+        "timestamp": 1752350669
+    },
+    {
+        "content": "<p>None that I'm aware of.</p>\n<p>But as someone <a href=\"https://srid.ca/cerveau-announce\">who used Obelisk in the past</a> this would certainly be useful to have as a demo.</p>\n<p>Related to this, on my list of things to do is to create a template for <a href=\"https://haskell-miso.org/\">https://haskell-miso.org/</a> based on haskell-flake.</p>",
+        "id": 528533354,
+        "sender_full_name": "Srid",
+        "timestamp": 1752417145
+    }
+]

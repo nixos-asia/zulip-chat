@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p><a href=\"https://discourse.nixos.org/t/nix-2-27-0-released/62003\">https://discourse.nixos.org/t/nix-2-27-0-released/62003</a></p>\n<p>if i have heard it correctly then <code>flakes</code> are stable now.<br>\nWhat is the favourite part of this release for you all?</p>",
+        "id": 509331711,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1743468320
+    },
+    {
+        "content": "<p>I have got a few pings regarding the confirmation from some other sources.<br>\njust to be clear </p>\n<blockquote>\n<p>if i have heard it correctly then <code>flakes</code> are stable now.</p>\n</blockquote>\n<p>above line is a part of <code>April's Fool</code> Joke.</p>",
+        "id": 509371482,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1743490181
+    },
+    {
+        "content": "<p>I fell for this April's Fools joke &lt;/3 <br>\nI even shared it with some ex-colleagues!</p>",
+        "id": 509748811,
+        "sender_full_name": "Daniel Herrera Rendón",
+        "timestamp": 1743612887
+    },
+    {
+        "content": "<p>(deleted)</p>",
+        "id": 528466729,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1752334619
+    }
+]

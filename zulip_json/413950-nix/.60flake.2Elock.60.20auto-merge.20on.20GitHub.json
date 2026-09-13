@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> <a href=\"https://github.com/DeterminateSystems/update-flake-lock/issues/89#issuecomment-1994167887\">https://github.com/DeterminateSystems/update-flake-lock/issues/89#issuecomment-1994167887</a></p>",
+        "id": 440720675,
+        "sender_full_name": "Srid",
+        "timestamp": 1716737199
+    },
+    {
+        "content": "<p>I tried it out here: <a href=\"https://github.com/shivaraj-bh/services-flake/pull/14\">https://github.com/shivaraj-bh/services-flake/pull/14</a></p>\n<p>This is the action configuration: <a href=\"https://github.com/shivaraj-bh/services-flake/blob/main/.github/workflows/update-flake-lock-ex-simple.yaml\">https://github.com/shivaraj-bh/services-flake/blob/main/.github/workflows/update-flake-lock-ex-simple.yaml</a></p>\n<p>If we use a github app, we wouldn’t have to manually trigger the CI workflow. How about creating a <a href=\"http://nixos.asia\">nixos.asia</a> github app for automated tasks?</p>",
+        "id": 440904022,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716835679
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/413950-nix/topic/.60flake.2Elock.60.20auto-merge.20on.20GitHub/near/440904022\">said</a>:</p>\n<blockquote>\n<p>How about creating a <a href=\"http://nixos.asia/\">nixos.asia</a> github app for automated tasks?</p>\n</blockquote>\n<p>Sure. As you are an owner, you should have rights to create it.</p>\n<p>By the way, take notes - so we can publish a tutorial on <a class=\"stream\" data-stream-id=\"416826\" href=\"/#narrow/stream/416826-website\">#website</a></p>",
+        "id": 440904170,
+        "sender_full_name": "Srid",
+        "timestamp": 1716835742
+    },
+    {
+        "content": "<p>(Or pass those notes to me here, so I can test it -- say for haskell-flake -- and create a formal tutorial)</p>",
+        "id": 440904230,
+        "sender_full_name": "Srid",
+        "timestamp": 1716835782
+    },
+    {
+        "content": "<p>Created the Github App: <a href=\"https://github.com/apps/nixos-asia\">https://github.com/apps/nixos-asia</a></p>",
+        "id": 440981356,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716882056
+    },
+    {
+        "content": "<p><strong>Notes</strong></p>\n<p><strong>Create the Github App</strong></p>\n<ul>\n<li>Under <code>Developer Settings</code> -&gt; <code>New Github App</code></li>\n<li>Only two mandatory fields: <code>Name</code> and <code>Homepage URL</code>. <code>Webhook URL</code> is not needed if <code>active</code> checkbox above it is unchecked.</li>\n<li><code>Read and Write</code> access to <code>Pull Request</code> and <code>Contents</code> under <code>Repository Permissions</code></li>\n<li>Before clicking on create the app, select <code>Any Account</code> (if that’s your req.) under <code>Where can this Github App be installed?</code></li>\n<li>And voila, you have the <code>Github App</code>. </li>\n<li>You should be redirected to the app’s settings page, where you can scroll down to <code>Generate a Private Key</code>, this key will be downloaded to your device.</li>\n</ul>\n<p><strong>Install the App and configure secrets</strong></p>\n<ul>\n<li>On the same settings page, you will find <code>Install App</code>, go ahead and install it on your repository.</li>\n<li>Under the repository settings, go over to the <code>Secrets and Variables -&gt; Actions</code>.</li>\n<li>Create a new secret, I call it <code>NIXOS_ASIA_PRIVATE_KEY</code></li>\n<li>Create a new variable, I call it <code>NIXOS_ASIA_APP_ID</code></li>\n</ul>\n<p><strong>Use the App in your CI workflow</strong><br>\nSee example: <a href=\"https://github.com/juspay/services-flake/commit/d6ed5ef580698b9f207e32813b476fc59942aaf8\">https://github.com/juspay/services-flake/commit/d6ed5ef580698b9f207e32813b476fc59942aaf8</a></p>",
+        "id": 440987146,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716884131
+    },
+    {
+        "content": "<p>And I manually triggered a workflow to see if it works and it did with no manual intervention: <a href=\"https://github.com/juspay/services-flake/pull/201\">https://github.com/juspay/services-flake/pull/201</a></p>",
+        "id": 440993799,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716886462
+    },
+    {
+        "content": "<p>Another additional feature: <a href=\"https://github.com/juspay/services-flake/commit/c0ecde349a19a5c19315d72cfbaffb7d72a77455\">Auto delete the branch after merge</a></p>",
+        "id": 441001340,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716889078
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> <a href=\"#narrow/stream/413950-nix/topic/.60flake.2Elock.60.20auto-merge.20on.20GitHub/near/441001340\">said</a>:</p>\n<blockquote>\n<p>Another additional feature: <a href=\"https://github.com/juspay/services-flake/commit/c0ecde349a19a5c19315d72cfbaffb7d72a77455\">Auto delete the branch after merge</a></p>\n</blockquote>\n<p>Strange, that didn’t work here: <a href=\"https://github.com/juspay/services-flake/pull/202\">https://github.com/juspay/services-flake/pull/202</a></p>\n<p>But the Github documentation says that it should work:<br>\n<a href=\"/user_uploads/60244/O9eC4vWnBan67frdzeO9vPPO/Screenshot-2024-05-28-at-5.12.17PM.png\">Screenshot-2024-05-28-at-5.12.17PM.png</a><br>\nsource: <a href=\"https://cli.github.com/manual/gh_pr_merge\">https://cli.github.com/manual/gh_pr_merge</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/O9eC4vWnBan67frdzeO9vPPO/Screenshot-2024-05-28-at-5.12.17PM.png\" title=\"Screenshot-2024-05-28-at-5.12.17PM.png\"><img src=\"/user_uploads/60244/O9eC4vWnBan67frdzeO9vPPO/Screenshot-2024-05-28-at-5.12.17PM.png\"></a></div>",
+        "id": 441020999,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716896574
+    },
+    {
+        "content": "<p>Ah, the default <code>GITHUB_TOKEN</code> doesn’t have permission to delete a branch: <a href=\"https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token\">https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token</a></p>",
+        "id": 441021993,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716896940
+    },
+    {
+        "content": "<p>Looks like the permission can be modified for a given job: <a href=\"https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs\">https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs</a></p>",
+        "id": 441022990,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716897308
+    }
+]

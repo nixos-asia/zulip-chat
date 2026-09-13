@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>On my NixOS it is usually found at /tmp/process-compose-&lt;user&gt;.log but this file doesn’t exist on the GitHub runners, anyone happen to know where else could it be?</p>",
+        "id": 422718437,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708556429
+    },
+    {
+        "content": "<p>That’s probably because nix flake check runs in sandbox mode. I could set the log_location somewhere in the build directory and create a process that will tail -f on the log: <a href=\"https://github.com/F1bonacc1/process-compose/blob/main/www/docs/logging.md\">https://github.com/F1bonacc1/process-compose/blob/main/www/docs/logging.md</a></p>",
+        "id": 422851940,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708618312
+    },
+    {
+        "content": "<p>But the problem is that the output is not very readable, need to expose log_configuration options in process-compose-flake</p>",
+        "id": 422852192,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708618385
+    },
+    {
+        "content": "<p>In the flake check how about <code>cat</code>'ing the log file at the end of a failed run?</p>",
+        "id": 422852764,
+        "sender_full_name": "Srid",
+        "timestamp": 1708618559
+    },
+    {
+        "content": "<p>But there is no failed run, it’s an infinite loop</p>",
+        "id": 422852946,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708618608
+    }
+]
