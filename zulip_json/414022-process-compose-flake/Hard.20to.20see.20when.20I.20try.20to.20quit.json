@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I don't know if it's because of my alacritty or zsh themes. I'm using catppuccin (mocha) everywhere.</p>\n<p>The rest of the UI seems fine.</p>\n<p><a href=\"/user_uploads/60244/B79oDrUJmom_OJENlJYcW1go/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/B79oDrUJmom_OJENlJYcW1go/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/B79oDrUJmom_OJENlJYcW1go/image.png\"></a></div>",
+        "id": 440960528,
+        "sender_full_name": "Bruno Bigras",
+        "timestamp": 1716868909
+    },
+    {
+        "content": "<p>process-compose does allow to configure custom themes: <a href=\"https://f1bonacc1.github.io/process-compose/tui/?h=theme#tui-themes\">https://f1bonacc1.github.io/process-compose/tui/?h=theme#tui-themes</a></p>\n<p>(Moving this topic to <a class=\"stream\" data-stream-id=\"414022\" href=\"/#narrow/stream/414022-process-compose-flake\">#process-compose-flake</a> )</p>",
+        "id": 440979939,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716881484
+    },
+    {
+        "content": "<p>This topic was moved here from <a class=\"stream-topic\" data-stream-id=\"414011\" href=\"/#narrow/stream/414011-services-flake/topic/Hard.20to.20see.20when.20I.20try.20to.20quit\">#services-flake &gt; Hard to see when I try to quit</a> by <span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span>.</p>",
+        "id": 440980051,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1716881523
+    },
+    {
+        "content": "<p>Also, if you don’t like TUI mode, you can disable it too: <code>nix run . -- -t=false</code></p>",
+        "id": 441002498,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716889460
+    },
+    {
+        "content": "<p>With the default theme, does everyone see the same thing as me? If so, maybe the exit prompt could be tweaked a bit.</p>",
+        "id": 441053519,
+        "sender_full_name": "Bruno Bigras",
+        "timestamp": 1716906675
+    },
+    {
+        "content": "<p>The quit dialog is not that clear even with my theme too. I didn’t bother trying to change it since I usually just <code>Ctrl-C</code> and press <code>Return</code>. </p>\n<p><a href=\"/user_uploads/60244/nfN8jcCFM1UFnzmZfnL-m2lX/Screenshot-2024-05-28-at-9.56.36PM.png\">Screenshot-2024-05-28-at-9.56.36PM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/nfN8jcCFM1UFnzmZfnL-m2lX/Screenshot-2024-05-28-at-9.56.36PM.png\" title=\"Screenshot-2024-05-28-at-9.56.36PM.png\"><img src=\"/user_uploads/60244/nfN8jcCFM1UFnzmZfnL-m2lX/Screenshot-2024-05-28-at-9.56.36PM.png\"></a></div>",
+        "id": 441075351,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716913793
+    },
+    {
+        "content": "<p>It would be clearer if the text was in some darker colour. Anyway, I haven’t tried out theming in process-compose, maybe will try it out tomorrow.</p>",
+        "id": 441075708,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716913910
+    }
+]

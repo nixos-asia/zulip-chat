@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>And its done: <a href=\"https://github.com/juspay/services-flake/releases/tag/0.2.0\">https://github.com/juspay/services-flake/releases/tag/0.2.0</a></p>",
+        "id": 436211767,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714462126
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span> has marked this topic as resolved.</p>",
+        "id": 436211777,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1714462130
+    },
+    {
+        "content": "<p>Announced on discourse: <a href=\"https://discourse.nixos.org/t/announcing-services-flake/41338/6?u=shivaraj-bh\">https://discourse.nixos.org/t/announcing-services-flake/41338/6?u=shivaraj-bh</a></p>",
+        "id": 436211874,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714462190
+    },
+    {
+        "content": "<p>TIL the github release includes contributors automatically:</p>\n<p><a href=\"/user_uploads/60244/3vymaFFPA0t1T-kDKKTL_OlS/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/3vymaFFPA0t1T-kDKKTL_OlS/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/3vymaFFPA0t1T-kDKKTL_OlS/image.png\"></a></div>",
+        "id": 436215029,
+        "sender_full_name": "Srid",
+        "timestamp": 1714463573
+    },
+    {
+        "content": "<p>twitter announcement: <a href=\"https://twitter.com/nixos_asia/status/1785224254272762308\">https://twitter.com/nixos_asia/status/1785224254272762308</a></p>",
+        "id": 436221199,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1714465834
+    }
+]

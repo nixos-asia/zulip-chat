@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>NixOS / nix-darwin and home-manager template all in one:</p>\n<p><a href=\"https://github.com/juspay/nixos-unified-template\">https://github.com/juspay/nixos-unified-template</a></p>",
+        "id": 474907174,
+        "sender_full_name": "Srid",
+        "timestamp": 1728079736
+    },
+    {
+        "content": "<p><code>flake.config.me</code> is a toplevel flake option, this is being passed by nixos-unified via specialArgs.<br>\nhow can i change the value for specific darwin host machine?</p>\n<p>i tried <code>_module.specialArgs.flake.config.me.username = \"tada\";</code> but this throws a random error for maintainer.nix not avaialable.<br>\nhow can i override toplevel value from inside a module?how can i override toplevel value from inside a module?</p>\n<p>info:<br>\ntrying to do the <code>_module.specialArgs.flake.config.me.username = \"tada\";</code><br>\ninf <code>configurations/darwin/&lt;machine&gt;.nix</code>.<br>\nso that the modules imported by <code>&lt;machine&gt;</code> have the changed value.</p>",
+        "id": 525149161,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1750499672
+    }
+]

@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p><code>just</code> recipes can now be grouped.</p>\n<ul>\n<li><a href=\"https://github.com/casey/just/pull/1842\">https://github.com/casey/just/pull/1842</a></li>\n<li><a href=\"https://just.systems/man/en/chapter_35.html\">https://just.systems/man/en/chapter_35.html</a></li>\n</ul>\n<p>Requires <a href=\"https://github.com/casey/just/releases/tag/1.27.0\">1.27.0</a> which was released yesterday.</p>",
+        "id": 440732100,
+        "sender_full_name": "Srid",
+        "timestamp": 1716749233
+    },
+    {
+        "content": "<p><a href=\"https://nixos.asia/en/buildRustPackage#override\">https://nixos.asia/en/buildRustPackage#override</a></p>",
+        "id": 440734639,
+        "sender_full_name": "Srid",
+        "timestamp": 1716751973
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/8wT9E8PQ0Ise1e3btlkWsXqK/image.png\"></a></div>",
+        "id": 440734675,
+        "sender_full_name": "Srid",
+        "timestamp": 1716752030
+    },
+    {
+        "content": "<p>Just is pretty nice, it's like make but better</p>",
+        "id": 450958551,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720787286
+    },
+    {
+        "content": "<p>Are there any big projects using it for nontrivial scripts?</p>",
+        "id": 450974927,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720790575
+    },
+    {
+        "content": "<p><a href=\"https://github.com/juspay/nix-browser/blob/main/justfile\">https://github.com/juspay/nix-browser/blob/main/justfile</a></p>\n<p>Generally I try to keep <code>justfile</code> trivial, and move any complex scripts into being <code>writeShellApplication</code> package under a devShell's <code>nativeBuildInputs</code></p>",
+        "id": 451001729,
+        "sender_full_name": "Srid",
+        "timestamp": 1720796478
+    },
+    {
+        "content": "<p>There's also <a href=\"#narrow/stream/413950-nix/topic/just-flake.20.28justfile.20sharing.29\">just-flake</a> - an attempt to abstract out common stuff in justfile</p>",
+        "id": 451001813,
+        "sender_full_name": "Srid",
+        "timestamp": 1720796499
+    },
+    {
+        "content": "<p>Some of the other SRE at work use just as a sort of high-level cli to unify their workflows. Seemed pretty cool to me</p>",
+        "id": 451008530,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1720797804
+    }
+]

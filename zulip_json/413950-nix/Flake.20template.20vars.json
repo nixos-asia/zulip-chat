@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/NixOS/nix/issues/4017\">https://github.com/NixOS/nix/issues/4017</a></p>\n<p>Has anyone written a dumb solution to extend <code>nix flake ..</code> with basic template vars support?</p>",
+        "id": 424704186,
+        "sender_full_name": "Srid",
+        "timestamp": 1709571955
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>flake<span class=\"w\"> </span>init<span class=\"w\"> </span>-t<span class=\"w\"> </span>github:juspay/nix-dev-home<span class=\"w\"> </span><span class=\"se\">\\</span>\n<span class=\"w\">  </span>--override-input<span class=\"w\"> </span>username<span class=\"w\"> </span><span class=\"s2\">\"https://nixid.page/str/srid\"</span>\n</code></pre></div>\n<p>Where <code>nixid.page/&lt;type&gt;/&lt;val&gt;</code> will dynamically serve a flake outputting that expression. <span aria-label=\"open mouth\" class=\"emoji emoji-1f62e\" role=\"img\" title=\"open mouth\">:open_mouth:</span></p>\n<p>As a bandaid for <a href=\"https://github.com/NixOS/nix/issues/5663\">https://github.com/NixOS/nix/issues/5663</a></p>",
+        "id": 424704651,
+        "sender_full_name": "Srid",
+        "timestamp": 1709572094
+    },
+    {
+        "content": "<p>Grr, <code>--override-input</code> is unsupported for this subcommand.</p>",
+        "id": 424704935,
+        "sender_full_name": "Srid",
+        "timestamp": 1709572171
+    },
+    {
+        "content": "<p>There's <code>--override-flake</code>, though.</p>",
+        "id": 424705288,
+        "sender_full_name": "Srid",
+        "timestamp": 1709572261
+    }
+]

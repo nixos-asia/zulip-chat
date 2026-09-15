@@ -1,0 +1,92 @@
+[
+    {
+        "content": "<p>I am trying to run some process using process compose. <br>\nUsing</p>\n<div class=\"codehilite\"><pre><span></span><code>in\n   {\n    process-compose =\n      {\n        settings.processes = commonConfig {\n            load-test = {\n              command = pkgs.writeShellApplication {\n                name = &quot;load-test&quot;;\n                runtimeInputs = [pkgs.python3];\n                text = &#39;&#39;\n                  set -x\n                  python3 Backend/load-test/setup/auth.py\n                &#39;&#39;;\n              };\n            };\n          };\n        };\n  };\n}\n</code></pre></div>\n<p>But this is throwing the below error <br>\nerror: flake 'git+file:///Users/soumyajit.behera/backend-nammayatri/b-nammayatri' does not provide attribute 'packages.aarch64-darwin.load-test', 'legacyPackages.aarch64-darwin.load-test'</p>\n<p>Can someone help me here?</p>",
+        "id": 410819876,
+        "sender_full_name": "Soumyajit Behera",
+        "timestamp": 1704188772
+    },
+    {
+        "content": "<p><a href=\"#narrow/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose/near/410819876\">A message</a> was moved here from <a class=\"stream-topic\" data-stream-id=\"413950\" href=\"/#narrow/stream/413950-nix/topic/Nix.20tutorial.20series\">#nix &gt; Nix tutorial series</a> by <span class=\"user-mention silent\" data-user-id=\"675703\">Soumyajit Behera</span>.</p>",
+        "id": 410820492,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1704189043
+    },
+    {
+        "content": "<p>Your config is wrong. It should be <code>process-compose.load-test =</code> not <code>process-compose =</code></p>\n<p>See example here: <a href=\"https://github.com/Platonic-Systems/process-compose-flake/blob/main/example/flake.nix#L20\">https://github.com/Platonic-Systems/process-compose-flake/blob/main/example/flake.nix#L20</a></p>\n<p>Also, we have a stream for process-compose: <a class=\"stream\" data-stream-id=\"414022\" href=\"/#narrow/stream/414022-process-compose-flake\">#process-compose-flake</a></p>",
+        "id": 410839860,
+        "sender_full_name": "Srid",
+        "timestamp": 1704199166
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>_:\n{\n  perSystem = perSystem@{ self&#39;, pkgs, lib, ... }: {\n    process-compose.load-test-nix =\n      {\n        settings.processes = {\n            echo-web.command = &#39;&#39;\n               while true; do\n                  echo &quot;heloow&quot;\n                done\n              &#39;&#39;;\n\n            auth = {\n              command = pkgs.writeShellApplication {\n                name = &quot;auth&quot;;\n                runtimeInputs = [ pkgs.python3 ];\n                text = &#39;&#39;\n                    python3 Backend/load-test/setup/auth.py\n                &#39;&#39;;\n              };\n            };\n          };\n      };\n  };\n}\n</code></pre></div>\n<p>With this there is no error but the process-compose is not coming up.</p>",
+        "id": 410847127,
+        "sender_full_name": "Soumyajit Behera",
+        "timestamp": 1704202798
+    },
+    {
+        "content": "<p>Make sure you are using the latest process-compose. If in nammayatri, use the latest <code>common</code> repo flake input.</p>",
+        "id": 410849197,
+        "sender_full_name": "Srid",
+        "timestamp": 1704203873
+    },
+    {
+        "content": "<p>The issue was with the older version of process compose . <br>\nWhich needs a new argument for -p=0 (port) to come up. <br>\nSo we can use -p=0  as argument in nix run.</p>",
+        "id": 410967721,
+        "sender_full_name": "Soumyajit Behera",
+        "timestamp": 1704266154
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>let\n  my-python-packages = ps: with ps; [\n    ( buildPythonPackage rec {\n      pname = &quot;locust&quot;;\n      version = &quot;2.16.1&quot;;\n      format = &quot;pyproject&quot;;\n\n      src = fetchFromGitHub {\n        owner = &quot;locustio&quot;;\n        repo = &quot;locust&quot;;\n        rev = version;\n        sha256 = &quot;sha256-MKFzEFpDkD8e+ENZN0GAWYipPK9A4SCZZRHG5/5UaNM=&quot;;\n      };\n\n      patchPhase = &#39;&#39;\n        echo &#39;version = &quot;${version}&quot;&#39; &gt; locust/_version.py\n      &#39;&#39;;\n\n      propagatedBuildInputs = with python3Packages; [\n        requests\n        flask-basicauth\n        flask-cors\n        msgpack\n        gevent\n        pyzmq\n        roundrobin\n        geventhttpclient\n        psutil\n        typing-extensions\n        configargparse\n        setuptools\n      ];\n    })\n  ];\n</code></pre></div>\n<p>I wanted to add locust to my env  but this is giving error  <code>error: attribute 'buildPythonPackage' missing</code> </p>\n<p>I have tried importing  { inputs, buildPythonPackage, fetchPypi, fetchFromGitHub, python3Packages, ... }: <br>\nBut this is not working</p>",
+        "id": 410987041,
+        "sender_full_name": "Soumyajit Behera",
+        "timestamp": 1704276250
+    },
+    {
+        "content": "<p><code>buildPythonPackage</code> comes from <code>pkgs.python3Packages.buildPythonPackage</code></p>",
+        "id": 410988250,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704276723
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>error: builder for &#39;/nix/store/rs8hwv9ra51064vxbdn05yz08kg1z801-python3.10-locust-2.19.1.drv&#39; failed with exit code 1;\n       last 10 log lines:\n       &gt;     _version_missing(config)\n       &gt;   File &quot;/nix/store/gaafmp68vslf33sawfi97rywids1s1kg-python3.10-setuptools-scm-7.1.0/lib/python3.10/site-packages/setuptools_scm/__init__.py&quot;, line 108, in _version_missing\n       &gt;     raise LookupError(\n       &gt; LookupError: setuptools-scm was unable to detect version for /private/tmp/nix-build-python3.10-locust-2.19.1.drv-0/source.\n       &gt;\n       &gt; Make sure you&#39;re either building from a fully intact git repository or PyPI tarballs. Most other sources (such as GitHub&#39;s tarballs, a git checkout without the .git folder) don&#39;t contain the necessary metadata and will not work.\n       &gt;\n       &gt; For example, if you&#39;re using pip, instead of https://github.com/user/proj/archive/master.zip use git+https://github.com/user/proj.git#egg=proj\n       &gt;\n       &gt; ERROR Backend subprocess exited when trying to invoke get_requires_for_build_wheel\n       For full logs, run &#39;nix log /nix/store/rs8hwv9ra51064vxbdn05yz08kg1z801-python3.10-locust-2.19.1.drv&#39;.\nerror: 1 dependencies of derivation &#39;/nix/store/jgxlnqwwhnyahpvl68niz5qvrffcxpp5-ny-backend-env.drv&#39; failed to build\n</code></pre></div>\n<p>Adding locust to the env. <br>\nIts giving this error.</p>",
+        "id": 411005338,
+        "sender_full_name": "Soumyajit Behera",
+        "timestamp": 1704284586
+    },
+    {
+        "content": "<p>You can avoid the setuptools-scm problem like this:</p>\n<div class=\"codehilite\"><pre><span></span><code>{\n  inputs.nixpkgs.url = &quot;github:nixos/nixpkgs/nixpkgs-unstable&quot;;\n  outputs = inputs@{...}: {\n    packages.x86_64-linux.default =\n    let\n      pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;\n    in\n    with pkgs;\n    with pkgs.python3Packages;\n    ( buildPythonPackage rec {\n      pname = &quot;locust&quot;;\n      version = &quot;2.20.1&quot;;\n      format = &quot;pyproject&quot;;\n\n      src = fetchFromGitHub {\n        owner = &quot;locustio&quot;;\n        repo = &quot;locust&quot;;\n        rev = version;\n        sha256 = &quot;sha256-pPtH9rnIDFRUyWPPF7xmPtfpiBFIz9WLYTTV+W0s/es=&quot;;\n      };\n\n      patchPhase = &#39;&#39;\n        echo &#39;version = &quot;${version}&quot;&#39; &gt; locust/_version.py\n      &#39;&#39;;\n      SETUPTOOLS_SCM_PRETEND_VERSION = version;\n      nativeBuildInputs = [ setuptools-scm ];\n\n      propagatedBuildInputs = [\n       requests\n       flask-basicauth\n       flask-cors\n       msgpack\n       gevent\n       pyzmq\n       geventhttpclient\n       roundrobin\n       psutil\n       typing-extensions\n       configargparse\n       setuptools\n      ];\n    });\n\n  };\n}\n</code></pre></div>\n<p>See here: <a href=\"https://github.com/NixOS/nixpkgs/issues/41136#issuecomment-1101342698\">https://github.com/NixOS/nixpkgs/issues/41136#issuecomment-1101342698</a></p>",
+        "id": 411012916,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704287797
+    },
+    {
+        "content": "<p>Also after this the package will complaint about roundrobin being missing as it is still an open PR here <a href=\"https://github.com/NixOS/nixpkgs/pull/185087\">https://github.com/NixOS/nixpkgs/pull/185087</a></p>",
+        "id": 411013019,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704287850
+    },
+    {
+        "content": "<p>You will have to create another buildPythonPackage for roundrobin and link it here</p>",
+        "id": 411013060,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704287869
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"675703\">@Soumyajit Behera</span> <br>\nHere’s a flake that builds locust, just run <code>nix build</code>:</p>\n<div class=\"codehilite\"><pre><span></span><code>{\n  inputs.nixpkgs.url = &quot;github:nixos/nixpkgs/nixpkgs-unstable&quot;;\n  outputs = inputs@{ ... }:\n    let pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; in {\n      packages.x86_64-linux.default =\n        with pkgs;\n        with pkgs.python3Packages;\n        let\n          roundrobin = buildPythonPackage rec {\n            pname = &quot;roundrobin&quot;;\n            version = &quot;0.0.4&quot;;\n\n            src = fetchFromGitHub {\n              owner = &quot;linnik&quot;;\n              repo = pname;\n              rev = version;\n              sha256 = &quot;sha256-eedE4PE43sbJE/Ktrc31KjVdfqe2ChKCYUNIl7fir0E=&quot;;\n            };\n\n            checkPhase = &#39;&#39;\n              runHook preCheck\n              ${python.interpreter} -m unittest discover\n              runHook postCheck\n            &#39;&#39;;\n\n            pythonImportsCheck = [ pname ];\n\n          };\n        in\n        (buildPythonPackage rec {\n          pname = &quot;locust&quot;;\n          version = &quot;2.20.1&quot;;\n          format = &quot;pyproject&quot;;\n\n          src = fetchFromGitHub {\n            owner = &quot;locustio&quot;;\n            repo = &quot;locust&quot;;\n            rev = version;\n            sha256 = &quot;sha256-pPtH9rnIDFRUyWPPF7xmPtfpiBFIz9WLYTTV+W0s/es=&quot;;\n          };\n\n          patchPhase = &#39;&#39;\n            echo &#39;version = &quot;${version}&quot;&#39; &gt; locust/_version.py\n          &#39;&#39;;\n          SETUPTOOLS_SCM_PRETEND_VERSION = version;\n          nativeBuildInputs = [ setuptools-scm ];\n          pythonImportsCheck = [ pname ];\n\n          propagatedBuildInputs = [\n            requests\n            flask-basicauth\n            flask-cors\n            msgpack\n            gevent\n            pyzmq\n            geventhttpclient\n            roundrobin\n            psutil\n            typing-extensions\n            configargparse\n            setuptools\n          ];\n        });\n\n    };\n}\n</code></pre></div>",
+        "id": 411037031,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704297319
+    },
+    {
+        "content": "<p>(One of these days we probably want to create a ... <code>python-flake</code>)</p>",
+        "id": 411038642,
+        "sender_full_name": "Srid",
+        "timestamp": 1704297884
+    },
+    {
+        "content": "<p>Agreed</p>",
+        "id": 411139064,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704352206
+    }
+]

@@ -1,0 +1,266 @@
+[
+    {
+        "content": "<p>I am trying to integrate cargo-doc-live into services-flake,  I added <code>cargo-doc-live</code> for nixci <a href=\"https://github.com/juspay/services-flake/pull/246/commits/7877ddc635eb45ebe0b71f02bc529065f06b6c5f#diff-206b9ce276ab5971a2489d75eb1b12999d4bf3843b7988cbe8d687cfde61dea0R31-R34\">https://github.com/juspay/services-flake/pull/246/commits/7877ddc635eb45ebe0b71f02bc529065f06b6c5f#diff-206b9ce276ab5971a2489d75eb1b12999d4bf3843b7988cbe8d687cfde61dea0R31-R34</a>, it errors out since it's not running the build in the <code>example/cargo-doc-live</code> directory</p>\n<p>the error says:</p>\n<div class=\"codehilite\"><pre><span></span><code>cargo-doc-live-test&gt; + process-compose --no-server -t=false\ncargo-doc-live-test&gt; [cargo-doc-live1-cargo-doc ] error: project root does not exist\n</code></pre></div>\n<p>any way I could run the nixci in the specified directory instead of top directory of <code>services-flake</code>?</p>",
+        "id": 446489275,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719187194
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> has marked this topic as unresolved.</p>",
+        "id": 446491401,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1719188809
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"723441\">@Hao Liu</span> It should not matter <em>from which directory</em> you run <code>nix build &lt;flake-url&gt;</code> (which is what <code>nixci build</code> does essentially) on, because nix builds are pure anyway.</p>",
+        "id": 446493416,
+        "sender_full_name": "Srid",
+        "timestamp": 1719190344
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>error: project root does not exist\n</code></pre></div>\n<p>Where's this error originating from?</p>\n<p>Take a look at how we set project root to the repo root in other places, e.g.: <a href=\"https://github.com/juspay/services-flake/blob/641937bc0f523405fbac4bb89c074de613dcee4d/dev/flake.nix#L26\">https://github.com/juspay/services-flake/blob/641937bc0f523405fbac4bb89c074de613dcee4d/dev/flake.nix#L26</a></p>",
+        "id": 446493576,
+        "sender_full_name": "Srid",
+        "timestamp": 1719190392
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> this is how I set the <code>projectRoot</code> in example <a href=\"https://github.com/juspay/services-flake/pull/246/files#diff-1cb9f37420e339a53fbd8b86243c074e2c4a3c93072a31a5ca73133054a63572R26\">https://github.com/juspay/services-flake/pull/246/files#diff-1cb9f37420e339a53fbd8b86243c074e2c4a3c93072a31a5ca73133054a63572R26</a></p>",
+        "id": 446493896,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719190479
+    },
+    {
+        "content": "<p>the error  <code>error: project root does not exist</code> is from cargo-watch when it could find a Rust project to watch on</p>",
+        "id": 446494015,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719190509
+    },
+    {
+        "content": "<p>This is where the flake check is defined: <a href=\"https://github.com/Platonic-Systems/process-compose-flake/blob/main/nix/process-compose/test.nix\">https://github.com/Platonic-Systems/process-compose-flake/blob/main/nix/process-compose/test.nix</a></p>",
+        "id": 446494275,
+        "sender_full_name": "Srid",
+        "timestamp": 1719190583
+    },
+    {
+        "content": "<p>Looks we need a <code>cd</code> there before running pc</p>",
+        "id": 446494292,
+        "sender_full_name": "Srid",
+        "timestamp": 1719190601
+    },
+    {
+        "content": "<p>More generally, what if our process-compose <code>test</code> depends on $PWD being set to something? That sounds like a feature request to <a href=\"https://github.com/Platonic-Systems/process-compose-flake\">https://github.com/Platonic-Systems/process-compose-flake</a> repo</p>",
+        "id": 446494341,
+        "sender_full_name": "Srid",
+        "timestamp": 1719190639
+    },
+    {
+        "content": "<p>you mean instead of hardcoded <code>cd $HOME</code>, introduce an option to enter a different directory like <code>$PWD</code>?</p>",
+        "id": 446494463,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719190729
+    },
+    {
+        "content": "<p>Haven't fully thought about it, but yes maybe something like that.</p>",
+        "id": 446494646,
+        "sender_full_name": "Srid",
+        "timestamp": 1719190827
+    },
+    {
+        "content": "<p>Or it could be something like <code>preHook</code> option we already have</p>",
+        "id": 446494672,
+        "sender_full_name": "Srid",
+        "timestamp": 1719190843
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>preHook = &#39;&#39;\n  cd ${inputs.self}\n&#39;&#39;;\n</code></pre></div>\n<p>won't work due to permission issue, </p>\n<div class=\"codehilite\"><pre><span></span><code>✔ ~/services-flake/example/cargo-doc-live [add-cargo-doc-live|✚ 1…1]\n11:07 $ result/bin/cargo-doc-live\n+ process-compose --no-server\n[cargo-doc-live1-cargo-doc  ] [Running &#39;run-cargo-doc&#39;]\n[cargo-doc-live1-cargo-doc  ] error: Permission denied (os error 13) at path &quot;/nix/store/a0vgclrrfn2svimc56k96m0nm0xvlndi-source/example/cargo-doc-live/targetwM02VI&quot;\n</code></pre></div>",
+        "id": 446495870,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719191304
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"ss\">preHook</span> <span class=\"o\">=</span> <span class=\"s s-Multiline\">''</span>\n<span class=\"s s-Multiline\">  cp -r </span><span class=\"si\">${</span>inputs<span class=\"o\">.</span>self<span class=\"si\">}</span><span class=\"s s-Multiline\"> $HOME/project</span>\n<span class=\"s s-Multiline\">  cd ~/project</span>\n<span class=\"s s-Multiline\">''</span><span class=\"p\">;</span>\n</code></pre></div>",
+        "id": 446496590,
+        "sender_full_name": "Srid",
+        "timestamp": 1719191510
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/GNuFbrTIBwMLFhHwr6GpA9rb/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/GNuFbrTIBwMLFhHwr6GpA9rb/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/GNuFbrTIBwMLFhHwr6GpA9rb/image.png\"></a></div>",
+        "id": 446496934,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719191717
+    },
+    {
+        "content": "<p>Yes, <a href=\"https://nixos.asia/en/writeShellApplication\"><code>writeShellApplication</code></a> uses shellcheck, so the script should conform to it.</p>",
+        "id": 446497348,
+        "sender_full_name": "Srid",
+        "timestamp": 1719192035
+    },
+    {
+        "content": "<p>ahh, no wonder :)</p>",
+        "id": 446497360,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719192053
+    },
+    {
+        "content": "<p>the same permission issue after copying to my home dir</p>\n<div class=\"codehilite\"><pre><span></span><code>11:21 $ result/bin/cargo-doc-live\n+ process-compose --no-server\n[cargo-doc-live1-cargo-doc  ] [Running &#39;run-cargo-doc&#39;]\n[cargo-doc-live1-cargo-doc  ] error: Permission denied (os error 13) at path &quot;/home/hao/project/targetuijuhb&quot;\n[cargo-doc-live1-cargo-doc  ] Browsersync not running at http://localhost:8009\n</code></pre></div>",
+        "id": 446497418,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719192105
+    },
+    {
+        "content": "<p>should I introduce a <code>chown</code>?</p>",
+        "id": 446497514,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719192177
+    },
+    {
+        "content": "<p>Yes.</p>",
+        "id": 446497675,
+        "sender_full_name": "Srid",
+        "timestamp": 1719192301
+    },
+    {
+        "content": "<p><code>chown $USER $HOME/project</code> won't work ...</p>",
+        "id": 446498000,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719192545
+    },
+    {
+        "content": "<p>and putting <code>preHook</code> in <code>example/cargo-doc-live/flake.nix</code> doesn't feel right since the user of the service should not bother to know that :D</p>",
+        "id": 446498036,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719192592
+    },
+    {
+        "content": "<p><code>chmod -R a+...</code></p>",
+        "id": 446498685,
+        "sender_full_name": "Srid",
+        "timestamp": 1719193105
+    },
+    {
+        "content": "<p><a href=\"https://github.com/srid/haskell-flake/blob/3f76199d42d55e3a36bf8e8e0544e715d6a3f007/nix/modules/project/hls-check.nix#L23-L24\">https://github.com/srid/haskell-flake/blob/3f76199d42d55e3a36bf8e8e0544e715d6a3f007/nix/modules/project/hls-check.nix#L23-L24</a></p>",
+        "id": 446498703,
+        "sender_full_name": "Srid",
+        "timestamp": 1719193133
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"723441\">Hao Liu</span> <a href=\"#narrow/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR/near/446498036\">said</a>:</p>\n<blockquote>\n<p>and putting <code>preHook</code> in <code>example/cargo-doc-live/flake.nix</code> doesn't feel right since the user of the service should not bother to know that :D</p>\n</blockquote>\n<p>I suggest doing this by hand then - i.e., write the flake check yourself, and then we can see how it can be abstracted out.</p>",
+        "id": 446498755,
+        "sender_full_name": "Srid",
+        "timestamp": 1719193199
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> copying the project to HOME will stop the realtime update from happening since the user is updating the doc in <code>example/cargo-doc-live</code> while the BrowserSync is watching the folder in HOME</p>",
+        "id": 446500938,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719194837
+    },
+    {
+        "content": "<p>When the flake check is built, where is the user involved?</p>",
+        "id": 446501060,
+        "sender_full_name": "Srid",
+        "timestamp": 1719194896
+    },
+    {
+        "content": "<p>ahh, indeed, no user will involve at the testing stage</p>",
+        "id": 446501131,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719194960
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"723441\">@Hao Liu</span> This <code>preHook</code> stuff should be added to the test only, of course.</p>",
+        "id": 446501575,
+        "sender_full_name": "Srid",
+        "timestamp": 1719195328
+    },
+    {
+        "content": "<p>Which is why I suggested further above as to how this may well be a PR to <code>process-compose-flake</code></p>",
+        "id": 446501684,
+        "sender_full_name": "Srid",
+        "timestamp": 1719195401
+    },
+    {
+        "content": "<p>But better to add flake check manually, because we don't know yet what the best API design here is.</p>",
+        "id": 446501708,
+        "sender_full_name": "Srid",
+        "timestamp": 1719195426
+    },
+    {
+        "content": "<p>indeed</p>",
+        "id": 446501730,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719195451
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"723441\">Hao Liu</span> <a href=\"#narrow/stream/414011-services-flake/topic/cargo-doc-live.20initial.20PR/near/446501730\">said</a>:</p>\n<blockquote>\n<p>indeed</p>\n</blockquote>\n<p>You realize, <a href=\"https://github.com/juspay/services-flake/commit/6de6f59f7773bc7852d9737c49c3b09ea5b11e48\">this commit</a> adds the <code>preHook</code> stuff to more than the test, right?</p>",
+        "id": 446502610,
+        "sender_full_name": "Srid",
+        "timestamp": 1719196122
+    },
+    {
+        "content": "<p>i.e., <code>nix run</code> is impacted too.</p>",
+        "id": 446502619,
+        "sender_full_name": "Srid",
+        "timestamp": 1719196139
+    },
+    {
+        "content": "<p>yes, should only the <code>checks</code> to be impacted, right?</p>",
+        "id": 446502742,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719196241
+    },
+    {
+        "content": "<p>The whole point is to fix this test failure, is it not? </p>\n<div class=\"codehilite\"><pre><span></span><code>error: project root does not exist\n</code></pre></div>\n<p>This error occurs only in tests, does it not?</p>",
+        "id": 446502778,
+        "sender_full_name": "Srid",
+        "timestamp": 1719196286
+    },
+    {
+        "content": "<p>yes, it's only there for test</p>",
+        "id": 446502792,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719196304
+    },
+    {
+        "content": "<p>So, do you see how <a href=\"https://github.com/juspay/services-flake/commit/6de6f59f7773bc7852d9737c49c3b09ea5b11e48\">that commit</a> is not doing it only for test?</p>",
+        "id": 446502870,
+        "sender_full_name": "Srid",
+        "timestamp": 1719196356
+    },
+    {
+        "content": "<p>I reckon I will move this under test package, will read process-compose-flake for how to</p>",
+        "id": 446502895,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719196386
+    },
+    {
+        "content": "<p>I am trying to move it under <code>settings.processes.test</code></p>",
+        "id": 446503555,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719197003
+    },
+    {
+        "content": "<p>(deleted)</p>",
+        "id": 446503910,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719197206
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> there doesn't seem to be a way to have a <code>preHook</code> specifically for test process</p>",
+        "id": 446513517,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719202226
+    },
+    {
+        "content": "<p>Ya, as I said above.</p>",
+        "id": 446516152,
+        "sender_full_name": "Srid",
+        "timestamp": 1719203709
+    },
+    {
+        "content": "<p>a feature request to process-compose-flake?</p>",
+        "id": 446516277,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1719203776
+    }
+]
