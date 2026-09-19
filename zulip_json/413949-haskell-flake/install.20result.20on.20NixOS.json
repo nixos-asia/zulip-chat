@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Hi, I am able to build the haskell-template project (<a href=\"https://github.com/srid/haskell-template\">https://github.com/srid/haskell-template</a>) using <code>nix run nixpkgs#omnix ci</code>, and I get a <code>result</code> symlink to a text file with some /nix/store/ paths, but how do I include the built program in my system config so I can run it like any other command without entering the devshell each time? I am on NixOS, and I have a flake-based config.</p>",
+        "id": 582789729,
+        "sender_full_name": "tharnival",
+        "timestamp": 1774960891
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"1062965\">@tharnival</span> You can just use <code>packages.default</code> output of the flake.</p>",
+        "id": 585066002,
+        "sender_full_name": "Srid",
+        "timestamp": 1776028016
+    }
+]

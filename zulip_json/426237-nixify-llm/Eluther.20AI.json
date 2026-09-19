@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>I used to follow their work 2 years ago (back when there weren’t many open-source LLM alternatives), don’t know if they are still relevant </p>\n<p><a href=\"https://github.com/EleutherAI\">https://github.com/EleutherAI</a></p>",
+        "id": 422476180,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1708453309
+    },
+    {
+        "content": "<blockquote>\n<p>In early 2023, EleutherAI incorporated as a non-profit research institute run by Stella Biderman, Curtis Huebner, and Shivanshu Purohit. This announcement came with the statement that EleutherAI's shift of focus away from training larger language models was part of a deliberate push towards doing work in interpretability, alignment, and scientific research.</p>\n</blockquote>\n<p>So the short answer is \"no\".</p>",
+        "id": 422476395,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708453390
+    }
+]

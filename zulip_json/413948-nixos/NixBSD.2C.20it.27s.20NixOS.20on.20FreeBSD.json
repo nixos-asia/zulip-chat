@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Yesterday I came across a particular project trying to port something like NixOS to the FreeBSD ecosystem. </p>\n<p><a href=\"https://github.com/nixos-bsd/nixbsd\">https://github.com/nixos-bsd/nixbsd</a></p>\n<p>For now they are maintaining their own fork of nixpkgs and some patches to the nix evaluator and are now trying to build something like a module system for FreeBSD.</p>\n<p>As I've been redoing my OPNsense router, which is based on FreeBSD 13, I had an idea. I am not so much interested in having an entire NixOS on FreeBSD. However: Would it be possible to build something like process-compose flakes on FreeBSD-based systems with this?</p>\n<p>That would be really neat for extending OPNsense or PFsense with just about anything that can be compiled for FreeBSD.</p>",
+        "id": 430952626,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712134631
+    },
+    {
+        "content": "<p>Nobody here any interested in being Free with Nix on FreeBSD? <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span></p>",
+        "id": 431300401,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712233371
+    },
+    {
+        "content": "<p>Well I tried Nix on freebsd a few years ago. It would be pretty cool to use it more like NixOS for sure, might give me more incentive to use it again</p>",
+        "id": 431316550,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1712238165
+    },
+    {
+        "content": "<p>I wouldn't want to redo the whole FreeBSD system to be like a Nix-infected borg drone. First and foremost my use-case would be to extend firewalls like pfsense / opnsense with Nix-managed services. </p>\n<p>Using something like process-compose flake on FreeBSD would be really great. Containerization is still a bit iffy on the platform, even though there is an experimental podman built now I believe.</p>",
+        "id": 431318910,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712238834
+    }
+]

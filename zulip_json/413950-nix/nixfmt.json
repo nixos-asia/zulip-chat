@@ -1,0 +1,80 @@
+[
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"728730\">@Pol Dellaiera</span> Is <code>nixfmt</code> considered de facto/ stable now? Because the Github repo description says </p>\n<blockquote>\n<p>The official (<strong>but not yet stable</strong>) formatter for Nix code</p>\n</blockquote>\n<p><a href=\"https://github.com/NixOS/nixfmt\">https://github.com/NixOS/nixfmt</a></p>",
+        "id": 444706789,
+        "sender_full_name": "Srid",
+        "timestamp": 1718373538
+    },
+    {
+        "content": "<p>Apparently RFC 166 has established it to become the standard at least</p>",
+        "id": 444707250,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718373667
+    },
+    {
+        "content": "<p>Yeah see this thingie: <a href=\"https://github.com/nix-community/nixvim/pull/1375#issuecomment-2039393789\">https://github.com/nix-community/nixvim/pull/1375#issuecomment-2039393789</a></p>",
+        "id": 444707285,
+        "sender_full_name": "Pol Dellaiera",
+        "timestamp": 1718373678
+    },
+    {
+        "content": "<p>I'm requiring every contributor to pass their new Nix files through <code>nixfmt-rfc-style</code> since 1 month or so now.</p>",
+        "id": 444707374,
+        "sender_full_name": "Pol Dellaiera",
+        "timestamp": 1718373706
+    },
+    {
+        "content": "<p>Good to know!</p>",
+        "id": 444707423,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718373720
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"728730\">Pol Dellaiera</span> <a href=\"#narrow/stream/413950-nix/topic/nixfmt/near/444707374\">said</a>:</p>\n<blockquote>\n<p>every contributor</p>\n</blockquote>\n<p>Which repo? nixpkgs?</p>",
+        "id": 444707477,
+        "sender_full_name": "Srid",
+        "timestamp": 1718373725
+    },
+    {
+        "content": "<p>Yes</p>",
+        "id": 444707494,
+        "sender_full_name": "Pol Dellaiera",
+        "timestamp": 1718373731
+    },
+    {
+        "content": "<p>Last example today: <a href=\"https://github.com/NixOS/nixpkgs/pull/317742#pullrequestreview-2118391543\">https://github.com/NixOS/nixpkgs/pull/317742#pullrequestreview-2118391543</a></p>",
+        "id": 444707561,
+        "sender_full_name": "Pol Dellaiera",
+        "timestamp": 1718373754
+    },
+    {
+        "content": "<p>In <code>services-flake</code> we have a CI check that runs <code>nixpkgs-fmt</code> to see that the code was formatted, but I was surprised to see that it didn't fail on your PR (cc <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span>)</p>\n<p><a href=\"https://github.com/juspay/services-flake/blob/db7ab711d9a6cefd28dbcfe58409d3a968a3b713/dev/flake.nix#L30\">https://github.com/juspay/services-flake/blob/db7ab711d9a6cefd28dbcfe58409d3a968a3b713/dev/flake.nix#L30</a></p>\n<p>I'd welcome a dedicated PR that replaces <code>nixpkgs-fmt</code> with <code>nixfmt-rfc-style</code> mainly to see whether the new formatting is something we can switch over, not just for this project but for others as well. I've been happy with <code>nixpkgs-fmt</code> so far.</p>",
+        "id": 444707966,
+        "sender_full_name": "Srid",
+        "timestamp": 1718373875
+    },
+    {
+        "content": "<p>I won't discuss the formatting, switch to <code>nixfmt-rfc-style</code> if you want to, that won't change a thing in the technical side of things. It's, I believe, up to the maintainers to decide.</p>",
+        "id": 444708395,
+        "sender_full_name": "Pol Dellaiera",
+        "timestamp": 1718373992
+    },
+    {
+        "content": "<p>I don’t think <code>nixpkgs-fmt</code> flake check complaints about <code>nixfmt-rfc-style</code>, which is why the tests were passing.</p>",
+        "id": 444708430,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1718374001
+    },
+    {
+        "content": "<p>I've already spent too much time discussing the code formatting in plenty of languages... and in the end, I always end up using the default one... even if I don't like some parts of it.</p>",
+        "id": 444708769,
+        "sender_full_name": "Pol Dellaiera",
+        "timestamp": 1718374103
+    },
+    {
+        "content": "<p>yeah that is the best approach imho, just avoid useless discussion by establishing a formatting default</p>",
+        "id": 444709031,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718374195
+    }
+]

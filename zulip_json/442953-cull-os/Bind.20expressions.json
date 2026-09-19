@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>I wanted to make <code>fix</code> and <code>makeScope</code> a built in operator in my language and this is the way I'm going to do it:</p>",
+        "id": 453401045,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737277
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>myident <span class=\"p\">@</span> <span class=\"p\">{</span>\n  <span class=\"ss\">foo</span> <span class=\"o\">=</span> <span class=\"mi\">132</span><span class=\"p\">;</span>\n  <span class=\"ss\">bar</span> <span class=\"o\">=</span> myident<span class=\"o\">.</span>foo<span class=\"p\">;</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 453401134,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737300
+    },
+    {
+        "content": "<p>This behaves the way you expect it to, just like <code>fix</code>. But you can also override the bind:</p>\n<div class=\"codehilite\"><pre><span></span><code>{\n  needsBaz = self @ { bar = self.baz; };\n} ==&gt; {\n  bazzed = setMeta { bind = (getMeta needsBaz).bind // { baz = 123; } needsBaz;\n}\n</code></pre></div>",
+        "id": 453401609,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737415
+    },
+    {
+        "content": "<p>So you can leverage this to implement anything, basically. Also the bind in <code>foo @ { pattern, here }:  here</code> will act specially and bind to the argument instead of the lambda itself. So it is basically identical to the Nix version here.</p>",
+        "id": 453401849,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737475
+    },
+    {
+        "content": "<p>Further, when you do <code>inputs @ { ... } ==&gt; ...</code>, the bind <code>inputs</code> will bind to the \"use\"d attribute set, and it will get overriden by the language itself when the \"use\"d attribute set gets overriden. So it will all work magically.</p>",
+        "id": 453402340,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737627
+    },
+    {
+        "content": "<p>Going to rethink the \"bind can be overriden\" stuff</p>",
+        "id": 479074831,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729972044
+    }
+]

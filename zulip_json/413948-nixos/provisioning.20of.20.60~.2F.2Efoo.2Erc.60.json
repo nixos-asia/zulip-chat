@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>What is the proper way to add various text files to any/all <code>$HOME</code> directories on rebuild?</p>\n<p>Is it possible to do something similar to <code>home.file.\".foo.rc\".text</code> without Home Manager?</p>",
+        "id": 535655487,
+        "sender_full_name": "eshep",
+        "timestamp": 1755858689
+    },
+    {
+        "content": "<p>What's the <a href=\"https://xyproblem.info/\">X</a>?</p>\n<p>There's also <code>environment.etc</code> if you are okay with putting them in /etc</p>",
+        "id": 535706439,
+        "sender_full_name": "Srid",
+        "timestamp": 1755876290
+    },
+    {
+        "content": "<p><code>environment.etc</code> works for some things, yes.  but for programs that don't look there, or if I wanted <code>/etc/foo.rc</code> to be copied to <code>$HOME/foo.rc</code> as a default config; I've not yet been able to work out any way to do it other than using HM</p>",
+        "id": 535777934,
+        "sender_full_name": "eshep",
+        "timestamp": 1755918513
+    },
+    {
+        "content": "<p>Perhaps: <a href=\"https://viperml.github.io/nix-maid/\">https://viperml.github.io/nix-maid/</a></p>",
+        "id": 540748966,
+        "sender_full_name": "Pol Dellaiera",
+        "timestamp": 1758532720
+    },
+    {
+        "content": "<p>this might be as close as I'm gonna get, thank you</p>",
+        "id": 543664473,
+        "sender_full_name": "eshep",
+        "timestamp": 1759902714
+    }
+]

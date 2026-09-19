@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>Good idea?<br>\n<a href=\"https://github.com/divnix/nosys/pull/16\">https://github.com/divnix/nosys/pull/16</a></p>",
+        "id": 423154383,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708767551
+    },
+    {
+        "content": "<p>Context? What's 'nosys'?</p>",
+        "id": 423161119,
+        "sender_full_name": "Srid",
+        "timestamp": 1708772889
+    },
+    {
+        "content": "<p>Okay, a way to deal with <code>systems</code>. Unsure what the benefit is compared to say flake-parts perSystem.</p>",
+        "id": 423161180,
+        "sender_full_name": "Srid",
+        "timestamp": 1708772953
+    },
+    {
+        "content": "<p>For a while now, (mosly since working on and using std), I'm not a big fan of the module system. It's complexity get's conflating with Nix as a whole. I think using it to build flakes just gives you another onramp to infinite recursion, slow evaluation and difficult error messages that I'd rather not deal with when declaring a simple interface of inputs and outputs <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 423195677,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708801087
+    },
+    {
+        "content": "<p>originally, nosys was just a way to start modularizing parts of <code>std</code> that could be factored out. There was a desystemetize function that I broke off here and used to essentially demonstrate the old \"system as an input\" idea for flakes. Showing what the flake API could be like if you didn't have to worry about system.</p>\n<p>It also doesn't do anything else, purposefully, and is as minimal and fast as possible with simple conveniences.</p>",
+        "id": 423195890,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708801310
+    }
+]

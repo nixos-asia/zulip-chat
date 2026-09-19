@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<h1>Converting Islands To Derivations</h1>\n<p>Fetching entire source trees using islands will be very inefficient. Say when we're doing:</p>\n<div class=\"codehilite\"><pre><span></span><code>packages.cargoBuild {\n  source = &lt;github:cull-os/cab&gt;,\n}\n</code></pre></div>\n<p>The build derivation will depend on the source derivation. But we don't have a derivation, we only have an island.</p>\n<p>Then what will we do? We will have to fetch it all and reupload it to our realizer, as a derivation (via toDerivation).</p>\n<p>This could be fixed with fixed output derivations, but specifying hashes manually is cumbersome.</p>\n<p>Instead of that, the implementation of <code>toDerivation island</code> will output a super tiny program (ideally written in Zig with -Osmall) that fetches the island and places the contents in a fixed output derivation.</p>\n<p>There is one minor issue. There is no way to do <code>cab build --update</code> without instructing the realizer to re-run the fetcher program with the found hash instead of expected one. This will be terrible for huge downloads.</p>\n<p>The fix is to have \"self-fixing\" derivations where the derivation will set its own fixed hash itself. Then we can have our \"updating\" program set its fixed hash and exit.</p>\n<p>This will be done with a fifo in the programs working directory where it will write the final hash right before exiting.</p>",
+        "id": 478760391,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729788874
+    },
+    {
+        "content": "<h1>Converting Islands To Derivations</h1>\n<p>Fetching entire source trees using islands will be very inefficient. Say when we're doing:</p>\n<div class=\"codehilite\"><pre><span></span><code>packages.cargoBuild {\n  source = &lt;github:cull-os/cab&gt;,\n}\n</code></pre></div>\n<p>The build derivation will depend on the source derivation. But we don't have a derivation, we only have an island.</p>\n<p>Then what will we do? We will have to fetch it all and reupload it to our realizer, as a derivation (via <code>toDerivation island</code>).</p>\n<p>This could be fixed with fixed output derivations, but specifying hashes manually is cumbersome.</p>\n<p>Instead of that, the implementation of <code>toDerivation island</code> will output a derivation using a super tiny WASM file (which is shared for all builtin islands, and requires <code>requiredRealizerFeatures = [ \"wasm\" ]</code>) that fetches the island and places the contents in a fixed output derivation.</p>\n<p>There is one minor issue. There is no way to do <code>cab build --update</code> (and fetch new islands without the flag) without instructing the realizer to re-run the fetcher program with the found hash after failing initially by running with a random one. This will be terrible for huge downloads.</p>\n<p>The fix is to have \"self-fixing\" derivations where the derivation will set its own fixed hash itself. Then we can have our \"updating\" program set its fixed hash and exit.</p>\n<p>This will be done with a fifo in the programs working directory where it will write the final hash in a number of formats (like our git fetcher can write the git revision at the start, before fetching and writing the Cab hash), and when each format is written the realizer has the right to terminate the derivation as it might already have it stored somewhere.</p>",
+        "id": 478917499,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729862338
+    },
+    {
+        "content": "<p>(updated to say WASM, for truly system independent building)</p>",
+        "id": 478917734,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729862408
+    },
+    {
+        "content": "<p>Which makes me think, does having <code>system</code> be something special make sense at all? Why not make it a feature in the protocol too?</p>",
+        "id": 478917902,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729862468
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> See the \"self-fixing\" part here.</p>",
+        "id": 484352848,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1732554632
+    },
+    {
+        "content": "<p>(this is a reply to <a href=\"https://x.com/nrdexp/status/1861093446846451897\">https://x.com/nrdexp/status/1861093446846451897</a>)</p>",
+        "id": 484352897,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1732554650
+    }
+]

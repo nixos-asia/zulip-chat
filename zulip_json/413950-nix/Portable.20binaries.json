@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Problem: Linux doesn't have portable binaries like windows - download exe from a site and double click to run.</p>\n<p>I think we could build something based off nix, which runs on any distro and sets up /nix under some X, and allows people to run all nix binaries directly on any distro. </p>\n<p>Example:<br>\nmakeitrun reptyr - launches reptyr as of nixos unstable / latest stable.</p>\n<p>X: </p>\n<ol>\n<li>Can be a ram based filesytem like tmpfs</li>\n<li>Can be a filesystem within a file. </li>\n<li>Can be a directory path - mainly if user wants to debug.</li>\n</ol>\n<p>makeitrun itself must be a statically linked binary - so that it can run without relying on any glibc etc.</p>\n<p>What do you peeps thing about it?</p>",
+        "id": 441964540,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1717276185
+    },
+    {
+        "content": "<p><a href=\"#narrow/stream/413950-nix/topic/Portable.20binaries/near/441964540\">A message</a> was moved here from <a class=\"stream-topic\" data-stream-id=\"413951\" href=\"/#narrow/stream/413951-general/topic/OSS.20contribution.20ideas\">#general &gt; OSS contribution ideas</a> by <span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span>.</p>",
+        "id": 441993195,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1717292057
+    },
+    {
+        "content": "<p><a href=\"https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-bundle\"><code>nix bundle</code></a>?</p>",
+        "id": 441993221,
+        "sender_full_name": "Srid",
+        "timestamp": 1717292081
+    }
+]
