@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/Nix.20development.20environments/near/430868272\">said</a>:</p>\n<blockquote>\n<ul>\n<li>For LSP, I have <code>nil</code> (<code>nil_ls.enable = true;</code> in nixvim config)</li>\n</ul>\n</blockquote>\n<p>For those curious, here's our nixvim config, in the context of a home-manager template:</p>\n<p><a href=\"https://github.com/juspay/nix-dev-home/blob/main/home/neovim.nix\">https://github.com/juspay/nix-dev-home/blob/main/home/neovim.nix</a></p>",
+        "id": 446132703,
+        "sender_full_name": "Srid",
+        "timestamp": 1718990587
+    },
+    {
+        "content": "<p>oh thanks a lot, I will look at that!</p>",
+        "id": 446135731,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718991352
+    },
+    {
+        "content": "<p>On a related note, this would be a <em>good first issue</em> to tackle for anyone looking to contribute to a Nix project:</p>\n<p><a href=\"https://github.com/juspay/nix-dev-home/issues/16\">https://github.com/juspay/nix-dev-home/issues/16</a></p>\n<p>(The cool thing is to be able to <code>nix run ..</code> neovim with certain nixvim config, which is useful to be able to 'take your vim' wherever you go, such as when pairing on a coworker's machine)</p>",
+        "id": 446181673,
+        "sender_full_name": "Srid",
+        "timestamp": 1719007265
+    },
+    {
+        "content": "<p>yeah that is an interesting issue. I will play a bit with Nixvim anyways, it looks a much nicer solution than my current Nvim config. I will have a look at it while I do</p>",
+        "id": 446435013,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719158419
+    },
+    {
+        "content": "<p>so if I see this correctly (had to get the organization of the flake first), you use the home manager module approach to Nixvim?</p>",
+        "id": 446435492,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719158601
+    },
+    {
+        "content": "<p>That entire repo provides only home-manager config, yes.</p>\n<p>But you can 'embed' it in nixos configuration in straightforward manner (like I do in srid/nixos-config using <code>nixos-flake</code>)</p>",
+        "id": 446441033,
+        "sender_full_name": "Srid",
+        "timestamp": 1719160333
+    }
+]

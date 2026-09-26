@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/NixOS/nixpkgs/pull/305586\">https://github.com/NixOS/nixpkgs/pull/305586</a></p>\n<p><a href=\"https://github.com/zylon-ai/private-gpt\">https://github.com/zylon-ai/private-gpt</a></p>\n<div class=\"message_inline_image\"><a href=\"https://github.com/zylon-ai/private-gpt/raw/main/fern/docs/assets/ui.png?raw=true\"><img src=\"https://uploads.zulipusercontent.net/6d157fa5875550373a7805fc55addcf77459bd1d/68747470733a2f2f6769746875622e636f6d2f7a796c6f6e2d61692f707269766174652d6770742f7261772f6d61696e2f6665726e2f646f63732f6173736574732f75692e706e673f7261773d74727565\"></a></div>",
+        "id": 438938713,
+        "sender_full_name": "Srid",
+        "timestamp": 1715837415
+    },
+    {
+        "content": "<p>Oops, fails to build on macOS:</p>\n<p><a href=\"/user_uploads/60244/eayS6zAkbniYsCBEgRcygzo5/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/eayS6zAkbniYsCBEgRcygzo5/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/eayS6zAkbniYsCBEgRcygzo5/image.png\"></a></div>",
+        "id": 438939097,
+        "sender_full_name": "Srid",
+        "timestamp": 1715837581
+    },
+    {
+        "content": "<p>yeah interesting, open-webui, what <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> was using so far, also has some RAG capabilities, but I haven't really been testing them in depth. I am not clear yet which is the best way to generate the embeddings. </p>\n<p>Apparently you can use ollama with specific models to get that done.</p>",
+        "id": 438963066,
+        "sender_full_name": "Andreas",
+        "timestamp": 1715846659
+    },
+    {
+        "content": "<p><code>private-gpt</code> build failure on <code>aarch64-darwin</code> should be solved after <a href=\"https://github.com/NixOS/nixpkgs/issues/313403\">https://github.com/NixOS/nixpkgs/issues/313403</a></p>\n<p>Until then, I will override in the <code>nixpkgs</code> <code>flakeModule</code> of <code>ollama-flake</code> to make it work on <code>aarch64-darwin</code></p>",
+        "id": 439868467,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716313217
+    },
+    {
+        "content": "<p><a href=\"https://github.com/zylon-ai/private-gpt\">private-gpt</a> in <a href=\"https://github.com/shivaraj-bh/ollama-flake\">ollama-flake</a>:</p>\n<p><a href=\"#narrow/stream/426237-nixify-llm/topic/ollama/near/440651465\">https://nixos.zulipchat.com/#narrow/stream/426237-nixify-llm/topic/ollama/near/440651465</a></p>",
+        "id": 440651533,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716657754
+    }
+]

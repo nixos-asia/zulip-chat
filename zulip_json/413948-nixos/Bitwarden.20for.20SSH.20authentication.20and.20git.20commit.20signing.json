@@ -1,0 +1,86 @@
+[
+    {
+        "content": "<p>Has anyone used Bitwarden with a vaultwarden instance to sign git commits and store ssh keys?</p>",
+        "id": 442066311,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1717343121
+    },
+    {
+        "content": "<p>cc <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> </p>\n<p>(Also, related: <a href=\"#narrow/stream/413948-nixos/topic/secrets.2Fpassword.20management/near/427139745\">this topic</a>)</p>",
+        "id": 442067443,
+        "sender_full_name": "Srid",
+        "timestamp": 1717343777
+    },
+    {
+        "content": "<p>I wanted to try out self-hosted vaultwarden soonishly. Does it have that kind of capability?</p>",
+        "id": 442082389,
+        "sender_full_name": "Andreas",
+        "timestamp": 1717350849
+    },
+    {
+        "content": "<p>I use vaultwarden, but it’s only limited to my passwords at the moment. I don’t store my SSH keys there yet as I was looking for a better solution (related topic that srid linked ^). Bitwarden has <a href=\"https://bitwarden.com/products/secrets-manager/\">Secrets manager</a>, but the last I checked, it was proprietary.</p>\n<p>I was planning to try this out myself with existing vaultwarden. Storing the keys and retrieving them using the “bw” CLI seems straightforward, but signing commits is what would be interesting to see. </p>\n<p>Anyways, I will update this thread with my progress.</p>",
+        "id": 442082737,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1717351046
+    },
+    {
+        "content": "<blockquote>\n<p>Storing the keys and retrieving them using the “bw” CLI seems straightforward</p>\n</blockquote>\n<p>So you would store them as what in vaultwarden? As a secure note? I still use regular Bitwarden for my passwords, so I am not sure which capabilities vaultwarden actually has.</p>",
+        "id": 442083135,
+        "sender_full_name": "Andreas",
+        "timestamp": 1717351217
+    },
+    {
+        "content": "<p>Signing shouldn't be that hard, let me see</p>",
+        "id": 442084129,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1717351686
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> For storing SSH private keys I use <a href=\"https://github.com/charmbracelet/melt\">https://github.com/charmbracelet/melt</a> and store the melted key physically in my wallet. works well and is offline</p>",
+        "id": 442084262,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1717351760
+    },
+    {
+        "content": "<p>If everything goes wrong, I can use that key to redeploy everything and ssh into my servers which is great. it's not really possible for me to lose access this way</p>",
+        "id": 442084341,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1717351802
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"725711\">@RGBCube</span> how do you manage the seed phrases used to create the melted key?</p>",
+        "id": 442085996,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1717352667
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"678574\">Andreas</span> <a href=\"#narrow/stream/413948-nixos/topic/Bitwarden.20for.20SSH.20authentication.20and.20git.20commit.20signing/near/442083135\">said</a>:</p>\n<blockquote>\n<blockquote>\n<p>Storing the keys and retrieving them using the “bw” CLI seems straightforward</p>\n</blockquote>\n<p>So you would store them as what in vaultwarden? As a secure note? I still use regular Bitwarden for my passwords, so I am not sure which capabilities vaultwarden actually has.</p>\n</blockquote>\n<p>Yes, I believe it should be secure note. I am guessing that’s what <span class=\"user-mention\" data-user-id=\"725711\">@RGBCube</span> is doing with his melted keys</p>",
+        "id": 442086131,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1717352757
+    },
+    {
+        "content": "<p>No, it's not in any password manager, i wrote the melted key down on a piece of paper and put it in my physical wallet.</p>",
+        "id": 442086561,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1717352995
+    },
+    {
+        "content": "<p>And the melted key doesn't have a passphrase, when you unmelt it it asks you for a passphrase</p>",
+        "id": 442086632,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1717353016
+    },
+    {
+        "content": "<p>Asks you for a passphrase as in ssh-keygening on the melted key to add a passphrase to the restored one</p>",
+        "id": 442086735,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1717353080
+    },
+    {
+        "content": "<p>We have a vaultwarden at work to share passwords and some keys. I would say it's not really appropriate for our usecase.</p>\n<p>It'd probably be better to use short lived ssh certs</p>",
+        "id": 442091324,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1717355589
+    }
+]

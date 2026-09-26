@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Quick question: is it possible to have a repo of <strong>private</strong> nix flake templates to initialize from the cli? Or does the template repo have to be public?</p>",
+        "id": 434502757,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713620959
+    },
+    {
+        "content": "<p>Since you are online <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> and everyone else is just chillin' on Saturday, I'll just ping you <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span></p>",
+        "id": 434519897,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713634165
+    },
+    {
+        "content": "<p>This might be related: <a href=\"https://gist.github.com/arianvp/8f80c23a3410d27746fb97a6563d9677\">https://gist.github.com/arianvp/8f80c23a3410d27746fb97a6563d9677</a></p>\n<p>Saw this on twitter like a week ago and srid posted on an internal channel as well.</p>",
+        "id": 434520096,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713634307
+    },
+    {
+        "content": "<p>interesting, I'll try and see if I can access my first little flake template from a private repo</p>",
+        "id": 434520212,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713634411
+    },
+    {
+        "content": "<p>Yeah, seems to work. I wonder if this also works for Gitea or Gitlab?</p>",
+        "id": 434521121,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713635267
+    },
+    {
+        "content": "<p>I think I might just create a little shell alias with that as a script to set this up whenever I need to.</p>",
+        "id": 434521195,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713635317
+    }
+]
