@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>Yes, this is a known limitation: <a href=\"https://github.com/NixOS/nix/issues/5663\">https://github.com/NixOS/nix/issues/5663</a></p>\n<p>What kind of expressions are planning to use <span class=\"user-mention\" data-user-id=\"702616\">@Tamil Selvan</span> ?</p>",
+        "id": 427917042,
+        "sender_full_name": "Srid",
+        "timestamp": 1710938062
+    },
+    {
+        "content": "<p>(deleted)</p>",
+        "id": 428236360,
+        "sender_full_name": "Tamil Selvan",
+        "timestamp": 1711064847
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/Expressions.20in.20flake.20inputs/near/427917042\">said</a>:</p>\n<blockquote>\n<p>Yes, this is a known limitation: <a href=\"https://github.com/NixOS/nix/issues/5663\">https://github.com/NixOS/nix/issues/5663</a></p>\n<p>What kind of expressions are planning to use <span class=\"user-mention silent\" data-user-id=\"702616\">Tamil Selvan</span> ?</p>\n</blockquote>\n<p>I was trying to tinker around refactoring the flake.<br>\n<span class=\"user-mention\" data-user-id=\"667408\">@Srid</span>  as you may know we were referring to a local repo in the flake inputs during our discussion<br>\nI tried to move the local repo's path to a different file and refer it from there</p>\n<div class=\"codehilite\"><pre><span></span><code>inputs = {\n       repo.url = &quot;path:&quot; + builtins.readFile &quot;&lt;file path that contains the local repo&#39;s absolute path&gt;&quot;;\n}\n</code></pre></div>",
+        "id": 428236471,
+        "sender_full_name": "Tamil Selvan",
+        "timestamp": 1711064909
+    },
+    {
+        "content": "<p>Why does <code>repo</code> here need to be dynamically specified? Is there a use-case you are trying to solve here? If the above is Y, <a href=\"https://xyproblem.info/\">what is X</a>?</p>",
+        "id": 428236523,
+        "sender_full_name": "Srid",
+        "timestamp": 1711064969
+    },
+    {
+        "content": "<p>(deleted)</p>",
+        "id": 429289530,
+        "sender_full_name": "Tamil Selvan",
+        "timestamp": 1711344080
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/Expressions.20in.20flake.20inputs/near/428236523\">said</a>:</p>\n<blockquote>\n<p>Why does <code>repo</code> here need to be dynamically specified? Is there a use-case you are trying to solve here? If the above is Y, <a href=\"https://xyproblem.info/\">what is X</a>?</p>\n</blockquote>\n<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> that was because I thought of keeping the flake file fixed and let people make changes i.e. add their own local repo path in a separate file rather than making changes in flake.</p>",
+        "id": 429289646,
+        "sender_full_name": "Tamil Selvan",
+        "timestamp": 1711344126
+    },
+    {
+        "content": "<p>Why do you want people to be making changes to a separate file rather than on <code>flake.nix</code> itself? Just trying to understand the motivation here -- why not just have them edit the <code>flake.nix</code> file?</p>",
+        "id": 429360778,
+        "sender_full_name": "Srid",
+        "timestamp": 1711366224
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/Expressions.20in.20flake.20inputs/near/429360778\">said</a>:</p>\n<blockquote>\n<p>Why do you want people to be making changes to a separate file rather than on <code>flake.nix</code> itself? Just trying to understand the motivation here -- why not just have them edit the <code>flake.nix</code> file?</p>\n</blockquote>\n<p>We can do that too. I was just trying to get to a one click dev environment setup where users don't have to edit the flake to get the setup running as majority of the folks in our team have not been introduced to nix yet. <br>\nWhat you are telling makes sense tho. Let people get their hands dirty in nix this way.</p>",
+        "id": 429543689,
+        "sender_full_name": "Tamil Selvan",
+        "timestamp": 1711420370
+    },
+    {
+        "content": "<blockquote>\n<p>Let people get their hands dirty in nix this way.</p>\n</blockquote>\n<p>For now, this is a wise approach. </p>\n<p>But down the like, I do like to create something with improved DX (on top of flakes/flake-parts).</p>",
+        "id": 429698535,
+        "sender_full_name": "Srid",
+        "timestamp": 1711471918
+    }
+]

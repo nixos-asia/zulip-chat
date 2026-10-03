@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Is this something within this implementation, or something upstream? Even after going into select mode using Ctrl+S, you can highlight the text but no normal copy operations will save to the clipboard. in any other tui, I can copy things to the clipboard</p>",
+        "id": 406595030,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701972261
+    },
+    {
+        "content": "<p>It has to be an upstream issue. We just shell out to <code>process-compose</code> command, passing it the arguments passed by the user:</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>srid<span class=\"w\"> </span>on<span class=\"w\"> </span>appreciate<span class=\"w\"> </span>process-compose-flake/example<span class=\"w\"> </span>on<span class=\"w\"> </span><span class=\"w\"> </span>main<span class=\"w\"> </span>via<span class=\"w\"> </span>❄️<span class=\"w\">  </span>impure<span class=\"w\"> </span><span class=\"o\">(</span>nix-shell-env<span class=\"o\">)</span>\n❯<span class=\"w\"> </span>cat<span class=\"w\"> </span><span class=\"k\">$(</span>nix<span class=\"w\"> </span>build<span class=\"w\"> </span>--print-out-paths<span class=\"k\">)</span>/bin/*\n<span class=\"c1\">#!/nix/store/rz0xwswp80pjyn8sf2vz3xlv67sfiyns-bash-5.2-p15/bin/bash</span>\n<span class=\"nb\">set</span><span class=\"w\"> </span>-o<span class=\"w\"> </span>errexit\n<span class=\"nb\">set</span><span class=\"w\"> </span>-o<span class=\"w\"> </span>nounset\n<span class=\"nb\">set</span><span class=\"w\"> </span>-o<span class=\"w\"> </span>pipefail\n\n<span class=\"nb\">export</span><span class=\"w\"> </span><span class=\"nv\">PATH</span><span class=\"o\">=</span><span class=\"s2\">\"/nix/store/srqqppq5zbn41dlpb87si0rw947d00w2-process-compose-0.60.0/bin:</span><span class=\"nv\">$PATH</span><span class=\"s2\">\"</span>\n\n<span class=\"nb\">export</span><span class=\"w\"> </span><span class=\"nv\">PC_CONFIG_FILES</span><span class=\"o\">=</span>/nix/store/8j1rnipbcmcyqg6md3mdizx6i4qwagdl-default.yaml\n\n<span class=\"nb\">exec</span><span class=\"w\"> </span>process-compose<span class=\"w\"> </span>-p<span class=\"w\"> </span><span class=\"m\">0</span><span class=\"w\"> </span><span class=\"s2\">\"</span><span class=\"nv\">$@</span><span class=\"s2\">\"</span>\n</code></pre></div>",
+        "id": 406595604,
+        "sender_full_name": "Srid",
+        "timestamp": 1701972500
+    },
+    {
+        "content": "<p>Note again, you can use the <code>log_location</code> option to have it write the process output to a log file, which should be straightforward to copy.</p>\n<p><a href=\"https://github.com/nammayatri/nammayatri/blob/7203bc29d5c2bf30e1e96582af2d3604915a5a97/Backend/nix/run-mobility-stack.nix#L13\">https://github.com/nammayatri/nammayatri/blob/7203bc29d5c2bf30e1e96582af2d3604915a5a97/Backend/nix/run-mobility-stack.nix#L13</a></p>",
+        "id": 406595924,
+        "sender_full_name": "Srid",
+        "timestamp": 1701972607
+    },
+    {
+        "content": "<p>yes, I am using that. thanks</p>",
+        "id": 406596016,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1701972652
+    }
+]

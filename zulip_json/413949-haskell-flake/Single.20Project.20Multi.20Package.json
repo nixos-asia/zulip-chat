@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>Hi there,<br>\nI'm using haskell-flake at work and I'm having some trouble to make nix run/build given that our project has a single cabal file but with multiple different executables. I'm a nix beginner and trying this setup for the first time. Do you guys have some guidelines for this particular setup? Thank you very much in advance.</p>",
+        "id": 510452159,
+        "sender_full_name": "Lemos",
+        "timestamp": 1743920879
+    }
+]

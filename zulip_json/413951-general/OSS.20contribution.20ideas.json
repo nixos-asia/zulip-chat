@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>I thought I'd dedicate a topic to catalogue ideas for OSS contributions.</p>",
+        "id": 436248824,
+        "sender_full_name": "Srid",
+        "timestamp": 1714476281
+    },
+    {
+        "content": "<h2>Use <code>haskell-flake</code> in pandoc</h2>\n<p>Pandoc's author is receptive to modernizing the <code>flake.nix</code> to use haskell-flake. If anybody's interested: <a href=\"https://github.com/jgm/pandoc/issues/8818\">https://github.com/jgm/pandoc/issues/8818</a></p>",
+        "id": 436248828,
+        "sender_full_name": "Srid",
+        "timestamp": 1714476283
+    },
+    {
+        "content": "<p>Problem: Linux doesn't have portable binaries like windows - download exe from a site and double click to run.</p>\n<p>I think we could build something based off nix, which runs on any distro and sets up /nix under some X, and allows people to run all nix binaries directly on any distro. </p>\n<p>Example:<br>\nmakeitrun reptyr - launches reptyr as of nixos unstable / latest stable.</p>\n<p>X: </p>\n<ol>\n<li>Can be a ram based filesytem like tmpfs</li>\n<li>Can be a filesystem within a file. </li>\n<li>Can be a directory path - mainly if user wants to debug.</li>\n</ol>\n<p>makeitrun itself must be a statically linked binary - so that it can run without relying on any glibc etc.</p>\n<p>What do you peeps thing about it?</p>",
+        "id": 441964540,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1717276185
+    },
+    {
+        "content": "<p>Anybody want to add a NixOS service module for this?</p>\n<p><a href=\"https://once.com/writebook\">https://once.com/writebook</a></p>",
+        "id": 448870341,
+        "sender_full_name": "Srid",
+        "timestamp": 1720017947
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413951-general/topic/OSS.20contribution.20ideas/near/436248828\">said</a>:</p>\n<blockquote>\n<h2>Use <code>haskell-flake</code> in pandoc</h2>\n<p>Pandoc's author is receptive to modernizing the <code>flake.nix</code> to use haskell-flake. If anybody's interested: <a href=\"https://github.com/jgm/pandoc/issues/8818\">https://github.com/jgm/pandoc/issues/8818</a></p>\n</blockquote>\n<p><a href=\"https://github.com/jgm/pandoc/pull/9952\">https://github.com/jgm/pandoc/pull/9952</a></p>",
+        "id": 449180867,
+        "sender_full_name": "Srid",
+        "timestamp": 1720137095
+    }
+]

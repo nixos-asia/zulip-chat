@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>Got the PR merged in upstream, now you can build latest grafana on <code>x86_64-{linux, darwin}</code> and <code>aarch64-{linux, darwin}</code>. </p>\n<p>Will update in <code>services-flake</code>, as soon as the release is in <code>nixpkgs-unstable</code>, track the PR here: <a href=\"https://nixpk.gs/pr-tracker.html?pr=297968\">https://nixpk.gs/pr-tracker.html?pr=297968</a></p>",
+        "id": 429717553,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711478471
+    }
+]

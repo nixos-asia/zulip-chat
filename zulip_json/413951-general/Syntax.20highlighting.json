@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>I see some folks pasting Nix code block without syntax highlighting (<a href=\"#narrow/stream/413950-nix/topic/Running.20python.20process.20using.20process-compose\">example</a>). Note that it is indeed supported on Zulip, eg:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span>\n  <span class=\"ss\">a</span> <span class=\"o\">=</span> x<span class=\"p\">:</span> x <span class=\"o\">+</span> <span class=\"mi\">2</span>\n  <span class=\"ss\">packages</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">foo</span> <span class=\"o\">=</span> pkgs<span class=\"o\">.</span>emanote<span class=\"p\">;</span>\n  <span class=\"p\">};</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
+        "id": 411038778,
+        "sender_full_name": "Srid",
+        "timestamp": 1704297930
+    }
+]

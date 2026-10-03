@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Just a little thing I found. You can <strong>evaluate</strong> a derivation first without building:</p>\n<div class=\"codehilite\"><pre><span></span><code>❯ nix path-info --derivation .#default\nevaluating derivation &#39;git+file:///Users/srid/code/emanote#default&#39;\n/nix/store/sdsqgcdzzzxcc3f12gvn6i44vh0xwmnq-emanote-1.3.13.0.drv\n</code></pre></div>\n<p>And then <strong>realize</strong> (aka. 'build') the evaluated derivation,</p>\n<div class=\"codehilite\"><pre><span></span><code>❯ nix build --no-link --print-out-paths &#39;/nix/store/sdsqgcdzzzxcc3f12gvn6i44vh0xwmnq-emanote-1.3.13.0.drv^out&#39;\n/nix/store/s79fra86jg0fxv5g084wb0dn7mp3scz8-emanote-1.3.13.0\n</code></pre></div>\n<p>As an aside, IFD involves evaluating the built path (a derivation) once again and building the resultant derivation. <a href=\"https://nixos.asia/en/ifd\">https://nixos.asia/en/ifd</a></p>",
+        "id": 421857227,
+        "sender_full_name": "Srid",
+        "timestamp": 1708089765
+    },
+    {
+        "content": "<p>Indeed. This is the entire premise behind std-ci as well</p>",
+        "id": 421891213,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708099791
+    },
+    {
+        "content": "<p>oh, it just clicked to me that that's what the <code>--derivation</code> flag is attempting to describe. i think its vague hence i didn't understand it until now</p>",
+        "id": 422467347,
+        "sender_full_name": "tgunnoe",
+        "timestamp": 1708450170
+    },
+    {
+        "content": "<p>Honestly after designing std-action, I really got the feeling that it was a missed opportunity in Nix's design that we didn't more heavily focus on the separation of \"eval time\" vs \"build time\". There was a lot of kerfuffle about the flake cache, and how it's not super efficient. But a derivation is it's own evaluation cache, after all</p>",
+        "id": 422469094,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708450747
+    }
+]

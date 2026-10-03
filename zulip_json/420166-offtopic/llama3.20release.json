@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Yann LeCun says Llama3-8B beats Llama2-70B in some cases.</p>\n<p>Source: <a href=\"https://x.com/ylecun/status/1780999054719127840?s=46\">https://x.com/ylecun/status/1780999054719127840?s=46</a></p>\n<p>Release:<br>\n<a href=\"https://llama.meta.com/llama3/\">https://llama.meta.com/llama3/</a></p>",
+        "id": 434281880,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713501997
+    },
+    {
+        "content": "<p>This topic was moved here from <a class=\"stream-topic\" data-stream-id=\"426237\" href=\"/#narrow/stream/426237-nixify-llm/topic/llama3.20release\">#nixify-llm &gt; llama3 release</a> by <span class=\"user-mention silent\" data-user-id=\"669081\">Shivaraj B H</span>.</p>",
+        "id": 434282031,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1713502066
+    },
+    {
+        "content": "<p>yes, that is nice. More models coming out.</p>",
+        "id": 434408128,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713548700
+    },
+    {
+        "content": "<p>Microsoft also released (and then unreleased) wizardlm2, which is supposed to be quite powerful</p>",
+        "id": 434408225,
+        "sender_full_name": "Andreas",
+        "timestamp": 1713548741
+    }
+]

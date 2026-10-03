@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>I just decided on this syntax for match-case:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"k\">if</span> <span class=\"l\">&lt;expr&gt;</span> is\n  <span class=\"l\">&lt;pat&gt;</span> <span class=\"k\">then</span> <span class=\"l\">&lt;expr&gt;</span><span class=\"p\">,</span>\n  <span class=\"l\">&lt;pat&gt;</span> <span class=\"k\">then</span> <span class=\"l\">&lt;expr&gt;</span><span class=\"p\">,</span>\n  <span class=\"k\">else</span> <span class=\"l\">&lt;expr&gt;</span>\n</code></pre></div>",
+        "id": 476588554,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728807781
+    },
+    {
+        "content": "<p>Since patterns will be able to have expressions in them for things like type checking (<code>&lt;pat&gt; :: &lt;expr&gt;</code>, same as just <code>&lt;pat&gt;</code> but with <code>and &lt;expr&gt;.check &lt;pat-bind&gt;</code>) and conditionals <code>&lt;pat&gt; and &lt;expr&gt;</code> you won't need to hard code an if into the match-case</p>",
+        "id": 476588730,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728807974
+    },
+    {
+        "content": "<p>interesting, could you maybe give a few concrete examples to demonstrate to help grok?</p>",
+        "id": 476610543,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728829809
+    },
+    {
+        "content": "<p><a href=\"https://dl.acm.org/doi/pdf/10.1145/3689746\">https://dl.acm.org/doi/pdf/10.1145/3689746</a> inspired from this</p>",
+        "id": 476675531,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728880431
+    },
+    {
+        "content": "<p>I was thinking of this earlier but I hadn't thought of using a different keyword after if to do a match. My initial idea was just</p>\n<div class=\"codehilite\" data-code-language=\"Rust\"><pre><span></span><code><span class=\"k\">match</span><span class=\"w\"> </span><span class=\"o\">&lt;</span><span class=\"n\">expr</span><span class=\"o\">&gt;</span><span class=\"w\"> </span><span class=\"n\">with</span>\n<span class=\"w\">  </span><span class=\"o\">&lt;</span><span class=\"n\">pat</span><span class=\"o\">&gt;</span><span class=\"w\"> </span><span class=\"n\">then</span><span class=\"w\"> </span><span class=\"o\">&lt;</span><span class=\"n\">expr</span><span class=\"o\">&gt;</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"o\">&lt;</span><span class=\"n\">pat</span><span class=\"o\">&gt;</span><span class=\"w\"> </span><span class=\"n\">then</span><span class=\"w\"> </span><span class=\"o\">&lt;</span><span class=\"n\">expr</span><span class=\"o\">&gt;</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"k\">else</span><span class=\"w\"> </span><span class=\"o\">&lt;</span><span class=\"n\">expr</span><span class=\"o\">&gt;</span>\n</code></pre></div>",
+        "id": 476675667,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728880520
+    },
+    {
+        "content": "<p>This only replaces match-with with if-is</p>",
+        "id": 476675703,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728880533
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Haskell\"><pre><span></span><code><span class=\"nf\">concatString</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"nf\">\\</span><span class=\"n\">s</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"n\">string</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">list</span><span class=\"w\"> </span><span class=\"n\">string</span><span class=\"kt\">:</span>\n<span class=\"w\">  </span><span class=\"kr\">if</span><span class=\"w\"> </span><span class=\"n\">s</span><span class=\"w\"> </span><span class=\"n\">is</span>\n<span class=\"w\">    </span><span class=\"n\">xs</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"n\">list</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">insert</span><span class=\"w\"> </span><span class=\"p\">`</span><span class=\"o\">+</span><span class=\"p\">`</span><span class=\"w\"> </span><span class=\"n\">xs</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"n\">string</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"p\">;</span>\n</code></pre></div>",
+        "id": 476675851,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728880658
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Haskell\"><pre><span></span><code><span class=\"nf\">insert</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"nf\">\\</span><span class=\"n\">f</span><span class=\"kt\">:</span><span class=\"w\"> </span><span class=\"nf\">\\</span><span class=\"n\">xs</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"n\">list</span><span class=\"kt\">:</span>\n<span class=\"w\">  </span><span class=\"kr\">if</span><span class=\"w\"> </span><span class=\"n\">xs</span><span class=\"w\"> </span><span class=\"n\">is</span>\n<span class=\"w\">    </span><span class=\"kt\">[]</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">throw</span><span class=\"w\"> </span><span class=\"s\">\"cannot insert with zero items\"</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"p\">[</span><span class=\"n\">x</span><span class=\"p\">]</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"p\">[</span><span class=\"n\">x</span><span class=\"p\">]</span><span class=\"w\"> </span><span class=\"o\">++</span><span class=\"w\"> </span><span class=\"n\">xs</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">$</span><span class=\"w\"> </span><span class=\"n\">insert</span><span class=\"w\"> </span><span class=\"n\">xs</span><span class=\"p\">;</span>\n\n<span class=\"nf\">toString</span><span class=\"w\"> </span><span class=\"ow\">=</span><span class=\"w\"> </span><span class=\"nf\">\\</span><span class=\"n\">x</span><span class=\"kt\">:</span>\n<span class=\"w\">  </span><span class=\"kr\">if</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"n\">is</span>\n<span class=\"w\">    </span><span class=\"n\">s</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"n\">string</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">s</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"n\">number</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">numberToString</span><span class=\"w\"> </span><span class=\"n\">n</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"n\">xs</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"n\">list</span><span class=\"w\"> </span><span class=\"kr\">then</span><span class=\"w\"> </span><span class=\"n\">insert</span><span class=\"w\"> </span><span class=\"p\">`</span><span class=\"o\">+</span><span class=\"p\">`</span><span class=\"w\"> </span><span class=\"o\">$</span><span class=\"w\"> </span><span class=\"n\">map</span><span class=\"w\"> </span><span class=\"n\">toString</span><span class=\"w\"> </span><span class=\"n\">xs</span><span class=\"p\">;</span>\n</code></pre></div>",
+        "id": 476677843,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728882033
+    },
+    {
+        "content": "<p>Update on this: <code>if is</code> won't have <code>else</code>, as that's a duplicate of <code>_ then</code> at the end (like in Rust)</p>",
+        "id": 479075091,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1729972340
+    }
+]
