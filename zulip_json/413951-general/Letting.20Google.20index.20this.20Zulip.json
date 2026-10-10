@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>This Zulip has many \"web-public\" streams -- they can be accessed anonymously. However, they cannot be indexed by search engines unfortunately</p>\n<blockquote>\n<p>Web-public streams do not yet support search engine indexing. You can use zulip-archive to create an archive of a Zulip organization that can be indexed by search engines. <a href=\"https://zulip.com/help/public-access-option#caveats\">https://zulip.com/help/public-access-option#caveats</a></p>\n</blockquote>\n<p>So it is probably worth setting up <a href=\"https://github.com/zulip/zulip-archive\">https://github.com/zulip/zulip-archive</a> and host it as, say, <code>chat.nixos.asia</code>.</p>",
+        "id": 427106721,
+        "sender_full_name": "Srid",
+        "timestamp": 1710678766
+    },
+    {
+        "content": "<p>Voilà  <span aria-label=\"right\" class=\"emoji emoji-27a1\" role=\"img\" title=\"right\">:right:</span> <a href=\"https://chat.nixos.asia/\">https://chat.nixos.asia/</a></p>",
+        "id": 427111639,
+        "sender_full_name": "Srid",
+        "timestamp": 1710680106
+    },
+    {
+        "content": "<p><a href=\"https://github.com/zulip/zulip-archive/issues/15\">No styling</a>, though.</p>",
+        "id": 427111879,
+        "sender_full_name": "Srid",
+        "timestamp": 1710680173
+    },
+    {
+        "content": "<p>yes, better than nothing. However SEO for the actual public part of Zulip would be really a neat thing to have tbh</p>",
+        "id": 427127688,
+        "sender_full_name": "Andreas",
+        "timestamp": 1710684375
+    },
+    {
+        "content": "<p>if there is no way around this, it might imply that Discourse is actually superior to Zulip as a public forum?</p>",
+        "id": 427137470,
+        "sender_full_name": "Andreas",
+        "timestamp": 1710687044
+    },
+    {
+        "content": "<p>Incidentally, I've also written my own Zulip archiver, it renders like this: <a href=\"https://funprog.srid.ca/\">https://funprog.srid.ca/</a></p>\n<p>(uses github pages as well)</p>",
+        "id": 427137680,
+        "sender_full_name": "Srid",
+        "timestamp": 1710687099
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><code>releases.nixos.org</code> used to be faster before, but has now gotten slower:</p>\n<p><a href=\"/user_uploads/60244/eD7IHM-ert_0xNX_1n9Z3pKL/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/eD7IHM-ert_0xNX_1n9Z3pKL/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/eD7IHM-ert_0xNX_1n9Z3pKL/image.png\"></a></div><p>They should do <a href=\"https://discourse.nixos.org/t/consider-adding-torrent-downloads-on-your-website/5161\">torrents</a>.</p>",
+        "id": 440399328,
+        "sender_full_name": "Srid",
+        "timestamp": 1716498685
+    },
+    {
+        "content": "<p>This morning in Europe I get 25 MBytes/s. Maybe you should move to Europe?</p>",
+        "id": 440463315,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716539084
+    }
+]

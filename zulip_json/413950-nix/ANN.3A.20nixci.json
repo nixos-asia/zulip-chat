@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p><code>0.4.0</code> released!</p>\n<ul>\n<li><a href=\"https://crates.io/crates/nixci\">https://crates.io/crates/nixci</a></li>\n<li><a href=\"https://github.com/srid/nixci/releases/tag/0.4.0\">https://github.com/srid/nixci/releases/tag/0.4.0</a></li>\n</ul>\n<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> ^ another candidate for upstreaming to nixpkgs, if you would like to contribute a PR.</p>",
+        "id": 434267436,
+        "sender_full_name": "Srid",
+        "timestamp": 1713492212
+    },
+    {
+        "content": "<p><a href=\"https://github.com/NixOS/nixpkgs/pull/305222\">https://github.com/NixOS/nixpkgs/pull/305222</a></p>",
+        "id": 434276827,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1713498692
+    },
+    {
+        "content": "<p>Did you test the latest version with the command as follows?</p>\n<div class=\"codehilite\" data-code-language=\"log\"><pre><span></span><code>nixci build github:hercules-ci/hercules-ci-agent                                                                      │\n│🍏 github:hercules-ci/hercules-ci-agent                                                                                 │\n│🐚 nix --extra-experimental-features 'nix-command flakes' show-config --json                                            │\n│🐚 nix eval 'github:hercules-ci/hercules-ci-agent#nixci.default' --json                                                 │\n│🐚 nix eval --impure --json --expr 'builtins.getFlake \"github:nix-systems/empty\"'                                       │\n│🐚 nix eval --impure --json --expr 'import /nix/store/j0r8d7rdn4vrisl78v8ckl4hny4q9ipi-source'                          │\n│🐚 nix show-config --json                                                                                               │\n│🍎 default.&lt;root&gt;                                                                                                       │\n│🐚 nix flake lock --no-update-lock-file github:hercules-ci/hercules-ci-agent                                            │\n│🐚 nix build '/nix/store/p8vfkmfh43yy8lmz1r65dr9yq3ql7cd7-source#default' -L --no-link --print-out-paths --override-inpu│\n│t flake github:hercules-ci/hercules-ci-agent --override-input systems github:nix-systems/empty --refresh -j auto        │\n│• Updated input 'systems':                                                                                              │\n│    'github:nix-systems/default/da67096a3b9bf56a91d16901293e51ba5b49a27e?narHash=sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU│\n│309k9mBC768%3D' (2023-04-09)                                                                                            │\n│  → 'github:nix-systems/empty/23d743284b73ae69caf0cb7874edf05c0c631a1f?narHash=sha256-JeMK8G1oabQTSpqXhYaYtPRak4m6z1xxyR│\n│Kf8CvHy14%3D' (2024-02-23)                                                                                              │\n│error: flake 'path:/nix/store/p8vfkmfh43yy8lmz1r65dr9yq3ql7cd7-source' does not provide attribute 'packages.aarch64-darw│\n│in.default', 'legacyPackages.aarch64-darwin.default' or 'default'                                                       │\n│Error: devour-flake failed to run (exited: 1)\n</code></pre></div>",
+        "id": 435120570,
+        "sender_full_name": "GuangTao Zhang",
+        "timestamp": 1713940848
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"672761\">@GuangTao Zhang</span> How did you install nixci?</p>",
+        "id": 435131355,
+        "sender_full_name": "Srid",
+        "timestamp": 1713945062
+    },
+    {
+        "content": "<p>I'm unable to reproduce your error using <code>nix run github:srid/nixci build github:hercules-ci/hercules-ci-agent</code> on NixOS.</p>",
+        "id": 435134908,
+        "sender_full_name": "Srid",
+        "timestamp": 1713946383
+    },
+    {
+        "content": "<p>Ah, maybe the nixpkgs one is broken. Let me try ...</p>",
+        "id": 435135112,
+        "sender_full_name": "Srid",
+        "timestamp": 1713946457
+    },
+    {
+        "content": "<p>Nope, still can't reproduce it.</p>",
+        "id": 435139688,
+        "sender_full_name": "Srid",
+        "timestamp": 1713948044
+    },
+    {
+        "content": "<p>But, <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span>, you want to update nixpkgs to use the same devour-flake rev, since it contains some fixes (like for building nixosConfigurations).</p>\n<p><a href=\"https://github.com/srid/nixci/blob/b247e765843762f708861ec2309ae8ca75c1de25/flake.lock#L40-L49\">https://github.com/srid/nixci/blob/b247e765843762f708861ec2309ae8ca75c1de25/flake.lock#L40-L49</a></p>",
+        "id": 435139804,
+        "sender_full_name": "Srid",
+        "timestamp": 1713948084
+    },
+    {
+        "content": "<p>May as well use this opportunity to add a comment next to the <code>version</code> field reminding contributors to update <code>devour-flake</code> when upgrading nixci.</p>",
+        "id": 435139947,
+        "sender_full_name": "Srid",
+        "timestamp": 1713948123
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/ANN.3A.20nixci/near/435134908\">said</a>:</p>\n<blockquote>\n<p>I'm unable to reproduce your error using <code>nix run github:srid/nixci build github:hercules-ci/hercules-ci-agent</code> on NixOS.</p>\n</blockquote>\n<p>From the latest nixpkgs-unstable.Yeah, I can't reproduce the issue with the command you provided as well. It seems the problem appeared in the the upstream of nixpkgs (version 0.4.0)</p>",
+        "id": 435265301,
+        "sender_full_name": "GuangTao Zhang",
+        "timestamp": 1713989699
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> Another idea: add some regression tests for nixci in nixpkgs itself. Not sure what that looks like, but I'm sure some packages must have tests. We only need to run <code>nixci build</code> on some known repos. But this can happen on separate PR.</p>",
+        "id": 435283879,
+        "sender_full_name": "Srid",
+        "timestamp": 1713998606
+    }
+]

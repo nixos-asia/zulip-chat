@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/juspay/rust-flake\">https://github.com/juspay/rust-flake</a> now supports multiple crates from cargo workspace</p>\n<p><a href=\"/user_uploads/60244/GRx8d5qLblSZp37TZNFumRrw/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/GRx8d5qLblSZp37TZNFumRrw/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/GRx8d5qLblSZp37TZNFumRrw/image.png\"></a></div>",
+        "id": 451119493,
+        "sender_full_name": "Srid",
+        "timestamp": 1720841305
+    },
+    {
+        "content": "<p>oh cool. NCI is frustrating me with wasm and trunk right now. so if you have an example for wasm and trunk, that might get me to switch</p>",
+        "id": 451203521,
+        "sender_full_name": "Quinn",
+        "timestamp": 1720892483
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"734332\">@Quinn</span> <code>rust-flake</code> is designed to be basically a (flake-parts) wrapper over <a href=\"https://crane.dev/\">https://crane.dev/</a> - so if you can get something working with crane, it should map straightforwardly to <code>rust-flake</code>.</p>",
+        "id": 451235367,
+        "sender_full_name": "Srid",
+        "timestamp": 1720910709
+    },
+    {
+        "content": "<blockquote>\n<p>oh cool. NCI is frustrating me with wasm and trunk right now. so if you have an example for wasm and trunk, that might get me to switch</p>\n</blockquote>\n<p>Do you have an existing repo with wasm and trunk? I could try to package it using <code>rust-flake</code></p>",
+        "id": 452163350,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1721242993
+    },
+    {
+        "content": "<p>this is the current deal <a href=\"https://github.com/quinn-dougherty/gatekept-traffic-PoC/tree/master/src.rs\">https://github.com/quinn-dougherty/gatekept-traffic-PoC/tree/master/src.rs</a> i haven't done a ton of debugging as to why its not working. I will say my emacs lsp is jank in that it works when i <code>direnv</code> to an NCI full rust environment of the project, but it all depends on rustup not being installed. it all comes crashing down if emacs finds a rustup. that's a separate issue tho-- it'd be dope if it even built in CI.</p>",
+        "id": 452163872,
+        "sender_full_name": "Quinn",
+        "timestamp": 1721243140
+    },
+    {
+        "content": "<p>Alright, I will give it a try tomorrow, its almost bed time here.</p>",
+        "id": 452164321,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1721243274
+    }
+]

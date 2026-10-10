@@ -1,0 +1,74 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/vlang/v\">https://github.com/vlang/v</a></p>\n<p>I see that <a href=\"https://github.com/NixOS/nixpkgs/blob/54e675973270853217447973ab1d80efe318b195/pkgs/development/compilers/vlang/default.nix#L14\">vlang is already in nixpkgs</a>. That is, it has been <strong>packaged</strong> in nixpkgs. But the repository itself doesn't have Nix-based <strong>development</strong> environment.</p>\n<p>Nix is used not only for packaging, but also for development: <a href=\"https://nixos.asia/en/dev\">https://nixos.asia/en/dev</a></p>\n<p><span class=\"user-mention\" data-user-id=\"673288\">@Swastik Baranwal</span> So I'd propose that we create a <code>flake.nix</code> file in this repo, so that anyone can just <code>git clone</code> it and run <code>nix develop</code> to be dropped in a shell where they build the project, etc. They don't have to install anything on their computer, other than Nix itself.</p>\n<p>The README says the Makefile does some magical things, including:</p>\n<blockquote>\n<p>The Tiny C Compiler (tcc) is downloaded for you by make if there is a compatible version for your system, and installed under the V thirdparty directory.</p>\n</blockquote>\n<p>When using Nix, none of this need to happen, for the devShell can include the same Tiny C Compiler which is <a href=\"https://github.com/NixOS/nixpkgs/blob/54e675973270853217447973ab1d80efe318b195/pkgs/development/compilers/tinycc/default.nix#L47\">in fact available in nixpkgs</a>.</p>",
+        "id": 406822539,
+        "sender_full_name": "Srid",
+        "timestamp": 1702062607
+    },
+    {
+        "content": "<p>We have our own TCC with our own patches afaik</p>",
+        "id": 406822981,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702062808
+    },
+    {
+        "content": "<p>Nixifying that patched TCC would be the first step I'd think</p>",
+        "id": 406823027,
+        "sender_full_name": "Srid",
+        "timestamp": 1702062837
+    },
+    {
+        "content": "<p>I see</p>",
+        "id": 406823139,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702062879
+    },
+    {
+        "content": "<p>Let me see how I can do it</p>",
+        "id": 406823150,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702062887
+    },
+    {
+        "content": "<p>Write a <code>flake.nix</code> in that TCC repo, then if I run <code>nix run</code> in that repo it should run the compiler.</p>",
+        "id": 406823196,
+        "sender_full_name": "Srid",
+        "timestamp": 1702062913
+    },
+    {
+        "content": "<p>Are there any guides on how to write a <code>flake.nix</code></p>",
+        "id": 406823340,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702062966
+    },
+    {
+        "content": "<p>This is for non-windows <a href=\"https://github.com/vlang/tccbin\">https://github.com/vlang/tccbin</a></p>",
+        "id": 406823400,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702063011
+    },
+    {
+        "content": "<p>I could use this opportunity to see how useful <a href=\"https://nixos.asia/en/blog/nix-rapid\">https://nixos.asia/en/blog/nix-rapid</a> is</p>\n<p>Can you try that and let me know if there's anything you don't understand, as far as introduction goes?</p>",
+        "id": 406823419,
+        "sender_full_name": "Srid",
+        "timestamp": 1702063020
+    },
+    {
+        "content": "<p>This is for windows <a href=\"https://github.com/vlang/tccbin_win\">https://github.com/vlang/tccbin_win</a></p>",
+        "id": 406823433,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702063026
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment/near/406823419\">said</a>:</p>\n<blockquote>\n<p>I could use this opportunity to see how useful <a href=\"https://nixos.asia/en/blog/nix-rapid\">https://nixos.asia/en/blog/nix-rapid</a> is</p>\n<p>Can you try that and let me know if there's anything you don't understand, as far as introduction goes?</p>\n</blockquote>\n<p>This post actually introduces flakes</p>",
+        "id": 406823475,
+        "sender_full_name": "Srid",
+        "timestamp": 1702063042
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413950-nix/topic/Nixifying.20the.20vlang.20dev.20environment/near/406823419\">said</a>:</p>\n<blockquote>\n<p>I could use this opportunity to see how useful <a href=\"https://nixos.asia/en/blog/nix-rapid\">https://nixos.asia/en/blog/nix-rapid</a> is</p>\n<p>Can you try that and let me know if there's anything you don't understand, as far as introduction goes?</p>\n</blockquote>\n<p>Sure, I will work on it tomorrow. It is mid night here.</p>",
+        "id": 406823525,
+        "sender_full_name": "Swastik Baranwal",
+        "timestamp": 1702063056
+    }
+]

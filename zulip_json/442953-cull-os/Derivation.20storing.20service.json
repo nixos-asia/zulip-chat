@@ -1,0 +1,248 @@
+[
+    {
+        "content": "<p>I've been thinking about this for a bit, but what if we had a thing to store all versions of a certain derivation and its outputs, while making it possible for people to query them with names and versions? This is not so different from the current nix package management commands with added version storage.</p>\n<p>But what I had in mind was letting people patch these derivations. By default, if you want to install a package X, which depends on package <a href=\"mailto:Y@3.2\">Y@3.2</a>, but you have Y version 3.3 on your system, the tool could trivially pull X, rename it to a different drv path (calculated with the new Y version) and patch it. This would be done for any backwards compatible version upgrade, or hash mismatch for when the versions match</p>",
+        "id": 475240565,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728289341
+    },
+    {
+        "content": "<p>This would make the tool useful for casual efficient package management</p>",
+        "id": 475240731,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728289400
+    },
+    {
+        "content": "<p>This would be a completely different thing from Cab (built on top of it; very optional) and I'm thinking of calling it the \"Cab Package Registry\" (cli tool would be aptly named <code>cpr</code>)</p>",
+        "id": 475297297,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728307631
+    },
+    {
+        "content": "<p>I think Tim might have some comments on that one as well. I'll let him know so that he gets back to you.</p>",
+        "id": 476205193,
+        "sender_full_name": "Andreas",
+        "timestamp": 1728587309
+    },
+    {
+        "content": "<p>I have already spent some months working on just such a format, and I think you may appreciate some of its novelties. So far I already have the publishing code and a convenient URI syntax for addressing them. I can open up the codebase to you if you'd like to take a look. Also happen to maybe introduce the concept in an meeting if you prefer</p>",
+        "id": 476216831,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591326
+    },
+    {
+        "content": "<p>However, I'm not sure if what I am working on is exactly what you are looking for here. What I am working on is a sort of decentralized publishing mechanism for Nix (or Nix like, could easily work with Cab) code that would alleviate the growing burden of fetching an ever growing nixpkgs <em>n</em> times, along with some other nice properties, such as efficient and decentralized querying, and I also have plans for a full version resolution scheme for efficient dependency management</p>",
+        "id": 476217190,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591460
+    },
+    {
+        "content": "<p>We also have a private mattermost instance for discussing the project and some other random stuff as well</p>",
+        "id": 476217592,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591608
+    },
+    {
+        "content": "<p>One thing I am particularly proud of is a novel identifcation format which allows us to track a large number of these \"atoms\" as I call them across repositories without collisions, which will be extremely useful for efficiently caching them and returning results without any evaluation necessary (assuming its been cached).</p>\n<p>Perhaps this will give you a hint:<br>\n<a href=\"https://github.com/Byron/gitoxide/pull/1610\">https://github.com/Byron/gitoxide/pull/1610</a></p>",
+        "id": 476218477,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728591982
+    },
+    {
+        "content": "<p>This is interesting. Not sure what to make of the PR, but the concept I had in mind was fundamentally incompatible with using the cached derivations in Cab expressions, because every derivation must be produced by an expression itself, which the storing service does not provide.</p>",
+        "id": 476389346,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728653395
+    },
+    {
+        "content": "<p>Aside: I love the use of Result as Either and Ok, Err as named variants, will definitely use that in the future.</p>",
+        "id": 476389674,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728653506
+    },
+    {
+        "content": "<p>How do you \"cache\" the Nix expressions? That's the part I don't fully understand, as my understanding is that Nix always needs Nix code to evaluate derivations. Sure, primitive versions of caching is possible but how do you mitigate fetching nixpkgs _n_ times?</p>",
+        "id": 476390061,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728653619
+    },
+    {
+        "content": "<p>Well my approach is a fundamental shift in how we would run a Nix evaluation, based on 10 years of being annoyed at how costly evaluation can be sometimes, and the experience I gained in that time from Nix and software engineering in general.</p>\n<p>So far includes two components, a novel Nix module system that actually provides sensible boundaries for Nix code for not much cost (it is actually insanely fast compared to the NixOS module system). This piece makes the Nix code bounded and trvially statically analyzeable. It perpusefully bucks the trend of depending on nixpkgs and being super complex and heavy. The core of it took me two hours to write and I have kept it purposefully small since. Besides performance and predictability, another nice feature is trivial tracing (unlike the monsterous traces produced by the nixos module system). There is still some work to do to integrate it more cleanly with my CLI, and I am almost at that stage.</p>\n<p>As for the Rust based cli, there are a few core planned features but right now all I really have (although its pretty solid at this point) is a <code>publish</code> subcommand. This CLI is <em>not</em> meant to be just another Nix wrapper, but instead, a higher level frontend to a Nix like build service (I envision a Guix integration at some point in the future as well). Publishing is somewhat abstracted to allow different storage backends but the inaugural implementation, and probably source of truth for all other backends, is an implementation in pure git.</p>\n<p>I use gitoxide to do some non-standard git things in a very efficient and secure manner. Essentially I detect my format (based on a unique file-extension), and create a detached (orphaned) history containing just that \"atom\" as I call it. Similar to a crate, it contains a manifest and some source files (in a self-contained directory). Since some usecases in Nix may be aided by shared static config, the source dir is optional.</p>\n<p>These are then versioned (a semver is required in the manifest) and stored in unique gitrefs under a custom prefix. The contents are simply new git trees (references to already existing blobs). There is nowhere in the code that writes new blobs anywhere, so this essentially ensures that there is no way to \"corrupt\" the files during publishing, and also makes the format extremely light on gits store, since tree objects are akin to mere references, they are cheap to create, store and crucially, fetch.</p>\n<p>I store some additional, non-standard, meta-data in the commit header, such as the commit from which the atom originates, and commit it using a constant timestamp and author information, making the atom commit fully reproducible. Not implemented yet, but I plan to also allow for optionally signing the atom commit with a tag object. This way one can short circuit manual verification if they trust the key, but even so, manually verifying the contents of an atom is trivial.</p>\n<p>A ref pointing to the original source commit is also made in the atom's ref prefix, so that as long as an atom exists, so to will the source it came from. Verifying is as trivial as pulling it and checking the objectid of the source tree and manifest blob, if you are ever in doubt. You might be wondering \"why bother\"? I was trying to think of a system that could be incrementally adopted in a repo as large as nixpkgs, which would also make it more efficient to pull different packages from various points in history (different versions) without having to grab the entire nixpkgs tree <em>n</em> times, which is a persistent, and growing burden, that flakes actually made far worse.</p>\n<p>I am close to ready to start working on a full blown version resolver that resolves version constraints for these atom's across repositories, and produces a truly minimal set of dependencies (much unlike our friend the flake), directly from source while also remaining extremely cheap to fetch and totally self-contained in git. The versions themselves are contained in the refspec, so resolving the atoms a repository has does not require fetching any of its contents, which is why I spent a lot of time ensuring I do not break this property when writing the publishing code.</p>\n<p>I envision a 3rd critical piece which we have only been brainstorming, and only have a skeleton repo for so far, but it would essentially serve as a much more efficient backend for Nix like evaluators, and serve to decouple evaluation from the caller (our cli binary). This is where my atom id concept (implemented during publishing) comes in to bolster caching. An atom contains a unicode id in the manifest, however, in order to make its identity fully unambiguos and avoid an annoying global namespace (like rust crates suffer from), I also include the concept of a \"root\" which is used as a key input for a blake3 sum over the atom unicode id.</p>\n<p>This \"root\" key, in the git implementation I just described, is the oldest, parentless commit in the repositories history (the origin of the repository). I decided on this as I was trying to think of a way to unambiguously identify a git repo, without replying on emphermal information like remote names, etc (since those can change but you still have the same code and history underneath).</p>\n<p>If the very root of your history changes, you very clearly no longer have quite the same codebase, so to me it seemed like the perfect identifier. This also makes the atom format decentralized, just as git, since you can just publish them to as many remotes as you like. In any case, this ID will be used extensively to track information in this backend we are still designing. We plan to use capt-proto as the exchange format to make it extremely efficient to offload builds and evaluations to multiple instances.</p>\n<p>Everything this backend builds or evals will be tracked, by atomid and then also by derivation information which already exists, creating a trivial mapping to the final artifact (if it exists). This is what will (once fully implemented) allow a user to simply call for a package and instantly start to download it, avoiding evaluation entirely (if it was already built).</p>\n<p>I arrived at all this not to try to replace or even compete with Nix, but through my observation after all these years that Nix is actually quite good as a low-level build tool. It is a not a high level piece, and we shouldn't try to make it so (flakes), as it is fundamentally working at a different level of abstraction. Users simply don't care about derivations, as useful as they are. Everybody does already know what a version is though, and it is an abstraction we have sort of lost in Nix, pinning everything exactly. This model tries to essentially reintroduce it in a principled manner, while retaining the benefits of Nix and mitgating many of its pains.</p>\n<p>So again, this is a backend agnostic system envisioned to provide a proper, user (and developer) level abstraction which makes working with the low-level concept of derivations a breeze, by abstracting the nuisance, creating clean boundaries, reducing reliance on Nix code outright (I envision a plugin system for the cli to generate inputs), and only use it strictly as the DSL it was designed to be, and not the monsterous and growing beast it has become <em>a la</em> the module system, etc.</p>\n<p>None of the pieces I have so far are tied to Nix in any way, and that would be an indication of a boundary violation. It should remain abstract enough to be useful for any Nix like tool (and perhaps future usecases I haven't envisioned). In any case, we are going to be going public soon.</p>\n<p>If I could give a high-level principle that has motivated this whole thing it would be something like, \"nothing is cheaper than static\". If you keep as much as possible about the build statically knowable (the manifest, the refs, the atomids in the backend, the evaluation and build history) you don't have to worry about some eval taking an indeterminate amount of time in between you and the thing you want to use, at least not more than once (for the inital build).</p>\n<p>Sorry for the novel, but its hard to explain the plan without all the pieces <span aria-label=\"joy\" class=\"emoji emoji-1f602\" role=\"img\" title=\"joy\">:joy:</span></p>",
+        "id": 476414811,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728661571
+    },
+    {
+        "content": "<p>We plan to also release a whitepaper when we go public, so that I cam formalize all the novel pieces and make it clear our direction</p>",
+        "id": 476415748,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728661898
+    },
+    {
+        "content": "<p>That’s a pretty good introduction actually</p>",
+        "id": 476417832,
+        "sender_full_name": "Srid",
+        "timestamp": 1728662556
+    },
+    {
+        "content": "<p>haha yeah I was just thinking I can maybe reuse this somewhere</p>",
+        "id": 476418011,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728662635
+    },
+    {
+        "content": "<p>Milestones would also be good to see. In particular, I want to see at what point I can replace flakes+nixpkgs use in real-world projects (while retaining same functionality).</p>",
+        "id": 476420552,
+        "sender_full_name": "Srid",
+        "timestamp": 1728663598
+    },
+    {
+        "content": "<p>Yep, that's what comes next now that the format is stable and the code for it is properly tested. Next piece is integrating my novel Nix module system with the atom format produced by the cli, which should be fairly simple, I am really only missing one piece there that I already have a plan for.</p>\n<p>At that point it should be usable, although dependencies would have to be wired up manually, which is a pain. When it would be a truly nobrainer replacement for flakes is what comes after, I will start working on the resolver right after that, and once that's done, I can't imagine any reason why you would want a \"flake\" again at that point, even without the backend implemented. The resolver is a bit of a technical challenge, but there are some good libraries in the Rust ecosystem to lesson the burden somewhat.</p>",
+        "id": 476421036,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728663811
+    },
+    {
+        "content": "<p>Its also worth noting that I take abstraction and boundaries quite seriously after paying the price for over a decade of not having them respected. So my Nix module system is independantly useful inside of a flake if you really wanted to use it, just to help you organize your code.</p>",
+        "id": 476421433,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728663968
+    },
+    {
+        "content": "<p>For the resolver: <a href=\"https://lib.rs/pubgrub\">https://lib.rs/pubgrub</a><br>\nFor the standard: Have you looked into how <a href=\"https://radicle.xyz\">https://radicle.xyz</a> works?</p>",
+        "id": 476439503,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728671451
+    },
+    {
+        "content": "<p>I haven't fully understood the concept but it sounds really similar to how Radicle stores data, at least in the root level. Sharing that could simplify things a ton (and might even remove the need to explicitly store those files when interacting with a Radicle repository). Could you show me the codebase / practical examples on how the tool is used?</p>",
+        "id": 476439995,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728671645
+    },
+    {
+        "content": "<p>Also sorry for the late reply, I don't get Zulip notifications for some reason</p>",
+        "id": 476440057,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728671670
+    },
+    {
+        "content": "<p>Radicle is more of a blockchain thing right? I am aware of it, tested it years ago. I just don't want any exeternal dependencies outside of git. We also talked about how Radicle is a bit redundant just recently, given that git is already decentralized by nature (even if it isn't used that way). I don't know enough about its architecture beyond that to know if there is cross-over though.</p>\n<p>I have seen pubgrub as well. I am leaning toward resolvo though, at this point. Haven't started though, so it could change. No worries though, no rush</p>",
+        "id": 476451691,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728677287
+    },
+    {
+        "content": "<p>but yeah, I can open the codebase to you. As far as practical examples, that is where I am at now, trying to actually take the format that I have somewhat stabilized now, and put it to actual use</p>",
+        "id": 476451782,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728677339
+    },
+    {
+        "content": "<p>but you can use it to publish anything in the format right now, just need to put in some of the nix pieces to make a more \"full demo\". Also what is your GH handle, I'll add you to the repos</p>",
+        "id": 476451860,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728677375
+    },
+    {
+        "content": "<p>Perhaps the thing to emphasize is the \"orphaned\" and truncated history. And atom only contains the files pertinent to itself, with nothing else from the repo. Also has no history so there is no \"fetching the entire damn history\" for tools that don't know or  care was a shallow clone is.</p>\n<p>So with that, you could reference thousands of different package versions across nixpkgs (even if it stays a mono-repo) and never have to fetch the entire tree, only the data pertinent to your actual build (or whatever else you have, deployment, config, etc, etc)</p>",
+        "id": 476452611,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728677741
+    },
+    {
+        "content": "<p>you could maybe think of it as a \"view\" or \"slice\" into a larger history</p>",
+        "id": 476455666,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728679146
+    },
+    {
+        "content": "<p>I should add, one that is static an immutable (preproducible)</p>",
+        "id": 476456120,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728679363
+    },
+    {
+        "content": "<p>actually one thing I do have implemented already is a more general replacement for flake uris. One that is extensible (one can configure any url shortener they like). So you could do something like:<br>\n<code>my-repo::my-atom@^1</code> and the cli will look in your config file for an \"alias\" called <code>my-repo</code> and resolve it to whatever you have set, say <a href=\"http://example.com/work-repo.git\">example.com/work-repo.git</a>. You can also add a fragment after like flake uri:<br>\n<code>gh:owner/repo::atom</code>, etc, etc</p>\n<p>It took some pains, but its fairly robust and I got some good tests for it</p>",
+        "id": 476459972,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728681260
+    },
+    {
+        "content": "<p>found your github, gave you read:<br>\n<a href=\"https://github.com/ekala-project/eka\">https://github.com/ekala-project/eka</a><br>\n<a href=\"https://github.com/ekala-project/atom\">https://github.com/ekala-project/atom</a></p>\n<p>eka is the Rust cli, atom the Nix module system I've been talking about. I made some effort to document the latter, I have a wip branch with some higher level docs as well, but still early. eka is not very well documented at all, however I did just go through and ensure the <code>atom</code> crate is extensivvely documented in code at least, just not much higher level doc outside the clap cli help messages (which are hopefully helpful though)</p>\n<p>Gonna start integrating the two right now actually, so there should be more cohesion between the two soonish</p>",
+        "id": 476461730,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728682168
+    },
+    {
+        "content": "<p>Oh I get it now!</p>",
+        "id": 476492787,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728708717
+    },
+    {
+        "content": "<p>By limiting the allowed operations of the module system (no import) you can trivially track changes &amp; re-eval only that subset of the tree to re-record the effects it produces</p>",
+        "id": 476492881,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728708810
+    },
+    {
+        "content": "<p>And this thing is trivially applicable to package evaluation as well, as the client can just assume that the atoms stored in each \"branch\"(?) are up to date. Updating them is the job of the author, after all</p>",
+        "id": 476492964,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728708893
+    },
+    {
+        "content": "<p>And since if you don't clean your atom history up, you get ever \"derivation\" that has ever existed stored in your git repository as atoms. Aha</p>",
+        "id": 476493105,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728709005
+    },
+    {
+        "content": "<p>But how do you traverse those headless atoms to find the version 3 of let's say <code>root.foo</code>? Assuming that the current version is newer and that older version is never referenced anywhere in the graph that touches master</p>",
+        "id": 476493236,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728709132
+    },
+    {
+        "content": "<p>probably should have showed you this as well:</p>\n<div class=\"codehilite\"><pre><span></span><code>❯ g ls-remote\nFrom ssh://git@github.com/ekala-project/eka\n50378b2dace5628160724e9e6e855bc0d062865a        HEAD\nceebaca6d44c4cda555db3fbf687c0604c4818eb        refs/atoms/ひらがな/0.1.0\na87bff5ae43894a158dadf40938c775cb5b62d4b        refs/atoms/ひらがな/_specs/0.1.0\n9f17c8c816bd1de6f8aa9c037d1b529212ab2a02        refs/atoms/ひらがな/_srcs/0.1.0\n</code></pre></div>\n<p>This is how atom refs are stored. Essentially atoms are a way of bringing back versions in a meaningful way. They really should just be immutable (similar to version tags) unless something terrible happens (like a critical CVE) in which case you should maybe just delete the troubled version and release a patch update.</p>\n<p>I use the semver crate, so you can also release dev or pre releases as well (anything semver accepts), but the point is, these are resolvable without a fetch (listing references is the only git operation that does not require fetching or cloning, which is the reason I store them this way). So you can list all the available versions of any repository pretty cheaply. The git protocol also includes server side ref filtering, so you can limit your search to just the refs/atoms heading, or even a subset of atoms.</p>\n<p>I'm thinking maybe the backend build/eval service should have some sort of federated search protocol as well, perhaps (undecided), so that you can easily search multiple repos with one subcommand (say <code>eka search</code>)</p>\n<p>The _specs ref above is a lightweight ref that only contains the manifest and lock. This is for the resolver.</p>\n<p>In order to fully traverse the dependency tree, the resolver will have to read the manifests of candidates, so I want to keep those extremely cheap to fetch (in case the source directory gets large)</p>",
+        "id": 476527761,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728743020
+    },
+    {
+        "content": "<p>so even though atoms can live under any arbitrary directory in the repo, however many levels deep, they are identified not by their filepath, but by their:</p>\n<div class=\"codehilite\" data-code-language=\"TOML\"><pre><span></span><code><span class=\"k\">[atom]</span>\n<span class=\"n\">id</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s2\">\"my-atom\"</span>\n</code></pre></div>\n<p>This way, the tree of atoms is \"flat\" for any given repo, simplifying the search as well. For sanity, the source tree is searched before publishing to ensure no two atoms in the same commit have the same id, if they do, the request will fail unless/until you rename one. This is similar to cargo crates in a workspace. If any two have the same name, cargo will complain and not let you do anything.</p>",
+        "id": 476528506,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728743633
+    },
+    {
+        "content": "<p>That makes a ton of sense. But for the refs you might want to do <code>refs/atoms/.../0.1.0/{atom,spec,src}</code> for a better hierarchy</p>",
+        "id": 476542648,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728756928
+    },
+    {
+        "content": "<p>If I'm understanding correctly every \"module\" in this system will have to either have a user assigned atom id or an automatically generated one? How does your module system do it?</p>",
+        "id": 476542772,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728757033
+    },
+    {
+        "content": "<p>I did have that structure at one point, I've just been experimenting a bit, I might change it back actually, just need something that is fairly trivial to filter for just the atom ref itself during a search. git has its own semantic for filtering refs that is pretty similar to globbing in a shell, though I guess something like <code>refs/atoms/*/*/atom</code> would do it, so yeah you are probably right.</p>\n<p>As for the <code>AtomId</code>, it is essentially made of two components:<br>\n<a href=\"https://github.com/ekala-project/eka/blob/master/crates/atom/src/id/mod.rs#L55-L59\">https://github.com/ekala-project/eka/blob/master/crates/atom/src/id/mod.rs#L55-L59</a></p>\n<p>The <code>Id</code> is just a thin wrapper around a string, so that I can run a quick validation ensuring some basic rules. It serves as the human readable component of an atom's identity:<br>\n<a href=\"https://github.com/ekala-project/eka/blob/master/crates/atom/src/id/mod.rs#L133\">https://github.com/ekala-project/eka/blob/master/crates/atom/src/id/mod.rs#L133</a></p>\n<p>The only thing set in the manifest is one of these <code>Id</code>s. The other compoent, the <code>root</code> field is determined by where the atom is stored (why its generic). The git implementation uses my upstream patch to gitoxide to quickly calculate the very first commit in the history from which the atom is derived and uses that.</p>\n<p>That is used as a derived key for a blake3 sum over the <code>Id</code> itself:<br>\n<a href=\"https://github.com/ekala-project/eka/blob/master/crates/atom/src/id/mod.rs#L85\">https://github.com/ekala-project/eka/blob/master/crates/atom/src/id/mod.rs#L85</a></p>\n<p>This gives us an unambiguos hash of this specific atom, independant from other atoms in other repositories, even if they have the same unicode name. We can store this hash in lock files, and backends can use it to disambiguate, essentially giving us a huge namespace, avoiding collisions even where two projects might use the same human readable unicode id.</p>",
+        "id": 476543333,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728757596
+    },
+    {
+        "content": "<p>more simply, an atom is akin to a rust crate, and a module is akin to a rust module (indicated by the mod.nix)</p>",
+        "id": 476543440,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728757716
+    },
+    {
+        "content": "<p>Right now I also post a tag containing this root and ensure that every atom comes from the posted root. It is a sort of \"iitialization\" akin to a <code>git init</code>, and also provides a sanity check that the remote and local repos agree on history. This isn't strictly necessary, I could technically remove it and am considering if I really need it or not.</p>\n<p>It provides is a way for a remote user, who has not clone the repo, to calculate an atom's id, so for that reason alone I might just keep it, but also, it serves as a nice sanity check that we are not publishing atoms from inconsistent histories in a single repo. The initialization process technically targets a specific git remote, not the repository as a whole.</p>\n<p>So if you wanted unrelated histories in one repo and wanted to publish atoms from both you'd just have to init the respective remotes with the relevant historical root. I was thinking you might use this for \"secret\" atoms that are published to a priviledged remote, as one possible usecase</p>",
+        "id": 476543917,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1728758177
+    }
+]
