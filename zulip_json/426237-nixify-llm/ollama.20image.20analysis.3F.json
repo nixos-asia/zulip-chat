@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>Interesting question,</p>\n<blockquote>\n<p>can you paste an image to the chat ui for the chatbot to analyze?</p>\n</blockquote>\n<p><a href=\"https://old.reddit.com/r/NixOS/comments/1dujxu4/run_local_ai_chatbot_using_nix/\">https://old.reddit.com/r/NixOS/comments/1dujxu4/run_local_ai_chatbot_using_nix/</a></p>",
+        "id": 449113605,
+        "sender_full_name": "Srid",
+        "timestamp": 1720106691
+    },
+    {
+        "content": "<p>Supposedly open webui supports something in that direction...</p>",
+        "id": 449116930,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720107637
+    },
+    {
+        "content": "<p>you might need to run a specific model for that. Like this one: <a href=\"https://ollama.com/library/llava:13b\">https://ollama.com/library/llava:13b</a></p>",
+        "id": 449117007,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720107667
+    },
+    {
+        "content": "<p>Looks like it may work: <a href=\"https://openwebui.com/m/dwbranson/image-analysis-using-llava-1:latest\">https://openwebui.com/m/dwbranson/image-analysis-using-llava-1:latest</a></p>",
+        "id": 449117134,
+        "sender_full_name": "Srid",
+        "timestamp": 1720107712
+    },
+    {
+        "content": "<p>Is it just me or is the Add Model button basically broken for others too?</p>\n<p><a href=\"/user_uploads/60244/uLXr2Uu9_o600gLeSXCY0HC3/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/uLXr2Uu9_o600gLeSXCY0HC3/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/uLXr2Uu9_o600gLeSXCY0HC3/image.png\"></a></div>",
+        "id": 449117457,
+        "sender_full_name": "Srid",
+        "timestamp": 1720107836
+    },
+    {
+        "content": "<p>Okay, it works, but not the greatest quality:</p>\n<p><a href=\"/user_uploads/60244/1oPcOQs3EQUDTw3wSDntEKYn/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/1oPcOQs3EQUDTw3wSDntEKYn/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/1oPcOQs3EQUDTw3wSDntEKYn/image.png\"></a></div>",
+        "id": 449118153,
+        "sender_full_name": "Srid",
+        "timestamp": 1720108101
+    },
+    {
+        "content": "<p>Compare with Claude:</p>\n<p><a href=\"/user_uploads/60244/HM_Ck0E5bPIR8RxoXe99Mt6o/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/HM_Ck0E5bPIR8RxoXe99Mt6o/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/HM_Ck0E5bPIR8RxoXe99Mt6o/image.png\"></a></div>",
+        "id": 449118516,
+        "sender_full_name": "Srid",
+        "timestamp": 1720108260
+    },
+    {
+        "content": "<p>at least it works <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 449118967,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720108450
+    },
+    {
+        "content": "<p>but yeah I'd say that might be a bit neglected so far in the open LLM space</p>",
+        "id": 449118986,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720108463
+    }
+]

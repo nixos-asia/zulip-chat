@@ -1,0 +1,254 @@
+[
+    {
+        "content": "<p>Currently, I've only completed the tokenizer. But the general way I want to continue forward is like so:</p>\n<ul>\n<li>Create AST</li>\n<li>Create the lazy interpreters</li>\n<li>At this point, the program will be able to create files similar to Nix or Guix's .drv that specify environment variables, the builder &amp; arguments to that builder and other derivations that this derivation depends on</li>\n</ul>\n<p>That will be all that's done by the <code>cab</code> CLI tool. You will be able to import code from islands (e.g <code>&lt;github:cull-os/cab&gt;</code>) and create derivations (as well as convert islands into derivations). But you won't be able to import or inspect contents of derivations as Cab doesn't know how to build them, which is IMO a feature.</p>",
+        "id": 446141360,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718993275
+    },
+    {
+        "content": "<p>Essentially, <code>cull-os/cab</code> provides its own language (not Nix) and cross-repo abstraction (not flakes) - but using the underlying <code>.drv</code> language, right?</p>",
+        "id": 446141844,
+        "sender_full_name": "Srid",
+        "timestamp": 1718993459
+    },
+    {
+        "content": "<p>And then <code>cab</code> will invoke the configured derivation builder and copy the result to the current filesystem (if the builder is remote). The builder has to adhere to the \"builder protocol\"; something that I want to create and write a specification for. Unlike Nix or Guix, it will be documented and will allow for custom builders that accomplish custom needs. The specification will only require the builder to return a result matching the specified derivation, making it super flexible.</p>",
+        "id": 446141986,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718993513
+    },
+    {
+        "content": "<p>FTR, I am able to use the tokenizer (had to use Nix shell from a different Rust project since <code>shell.nix</code> doesn't provide cargo and friends):</p>\n<p><a href=\"/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/I5J19R4-DvV7olWmBQgXphXG/image.png\"></a></div>",
+        "id": 446142002,
+        "sender_full_name": "Srid",
+        "timestamp": 1718993518
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"725711\">RGBCube</span> <a href=\"#narrow/stream/442953-cull-os/topic/Current.20status/near/446141360\">said</a>:</p>\n<blockquote>\n<ul>\n<li>similar to Nix or Guix's .drv</li>\n</ul>\n</blockquote>\n<p>Ah, wait, you said <em>similar</em> to. So nothing's shared with Nix/nixpkgs?</p>",
+        "id": 446142163,
+        "sender_full_name": "Srid",
+        "timestamp": 1718993576
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/442953-cull-os/topic/Current.20status/near/446141844\">said</a>:</p>\n<blockquote>\n<p>Essentially, <code>cull-os/cab</code> provides its own language (not Nix) and cross-repo abstraction (not flakes) - but using the underlying <code>.drv</code> language, right?</p>\n</blockquote>\n<p>Yes, it's essentially just a simple tool to compose derivation files (though, I do not think I will use Nix's .drv syntax or even the .drv extension)</p>",
+        "id": 446142186,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718993582
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/442953-cull-os/topic/Current.20status/near/446142163\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"725711\">RGBCube</span> <a href=\"#narrow/stream/442953-cull-os/topic/Current.20status/near/446141360\">said</a>:</p>\n<blockquote>\n<ul>\n<li>similar to Nix or Guix's .drv</li>\n</ul>\n</blockquote>\n<p>Ah, wait, you said <em>similar</em> to. So nothing's shared with Nix/nixpkgs?</p>\n</blockquote>\n<p>Yes, I'm not planning to be compatible. What Cab essentially is is a frontend to the Builder Protocol, it creates derivation files required by the protocol and communicates with the backend (the builder server) to produce results</p>",
+        "id": 446142299,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718993640
+    },
+    {
+        "content": "<p>One could even use Nix for the (currently non existent) protocol to build things, as what Nix does it also create derivation files. Like another frontend</p>",
+        "id": 446142475,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718993704
+    },
+    {
+        "content": "<p>I'm specifically wondering if it would be possible to use (ie., <code>import &lt;github:NixOS/nixpkgs&gt;</code>) the existing packages from <code>nixpkgs</code> in a Cull package file.</p>",
+        "id": 446142569,
+        "sender_full_name": "Srid",
+        "timestamp": 1718993748
+    },
+    {
+        "content": "<p>I am wondering if <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span> might not be interested in this. Because he and I talked about about separating evaluation and builder functions of Nix, potentially distributing them somehow.</p>",
+        "id": 446142772,
+        "sender_full_name": "Andreas",
+        "timestamp": 1718993822
+    },
+    {
+        "content": "<p>That would require Cab to be compatible with Nix syntax, so no. But if Nix ever gets support for the builder protocol, it wouldn't be that hard to use Nix alongside Cab to build things on your system (with the same daemon managing both)</p>",
+        "id": 446142797,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1718993830
+    },
+    {
+        "content": "<p>Definitely interesting, especially the builder protocol, as that as something I've been itching to improve for years now with Nix.</p>\n<p>Have begun to wonder if a full scale rearch wasn't necessary. I've had some other more outlandish ideas like extending ELF to link dynamic libs via a content addressed URI instead of a file path </p>\n<p>That way, you could make the file system layer a virtual abstraction, and maybe even present the files as a regular FHS while still retaining the benefits of a Nix build.</p>\n<p>In any case, I'll keep a close eye on your project, and maybe even contrib at some point if it helps. Seems like you have a solid plan so far. Bravo <span aria-label=\"clap\" class=\"emoji emoji-1f44f\" role=\"img\" title=\"clap\">:clap:</span></p>",
+        "id": 446151052,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1718996878
+    },
+    {
+        "content": "<p>Almost finished the AST, the macros are done for automatic code generation</p>",
+        "id": 447758527,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719578825
+    },
+    {
+        "content": "<p>I'll continue monday, I'm done</p>",
+        "id": 447777259,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719582816
+    },
+    {
+        "content": "<p>AST node and token structures are done, as well as the tokenizer and stuff. Only need to create a parser that creates them, which shouldn't be more than 600 loc</p>",
+        "id": 448801760,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719999511
+    },
+    {
+        "content": "<p>Also I finally understand how rowan actually works, which will help</p>",
+        "id": 448801929,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1719999563
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/m72lUqPBKR-klnnKlo3LZSnT/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/m72lUqPBKR-klnnKlo3LZSnT/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/m72lUqPBKR-klnnKlo3LZSnT/image.png\"></a></div>",
+        "id": 449338974,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720193587
+    },
+    {
+        "content": "<p>Parsing and formatting for debug output works! Currently I haven't implemented much of the parser but the formatter is working nicely now</p>",
+        "id": 449339041,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720193628
+    },
+    {
+        "content": "<p>I need to clean up a little bit, however. But that's for after the parser</p>",
+        "id": 449339152,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720193659
+    },
+    {
+        "content": "<p>Found a much better way to write parsers, using chumsky. It's exactly like the megaparsec haskell library</p>",
+        "id": 450233681,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720545468
+    },
+    {
+        "content": "<p>I'm going to ditch the current implementation and rewrite it all. Did I waste the last 10 days? absolutely not</p>",
+        "id": 450233827,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720545509
+    },
+    {
+        "content": "<p>Actually no. I can't use chumsky because I need a lossless parser for the formatter. I'll continue doing this, it already parses pretty well</p>",
+        "id": 450265072,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720553425
+    },
+    {
+        "content": "<p>Unless there's a way to do lossless parsing with chumsky... I'm so unsure right now</p>",
+        "id": 450265479,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720553592
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/Q2YUlNt6osgGRkmR9cs2xseB/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/Q2YUlNt6osgGRkmR9cs2xseB/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/Q2YUlNt6osgGRkmR9cs2xseB/image.png\"></a></div><p>IT WORKS</p>",
+        "id": 450676238,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720694753
+    },
+    {
+        "content": "<p>After this, everything should be easy</p>",
+        "id": 450676312,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720694767
+    },
+    {
+        "content": "<p>lol, famous last words? <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 450761037,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1720717228
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/jcNvwB4au94F8U3A8jSpMiks/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/jcNvwB4au94F8U3A8jSpMiks/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/jcNvwB4au94F8U3A8jSpMiks/image.png\"></a></div>",
+        "id": 450950272,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720785510
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/QGYqNwYSRTvU2oh6Etu-WfUA/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/QGYqNwYSRTvU2oh6Etu-WfUA/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/QGYqNwYSRTvU2oh6Etu-WfUA/image.png\"></a></div>",
+        "id": 450950545,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720785612
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/uUCd0gYYettXAZ2ol8DRdE6l/image.png\">image.png</a><br>\nmeanwhile, nix without a recovering parser</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/uUCd0gYYettXAZ2ol8DRdE6l/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/uUCd0gYYettXAZ2ol8DRdE6l/image.png\"></a></div>",
+        "id": 450950597,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720785631
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/6UOkJ5JToJ30Uz4Skjd2na8O/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/6UOkJ5JToJ30Uz4Skjd2na8O/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/6UOkJ5JToJ30Uz4Skjd2na8O/image.png\"></a></div>",
+        "id": 450951789,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1720785880
+    },
+    {
+        "content": "<p>very nice!</p>",
+        "id": 451008047,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1720797710
+    },
+    {
+        "content": "<p>Parser is 100% complete!</p>",
+        "id": 453400609,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737176
+    },
+    {
+        "content": "<p>I implemented pratt parsing &amp; appliation today and yesterday after a long while</p>",
+        "id": 453400710,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737201
+    },
+    {
+        "content": "<p>I should update the examples to reflect the design changes I did</p>",
+        "id": 453400846,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721737225
+    },
+    {
+        "content": "<p>Cleaned up a lot of parsing code, wrote a fuzzer (which optionally saves valid code to test later for regressions) and checker</p>",
+        "id": 453981073,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721921664
+    },
+    {
+        "content": "<p><a href=\"https://x.com/RGBCubed/status/1816471661803127214\">https://x.com/RGBCubed/status/1816471661803127214</a></p>",
+        "id": 453981121,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721921678
+    },
+    {
+        "content": "<p>Also wrote an sexpr formatter</p>",
+        "id": 453981139,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1721921686
+    },
+    {
+        "content": "<p>How goes it? Are you still actively developing this? Just curious because I have been building some things that may be useful for your (or any Nix like) system, but act as a more general format for them to leverage, rather than tightly coupling with a particular tool. I'd be interested to see if you'd find it useful here.</p>",
+        "id": 471333579,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1726687925
+    },
+    {
+        "content": "<p>I forgot to check this chat, but no I haven't had the chance to develop it further because of school. I have refined the design and direction I want to take the language and builder protocol though</p>",
+        "id": 475235977,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728287850
+    },
+    {
+        "content": "<p>What have you created? I'm not really looking to use an older format because I want to use Cap'n Proto for this, and a single Cap'n file can be leveraged by lots of languages so it's a de facto standard</p>",
+        "id": 475236434,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728287985
+    },
+    {
+        "content": "<blockquote>\n<p>use Cap'n Proto for this</p>\n</blockquote>\n<p>Believe it or not, we've I've had some discussions with Tim on that one as well <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span> did you already build something with that?</p>",
+        "id": 476204865,
+        "sender_full_name": "Andreas",
+        "timestamp": 1728587225
+    },
+    {
+        "content": "<p>Nope, but it does seem pretty useful for creating APIs that can be used across multiple languages (thanks to the community) while enabling you to trivially extend the protocol</p>",
+        "id": 476387266,
+        "sender_full_name": "RGBCube",
+        "timestamp": 1728652719
+    }
+]

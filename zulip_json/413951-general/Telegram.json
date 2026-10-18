@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>We now have a Telegram group: </p>\n<p><a href=\"https://t.me/nixosasia\">https://t.me/nixosasia</a></p>",
+        "id": 447509710,
+        "sender_full_name": "Srid",
+        "timestamp": 1719502547
+    },
+    {
+        "content": "<p>that makes sense given how many people use Telegram <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 447527440,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719507413
+    },
+    {
+        "content": "<p>Looks like some people do join Telegram and post there more than this Zulip. Apparently many are not comfortable with Zulip.</p>",
+        "id": 448117239,
+        "sender_full_name": "Srid",
+        "timestamp": 1719755703
+    },
+    {
+        "content": "<p>yeah it's like the platform effect I guess</p>",
+        "id": 448117488,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719755896
+    },
+    {
+        "content": "<p>if you are already on the platform and all your friends are there</p>",
+        "id": 448117505,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719755914
+    }
+]

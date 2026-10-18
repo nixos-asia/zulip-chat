@@ -1,0 +1,308 @@
+[
+    {
+        "content": "<p>Have anyone managed to do this on a personal account (not org)? To let a NixOS machine (ideally using containers) act as self-hosted runner for many personal repositories. </p>\n<p>For a single repository, I added a runner with config like this:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"p\">{</span> pkgs<span class=\"p\">,</span> config<span class=\"p\">,</span> <span class=\"o\">...</span> <span class=\"p\">}:</span>\n<span class=\"p\">{</span>\n  <span class=\"c1\"># TODO: Run inside container</span>\n  services<span class=\"o\">.</span><span class=\"ss\">github-runners</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    <span class=\"ss\">emanote-runner</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n      <span class=\"ss\">enable</span> <span class=\"o\">=</span> <span class=\"no\">true</span><span class=\"p\">;</span>\n      <span class=\"ss\">name</span> <span class=\"o\">=</span> <span class=\"s2\">\"emanote-runner\"</span><span class=\"p\">;</span>\n      <span class=\"c1\"># TODO: use sops-nix</span>\n      <span class=\"ss\">tokenFile</span> <span class=\"o\">=</span> <span class=\"s2\">\"/home/srid/runner.token\"</span><span class=\"p\">;</span>\n      <span class=\"ss\">url</span> <span class=\"o\">=</span> <span class=\"s2\">\"https://github.com/srid/emanote\"</span><span class=\"p\">;</span>\n      <span class=\"ss\">extraPackages</span> <span class=\"o\">=</span> <span class=\"p\">[</span> pkgs<span class=\"o\">.</span>cachix pkgs<span class=\"o\">.</span>nixci <span class=\"p\">];</span>\n      <span class=\"ss\">extraLabels</span> <span class=\"o\">=</span> <span class=\"p\">[</span> <span class=\"s2\">\"nixos\"</span> <span class=\"p\">];</span>\n    <span class=\"p\">};</span>\n  <span class=\"p\">};</span>\n  nix<span class=\"o\">.</span>settings<span class=\"o\">.</span><span class=\"ss\">trusted-users</span> <span class=\"o\">=</span>\n    <span class=\"nb\">builtins</span><span class=\"o\">.</span><span class=\"nb\">map</span>\n      <span class=\"p\">(</span>runner<span class=\"p\">:</span> runner<span class=\"o\">.</span>user<span class=\"p\">)</span>\n      config<span class=\"o\">.</span>services<span class=\"o\">.</span>github-runners<span class=\"p\">;</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<p>However, it appears you can't share a runner with other personal repos.</p>",
+        "id": 418314629,
+        "sender_full_name": "Srid",
+        "timestamp": 1706288163
+    },
+    {
+        "content": "<p>Apparently it is possible to share a runner across an organizations repositories. I'm not sure if this applies to user repos though</p>",
+        "id": 418340635,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706298083
+    },
+    {
+        "content": "<p><a href=\"https://github.blog/2020-04-22-github-actions-community-momentum-enterprise-capabilities-and-developer-improvements/#share-self-hosted-runners-across-an-organization\">https://github.blog/2020-04-22-github-actions-community-momentum-enterprise-capabilities-and-developer-improvements/#share-self-hosted-runners-across-an-organization</a></p>",
+        "id": 418340788,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706298133
+    },
+    {
+        "content": "<p>Looks like you can only share across org, but not personal repos. Sad.</p>",
+        "id": 418392967,
+        "sender_full_name": "Srid",
+        "timestamp": 1706337098
+    },
+    {
+        "content": "<p>So I decided to write a small module to help with that,</p>\n<p><a href=\"https://github.com/srid/nixos-config/pull/40\">https://github.com/srid/nixos-config/pull/40</a></p>",
+        "id": 418392971,
+        "sender_full_name": "Srid",
+        "timestamp": 1706337106
+    },
+    {
+        "content": "<p>You still have to manually create the runner in Settings for each repository. And then copy paste the token into the config for immediate deployment (if it not be immediate the token gets invalidated).</p>",
+        "id": 418393035,
+        "sender_full_name": "Srid",
+        "timestamp": 1706337158
+    },
+    {
+        "content": "<p>Runners in containers: <a href=\"https://github.com/srid/nixos-config/pull/41\">https://github.com/srid/nixos-config/pull/41</a></p>",
+        "id": 418413607,
+        "sender_full_name": "Srid",
+        "timestamp": 1706357849
+    },
+    {
+        "content": "<p>Yeah, so on my nrdxp/nrdos repo I setup 16 runners to avoid the one job at a time bottleneck. Each one is in a nixos-container for a layer of isolation, but has the nix store and daemon socket mounted so that the host daemon can manage and coordinate all the jobs, respecting its configured limits.</p>\n<p>This is coupled with divnix/std-action, which I designed to do one eval up front and distribute the derivations to multiple build matrices after, which worked great since they are all on the same disk. One of the biggest bottlenecks in the past was the network cost of transferring the evaled derivations around.</p>",
+        "id": 419068187,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706715831
+    },
+    {
+        "content": "<p>You can see a sample run here:<br>\n<a href=\"https://github.com/nrdxp/nrdos/actions/runs/7719678719\">https://github.com/nrdxp/nrdos/actions/runs/7719678719</a></p>\n<p>Discovery is the only bottleneck, but once that's done all the builds can kick off in parallel each in its own runner.</p>",
+        "id": 419069555,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706716145
+    },
+    {
+        "content": "<p>Oh the discovery-&gt;matrix part is interesting. Is std-action really required here? I wonder how I can do the same from scratch.</p>",
+        "id": 419165886,
+        "sender_full_name": "Srid",
+        "timestamp": 1706757863
+    },
+    {
+        "content": "<p>It was originally designed to consume Standard's API, but it's fairly simple in practice. It should be fairly simple to port to the regular flake API if desired. The core idea is to <code>nix eval</code> a single json file containing a list of all the Nix derivations you plan to build. I came to this because Nix's eval cache is subpar at best, and because I noticed that multiple runners were evaling the same things over and over.</p>\n<p>The real trouble I came upon is that the cost of evaluation in that context (of multiple runners building from a shared flake) is unknowable, especially since Nix has a severe lack of any real profiling tooling (for the language itself at least). Better then, to consolidate all evaluation up front, where the single threaded Nix evaluator can share any state between derivations in a single pass, and where the cost can at least become linear and predictable.</p>",
+        "id": 419168358,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706759315
+    },
+    {
+        "content": "<p>I've observed that running <code>nix build</code> separately for each output (whether it is specified in same CLI invocation or not) would slow down evaluation by O(n),</p>\n<p><a href=\"https://github.com/srid/devour-flake?tab=readme-ov-file#why\">https://github.com/srid/devour-flake?tab=readme-ov-file#why</a></p>\n<p>Which is how I came up with <a href=\"https://github.com/srid/nixci\">https://github.com/srid/nixci</a> and use that in CI. But it doesn't have the nice per-output build status.</p>",
+        "id": 419187019,
+        "sender_full_name": "Srid",
+        "timestamp": 1706772278
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"679006\">Tim DeHerrera</span> <a href=\"#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners/near/419068187\">said</a>:</p>\n<blockquote>\n<p>Yeah, so on my nrdxp/nrdos repo I setup 16 runners to avoid the one job at a time bottleneck. [..]</p>\n</blockquote>\n<p>Was this fully automated? Or, like me, did you have to manually create the token for each of those runners?</p>",
+        "id": 419187245,
+        "sender_full_name": "Srid",
+        "timestamp": 1706772424
+    },
+    {
+        "content": "<p>Oh wait, you are using <a href=\"https://github.com/nrdxp/nrdos/blob/df7dcf4a3c8796692b7718616f0427e495c39bd8/src/nrdxp/hosts/micro/runners.nix#L12C5-L12C44\">the same token</a> for all runners?</p>",
+        "id": 419187401,
+        "sender_full_name": "Srid",
+        "timestamp": 1706772499
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners/near/419187401\">said</a>:</p>\n<blockquote>\n<p>Oh wait, you are using <a href=\"https://github.com/nrdxp/nrdos/blob/df7dcf4a3c8796692b7718616f0427e495c39bd8/src/nrdxp/hosts/micro/runners.nix#L12C5-L12C44\">the same token</a> for all runners?</p>\n</blockquote>\n<p>Assuming this token was created from nrdxp/nrdos repository, your 16 runners can run <strong>only</strong> jobs from that repo, and not from elsewhere, such as nrdxp/foo</p>",
+        "id": 419190444,
+        "sender_full_name": "Srid",
+        "timestamp": 1706773853
+    },
+    {
+        "content": "<p>For now yes, they are only setup for that repo. I can set up more for others repo if when needed. They have almost no overhead unless/until they start building anyway.</p>",
+        "id": 419253651,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706796545
+    },
+    {
+        "content": "<p>Actually, now that I think about it, I wonder if I even need to mount the /nix/store at all inside these containers. Since the host daemon will be the one to do the actual building it might not be necessary. I already have <code>nix.enable = false</code> in their configs. I was wondering if I should actually make these VMs instead of containers for added security isolation.</p>",
+        "id": 419287805,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706805857
+    },
+    {
+        "content": "<p>Only the token needs to be bind mounted. I didn't have to mount /nix/store</p>",
+        "id": 419376688,
+        "sender_full_name": "Srid",
+        "timestamp": 1706843916
+    },
+    {
+        "content": "<p>Do you pass through the socket? In my case, for the sake of avoiding repeated work, I want the builds to all work from the same store, since they share dependencies.</p>\n<p>But I think bind mounting the host daemon socket is enough to accomplish that.</p>",
+        "id": 419387058,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706851898
+    },
+    {
+        "content": "<p>Nope, I bind mount only the token. </p>\n<p><a href=\"https://github.com/srid/nixos-config/blob/9c392f468f2b341af8a83e8061ff1a92face28f5/nixos/github-runner.nix#L110-L131\">https://github.com/srid/nixos-config/blob/9c392f468f2b341af8a83e8061ff1a92face28f5/nixos/github-runner.nix#L110-L131</a></p>",
+        "id": 419458716,
+        "sender_full_name": "Srid",
+        "timestamp": 1706880956
+    },
+    {
+        "content": "<p>It seems to automatically use the host nix store,</p>\n<div class=\"codehilite\"><pre><span></span><code>[root@github-runner-emanote:~]# mount| grep store\n/dev/md/nixos on /nix/store type ext4 (ro,relatime,stripe=32)\n</code></pre></div>",
+        "id": 419461875,
+        "sender_full_name": "Srid",
+        "timestamp": 1706882066
+    },
+    {
+        "content": "<p>I still want them all to speak to the same daemon, so that the set limits on jobs and cores are globally respected between them</p>",
+        "id": 419464233,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706882843
+    },
+    {
+        "content": "<p>I have two runners, and I see this:</p>\n<div class=\"codehilite\"><pre><span></span><code>❯ ps -ef | grep nix-daemon\nroot        1459       1  0 Jan29 ?        00:00:00 nix-daemon --daemon\nroot      132628    1459  0 Jan30 ?        00:00:00 nix-daemon 132605\nroot      132971    1459  0 Jan30 ?        00:00:00 nix-daemon 132948\n</code></pre></div>\n<p>Are these child daemons spawned for each container? And if so, do they inherit jobs/cores limits automatically?</p>",
+        "id": 419467430,
+        "sender_full_name": "Srid",
+        "timestamp": 1706883854
+    },
+    {
+        "content": "<p>The daemon does spawn child procs for each build, but if the hosts socket is not available then they could be independent instances.</p>\n<p>If the /nix/store is auto mounted though, perhaps the socket is as well. Not sure (not at my desk to check ATM)</p>",
+        "id": 419468266,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1706884133
+    },
+    {
+        "content": "<p>Oh yea,</p>\n<div class=\"codehilite\"><pre><span></span><code>[root@github-runner-emanote:~]# mount| grep socket\n/dev/md/nixos on /nix/var/nix/daemon-socket type ext4 (ro,relatime,stripe=32)\n</code></pre></div>",
+        "id": 419468571,
+        "sender_full_name": "Srid",
+        "timestamp": 1706884220
+    },
+    {
+        "content": "<p>It mounts quite a few things,</p>\n<div class=\"codehilite\"><pre><span></span><code>[root@github-runner-emanote:~]# mount| grep /dev/md/nixos\n/dev/md/nixos on / type ext4 (rw,relatime,stripe=32)\n/dev/md/nixos on /run/host/os-release type ext4 (ro,nosuid,nodev,noexec,relatime,stripe=32)\n/dev/md/nixos on /nix/store type ext4 (ro,relatime,stripe=32)\n/dev/md/nixos on /nix/var/nix/daemon-socket type ext4 (ro,relatime,stripe=32)\n/dev/md/nixos on /nix/var/nix/db type ext4 (ro,relatime,stripe=32)\n/dev/md/nixos on /nix/var/nix/gcroots type ext4 (rw,relatime,stripe=32)\n/dev/md/nixos on /nix/var/nix/profiles type ext4 (rw,relatime,stripe=32)\n/dev/md/nixos on /etc/localtime type ext4 (ro,nosuid,nodev,relatime,stripe=32)\n</code></pre></div>",
+        "id": 419468680,
+        "sender_full_name": "Srid",
+        "timestamp": 1706884254
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>error (ignored): error: reached end of FramedSource\n[..]\nerror: opening file &#39;/nix/store/i8jjpg7im5jgr6dvr9ikylpa1szx1kpi-treefmt-check.lock&#39;: Permission denied\n</code></pre></div>\n<p><a href=\"https://github.com/srid/haskell-flake/actions/runs/7885297185/job/21516934365\">https://github.com/srid/haskell-flake/actions/runs/7885297185/job/21516934365</a></p>\n<p>And this is happening only in Github Runner inside containers. I wonder if this is to do with the mounted nix-store access from the container.</p>\n<p>Have you seen this? <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span></p>",
+        "id": 421222981,
+        "sender_full_name": "Srid",
+        "timestamp": 1707823021
+    },
+    {
+        "content": "<p>I had to run the following to fix this:</p>\n<div class=\"codehilite\"><pre><span></span><code>nix-store --verify --repair --check-contents\n</code></pre></div>\n<p>But the problem reappears when doing the CI build again.</p>",
+        "id": 421243990,
+        "sender_full_name": "Srid",
+        "timestamp": 1707831047
+    },
+    {
+        "content": "<p>hmm, haven't seen that one yet, have you tried making the daemon socket writable (mine is)?</p>",
+        "id": 421257120,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707835341
+    },
+    {
+        "content": "<p>Nope, but I'll <a href=\"https://github.com/nrdxp/nrdos/blob/63b56c718cc69e883a1ff15c5aeae0720ae64c21/src/ci/modules/runners/default.nix#L63-L70\">try that</a> if this happens again.</p>",
+        "id": 421257483,
+        "sender_full_name": "Srid",
+        "timestamp": 1707835453
+    },
+    {
+        "content": "<p>TIL that you can just use a single personal access token (with 'repo' scope) for all runners across one's personal repositories.</p>",
+        "id": 421407504,
+        "sender_full_name": "Srid",
+        "timestamp": 1707904067
+    },
+    {
+        "content": "<h2>easy-github-runners.nix</h2>\n<p>Now supports organizations:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>            services<span class=\"o\">.</span><span class=\"ss\">easy-github-runners</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n              <span class=\"s2\">\"srid/emanote\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span> <span class=\"p\">};</span>\n              <span class=\"s2\">\"srid/haskell-flake\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span> <span class=\"p\">};</span>\n              <span class=\"s2\">\"srid/nixos-config\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span> <span class=\"p\">};</span>\n              <span class=\"s2\">\"srid/ema\"</span> <span class=\"o\">=</span> <span class=\"p\">{</span> <span class=\"p\">};</span>\n              <span class=\"s2\">\"EmaApps/orgself\"</span><span class=\"o\">.</span><span class=\"ss\">owner</span> <span class=\"o\">=</span> <span class=\"s2\">\"srid\"</span><span class=\"p\">;</span>\n            <span class=\"p\">};</span>\n</code></pre></div>\n<p><a href=\"https://github.com/srid/nixos-config/blob/master/nixos/easy-github-runners.nix\">https://github.com/srid/nixos-config/blob/master/nixos/easy-github-runners.nix</a></p>",
+        "id": 421418385,
+        "sender_full_name": "Srid",
+        "timestamp": 1707907596
+    },
+    {
+        "content": "<p>Just a heads up, I tried updating my nixos-unstable pin and somebody has modified the github runners in a way that my configuration now totally breaks. I cannot get the nix client to talk to the daemon and I am unsure why. I'll keep you posted if I figure it out</p>",
+        "id": 422030412,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708192031
+    },
+    {
+        "content": "<p>Alright so two things:</p>\n<p>Firstly, they appear to have removed the old <code>services.github-runner</code> option and only have the newer <code>services.github-runners</code> option now, which led to a reorganization of the code, which means my snippet to import the options and use them in containers broke. So that's the first thing.</p>\n<p>Even taking them out of the container and just running them directly on the host I was still failing to communicate with the daemon. This appears to be because the dynamically created users created by systemd were not trusted users. I thought I had already addressed that, but apparently not or I reverted it or something.</p>\n<p>In any case, I was able to add the dynamic users to the trusted users list like so:<br>\n<code>nix.settings.trusted-users = lib.genList (i: \"github-runner-nrdos-${i}\") 16</code></p>\n<p>To match the names of the dynamically allocated users. I may swing back around and configure each runner in a minimal microvm for added isolation with just the host daemon socket mounted. But for now this is fine since I only have them configured for a private repository at this point.</p>",
+        "id": 422034536,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708195877
+    },
+    {
+        "content": "<p>seems kind of presumptuous to assume all runners should have Nix. Hopefully we can get this reviewed and merged quickly, cause I need it <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span> <br>\n<a href=\"https://github.com/NixOS/nixpkgs/pull/289607\">https://github.com/NixOS/nixpkgs/pull/289607</a></p>",
+        "id": 422040602,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708201850
+    },
+    {
+        "content": "<p>I believe my module has always been using the new <code>github-runners</code> service. </p>\n<p>By the way, nix-darwin PR just got merged: <a href=\"https://github.com/LnL7/nix-darwin/pull/859\">https://github.com/LnL7/nix-darwin/pull/859</a></p>\n<p>I'll play with macOS support.</p>",
+        "id": 422103256,
+        "sender_full_name": "Srid",
+        "timestamp": 1708267882
+    },
+    {
+        "content": "<p>The service is not new, what's new is that the code has been restructured and my previous code broke.</p>",
+        "id": 422112804,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708276277
+    },
+    {
+        "content": "<h3>Parallels VM</h3>\n<p>The runner failed with a new error,</p>\n<div class=\"codehilite\"><pre><span></span><code>The local machine&#39;s clock may be out of sync with the server time by more than five minutes. Please sync your clock with your domain or internet time and try again.\n</code></pre></div>\n<p>The local time on the container and host is incorrect, though. Wonder how that happened ... I'm running this in Parallels.</p>",
+        "id": 422613996,
+        "sender_full_name": "Srid",
+        "timestamp": 1708521055
+    },
+    {
+        "content": "<p>Yup, it was Parallels. Rebooting the VM fixed it.</p>",
+        "id": 422614526,
+        "sender_full_name": "Srid",
+        "timestamp": 1708521217
+    },
+    {
+        "content": "<p>Let's see if disabling <a href=\"https://kb.parallels.com/en/113271\">automatic time sync</a> fixes it long-term,</p>\n<p><a href=\"/user_uploads/60244/YQZT9sJD40W7FpiNSLDmoSYT/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/YQZT9sJD40W7FpiNSLDmoSYT/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/YQZT9sJD40W7FpiNSLDmoSYT/image.png\"></a></div>",
+        "id": 422614966,
+        "sender_full_name": "Srid",
+        "timestamp": 1708521354
+    },
+    {
+        "content": "<p>I made the mistake of not setting a good disk size. 60GB (the default) quickly ran out in CI. Neither <code>boot.growPartition</code> nor systemd repart worked to repartition root on boot,  after I resized the disk image in Parallels.</p>",
+        "id": 422659473,
+        "sender_full_name": "Srid",
+        "timestamp": 1708533288
+    },
+    {
+        "content": "<h3>New nix-darwin module</h3>\n<p>I upgraded <code>nix-darwin</code> which has a revamped <code>github-runners</code> module that explicitly writes the log files.</p>\n<p>Which allowed me to actually observe crash logs like this:</p>\n<div class=\"codehilite\"><pre><span></span><code>-bash-3.2$ pwd\n/var/lib/github-runners\n-bash-3.2$ tail -5 nixci-1/_diag/Runner_20240325-120051-utc.log\n[2024-03-25 12:00:53Z ERR  Runner] GitHub.DistributedTask.WebApi.TaskAgentExistsException: A runner exists with the same name nixci-1.\n   at GitHub.Runner.Listener.Configuration.ConfigurationManager.ConfigureAsync(CommandSettings command) in /private/tmp/nix-build-github-runner-2.314.1.drv-0/src/src/Runner.Listener/Configuration/ConfigurationManager.cs:line 306\n   at GitHub.Runner.Listener.Runner.ExecuteCommand(CommandSettings command) in /private/tmp/nix-build-github-runner-2.314.1.drv-0/src/src/Runner.Listener/Runner.cs:line 126\n[2024-03-25 12:00:53Z ERR  Terminal] WRITE ERROR: A runner exists with the same name nixci-1.\n[2024-03-25 12:00:53Z INFO Listener] Runner execution has finished with return code 1\n-bash-3.2$\n</code></pre></div>",
+        "id": 429370734,
+        "sender_full_name": "Srid",
+        "timestamp": 1711368180
+    },
+    {
+        "content": "<p><a href=\"https://github.com/LnL7/nix-darwin/pull/893\">https://github.com/LnL7/nix-darwin/pull/893</a></p>",
+        "id": 429370976,
+        "sender_full_name": "Srid",
+        "timestamp": 1711368217
+    },
+    {
+        "content": "<p>As for this particular problem, there is <a href=\"https://github.com/LnL7/nix-darwin/blob/bcc8afd06e237df060c85bad6af7128e05fd61a3/modules/services/github-runner/options.nix#L165-L173\"><code>replace = true;</code></a> which solves the issue.</p>",
+        "id": 429371408,
+        "sender_full_name": "Srid",
+        "timestamp": 1711368287
+    },
+    {
+        "content": "<p>3 messages were moved here from <a class=\"stream-topic\" data-stream-id=\"413950\" href=\"/#narrow/stream/413950-nix/topic/Darwin.3A.20launchctl.20logs.20for.20a.20service\">#nix &gt; Darwin: launchctl logs for a service</a> by <span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span>.</p>",
+        "id": 429371860,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1711368362
+    },
+    {
+        "content": "<p>I decided to do this the other way. Setup runners on the NixOS VM, and do remote build on macOS as necessary.</p>\n<p>Rough notes: <a href=\"https://github.com/srid/nixos-config/tree/master/clusters/github-runner\">https://github.com/srid/nixos-config/tree/master/clusters/github-runner</a></p>",
+        "id": 429740801,
+        "sender_full_name": "Srid",
+        "timestamp": 1711487521
+    },
+    {
+        "content": "<p>Alright, based on how I'm setting CI for Juspay Github, the new approach is not to use distributed builds, but just dedicate runners to each host. </p>\n<p>Module &amp; tutorial incoming, but here's a sneak preview:</p>\n<p><a href=\"https://x.com/sridca/status/1804286220304028106\">https://x.com/sridca/status/1804286220304028106</a></p>",
+        "id": 446194989,
+        "sender_full_name": "Srid",
+        "timestamp": 1719013110
+    },
+    {
+        "content": "<p>Awesome, I will look at this, once I am out of drama mindset thanks to the ongoing legacy NixOS community.</p>",
+        "id": 446239113,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719041838
+    },
+    {
+        "content": "<p>Here it is:</p>\n<p><a href=\"https://github.com/juspay/github-nix-ci\">https://github.com/juspay/github-nix-ci</a></p>\n<p>I'll announce it in a bit, after some final polish, and feedback (if any).</p>",
+        "id": 446703689,
+        "sender_full_name": "Srid",
+        "timestamp": 1719258757
+    },
+    {
+        "content": "<p><a href=\"https://x.com/nixos_asia/status/1805609192843014276\">https://x.com/nixos_asia/status/1805609192843014276</a></p>",
+        "id": 446903186,
+        "sender_full_name": "Srid",
+        "timestamp": 1719326404
+    },
+    {
+        "content": "<p><a href=\"https://discourse.nixos.org/t/github-nix-ci-for-self-hosting-github-runners-on-macos-linux/47642\">https://discourse.nixos.org/t/github-nix-ci-for-self-hosting-github-runners-on-macos-linux/47642</a></p>",
+        "id": 446904139,
+        "sender_full_name": "Srid",
+        "timestamp": 1719326644
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Getting this error while building a haskell flake.<br>\nerror: opening file '/nix/store/nks5377mygc1srxld9l9dmjg32lrpmf0-gettext-0.21.1.drv': No such file or directory</p>\n<p>The path to derivation shown via nix repl is different that this error despite both having the same version (0.21.1).</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix-repl&gt;<span class=\"w\"> </span><span class=\"nv\">pkgs</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span>legacyPackages.x86_64-darwin\nnix-repl&gt;<span class=\"w\"> </span>pkgs.gettext\n«derivation<span class=\"w\"> </span>/nix/store/4a6rg76h6gwnvqhpvd8hkd4nq3jg3f7h-gettext-0.21.1.drv»\n</code></pre></div>\n<p><code>gettext</code> is installed via home-manager and homebrew.<br>\nWhat can be done to identify why is the required derivation different from what's present in nixpkgs-unstable. I have checked all flakes couldn't find any reference regarding this package.</p>\n<p>Another observation: This flake was building last Friday (5/5/24), I believe I haven't changes anything since then.<br>\nLet me know what other information I can provide.</p>",
+        "id": 431959935,
+        "sender_full_name": "Aman Singh",
+        "timestamp": 1712579731
+    },
+    {
+        "content": "<p>I am not the big Haskell guy sadly, but I hope someone will get back to you quickly <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 431965576,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712581447
+    },
+    {
+        "content": "<p>It's alright. <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> will able to help me out here.</p>",
+        "id": 432010609,
+        "sender_full_name": "Aman Singh",
+        "timestamp": 1712592099
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"691893\">@Aman Singh</span> This may be relevant: <a href=\"https://discourse.nixos.org/t/how-to-get-a-missing-drv-file-for-a-derivation-from-nixpkgs/2300/13\">https://discourse.nixos.org/t/how-to-get-a-missing-drv-file-for-a-derivation-from-nixpkgs/2300/13</a></p>",
+        "id": 432059203,
+        "sender_full_name": "Srid",
+        "timestamp": 1712607116
+    }
+]

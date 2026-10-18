@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Any plans to have haskell-flake or flake-parts in ekapkgs? Or do you have a better candidate?</p>",
+        "id": 624473790,
+        "sender_full_name": "Daniel Herrera Rendón",
+        "timestamp": 1789508854
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"712706\">Daniel Herrera Rendón</span> <a href=\"#narrow/channel/413949-haskell-flake/topic/ekapkgs/near/624473790\">said</a>:</p>\n<blockquote>\n<p>Any plans to have haskell-flake or flake-parts in ekapkgs? Or do you have a better candidate?</p>\n</blockquote>\n<p>I'm open to it, yes.  Let's chat on Ekala discord? I'm there.</p>",
+        "id": 624475878,
+        "sender_full_name": "Srid",
+        "timestamp": 1789509620
+    }
+]

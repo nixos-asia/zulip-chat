@@ -1,0 +1,86 @@
+[
+    {
+        "content": "<p>Is there a way to specify UUIDs for partitions in diskio? Doing so would help me not update my <code>${hostname}-hardware-configuration.nix</code> file everytime I need to clean-install on a host with same storage layout.</p>",
+        "id": 425994661,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1710185407
+    },
+    {
+        "content": "<p><code>/dev/disk/by-{id,path}</code>?</p>\n<p>cf. <a href=\"https://github.com/nix-community/disko/issues/14\">https://github.com/nix-community/disko/issues/14</a></p>",
+        "id": 426021643,
+        "sender_full_name": "Srid",
+        "timestamp": 1710196873
+    },
+    {
+        "content": "<p>Not the target disk... specifying the UUIDs of the partitions created themselves.</p>",
+        "id": 426038934,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1710207942
+    },
+    {
+        "content": "<p>Isn't diskio responsible for creating those partitions? I haven't used it but it was my impression that was the point of the tool.</p>",
+        "id": 426116718,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1710247507
+    },
+    {
+        "content": "<p>You can get the  same storage layout without necessarily fixing individual partition's UUID. See for example <a href=\"https://github.com/srid/nixos-config/blob/master/nixos/disko/trivial.nix\">https://github.com/srid/nixos-config/blob/master/nixos/disko/trivial.nix</a></p>\n<p>This layout remains the same across re-installs (wherein the partition UUID will change)</p>",
+        "id": 426191357,
+        "sender_full_name": "Srid",
+        "timestamp": 1710269037
+    },
+    {
+        "content": "<p>Or maybe I'm not understanding your question, <span class=\"user-mention\" data-user-id=\"696416\">@Pratham Patel</span></p>",
+        "id": 426191433,
+        "sender_full_name": "Srid",
+        "timestamp": 1710269059
+    },
+    {
+        "content": "<p>If you use disko, you will not have to manually specify the UUID in <code>hardware-configuration.nix</code>, because disko manages it for you, if i am not wrong. I never had to do that at least.</p>",
+        "id": 426308709,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1710327006
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span>  This question came out of my migration to deploying nixos on my machines using flakes. Flakes mandate that all files be included in the git tree and therefore, it's not possible to have the <code>hardware-configuration.nix</code> in the repo in advance. Specifying the UUIDs for each partition/filesystem in diskio would be nice for this, where the <code>hardware-configuration.nix</code> file already picks up the devices using the <code>/dev/disk/by-uuid</code> path. :)</p>",
+        "id": 426315346,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1710329461
+    },
+    {
+        "content": "<p>So you want to introduce disko on an <em>already-installed</em> NixOS machine? </p>\n<p>This looks to be the same problem as <a href=\"https://github.com/juspay/remote-development/issues/11\">https://github.com/juspay/remote-development/issues/11</a></p>",
+        "id": 426327482,
+        "sender_full_name": "Srid",
+        "timestamp": 1710333613
+    },
+    {
+        "content": "<p>This may be relevant: <a href=\"https://github.com/nix-community/disko/issues/295\">https://github.com/nix-community/disko/issues/295</a></p>",
+        "id": 426327929,
+        "sender_full_name": "Srid",
+        "timestamp": 1710333694
+    },
+    {
+        "content": "<p>Sort of, yes! :)</p>",
+        "id": 426328916,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1710333859
+    },
+    {
+        "content": "<p>Finally got some free time to poke around in the disko src and noticed this line: <a href=\"https://github.com/nix-community/disko/blob/f6b72bfed7c57997aa5dccd94a3ebbc4cb824b04/lib/types/filesystem.nix#L48\">https://github.com/nix-community/disko/blob/f6b72bfed7c57997aa5dccd94a3ebbc4cb824b04/lib/types/filesystem.nix#L48</a></p>\n<p>So, the pseudo code would be something like:</p>\n<ol>\n<li>Check if filesystem supports the <code>-U</code> or <code>-u</code> option to specify the UUID to assign to, such that, it appears as <code>/dev/disk/by-uuid/${UUID}</code>.</li>\n<li>Append the string <code>-U ${UUID}</code> if some option, let's assume <code>customUUID</code> is specified.</li>\n</ol>\n<p>That way, the same disko config _and_ same <code>hardware-configuration.nix</code> can be used, even when the disk is reformatted, preserving the UUID, resulting in not needing to update the <code>hardware-configuration.nix</code> file, at all</p>",
+        "id": 426563619,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1710429120
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"696416\">@Pratham Patel</span> Is this relevant? <a href=\"https://github.com/nix-community/disko/pull/548#issuecomment-1967664266\">https://github.com/nix-community/disko/pull/548#issuecomment-1967664266</a></p>",
+        "id": 429643019,
+        "sender_full_name": "Srid",
+        "timestamp": 1711455818
+    },
+    {
+        "content": "<p>huh, this is better than what I was looking for! thank you :D</p>",
+        "id": 429766644,
+        "sender_full_name": "Pratham Patel",
+        "timestamp": 1711503303
+    }
+]
