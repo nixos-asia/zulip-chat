@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I got this working so far:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>  <span class=\"ss\">outputs</span> <span class=\"o\">=</span> inputs<span class=\"p\">:</span>\n    <span class=\"k\">let</span>\n      <span class=\"ss\">lib</span> <span class=\"o\">=</span> inputs<span class=\"o\">.</span>nixpkgs<span class=\"o\">.</span>lib<span class=\"o\">.</span>extend <span class=\"p\">(</span>self<span class=\"p\">:</span> super<span class=\"p\">:</span> <span class=\"p\">{</span>\n        <span class=\"c1\"># Polyfill https://github.com/NixOS/nixpkgs/blob/ea77cefecb0ab07e61d6bde3e24c7ae6820b96d5/lib/attrsets.nix#L360</span>\n        <span class=\"ss\">concatMapAttrs</span> <span class=\"o\">=</span> <span class=\"k\">with</span> self<span class=\"p\">;</span> f<span class=\"p\">:</span> v<span class=\"p\">:</span>\n          foldl' mergeAttrs <span class=\"p\">{</span> <span class=\"p\">}</span>\n            <span class=\"p\">(</span>attrValues\n              <span class=\"p\">(</span>mapAttrs f v<span class=\"p\">)</span>\n            <span class=\"p\">);</span>\n      <span class=\"p\">});</span>\n      <span class=\"ss\">specialArgs</span> <span class=\"o\">=</span> <span class=\"p\">{</span> <span class=\"k\">inherit</span> lib<span class=\"p\">;</span> <span class=\"p\">};</span>\n    <span class=\"k\">in</span>\n    inputs<span class=\"o\">.</span>flake-parts<span class=\"o\">.</span>lib<span class=\"o\">.</span>mkFlake <span class=\"p\">{</span> <span class=\"k\">inherit</span> inputs specialArgs<span class=\"p\">;</span> <span class=\"p\">}</span> <span class=\"p\">{</span>\n</code></pre></div>\n<p>However, this leads to <code>error: attribute 'fileset' missing</code>. </p>\n<p>For some reason, <code>fileset</code> attribute gets lost.</p>",
+        "id": 439118559,
+        "sender_full_name": "Srid",
+        "timestamp": 1715901763
+    },
+    {
+        "content": "<p>After the addition of the following to the lib overlay (with a 2nd nixpkgs, <code>nixpkgs-latest</code>, added),</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code><span class=\"ss\">fileset</span> <span class=\"o\">=</span> inputs<span class=\"o\">.</span>nixpkgs-latest<span class=\"o\">.</span>lib<span class=\"o\">.</span>fileset<span class=\"p\">;</span>\n</code></pre></div>\n<p>it works.</p>",
+        "id": 439119492,
+        "sender_full_name": "Srid",
+        "timestamp": 1715902260
+    },
+    {
+        "content": "<p>More concisely,</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>  <span class=\"ss\">inputs</span> <span class=\"o\">=</span> <span class=\"p\">{</span>\n    nixpkgs<span class=\"o\">.</span><span class=\"ss\">url</span> <span class=\"o\">=</span> <span class=\"s2\">\"github:nixos/nixpkgs/nixpkgs-unstable\"</span><span class=\"p\">;</span>\n    nixpkgs-latest<span class=\"o\">.</span><span class=\"ss\">url</span> <span class=\"o\">=</span> <span class=\"s2\">\"github:nixos/nixpkgs/nixpkgs-unstable\"</span><span class=\"p\">;</span>\n    <span class=\"o\">...</span>\n  <span class=\"p\">};</span>\n  <span class=\"ss\">outputs</span> <span class=\"o\">=</span> inputs<span class=\"p\">:</span>\n    <span class=\"k\">let</span>\n      specialArgs<span class=\"o\">.</span><span class=\"ss\">lib</span> <span class=\"o\">=</span> inputs<span class=\"o\">.</span>nixpkgs<span class=\"o\">.</span>lib<span class=\"o\">.</span>extend <span class=\"p\">(</span>self<span class=\"p\">:</span> _<span class=\"p\">:</span> <span class=\"p\">{</span>\n        <span class=\"c1\"># Polyfill what's missing in our `inputs.nixpkgs`.</span>\n        <span class=\"k\">inherit</span> <span class=\"p\">(</span>inputs<span class=\"o\">.</span>nixpkgs-latest<span class=\"o\">.</span>lib<span class=\"p\">)</span>\n          concatMapAttrs\n          fileset<span class=\"p\">;</span>\n      <span class=\"p\">});</span>\n    <span class=\"k\">in</span>\n    inputs<span class=\"o\">.</span>flake-parts<span class=\"o\">.</span>lib<span class=\"o\">.</span>mkFlake <span class=\"p\">{</span> <span class=\"k\">inherit</span> inputs specialArgs<span class=\"p\">;</span> <span class=\"p\">}</span> <span class=\"p\">{</span>\n      <span class=\"o\">...</span>\n</code></pre></div>",
+        "id": 439119814,
+        "sender_full_name": "Srid",
+        "timestamp": 1715902415
+    },
+    {
+        "content": "<p>Wait, that didn't quite work for treefmt-nix, when using its devShell.</p>",
+        "id": 439120209,
+        "sender_full_name": "Srid",
+        "timestamp": 1715902650
+    },
+    {
+        "content": "<p>We also need,</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>        _module<span class=\"o\">.</span>args<span class=\"o\">.</span><span class=\"ss\">pkgs</span> <span class=\"o\">=</span> <span class=\"nb\">import</span> inputs<span class=\"o\">.</span>nixpkgs <span class=\"p\">{</span>\n          <span class=\"k\">inherit</span> system<span class=\"p\">;</span>\n          <span class=\"ss\">overlays</span> <span class=\"o\">=</span> <span class=\"p\">[</span>\n            <span class=\"p\">(</span>self<span class=\"p\">:</span> super<span class=\"p\">:</span> <span class=\"p\">{</span>\n              <span class=\"ss\">lib</span> <span class=\"o\">=</span> lib<span class=\"p\">;</span>\n            <span class=\"p\">})</span>\n          <span class=\"p\">];</span>\n        <span class=\"p\">};</span>\n</code></pre></div>",
+        "id": 439120363,
+        "sender_full_name": "Srid",
+        "timestamp": 1715902758
+    },
+    {
+        "content": "<p>Alright, here's the final thing:</p>\n<div class=\"codehilite\" data-code-language=\"Nix\"><pre><span></span><code>        _module<span class=\"o\">.</span>args<span class=\"o\">.</span><span class=\"ss\">pkgs</span> <span class=\"o\">=</span> <span class=\"nb\">import</span> inputs<span class=\"o\">.</span>nixpkgs <span class=\"p\">{</span>\n          <span class=\"k\">inherit</span> system<span class=\"p\">;</span>\n          <span class=\"ss\">overlays</span> <span class=\"o\">=</span> <span class=\"p\">[</span>\n            <span class=\"p\">(</span>self<span class=\"p\">:</span> super<span class=\"p\">:</span> <span class=\"p\">{</span>\n              <span class=\"ss\">lib</span> <span class=\"o\">=</span> super<span class=\"o\">.</span>lib<span class=\"o\">.</span>extend <span class=\"p\">(</span>self<span class=\"p\">:</span> super<span class=\"p\">:</span> <span class=\"p\">{</span>\n                <span class=\"k\">inherit</span> <span class=\"p\">(</span>inputs<span class=\"o\">.</span>nixpkgs-latest<span class=\"o\">.</span>lib<span class=\"p\">)</span> concatMapAttrs<span class=\"p\">;</span>\n              <span class=\"p\">});</span>\n            <span class=\"p\">})</span>\n          <span class=\"p\">];</span>\n        <span class=\"p\">};</span>\n</code></pre></div>",
+        "id": 439120636,
+        "sender_full_name": "Srid",
+        "timestamp": 1715902936
+    },
+    {
+        "content": "<p><a href=\"https://github.com/hercules-ci/flake-parts/discussions/234\">https://github.com/hercules-ci/flake-parts/discussions/234</a></p>",
+        "id": 448881204,
+        "sender_full_name": "Srid",
+        "timestamp": 1720020312
+    }
+]

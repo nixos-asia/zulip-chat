@@ -1,0 +1,74 @@
+[
+    {
+        "content": "<p><a href=\"#narrow/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60/near/421225705\">This convo</a> with <span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span>  began as a way to provide project-specific caches to users who are installing these Nix packages outside of nixpkgs.</p>\n<p>One way to automate that providing of cache is to add the cache to <code>flake.nix</code> (<a href=\"https://github.com/juspay/nix-browser/blob/d7d33d764d7f0829cbd2160431e091d09a7b0700/flake.nix#L3-L7\">see example</a>), and then ask the user to use <code>--accept-flake-config</code> to automatically use that cache when doing <code>nix run</code> or <code>nix profile install</code>, eg.:</p>\n<div class=\"codehilite\"><pre><span></span><code>nix --accept-flake-config run github:juspay/nix-browser#nix-health\n</code></pre></div>",
+        "id": 421260162,
+        "sender_full_name": "Srid",
+        "timestamp": 1707836240
+    },
+    {
+        "content": "<p>If you run this command on macOS or Linux, it should just get binaries from the cache without building any of the Rust packages.</p>",
+        "id": 421260346,
+        "sender_full_name": "Srid",
+        "timestamp": 1707836286
+    },
+    {
+        "content": "<p>I get the error <code>warning: ignoring untrusted substituter 'https://cache.garnix.io', you are not a trusted user.</code></p>\n<p>Which apparently has been an issue: <a href=\"https://discourse.nixos.org/t/ux-problems-with-flakes-and-custom-caches-substituters/23691\">https://discourse.nixos.org/t/ux-problems-with-flakes-and-custom-caches-substituters/23691</a></p>\n<p>So it appears I have to configure this cache as a trusted substituter before using this?</p>",
+        "id": 421262529,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707836838
+    },
+    {
+        "content": "<p>You need to make yourself a trusted user. </p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>srid<span class=\"w\"> </span>on<span class=\"w\"> </span>appreciate<span class=\"w\"> </span>~\n❯<span class=\"w\"> </span>nix<span class=\"w\"> </span>show-config<span class=\"w\"> </span><span class=\"p\">|</span><span class=\"w\"> </span>grep<span class=\"w\"> </span>trusted-users\ntrusted-users<span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span>root<span class=\"w\"> </span>srid\n\nsrid<span class=\"w\"> </span>on<span class=\"w\"> </span>appreciate<span class=\"w\"> </span>~\n❯<span class=\"w\"> </span>grep<span class=\"w\"> </span>trusted-users<span class=\"w\"> </span>/etc/nix/nix.conf\ntrusted-users<span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span>root<span class=\"w\"> </span>srid\n</code></pre></div>",
+        "id": 421263183,
+        "sender_full_name": "Srid",
+        "timestamp": 1707837008
+    },
+    {
+        "content": "<p>I'll set this in my system flake <code>nix.settings.trusted-users</code> and check later</p>",
+        "id": 421264493,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707837379
+    },
+    {
+        "content": "<p>It is one of the defaults we recommend to all, <a href=\"https://github.com/juspay/nix-dev-home?tab=readme-ov-file#cannot-use-cache--cachix\">https://github.com/juspay/nix-dev-home?tab=readme-ov-file#cannot-use-cache--cachix</a></p>",
+        "id": 421265244,
+        "sender_full_name": "Srid",
+        "timestamp": 1707837603
+    },
+    {
+        "content": "<p>Very wise suggestion I'd say. Also explains why I had trouble using other people's caches in the past when I didn't care to investigate.</p>",
+        "id": 421265583,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707837686
+    },
+    {
+        "content": "<p>you can also set a group to the trusted users by prepending with <code>@</code>. I usually just drop <code>@wheel</code> as a trusted user since they also have sudo access.</p>\n<p>Also, even if you don't pass the <code>--accept-flake-config</code> flag, you will still be interactively prompted if you want to accept the cache config or not by default.</p>",
+        "id": 421267712,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707838301
+    },
+    {
+        "content": "<p>I just found this comment <a href=\"https://github.com/NixOS/nix/issues/6672#issuecomment-1920721589\">https://github.com/NixOS/nix/issues/6672#issuecomment-1920721589</a></p>\n<p>Suggesting to use the <code>trusted-public-keys</code> and <code>substituters</code> or <code>trusted-substituters</code> setting instead because just adding your user is a bit of a security issue. What do you guys say to that?</p>",
+        "id": 421275518,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707840277
+    },
+    {
+        "content": "<p>Depends on how you want to balance security vs usability.</p>",
+        "id": 421278280,
+        "sender_full_name": "Srid",
+        "timestamp": 1707840980
+    },
+    {
+        "content": "<p>Sure it is important to be aware that a trusted-user is essentially as powerful as root. Same issue as adding your user to the docker group as well. But multi-user systems are pretty rare these days. If you have one then sure, maybe you care more, but I am the admin in all my systems, and I get sudo based on the presence or absence of my yubikey where possible.</p>\n<p>What I would really like is some sort of remote protocol for sending my yubikey creds over an ssh connection. For Nix, it might be interesting if someone could be a \"trusted-user\" based on the presence or absence of a yubikey OTP. That would really be an \"improvement\" in my view, but on single user systems where you are basically the only user and admin, the point is kinda moot.</p>\n<p>Not being a trusted user just makes things more of a pain in the same way not having root on a smartphone can be a pain <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 421280916,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707841730
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"679006\">Tim DeHerrera</span> <a href=\"#narrow/stream/413950-nix/topic/Cache.20config.20in.20.60nix.20run.60.20of.20flake/near/421280916\">said</a>:</p>\n<blockquote>\n<p>What I would really like is some sort of remote protocol for sending my yubikey creds over an ssh connection. [..]</p>\n</blockquote>\n<p>I enjoy a similar UX for ssh-based auths (like <code>git pull</code> in a ssh session, which uses local Touch ID for 1Password key access):</p>\n<p><a href=\"#narrow/stream/413950-nix/topic/1Password.20TouchID.20auth.20for.20git.2C.20ssh.2C.20etc.2E\">https://nixos.zulipchat.com/#narrow/stream/413950-nix/topic/1Password.20TouchID.20auth.20for.20git.2C.20ssh.2C.20etc.2E</a></p>",
+        "id": 421292715,
+        "sender_full_name": "Srid",
+        "timestamp": 1707845691
+    }
+]

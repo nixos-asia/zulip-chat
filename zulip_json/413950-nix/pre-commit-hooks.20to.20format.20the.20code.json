@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>I am trying to introduce a pre-commit-hooks check to stop user from pushing to remote if mal-formatted code found in the changes, the most promising checker I have found is <a href=\"https://github.com/editorconfig-checker/editorconfig-checker\">https://github.com/editorconfig-checker/editorconfig-checker</a>, while it doesn't honor the .editorconfig already there in the repo, it seems to be using its own set of rules</p>",
+        "id": 440403076,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1716500350
+    },
+    {
+        "content": "<p>Looks like it <a href=\"https://github.com/editorconfig-checker/editorconfig-checker/blob/dd3d0a712aa4171c404b80f235cfcafbec5ff20b/README.md?plain=1#L37\">supports <code>.editorconfig</code> file</a>?</p>",
+        "id": 440404678,
+        "sender_full_name": "Srid",
+        "timestamp": 1716501163
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> it will use its own config file <a href=\"https://github.com/editorconfig-checker/editorconfig-checker/blob/dd3d0a712aa4171c404b80f235cfcafbec5ff20b/README.md?plain=1#L147\">.ecrc</a> instead of following the rules in .editorconfig</p>",
+        "id": 440405155,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1716501432
+    },
+    {
+        "content": "<p>I'm not familiar with editorconfig, but why does it say this in the README?</p>\n<blockquote>\n<p>This tool only needs your <code>.editorconfig</code> to check all files.</p>\n</blockquote>",
+        "id": 440405279,
+        "sender_full_name": "Srid",
+        "timestamp": 1716501498
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/a9yR-XuuZzxe0BZLO51p7Cbt/image.png\">image.png</a><br>\nturns out it does follow the rules in .editorconfig :)</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/a9yR-XuuZzxe0BZLO51p7Cbt/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/a9yR-XuuZzxe0BZLO51p7Cbt/image.png\"></a></div>",
+        "id": 440406495,
+        "sender_full_name": "Hao Liu",
+        "timestamp": 1716502157
+    },
+    {
+        "content": "<p>For ref, <a href=\"https://github.com/juspay/superposition/pull/75\">https://github.com/juspay/superposition/pull/75</a></p>",
+        "id": 440407688,
+        "sender_full_name": "Srid",
+        "timestamp": 1716502896
+    }
+]

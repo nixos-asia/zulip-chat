@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p><code>remotedev</code> user was <a href=\"https://github.com/juspay/remote-development/blob/7aa17a2f6849d31477f18792e145710d0bbacc23/hosts/vanjaram/configuration.nix#L99-L107\">present</a> in the configuration and was later <a href=\"https://github.com/juspay/remote-development/pull/12/files#diff-a7c2716e96e14fd507ada5ecf25fa4138ad73fe6bb002285b5fb90f662c36295\">removed</a>  </p>\n<p>But I still see the user’s files:<br>\n<a href=\"/user_uploads/60244/wLiaehgYEUOixVHDG4XblQKH/Screenshot-2024-02-28-at-5.25.16PM.png\">Screenshot-2024-02-28-at-5.25.16PM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/wLiaehgYEUOixVHDG4XblQKH/Screenshot-2024-02-28-at-5.25.16PM.png\" title=\"Screenshot-2024-02-28-at-5.25.16PM.png\"><img src=\"/user_uploads/60244/wLiaehgYEUOixVHDG4XblQKH/Screenshot-2024-02-28-at-5.25.16PM.png\"></a></div>",
+        "id": 423803581,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709121716
+    },
+    {
+        "content": "<p>Makes sense why they are not deleted, though nixos should probably offer an option to the user here, or at least inform them. This all falls under the larger category of automatic migration of stateful data, I guess.</p>",
+        "id": 423805009,
+        "sender_full_name": "Srid",
+        "timestamp": 1709122251
+    },
+    {
+        "content": "<p>Probably the best solution to this kind of thing so far would be:<br>\n<a href=\"https://nixos.wiki/wiki/Impermanence\">https://nixos.wiki/wiki/Impermanence</a></p>",
+        "id": 423818447,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709127277
+    },
+    {
+        "content": "<p>Impermenence can work for certain servers, more than shared machines. In the latter, user home directories will have various git repos checked out with <code>direnv</code> enabled on them, which needs to be persisted.</p>",
+        "id": 423870738,
+        "sender_full_name": "Srid",
+        "timestamp": 1709142387
+    },
+    {
+        "content": "<p>That's what the impermanence module is for. It's essentially a white list for files and directories you wish to be persisted across reboots. Everything else is wiped</p>",
+        "id": 423879815,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709145588
+    },
+    {
+        "content": "<p>I used to use it, haven't for a little while now, but was considering adding it again on my large build server, just to keep it clean, but then I don't reboot it very often either <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 423879991,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709145631
+    }
+]
