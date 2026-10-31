@@ -1,0 +1,134 @@
+[
+    {
+        "content": "<p>Srid told mit that you <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> are having some kind of NixOS datacenter project going? Care to tell me more about that?</p>",
+        "id": 448127623,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719760987
+    },
+    {
+        "content": "<p>I have it in mind, yes. But haven’t had the chance to do anything about it unfortunately. I was thinking of providing Hetzner like services here in India. It is especially important considering how expensive AWS, GCP and azure can get and their vendor lock-in strategies (these strategies might be less now, but it does exist). I don’t own racks in any datacenters, but I could either rent a few racks to start with and manage them using NixOS. All this will not matter if I don’t have clients to use this new cloud-service provider in the market. I am hoping a few clients might be ready to use it for their non-critical tasks just because of the lower price. Once the financials add up, could dream bigger and have DCs like Hetzner.</p>",
+        "id": 448156269,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719772902
+    },
+    {
+        "content": "<p>Idk if you have seen this, but this project looks interesting: <a href=\"https://github.com/SaumonNet/proxmox-nixos\">https://github.com/SaumonNet/proxmox-nixos</a></p>\n<p>Not quite there yet for clustering, but once they have that, it might be great.</p>\n<p>The only thing that isn't so great is that they put everything under a licence other than MIT and it's not clear if they intend to upstream this at all.</p>",
+        "id": 448668950,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719942932
+    },
+    {
+        "content": "<p>but your project does sound enticing I have to say, very interesting</p>",
+        "id": 448669186,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719942999
+    },
+    {
+        "content": "<blockquote>\n<p>Idk if you have seen this, but this project looks interesting: <a href=\"https://github.com/SaumonNet/proxmox-nixos\">https://github.com/SaumonNet/proxmox-nixos</a></p>\n</blockquote>\n<p>Yes, I came across this one. It is interesting.</p>\n<blockquote>\n<p>The only thing that isn't so great is that they put everything under a licence other than MIT</p>\n</blockquote>\n<p>The AGPL-v3 license seems to be because upstream uses that one, I couldn’t find the source but one of the staff member of proxmox mentioned here: <a href=\"https://forum.proxmox.com/threads/proxmox-ve-licensing-features.87788/post-384662\">https://forum.proxmox.com/threads/proxmox-ve-licensing-features.87788/post-384662</a></p>",
+        "id": 448790877,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719996382
+    },
+    {
+        "content": "<p>Yes but does that make sense? Aren't there many pieces of software already in nixpkgs that use that licence?</p>",
+        "id": 448790983,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719996426
+    },
+    {
+        "content": "<p>like that for instance:  <a href=\"https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/applications/backup/proxmox-backup-client/default.nix#L152\">https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/applications/backup/proxmox-backup-client/default.nix#L152</a></p>",
+        "id": 448792115,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719996787
+    },
+    {
+        "content": "<blockquote>\n<p>Yes but does that make sense?</p>\n</blockquote>\n<p>It does not, unless you are modifying the code you can have your own license and re-distribute it, while providing the original source code with agpl-v3 license.</p>",
+        "id": 448792575,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719996956
+    },
+    {
+        "content": "<p>I think this only makes sense <em>if they don't want to commit it to nixpkgs</em> ... I will go and ask them on discourse what is going on with that.</p>",
+        "id": 448792949,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719997073
+    },
+    {
+        "content": "<p>because the project is very nice. Once you have Proxmox clustering support and everything, you could use that as the foundational stone for NixOS-based datacenters.</p>",
+        "id": 448793072,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719997107
+    },
+    {
+        "content": "<p>and then you could build a terraform-backend with a nice frontend for the outside to automate VM provisioning via Proxmox in your cluster</p>",
+        "id": 448793201,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719997152
+    },
+    {
+        "content": "<p>Yup, pretty exciting</p>",
+        "id": 448793433,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719997209
+    },
+    {
+        "content": "<p>Alright, I asked them</p>",
+        "id": 448795555,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719997887
+    },
+    {
+        "content": "<p>but if this was working nicely for proxmox custering out of the box and wouldn't rely on a third party cache as it does right now, it'd be a really nice (and cheap!) basis for building smaller datacenters in order to offer hosting solutions with nice automated provisioning for clients.</p>",
+        "id": 448795738,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719997946
+    },
+    {
+        "content": "<p>Idk what the alternatives would be tbh: VMware, Nutanix, maybe something like OpenStack?</p>",
+        "id": 448796530,
+        "sender_full_name": "Andreas",
+        "timestamp": 1719998190
+    },
+    {
+        "content": "<p><a href=\"https://www.reddit.com/r/homelab/s/2eHFsh2NPW\">https://www.reddit.com/r/homelab/s/2eHFsh2NPW</a></p>",
+        "id": 448797173,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719998353
+    },
+    {
+        "content": "<p>^ recommends xcp-ng</p>",
+        "id": 448797228,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1719998373
+    },
+    {
+        "content": "<p>yes, I am not sure on the Xen vs. KVM question. I only ever used the latter.</p>",
+        "id": 449026354,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720079752
+    },
+    {
+        "content": "<p>I have also tried only KVM, but I might soon give Xen a shot</p>",
+        "id": 449026579,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1720079801
+    },
+    {
+        "content": "<p>I think Proxmox is fantastic for VDS services; but you will most likely want VPS services aswell;<br>\nOpenStack works exceptionally for those.</p>\n<p>Using Nix as a reliable backbone for a data-center is very exciting! I've got some small-scale tests in my own home, never had enough resources to make a larger system though.</p>",
+        "id": 449452185,
+        "sender_full_name": "John Bargman",
+        "timestamp": 1720250279
+    },
+    {
+        "content": "<p>Also, LibVirt/QEMU and/or MicroVM works very very well for stable single-deployments (such as CDN and VPN/networking runners)</p>",
+        "id": 449452266,
+        "sender_full_name": "John Bargman",
+        "timestamp": 1720250339
+    },
+    {
+        "content": "<p>I can only say I am very happy with Proxmox. If it came built on NixOS it might be even nicer to deploy quicker on new machines. But other than the deployment, there is a fairly capable Terraform-provider for Proxmox out there.</p>\n<p>And for larger stuff, yes, OpenStack might be a really nice solution.</p>",
+        "id": 449457937,
+        "sender_full_name": "Andreas",
+        "timestamp": 1720253590
+    }
+]

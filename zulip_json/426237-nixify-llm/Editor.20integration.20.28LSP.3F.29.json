@@ -1,0 +1,278 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/djandries/llmvm/blob/master/frontends%2Fcodeassist%2FREADME.md\">https://github.com/djandries/llmvm/blob/master/frontends%2Fcodeassist%2FREADME.md</a></p>",
+        "id": 423152528,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708765860
+    },
+    {
+        "content": "<p>What will be the way to go?</p>\n<p>(Under the umbrella premis of defying proprietary standards and ecosystems)</p>",
+        "id": 423152568,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708765909
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> ^^ helix-bound, as well.</p>",
+        "id": 423152631,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708765932
+    },
+    {
+        "content": "<p><a href=\"https://github.com/DJAndries/llmvm/issues/7\">https://github.com/DJAndries/llmvm/issues/7</a></p>",
+        "id": 423154265,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708767435
+    },
+    {
+        "content": "<p><a href=\"https://github.com/DJAndries/llmvm/issues/8\">https://github.com/DJAndries/llmvm/issues/8</a></p>",
+        "id": 423155972,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708768986
+    },
+    {
+        "content": "<p>For the true elite who have long left CLI-based tools behind and embraced the virtues of the GUI, there is (at least for VSCode) for interacting with locally hosted A.I. models:</p>\n<p><a href=\"https://github.com/continuedev/continue\">https://github.com/continuedev/continue</a><br>\n<a href=\"https://github.com/ex3ndr/llama-coder\">https://github.com/ex3ndr/llama-coder</a></p>\n<p>I have been playing with these a bit. Not sure what is out there for Neovim, yet. Probably some things will be found.</p>",
+        "id": 423156126,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708769062
+    },
+    {
+        "content": "<p>llmvm is a good approach, indeed for text based editors, the way how it injects itself into the LSP protocol.</p>",
+        "id": 423156258,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708769135
+    },
+    {
+        "content": "<p>(or even for VSCode)</p>",
+        "id": 423156384,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708769187
+    },
+    {
+        "content": "<p>It can run models against:</p>\n<ul>\n<li>local backend (run by llvm.cpp via lvm rust bindings)</li>\n<li>simply a remote api</li>\n</ul>\n<p>It's actually nice that every layer of the stack can be provided remotely, even the core component to the frontend.</p>",
+        "id": 423156542,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708769280
+    },
+    {
+        "content": "<p>I mean there is stuff out there like</p>\n<p><a href=\"https://github.com/nomnivore/ollama.nvim\">https://github.com/nomnivore/ollama.nvim</a><br>\n<a href=\"https://github.com/jpmcb/nvim-llama\">https://github.com/jpmcb/nvim-llama</a></p>\n<p>So people are playing with this obviously, I am just not sure what will stick yet.</p>",
+        "id": 423156674,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708769340
+    },
+    {
+        "content": "<p>Llmvm Core</p>\n<blockquote>\n<p>manages state related to text generation, such as:<br>\nModel presets<br>\nPrompt templates<br>\nMessage threads<br>\nProjects/workspaces</p>\n</blockquote>\n<p>That's pretty neat and a sound design.</p>",
+        "id": 423156730,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708769376
+    },
+    {
+        "content": "<p>I guess running against locally hosted remote API is what I would go for, most likely either ollama API or OpenAI compatible, which more and more are implementing. </p>\n<p>Yes, LLVM core is looking promising. </p>\n<p>If you might then integrate something like khoj which can use entire GitHub repos as context apparently, it might get even more interesting</p>",
+        "id": 423156993,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708769501
+    },
+    {
+        "content": "<p>I wonder what would happen if we self-hosted khoj and fed it nixpkgs as a repo.</p>",
+        "id": 423157088,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708769533
+    },
+    {
+        "content": "<p>I'm always a bit wary of the foundations of auch productized \"solutions\", tbh.</p>\n<p>\"Solutions to what?\"</p>\n<p>In LLMVM i was able to exactly identify what I'd be missing in about an hour of research:</p>\n<p>I think, this is what we want:</p>\n<ul>\n<li><a href=\"https://github.com/DJAndries/llmvm/issues/7\">https://github.com/DJAndries/llmvm/issues/7</a></li>\n<li><a href=\"https://github.com/DJAndries/llmvm/issues/8\">https://github.com/DJAndries/llmvm/issues/8</a></li>\n</ul>",
+        "id": 423157146,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708769577
+    },
+    {
+        "content": "<p>Issue 8 requests project scope context.</p>\n<p>But for the LSP-based codeassist feature, too much context might actually be harmful for the result quality.</p>",
+        "id": 423157310,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708769656
+    },
+    {
+        "content": "<p>Of course, if your language is non typed, you're really a bit out of luck. But that's true anyways.</p>",
+        "id": 423157365,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708769693
+    },
+    {
+        "content": "<p>Let's see if you get a discussion on your issues.</p>",
+        "id": 423157577,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708769817
+    },
+    {
+        "content": "<p>Locally hosted remote api:</p>\n<p>It appears that from the web of context around specifically this resource <a href=\"https://github.com/rustformers/llm\">https://github.com/rustformers/llm</a></p>\n<p>That llvm.cpp is the current state of the art model runtime (over ONNX, which is a bit more slow moving and has more industry support). Nitro is built on it.</p>\n<p>Specifically the GGUF model format appears to be regarded as promising by the domain experts in the same web of context.</p>\n<p>The <code>llm</code> create used by <code>llmvm</code> is lagging a bit on support for the latest <code>llvm.cpp</code> developments, which is why separately hosting with nitro and using the offloading backend (e.g. via a OpenAI compatible API) sounds like a good escape hatch.</p>\n<p>But it's nice that <code>llmvm</code> <em>could</em> also manage your model runtime seemlessly.</p>",
+        "id": 423157902,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708770146
+    },
+    {
+        "content": "<blockquote>\n<p>But for the LSP-based codeassist feature, too much context might actually be harmful for the result quality.</p>\n</blockquote>\n<p>So khoj has it's own client. And they have a GitHub integration. I am not entirely firm yet on the theoretical basis for the technique behind it, which is Retrieval Augmented Generation for LLMs. But basically it runs a Postgres-turned-VectorDB instance to store context if I see this correctly.</p>",
+        "id": 423159171,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708771257
+    },
+    {
+        "content": "<p>Seems like it, yes. And thanks! I just wondered why the heck postgres?</p>\n<p>Is that more performant? Or probably it does a transformation ahead of time?</p>",
+        "id": 423159284,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708771371
+    },
+    {
+        "content": "<div class=\"message_inline_image\"><a href=\"https://github.com/khoj-ai/khoj/blob/master/documentation%2Fassets%2Fimg%2Fkhoj_architecture.png\"><img src=\"https://uploads.zulipusercontent.net/129a63cfeafd55f0a46b4c580cae94467f60443b/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f6b686f6a2d61692f6b686f6a2f6d61737465722f646f63756d656e746174696f6e253246617373657473253246696d672532466b686f6a5f6172636869746563747572652e706e67\"></a></div>",
+        "id": 423159442,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708771548
+    },
+    {
+        "content": "<p>Yeah that illustration is nice. If need to guesstimate this, but I'd say the corpus embeddings need to be stored somewhere.</p>",
+        "id": 423159546,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708771665
+    },
+    {
+        "content": "<p>What is corpus embedding?</p>\n<blockquote>\n<p>The corpus can also be a custom embedding layer, which is specifically designed for the use case when other pre-trained corpora cannot supply sufficient data.</p>\n</blockquote>",
+        "id": 423159550,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708771669
+    },
+    {
+        "content": "<p>yes, in order to explain exactly what that is, I'd have to read the papers detailing the technique. Again, guesstimating this, it is some linear-algebra based compression of the information in your text corpus (notes, GitHub repo) , which then can be use to enhance the LLM output to refer to information peculiar to your corpus of text.</p>",
+        "id": 423159667,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708771790
+    },
+    {
+        "content": "<p>Since we're not dealing with images and ledgers in a Code Editor scenario, this type of transformation and corpus embedding is probably less relevant.</p>\n<p>But for <strong>retreival/search</strong> it seems key.</p>",
+        "id": 423159715,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708771815
+    },
+    {
+        "content": "<p>I mean Code is text. Text is run through a tokenizer, and embeddings are vector-space-based linear algebra reprsentations of the tokenization of your text (more or less). But that is true for LLMs in general.</p>",
+        "id": 423159773,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708771907
+    },
+    {
+        "content": "<p>Preliminary <strong>Conclusion</strong>:</p>\n<ul>\n<li>For search: Khoj</li>\n<li>For LSP: llmvm</li>\n</ul>",
+        "id": 423159774,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708771908
+    },
+    {
+        "content": "<p>well I am not so sure you couldn't somehow fuse these</p>",
+        "id": 423159826,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708771930
+    },
+    {
+        "content": "<p>but as it stand right now, you are right</p>",
+        "id": 423159896,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708772008
+    },
+    {
+        "content": "<p>It doesn't make really sense in a near scope: for retreival you already have LSPs and rich semantic code identifiers, such as types, etc.</p>\n<p>Of course that disregards some unknown potential that might just reveal itself after it is there.</p>",
+        "id": 423159899,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708772013
+    },
+    {
+        "content": "<p>But Khoj can run with the same model  backend as llmvm, for example, so at that level, they can share a stack (or a credit card). :-)</p>",
+        "id": 423159993,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708772099
+    },
+    {
+        "content": "<p>I mean what I have in mind here is: use these corpus embeddings of a GitHub repo or a whole set of GitHub repos (think: nixpkgs + all commuity repos of sufficient quality; or alternatively, all the repos in the cargo database with a certain number of stars for rust) with an existing code-optimized LLM. Is something you'd have to try and see what it does.</p>",
+        "id": 423160022,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708772134
+    },
+    {
+        "content": "<p>How do you get the corpus embeddings injected into the prompt? Because maybe that's not too far off as a data source to inject from khoj for lvmvm.</p>",
+        "id": 423160120,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708772224
+    },
+    {
+        "content": "<p>But I have no idea if this even makes any sense. But since nixpkgs is a monorepo it might (ironically) be an easy thing to just try and feed it to khoj. And then run khoj with codellama or deepseek-coder and see what comes out.</p>",
+        "id": 423160124,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708772228
+    },
+    {
+        "content": "<blockquote>\n<p>How do you get the corpus embeddings injected into the prompt? </p>\n</blockquote>\n<p>I mean I assume that is what khoj does when you query it?</p>\n<p>And the for getting the repos into khoj they have this:</p>\n<p><a href=\"https://docs.khoj.dev/online-data-sources/github_integration/\">https://docs.khoj.dev/online-data-sources/github_integration/</a></p>",
+        "id": 423160158,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708772282
+    },
+    {
+        "content": "<p>Noe it seems like you might have to trick or configure it explicitly it to accept the file containing the actual code as the plaintext stuff you want to create context embeddings for. It seems to be somewhat against the design idea of khoj to do that. However that doesn't necessarily mean it wouldn't work. But it might take some time it seems. At least they say it does for large repos.</p>",
+        "id": 423160719,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708772706
+    },
+    {
+        "content": "<p>Khoj just could give the preprocessimg to the toolchain, not the other way round.</p>",
+        "id": 423160858,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708772805
+    },
+    {
+        "content": "<p>that's all things you'd have to experimentally try out which works and which doesn't. I mean I might try and set something up at some point.</p>",
+        "id": 423161060,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708772873
+    },
+    {
+        "content": "<p>Btw, Eka Types is what I see as our highly rated comtext embedding sources for the Eka ecosystem. Since typed and schemaed they should be of extremely high quality, already.</p>",
+        "id": 423161065,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708772874
+    },
+    {
+        "content": "<p>I mean the funny things about these LLMs is that they do stuff that looks intelligent, but nobody really knows what is going on in there in detail. It might just be a fancy non-linear lossy compression technique like zip files that you can query in natural language (or weird optimized totally unnatural and unexpected ways). So if types add information and you fine-tune a model of a typed variety of an otherwise untyped language it might add something. But until you do you don't know. In the end it's all just text that is being vectorized. (Or context for that matter, which works a bit differently, but don't ask me for the details yet. I will probably read some at some point <span aria-label=\"grinning face with smiling eyes\" class=\"emoji emoji-1f601\" role=\"img\" title=\"grinning face with smiling eyes\">:grinning_face_with_smiling_eyes:</span> )</p>",
+        "id": 423161851,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708773600
+    },
+    {
+        "content": "<p><a href=\"https://github.com/khoj-ai/khoj/blob/master/src%2Fkhoj%2Fprocessor%2Fcontent%2Fmarkdown%2Fmarkdown_to_entries.py#L79-L96\">https://github.com/khoj-ai/khoj/blob/master/src%2Fkhoj%2Fprocessor%2Fcontent%2Fmarkdown%2Fmarkdown_to_entries.py#L79-L96</a></p>\n<p>This is how an entry is \"compiled\" from markdown. Nothing fancy, and definitly of very limited value compared to how native LSP can generate entries.</p>\n<p>So in sum: khoj isn't really useful for the editor case, as far as I can see.</p>",
+        "id": 423162089,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708773821
+    },
+    {
+        "content": "<blockquote>\n<p>So in sum: khoj isn't really useful for the editor case, as far as I can see.</p>\n</blockquote>\n<p>That is possible, yes. I will try it nonetheless and see what it does. Maybe it is also just a nice open source thing to allow users ask questions verbally about potential documentation and improve their learning experience.</p>\n<blockquote>\n<p>definitly of very limited value compared to how native LSP can generate entries.</p>\n</blockquote>\n<p>I am not sure this is the right standard of comparison. Because the idea is to enhance the query of some LLM.</p>",
+        "id": 423163061,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708774705
+    },
+    {
+        "content": "<blockquote>\n<p>Nothing fancy</p>\n</blockquote>\n<p>I guess from a software development perspective LLMs are nothing fancy either. It's just a file with pre-trained weights and a program using the file, doing some input-output. This is why people doing symbolic A.I. for decades were so upset when they found that stupid deep-learning models (like transformer-based LLMs) were magnitudes better at many tasks.</p>",
+        "id": 423163290,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708774998
+    },
+    {
+        "content": "<p>Yes, and my argument actually was that while one enhances the LLM output about types and actual code samples, throwing in an occasional markdown snippet into the context might not necessarily produce better results, because types are already as concise as it can get.</p>\n<p>But not actually sure, either: maybe the LLM can benefit from accompanying prose, as well.</p>",
+        "id": 423164186,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708775746
+    },
+    {
+        "content": "<p>In all of this: do input token length on the system prompt (\"context\") count costs in typical pricing models?</p>",
+        "id": 423164484,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708776050
+    },
+    {
+        "content": "<p>afaik that depends on the company. Here is OpenAI, they calculate both input and output prices:</p>\n<p><a href=\"https://openai.com/pricing\">https://openai.com/pricing</a></p>",
+        "id": 423166464,
+        "sender_full_name": "Andreas",
+        "timestamp": 1708778137
+    }
+]
