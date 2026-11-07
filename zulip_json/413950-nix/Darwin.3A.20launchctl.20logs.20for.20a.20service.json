@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>How do we get the logs for a failing launchd service? This is the github-runner service setup by <code>nix-darwin</code>. </p>\n<p>It is surprisingly impossible to find a way to do this. One of the reasons macOS sucks compared to Linux.</p>",
+        "id": 426832368,
+        "sender_full_name": "Srid",
+        "timestamp": 1710541923
+    },
+    {
+        "content": "<div class=\"codehilite\"><pre><span></span><code>$ sudo launchctl kickstart -kp system/org.nixos.github-runner-heist-extra-1\nservice spawned with pid: 84781\n$\n</code></pre></div>\n<p>And that PID no longer exists after that.</p>",
+        "id": 426832445,
+        "sender_full_name": "Srid",
+        "timestamp": 1710541960
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/60244/EO03WEV_ys-WtfVaqNex8wJV/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/EO03WEV_ys-WtfVaqNex8wJV/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/EO03WEV_ys-WtfVaqNex8wJV/image.png\"></a></div><p>Guess that's why it is failing -- my token expired. </p>\n<p>(But can't confirm -- just guessing)</p>",
+        "id": 426832597,
+        "sender_full_name": "Srid",
+        "timestamp": 1710542052
+    },
+    {
+        "content": "<p>You will have to use either the <code>log</code> cli command in MacOS, or if you have access to GUI you can use Console app to start filtering all the messages with <code>system/org.nixos.github-runner-heist-extra-1</code> in it and then kickstart your daemon</p>",
+        "id": 426904808,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1710607143
+    },
+    {
+        "content": "<p>If you still don’t see anything, you can try enabling <code>debug</code> mode first, with <code>launchctl debug</code> and then start filtering for logs again</p>",
+        "id": 426904942,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1710607238
+    },
+    {
+        "content": "<p>Console app never showed any logs for the crashed service, but I'll try the <code>debug</code> command next time this happens.</p>",
+        "id": 427104630,
+        "sender_full_name": "Srid",
+        "timestamp": 1710678179
+    },
+    {
+        "content": "<p>Nothing's coming through:</p>\n<div class=\"codehilite\"><pre><span></span><code>❯ sudo launchctl debug  system/org.nixos.github-runner-dioxus-desktop-template-1 --stdout ~/out --stderr ~/err\nService configured for next launch.\n</code></pre></div>\n<p>And:</p>\n<div class=\"codehilite\"><pre><span></span><code>srid on appreciate ~/code\n❯  sudo launchctl kickstart system/org.nixos.github-runner-dioxus-desktop-template-1\n\nsrid on appreciate ~/code\n❯ more ~/out\n\nsrid on appreciate ~/code\n❯ more ~/err\n</code></pre></div>",
+        "id": 429231563,
+        "sender_full_name": "Srid",
+        "timestamp": 1711302815
+    },
+    {
+        "content": "<p>3 messages were moved from this topic to <a class=\"stream-topic\" data-stream-id=\"413948\" href=\"/#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners\">#nixos &gt; Self-hosted GitHub runners</a> by <span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span>.</p>",
+        "id": 429371861,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1711368362
+    },
+    {
+        "content": "<p>The new nix-darwin module writes the log files (see topic referenced above), thus allowing me to not repy on Apple's slipshod tech.</p>",
+        "id": 429372469,
+        "sender_full_name": "Srid",
+        "timestamp": 1711368460
+    }
+]

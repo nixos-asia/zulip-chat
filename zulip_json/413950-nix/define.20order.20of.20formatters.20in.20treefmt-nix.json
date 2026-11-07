@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Is it possible to define a <code>depends-on</code> relation for a formatter, like running <code>stylish-haskell</code> should depend on <code>ormolu</code> having been executed?</p>\n<p>FYI <span class=\"user-mention\" data-user-id=\"704449\">@Abhishek Yadav</span></p>",
+        "id": 432477894,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712747052
+    },
+    {
+        "content": "<p>Similar to <a href=\"https://github.com/cachix/git-hooks.nix/issues/250\">https://github.com/cachix/git-hooks.nix/issues/250</a> but for <code>treefmt-nix</code>.</p>\n<p>Maybe this: <a href=\"https://github.com/numtide/treefmt/issues/77\">https://github.com/numtide/treefmt/issues/77</a></p>",
+        "id": 432637493,
+        "sender_full_name": "Srid",
+        "timestamp": 1712817839
+    },
+    {
+        "content": "<p>There is also another option to write a custom formatter that will run the dependent formatters sequentially</p>",
+        "id": 432678324,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1712832943
+    }
+]

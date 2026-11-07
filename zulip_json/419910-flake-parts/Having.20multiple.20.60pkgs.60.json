@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/hercules-ci/flake-parts/discussions/217\">https://github.com/hercules-ci/flake-parts/discussions/217</a></p>\n<p>cc <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span>  (cf. our <code>pkgs-latest</code>)</p>",
+        "id": 427482975,
+        "sender_full_name": "Srid",
+        "timestamp": 1710768476
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"679956\">@Robert Hensing</span> We do this in several repos at Juspay, FWIW.</p>",
+        "id": 427483108,
+        "sender_full_name": "Srid",
+        "timestamp": 1710768492
+    }
+]

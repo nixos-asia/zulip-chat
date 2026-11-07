@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>In a project we are using boto3 package which is imported from python3. Our requirement is to update the boto3 package without updating nixpkgs version, basically we wanted to override only boto3 package. How can we do that ?   </p>\n<p>This is how we are importing the package boto3 with other packages from python3 using nixpkgs</p>\n<p><code>infra-env = pkgs.python3.withPackages (ps: with ps; [ boto3 kubernetes requests schema python-jenkins croniter validators]);</code></p>",
+        "id": 407297024,
+        "sender_full_name": "Rohit Singh",
+        "timestamp": 1702319245
+    },
+    {
+        "content": "<p>Looks like you want <code>overridePythonAttrs</code>, it is documented here:</p>\n<p><a href=\"https://nixos.org/manual/nixpkgs/stable/#overridePythonAttrs\">https://nixos.org/manual/nixpkgs/stable/#overridePythonAttrs</a></p>\n<p><a href=\"/user_uploads/60244/bpf0Hfb36deIvy2--qxto2mG/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/bpf0Hfb36deIvy2--qxto2mG/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/bpf0Hfb36deIvy2--qxto2mG/image.png\"></a></div>",
+        "id": 407297368,
+        "sender_full_name": "Srid",
+        "timestamp": 1702319397
+    },
+    {
+        "content": "<p>Sure. Let me try that.</p>",
+        "id": 407297939,
+        "sender_full_name": "Rohit Singh",
+        "timestamp": 1702319626
+    }
+]

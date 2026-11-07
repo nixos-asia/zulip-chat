@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Ghost process from an old <code>nixci build</code> on services-flake:</p>\n<p><a href=\"/user_uploads/60244/V_8LLN0nsfp7IdZkyNIXKRTD/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/V_8LLN0nsfp7IdZkyNIXKRTD/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/V_8LLN0nsfp7IdZkyNIXKRTD/image.png\"></a></div><p><a href=\"/user_uploads/60244/pO1ygZcEQ1r2rxFzSSkb2BYd/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/pO1ygZcEQ1r2rxFzSSkb2BYd/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/pO1ygZcEQ1r2rxFzSSkb2BYd/image.png\"></a></div><p><a href=\"/user_uploads/60244/DdRenktPP9O6RK8PgcUo1KQ4/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/DdRenktPP9O6RK8PgcUo1KQ4/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/DdRenktPP9O6RK8PgcUo1KQ4/image.png\"></a></div><p>I can't even kill it.</p>",
+        "id": 445659476,
+        "sender_full_name": "Srid",
+        "timestamp": 1718816149
+    },
+    {
+        "content": "<p>(Well, it stopped after trying to kill process-compose twice)</p>",
+        "id": 445659597,
+        "sender_full_name": "Srid",
+        "timestamp": 1718816181
+    },
+    {
+        "content": "<p>Something to do with <code>cassandra-test</code> it seems.</p>",
+        "id": 445659817,
+        "sender_full_name": "Srid",
+        "timestamp": 1718816209
+    }
+]

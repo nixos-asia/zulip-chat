@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Hello folks, I'm from Chandigarh, India.</p>\n<p>I've been enjoying Nix for about 3 years on my raspi server running  *arr stack, nextcloud, wireguard and a few other services. Recently moved from arch to nix on my laptop - about 3 months ago. I have triple boot setup - Nix, Arch, Windows 10. Not that comfortable with Nix to leave arch yet. Windows will stay for gaming / performance comparisons.</p>\n<p>The next few things I wanna get done is jupyter notebook setup for data science experiments and improve my gaming setup on NixOS - ntsync kernel patch, proton-ge etc.</p>\n<p>Great to see a community here! I have not been able to find people in the city to discuss this stuff. Have been working remotely since covid</p>",
+        "id": 423650964,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1709051847
+    },
+    {
+        "content": "<p>NixOS has good gpu passthrough support, you can run a windows VM with GPU passthrough and play your games. I haven’t personally tried it though.</p>",
+        "id": 423654553,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709052940
+    },
+    {
+        "content": "<p>Ok. Will try with a windows VM. I have Nvidia optimus to make things more challenging. <br>\nMost games have been fine with steam on Xorg. Dota has frequent crashes on wayland - some segfault in <a href=\"http://libglvnd-core.so\">libglvnd-core.so</a> as soon as I alt-tab.<br>\nPalworld dies after 1-2 hours of gameplay due to OOM on Xorg. Palworld seems to manage memory better on Windows. I get slightly better experience.</p>",
+        "id": 423657824,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1709053889
+    },
+    {
+        "content": "<p>Ah yes, Nvidia Optimus! I have that running on a Xiaomi laptop of mine. Works fine on NixOS with a offload script which I think you can just activate these days by setting the appropriate value. But I never went to the point of trying GPU passthrough for the dedicated Nvidia GPU. Even though it should work. Maybe I should finally try?</p>",
+        "id": 423666331,
+        "sender_full_name": "Andreas",
+        "timestamp": 1709056709
+    },
+    {
+        "content": "<p>Welcome!</p>\n<blockquote>\n<p>Great to see a community here! I have not been able to find people in the city to discuss this stuff. Have been working remotely since covid</p>\n</blockquote>\n<p>We are planning to host online events, actually. Keep an eye on <a href=\"https://nixos.asia/en/event\">https://nixos.asia/en/event</a></p>",
+        "id": 423674459,
+        "sender_full_name": "Srid",
+        "timestamp": 1709059707
+    },
+    {
+        "content": "<p>In my experience, most games that run through proton run better than in Windows, even without tuning the kernel or anything else.</p>\n<p>Although I haven't had much time for games in recent years, minus a few hours with the kids here or there.</p>",
+        "id": 423679257,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709061477
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Hi everyone. This is a fantastic tool, thank you for making it.</p>\n<p>I've seen a couple references to llvm in github but I'm having trouble compiling with llvm normally.  if I just add <code>-fllvm</code> to my GHC options in my .cabal file it says GHC isn't configured for llvm use. If I set <code>basePackages = pkgs.pkgsLLVM.haskell.packages.ghc912;</code> then all my settings overrides in <code>perSystem.haskellProjects.default.settings</code> stop working. Any advice? Thank you.</p>",
+        "id": 564842532,
+        "sender_full_name": "Jack",
+        "timestamp": 1766251527
+    },
+    {
+        "content": "<p>actually hold that thought, this problem seem to only happen when using something unusual for inputs.source or &gt;= ghc.9.10.</p>\n<p>maybe also only on aarch-64-linux</p>",
+        "id": 564926155,
+        "sender_full_name": "Jack",
+        "timestamp": 1766367188
+    }
+]

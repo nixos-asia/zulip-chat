@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>As mentioned in the NixOS stream, there is now a project trying to get more serious about building something like NixOS on FreeBSD.</p>\n<p>I was wondering, what would it take to run process-compose flakes on FreeBSD via Nix? OPNsense and PFsense would be my targets essentially. </p>\n<p>Does process-compose itself support FreeBSD?</p>",
+        "id": 430953986,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712134982
+    },
+    {
+        "content": "<p>Apparently it's a simple go binary without any dependencies... so it should compile on FreeBSD, I guess?</p>",
+        "id": 430960193,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712136737
+    },
+    {
+        "content": "<p>I'd think so, yes. It even runs on macOS (doesn't use any platform specific runner)</p>",
+        "id": 431158164,
+        "sender_full_name": "Srid",
+        "timestamp": 1712171584
+    },
+    {
+        "content": "<p>yeah, maybe I should start up a FreeBSD VM and compile it...</p>\n<p>More interesting question perhaps: Can one use Nix with process-compose flake to define services for FreeBSD?</p>",
+        "id": 431160855,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172613
+    },
+    {
+        "content": "<p>because that would be really neat I'd say, if you could extend the functionality of pfsense and opnsense in that way.</p>",
+        "id": 431160930,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712172643
+    },
+    {
+        "content": "<p>And as I said here <a href=\"#narrow/stream/413948-nixos/topic/NixBSD.2C.20it's.20NixOS.20on.20FreeBSD\">https://nixos.zulipchat.com/#narrow/stream/413948-nixos/topic/NixBSD.2C.20it's.20NixOS.20on.20FreeBSD</a></p>\n<p>there is now a fork of nixpkgs one might try to use...</p>",
+        "id": 431162841,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712173287
+    }
+]
