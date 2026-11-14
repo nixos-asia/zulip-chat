@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>I don’t think it is possible with the current library, but I do have a case where it could be useful.</p>\n<p>In a <a href=\"https://github.com/juspay/services-flake/pull/160\">recent change to services-flake</a>, I made the default value for <code>socketDir</code> option as <code>””</code> and when it is an empty-string, I don’t want the users to refer to this config, it doesn’t make sense. It only makes sense to refer to it when it is non-empty.</p>\n<p>Is there a better way I can implement this? or is it a problem worth being solved upstream?</p>",
+        "id": 429799391,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711524848
+    },
+    {
+        "content": "<p>One way is <code>types.nullOr types.string</code></p>",
+        "id": 429851335,
+        "sender_full_name": "Srid",
+        "timestamp": 1711543627
+    },
+    {
+        "content": "<p>This is much better since it will throw a “cannot coerce null to string” error, when trying to use the option in any shell script.</p>",
+        "id": 429873859,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711550054
+    }
+]

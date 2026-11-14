@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p><a href=\"/user_uploads/60244/Ow5XZlDWoiwCeamNVYpWX42b/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/Ow5XZlDWoiwCeamNVYpWX42b/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/Ow5XZlDWoiwCeamNVYpWX42b/image.png\"></a></div><p><span class=\"user-mention\" data-user-id=\"670182\">@Stephen</span> AFAIU, you can just open a PR adding yourself, and asking the existing maintainer for review. A package can have more than one maintainer.</p>",
+        "id": 404420437,
+        "sender_full_name": "Srid",
+        "timestamp": 1701094324
+    },
+    {
+        "content": "<p>I noticed that yesterday after I asked the question haha. I didn't realize someone had already updated the cli, it is just available in unstable instead.</p>",
+        "id": 404421728,
+        "sender_full_name": "Stephen",
+        "timestamp": 1701094731
+    },
+    {
+        "content": "<p>I normally use <code>nixpkgs-unstable</code> for my project. </p>\n<p>When you open PRs, you are going to be making it against the <code>master</code> branch anyway. So in this case you'd go directly to the file on the Git repo to see what version is current. </p>\n<p><a href=\"https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/rust/dioxus-cli/default.nix\">https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/rust/dioxus-cli/default.nix</a></p>",
+        "id": 404439769,
+        "sender_full_name": "Srid",
+        "timestamp": 1701100090
+    }
+]

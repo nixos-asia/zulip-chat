@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><a href=\"https://github.com/srid/nixos-flake/pull/54\">https://github.com/srid/nixos-flake/pull/54</a></p>\n<p>The idea is to have one command that knows how to activate system configuration regardless of <code>system</code> or <code>host</code>. </p>\n<p>ie., be it NixOS or nix-darwin. </p>\n<p>Or, be it local machine or a remote machine (accessible over SSH).</p>\n<p>Eventually, even home-manager activation too can happen as part of it.</p>\n<p>It sits in between the triviality of bash scripts and complexity of writing an entirely new deployment tool (like in Rust; cf. colmena &amp; deploy-rs), and I'd like to keep it that way. The focus is merely on activation. Nushell has been good for this.</p>",
+        "id": 447234468,
+        "sender_full_name": "Srid",
+        "timestamp": 1719413091
+    },
+    {
+        "content": "<h2>A new deployment tool</h2>\n<p><a href=\"https://community.flake.parts/nixos-flake/activate#remote\">https://community.flake.parts/nixos-flake/activate#remote</a></p>",
+        "id": 447299022,
+        "sender_full_name": "Srid",
+        "timestamp": 1719426925
+    }
+]

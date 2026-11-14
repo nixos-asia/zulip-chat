@@ -1,0 +1,98 @@
+[
+    {
+        "content": "<p>Does <a href=\"https://github.com/srid/haskell-flake/blob/d128c7329bfc73c3eeef90f6d215d0ccd7baf78c/nix/modules/project/defaults.nix#L87-L91\">globalSettings</a> apply to all the packages in <code>basePackages</code>?</p>",
+        "id": 424220209,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709294549
+    },
+    {
+        "content": "<p>No, just the ones specified in <code>packages</code> attrset.</p>",
+        "id": 424223495,
+        "sender_full_name": "Srid",
+        "timestamp": 1709295706
+    },
+    {
+        "content": "<p>It is badly named. Certainly not 'global'.</p>",
+        "id": 424223534,
+        "sender_full_name": "Srid",
+        "timestamp": 1709295719
+    },
+    {
+        "content": "<p>Can be fixed along with this: <a href=\"https://github.com/srid/haskell-flake/issues/261\">https://github.com/srid/haskell-flake/issues/261</a></p>",
+        "id": 424223684,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709295773
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424223495\">said</a>:</p>\n<blockquote>\n<p>No, just the ones specified in <code>packages</code> attrset.</p>\n</blockquote>\n<p>Wait. Hmm. Let's confirm that first. Because line 83 <a href=\"https://github.com/srid/haskell-flake/blob/d128c7329bfc73c3eeef90f6d215d0ccd7baf78c/nix/modules/project/settings/default.nix#L59-L83\">here</a> suggests it only applies if you have <code>settings.&lt;foo&gt;</code>.</p>",
+        "id": 424223905,
+        "sender_full_name": "Srid",
+        "timestamp": 1709295853
+    },
+    {
+        "content": "<p>Jesus, that code (I've written) is not super clear to read. <span aria-label=\"face palm\" class=\"emoji emoji-1f926\" role=\"img\" title=\"face palm\">:face_palm:</span></p>",
+        "id": 424224025,
+        "sender_full_name": "Srid",
+        "timestamp": 1709295905
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424223905\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424223495\">said</a>:</p>\n<blockquote>\n<p>No, just the ones specified in <code>packages</code> attrset.</p>\n</blockquote>\n<p>Wait. Hmm. Let's confirm that first. Because line 83 <a href=\"https://github.com/srid/haskell-flake/blob/d128c7329bfc73c3eeef90f6d215d0ccd7baf78c/nix/modules/project/settings/default.nix#L59-L83\">here</a> suggests it only applies if you have <code>settings.&lt;foo&gt;</code>.</p>\n</blockquote>\n<p>This is probably the case</p>",
+        "id": 424224656,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709296158
+    },
+    {
+        "content": "<p>shouldn’t it <code>mapAttrs</code> on <code>config.packages</code> and use <code>config.settings.${name}</code> to get the <code>mod</code> for a given package</p>",
+        "id": 424224965,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709296282
+    },
+    {
+        "content": "<p>There can be a case where you have a package in <code>settings</code> attrset, but not in <code>packages</code>.</p>",
+        "id": 424225214,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296372
+    },
+    {
+        "content": "<p>Also, when we introduce different settings default <a href=\"https://github.com/srid/haskell-flake/issues/261\">here</a>, we might need a way to test if the setting is actually applied.</p>",
+        "id": 424225240,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709296383
+    },
+    {
+        "content": "<p>Right. We want to add a dedicated <code>test/???</code> for this, to check all cases.</p>",
+        "id": 424225319,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296416
+    },
+    {
+        "content": "<p>Incidentally, as of yesterday, <code>haskell-flake</code> master uses Nix (flake checks) for tests. No more bash scripts. <a href=\"https://twitter.com/sridca/status/1763528379188265314\">https://twitter.com/sridca/status/1763528379188265314</a></p>\n<p><code>example/flake.nix</code>, <code>test/*/flake.nix</code> are all candidates for defining these tests.</p>",
+        "id": 424225458,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296461
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413949-haskell-flake/topic/.60globalSettings.60.20is.20for.20which.20package.3F/near/424225214\">said</a>:</p>\n<blockquote>\n<p>There can be a case where you have a package in <code>settings</code> attrset, but not in <code>packages</code>.</p>\n</blockquote>\n<p>Right, so merging the attribute names looks like what we need</p>",
+        "id": 424225530,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709296488
+    },
+    {
+        "content": "<p>Possibly. In any case, having clear tests cases should also be self-documenting in a way.</p>",
+        "id": 424225577,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296513
+    },
+    {
+        "content": "<p>And allow us to freely refactor things without fear of breaking semantics (because the tests, which encode these semantics, will catch them).</p>",
+        "id": 424225623,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296535
+    },
+    {
+        "content": "<p>FYI: <a href=\"https://github.com/srid/haskell-flake/commit/307961a20136dd75b761fa0e47b947a6fed757a8\">https://github.com/srid/haskell-flake/commit/307961a20136dd75b761fa0e47b947a6fed757a8</a></p>\n<p><code>haskellProjectTests</code> is pretty nascent right now, but we can improve it to accommodate our future tests.</p>",
+        "id": 424281174,
+        "sender_full_name": "Srid",
+        "timestamp": 1709310331
+    }
+]

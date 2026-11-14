@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"671300\">@Aravind Gopal</span> opened <a href=\"https://github.com/srid/haskell-flake/pull/204\">https://github.com/srid/haskell-flake/pull/204</a> which removes the need for IFD in local packages.</p>\n<p>But IFD is still used in dependency overrides; for eg., <code>packages.foo.source</code> will use IFD, via callCabal2nix or callHackage. The open question here is: how do we solve it?</p>\n<p>cc <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span></p>",
+        "id": 406071884,
+        "sender_full_name": "Srid",
+        "timestamp": 1701787638
+    },
+    {
+        "content": "<p>We may have to borrow some ideas from <a href=\"https://horizon-haskell.net/\">https://horizon-haskell.net/</a></p>",
+        "id": 406072902,
+        "sender_full_name": "Srid",
+        "timestamp": 1701787958
+    },
+    {
+        "content": "<p>From <span class=\"user-mention\" data-user-id=\"671300\">@Aravind Gopal</span> </p>\n<blockquote>\n<p>maintaining package sets seems like the only possible way for this.</p>\n<p>which is same as in horizon-haskell.</p>\n</blockquote>\n<p>Hmm, I'll take a look at this as a next project. Ideally we want to define package sets in Nix expressions itself, and stick close to nixpkgs (unlike horizon).</p>",
+        "id": 407264742,
+        "sender_full_name": "Srid",
+        "timestamp": 1702308662
+    },
+    {
+        "content": "<p>Here's one way to solve this: <a href=\"https://github.com/srid/haskell-flake/pull/204#pullrequestreview-1809771568\">https://github.com/srid/haskell-flake/pull/204#pullrequestreview-1809771568</a></p>\n<p>Summary: copy over the hackage2nix/ callCabal2nix generated <code>default.nix</code> to a directory, and have the developer commit that to Git.</p>",
+        "id": 411872738,
+        "sender_full_name": "Srid",
+        "timestamp": 1704781394
+    },
+    {
+        "content": "<p>It looks like this (note: we overrode relude to test dependency override),</p>\n<p><a href=\"/user_uploads/60244/P0zCMPlvvYvMKjXeyLN19f29/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/60244/P0zCMPlvvYvMKjXeyLN19f29/image.png\" title=\"image.png\"><img src=\"/user_uploads/60244/P0zCMPlvvYvMKjXeyLN19f29/image.png\"></a></div><div class=\"codehilite\"><pre><span></span><code>❯ cat .haskellSrc2nix/haskell-template.nix\n{ mkDerivation, aeson, async, base, data-default, directory\n, filepath, lib, mtl, optics-core, profunctors, relude, shower\n, time, with-utf8\n}:\nmkDerivation {\n  pname = &quot;haskell-template&quot;;\n  version = &quot;0.1.0.0&quot;;\n  src = /nix/store/51shzaxpi2abz3hfp4q05kcd1lls0lba-source;\n  isLibrary = false;\n  isExecutable = true;\n  executableHaskellDepends = [\n    aeson async base data-default directory filepath mtl optics-core\n    profunctors relude shower time with-utf8\n  ];\n  homepage = &quot;https://srid.ca/haskell-template&quot;;\n  description = &quot;A template for Haskell projects using Nix&quot;;\n  license = lib.licenses.mit;\n  mainProgram = &quot;haskell-template&quot;;\n}\n</code></pre></div>\n<p>But as you can see that hardcoded <code>src = /nix/store/51shzaxpi2abz3hfp4q05kcd1lls0lba-source;</code> is problematic. Looks like we have to do some hacky patching of this generated nix to have the src point back to the actual path.</p>",
+        "id": 411872872,
+        "sender_full_name": "Srid",
+        "timestamp": 1704781466
+    },
+    {
+        "content": "<blockquote>\n<p>Looks like we have to do some hacky patching of this generated nix to have the src point back to the actual path.</p>\n</blockquote>\n<p>AFAIR calling <code>cabal2nix</code> executable results in a relative path rather than a path linking to the /nix/store for local packages.</p>",
+        "id": 411873737,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1704782030
+    },
+    {
+        "content": "<p>But note we are using <code>callCabal2nix</code> which passes nix store paths,</p>\n<p>cf. <code>src</code> in <a href=\"https://github.com/NixOS/nixpkgs/blob/6a9382b8d1d9531be1a2fd611f3f91f30fb38678/pkgs/development/haskell-modules/make-package-set.nix#L140\">https://github.com/NixOS/nixpkgs/blob/6a9382b8d1d9531be1a2fd611f3f91f30fb38678/pkgs/development/haskell-modules/make-package-set.nix#L140</a></p>",
+        "id": 411876599,
+        "sender_full_name": "Srid",
+        "timestamp": 1704783877
+    }
+]

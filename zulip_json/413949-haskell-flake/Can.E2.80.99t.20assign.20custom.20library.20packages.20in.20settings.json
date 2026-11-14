@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>I have a reproducer:</p>\n<p>clone this repo: <a href=\"https://github.com/shivaraj-bh/haskell-rust-ffi-template/tree/master\">https://github.com/shivaraj-bh/haskell-rust-ffi-template/tree/master</a></p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>develop\njust<span class=\"w\"> </span>run\n</code></pre></div>\n<p>Now, update haskell-flake <code>nix flake lock —update-input haskell-flake</code> and it fails with (while trying to enter the devshell):</p>\n<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>error:<span class=\"w\"> </span>attribute<span class=\"w\"> </span><span class=\"s1\">'hello_rust'</span><span class=\"w\"> </span>missing\n</code></pre></div>\n<p>Which is a setting : <a href=\"https://github.com/shivaraj-bh/haskell-rust-ffi-template/blob/1038ca8a87aae4e448bbd7ea6e1c41ee4e7acb2d/haskell/default.nix#L6-L8\">https://github.com/shivaraj-bh/haskell-rust-ffi-template/blob/1038ca8a87aae4e448bbd7ea6e1c41ee4e7acb2d/haskell/default.nix#L6-L8</a></p>",
+        "id": 429916344,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711561938
+    },
+    {
+        "content": "<p>I'll take a look later today. Actually, this may be related to the ordering of settings,</p>\n<p><a href=\"https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77\">https://github.com/srid/haskell-flake/blob/b5bfa21723e55590e92f4896d7bc3ad212cf425a/nix/modules/project/settings/default.nix#L76-L77</a></p>",
+        "id": 429917075,
+        "sender_full_name": "Srid",
+        "timestamp": 1711562175
+    },
+    {
+        "content": "<p>FTR,</p>\n<div class=\"codehilite\"><pre><span></span><code>• Updated input &#39;haskell-flake&#39;:\n    &#39;github:srid/haskell-flake/f9d17c3aa68e65529f424816c8b9346ae602d1de&#39; (2024-02-06)\n  → &#39;github:srid/haskell-flake/5dcb739e9cc4e0edf5267de665fa7a905a543baa&#39; (2024-03-27)\n</code></pre></div>\n<p><code>nixci build</code> =&gt;</p>\n<div class=\"codehilite\"><pre><span></span><code>       error: attribute &#39;hello_rust&#39; missing\n\n       at /nix/store/lz0159maimglzlpd6gmn0f02047mmih0-source/nix/modules/project/settings/default.nix:75:20:\n\n           74|           in\n           75|           lib.pipe super.${name} (\n             |                    ^\n           76|             # TODO: Do we care about the *order* of overrides?\nError: devour-flake failed to run (exited: 1)\n</code></pre></div>",
+        "id": 429934842,
+        "sender_full_name": "Srid",
+        "timestamp": 1711568678
+    }
+]

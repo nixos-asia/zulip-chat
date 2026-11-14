@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>More breaking changes <span aria-label=\"clap\" class=\"emoji emoji-1f44f\" role=\"img\" title=\"clap\">:clap:</span><span aria-label=\"face palm\" class=\"emoji emoji-1f926\" role=\"img\" title=\"face palm\">:face_palm:</span><br>\n<a href=\"https://github.com/NixOS/nix/issues/10026\">https://github.com/NixOS/nix/issues/10026</a></p>\n<p>This is particularly ironic seeing as nixpkgs is the central hub, and has a huge number of files itself</p>",
+        "id": 421967144,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708136915
+    }
+]

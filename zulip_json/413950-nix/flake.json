@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Is there any support for flake inputs to have expressions in decl?</p>\n<div class=\"codehilite\"><pre><span></span><code>inputs = {\n      var1.url =  (&quot;string1&quot; + &quot;string2&quot;);\n};\n</code></pre></div>\n<p>Expressions like these throw a thunk error and I am unable to force evaluate it</p>",
+        "id": 427879841,
+        "sender_full_name": "Tamil Selvan",
+        "timestamp": 1710925270
+    },
+    {
+        "content": "<p><code>inputs.${var1}.url = # ...</code></p>",
+        "id": 427914275,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1710937113
+    },
+    {
+        "content": "<p>However, this won't work in flake inputs. No eval of any kind is allowed in inputs unfortunately. It's a stricter subset of Nix, technically</p>",
+        "id": 427914410,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1710937170
+    }
+]
