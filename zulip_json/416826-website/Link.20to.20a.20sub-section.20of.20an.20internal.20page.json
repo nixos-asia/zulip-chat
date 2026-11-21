@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>I want to be able to do this: <code>[[nixos-install#edit]]</code>, it doesn't seem to work, is there a way of doing this without having to provide the entire URL?</p>",
+        "id": 408529095,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1702874956
+    },
+    {
+        "content": "<p>Only for regular links right now,</p>\n<p><a href=\"https://emanote.srid.ca/guide/markdown#anchors\">https://emanote.srid.ca/guide/markdown#anchors</a></p>\n<p><a href=\"https://github.com/srid/emanote/discussions/105\">https://github.com/srid/emanote/discussions/105</a></p>",
+        "id": 408609977,
+        "sender_full_name": "Srid",
+        "timestamp": 1702905726
+    }
+]

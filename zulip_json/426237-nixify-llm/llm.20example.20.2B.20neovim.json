@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>Just an idea, what if we had a single <code>nix run</code> that spun up our <a href=\"https://old.reddit.com/r/NixOS/comments/1dujxu4/run_local_ai_chatbot_using_nix/\">llm example</a> as well as neovim (in zellij?) configured to use it for code suggestions/completions? </p>\n<p>First requires <a href=\"https://github.com/juspay/nix-dev-home/issues/16\">https://github.com/juspay/nix-dev-home/issues/16</a></p>",
+        "id": 449114060,
+        "sender_full_name": "Srid",
+        "timestamp": 1720106788
+    }
+]

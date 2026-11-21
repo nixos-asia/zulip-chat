@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>Is there a real-time collaborative editing tool for writing a collection of Markdown files? Ideally towards publishing a <a href=\"https://rust-lang.github.io/mdBook/\">mdBook</a>-like site. Multiple people should be able to edit at the same time, like Google docs.</p>\n<p>(Storage on Github repo preferred, but not necessary)</p>\n<p>cc <span class=\"user-mention\" data-user-id=\"679006\">@Tim DeHerrera</span></p>",
+        "id": 439309025,
+        "sender_full_name": "Srid",
+        "timestamp": 1715991773
+    },
+    {
+        "content": "<p>HedgeDoc seems good enough. No multi file support, but ticks other boxes.</p>",
+        "id": 439312082,
+        "sender_full_name": "Srid",
+        "timestamp": 1715994422
+    },
+    {
+        "content": "<p>I'd say HedgeDoc, yeah. That has been used by others in and around Nix.</p>",
+        "id": 439341245,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716024345
+    },
+    {
+        "content": "<p>HedgeDoc is close to perfect. Will be perfect once 2.0 is released, because then I can whitelist notes access by GitHub accounts.</p>",
+        "id": 439437005,
+        "sender_full_name": "Srid",
+        "timestamp": 1716123843
+    },
+    {
+        "content": "<p>yeah that last thing would be a boon to have already. Do they have a schedule for the 2.0 release? They are at 1.9.9 right now, seems pretty close <span aria-label=\"big smile\" class=\"emoji emoji-1f604\" role=\"img\" title=\"big smile\">:big_smile:</span></p>",
+        "id": 439756878,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716279278
+    }
+]

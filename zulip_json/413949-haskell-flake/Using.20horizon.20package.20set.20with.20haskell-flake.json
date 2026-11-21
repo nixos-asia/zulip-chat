@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>After talking to <span class=\"user-mention\" data-user-id=\"682919\">@locallycompact</span> , it seems that using <a href=\"https://horizon-haskell.net/\">horizon-haskell</a> package set with haskell-flake is a matter of setting <code>basePackages</code>.</p>\n<p>Though there are some issues to iron out. /thread for it.</p>",
+        "id": 416021495,
+        "sender_full_name": "Srid",
+        "timestamp": 1705496462
+    },
+    {
+        "content": "<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"682919\">locallycompact</span> Can we factor out cabalSdist and use it from another location?</p>\n</blockquote>\n<p>What do you mean? </p>\n<p>It is used <a href=\"https://github.com/srid/haskell-flake/blob/55efd0cbf1b5b4a402dc88c3c962c24e13f0fd8b/nix/build-haskell-package.nix#L15\">here</a>, btw. Line 15 and 42.</p>",
+        "id": 416021709,
+        "sender_full_name": "Srid",
+        "timestamp": 1705496532
+    },
+    {
+        "content": "<p>One thing we should do is allow the user to disable the use of cabalSdist (toggle on/off module option).</p>",
+        "id": 416022231,
+        "sender_full_name": "Srid",
+        "timestamp": 1705496696
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"682919\">@locallycompact</span> Could you try <a href=\"https://github.com/srid/haskell-flake/pull/220\">https://github.com/srid/haskell-flake/pull/220</a> and see if that works?</p>",
+        "id": 419005350,
+        "sender_full_name": "Srid",
+        "timestamp": 1706695672
+    },
+    {
+        "content": "<p><a href=\"https://github.com/srid/haskell-flake/pull/221\">https://github.com/srid/haskell-flake/pull/221</a> in fact</p>",
+        "id": 419165964,
+        "sender_full_name": "Srid",
+        "timestamp": 1706757908
+    },
+    {
+        "content": "<p>Proof of concept that works on Linux (not yet on macOS), thanks to <span class=\"user-mention\" data-user-id=\"682919\">@locallycompact</span> </p>\n<p><a href=\"https://github.com/srid/haskell-template/pull/123\">https://github.com/srid/haskell-template/pull/123</a></p>",
+        "id": 420191600,
+        "sender_full_name": "Srid",
+        "timestamp": 1707289374
+    }
+]

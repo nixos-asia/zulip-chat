@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>If I have to add a boolean flake input, it would look like: <code>inputs.flag.url = “github:boolean-options/true”;</code>.  This depends on github, is there a way to add this input without this dependency?</p>\n<p>Or is at a limitation of flake inputs that nix expressions can’t be flake inputs</p>",
+        "id": 424209207,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709291315
+    },
+    {
+        "content": "<p>Inputs can't be arbitrary expressions: <a href=\"https://github.com/NixOS/nix/issues/5663\">https://github.com/NixOS/nix/issues/5663</a></p>\n<p>You can use <code>path:./...</code> to point local flake though. Not sure if the hash is consistent across systems (need to verify), because I remember inconsistency when using local relative flake inputs in the path.</p>",
+        "id": 424225133,
+        "sender_full_name": "Srid",
+        "timestamp": 1709296336
+    },
+    {
+        "content": "<p>Not yet, but there really isn't a good reason in my view (if you look at the last comment on that ticket I elaborate on that a bit)</p>",
+        "id": 424291357,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1709313082
+    },
+    {
+        "content": "<p>I was looking for this to use in an internal project at work because I was getting rate-limited in CI by github, failing the build. I ended up creating a subflake with <code>true</code> and <code>false</code> flake’s and I am accessing it in another flake with the <code>?dir=&lt;subdir&gt;</code> URL syntax.</p>",
+        "id": 424592895,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1709538008
+    }
+]

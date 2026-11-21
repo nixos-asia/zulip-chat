@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Our first event! <a href=\"https://nixos.asia/en/event/srid-nix-dev\">https://nixos.asia/en/event/srid-nix-dev</a></p>",
+        "id": 411966009,
+        "sender_full_name": "Srid",
+        "timestamp": 1704816552
+    },
+    {
+        "content": "<p>Announcement post: <a href=\"https://discourse.nixos.org/t/nix-meetup-in-bangalore-india-23rd-jan-4pm-ist/38033\">https://discourse.nixos.org/t/nix-meetup-in-bangalore-india-23rd-jan-4pm-ist/38033</a></p>",
+        "id": 411983978,
+        "sender_full_name": "Srid",
+        "timestamp": 1704822397
+    },
+    {
+        "content": "<h2>home-manager online event</h2>\n<p><a href=\"https://nixos.asia/en/event/nix-dev-home\">https://nixos.asia/en/event/nix-dev-home</a></p>\n<blockquote>\n<p>We will demonstrate using Nix to declaratively manage your dotfiles, programs and services using home-manager, thus replacing the likes of legacy software like homebrew. The goal is to create an one-click environment to setup an user environment on any system, be it a Macbook or a Linux machine.</p>\n</blockquote>",
+        "id": 423809735,
+        "sender_full_name": "Srid",
+        "timestamp": 1709124228
+    },
+    {
+        "content": "<p>A message was moved from this topic to <a class=\"stream-topic\" data-stream-id=\"413950\" href=\"/#narrow/stream/413950-nix/topic/home-manager.20without.20admin.20access\">#nix &gt; home-manager without admin access</a> by <span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span>.</p>",
+        "id": 424224195,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1709295968
+    }
+]
