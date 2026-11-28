@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>What makes a derivation impure ? Say for example i source the contents of a file from my filesystem and use it inside of my .nix files, is that an impure derivation?</p>\n<p>I'm confused about this, because I'm trying to read my secrets that are decrypted by agenix into /etc/secrets. The agenix github already says this is an anti pattern and must not be used <a href=\"https://github.com/ryantm/agenix?tab=readme-ov-file#builtinsreadfile-anti-pattern\">here</a> , but certain services only have a option that is <br>\npassword = \"\"; (a string) <br>\nand not an equivalent<br>\npasswordFile = \"&lt;path&gt;\";</p>\n<p>Is the correct way just make a module that implements the option to read the path? ( also need help understanding  how nixos packages are built.) </p>\n<p>or is there a easier way to go about this?</p>",
+        "id": 491768852,
+        "sender_full_name": "Nithin",
+        "timestamp": 1735916279
+    },
+    {
+        "content": "<p>So far, <span class=\"user-mention\" data-user-id=\"667408\">@Srid</span> has clarified that anything that is not in my \"inputs\" are impure, and must not be used in derivations. (ideally, at least)</p>",
+        "id": 491769005,
+        "sender_full_name": "Nithin",
+        "timestamp": 1735916350
+    },
+    {
+        "content": "<p>What is the type of <code>passwordFile</code>? Is it <code>type.path</code> or <code>types.string</code>.</p>\n<p>The later is most suitable here, because the former will have your derivation depend on an absolute path. The use of absolute paths will make it impure because they cannot be part of a derivation's inputs. </p>\n<p>Just like how a pure function can only depend on its inputs and not global variables.</p>",
+        "id": 491770777,
+        "sender_full_name": "Srid",
+        "timestamp": 1735917024
+    },
+    {
+        "content": "<p>Check out my derivation of a font; it might help. It’s not the cleanest way to achieve this, but it uses sops decryption to decrypt a paid font file. My password is stored in an age key file.<br>\n<a href=\"https://github.com/niksingh710/ndots/blob/master/pkgs%2Fmono-lisa%2Fdefault.nix\">Font Derivation</a></p>\n<p>This derivation is also impure because it doesn’t take the key as an input but instead relies on the availability of the key on the host system.</p>\n<p>To do this in the purest and most declarative way, you would need to store your key in a private repository and pass it as an input or override your inputs. (There are several ways to achieve this.)</p>\n<p>Keep in mind that anything not coming from your flake directory or the flake’s local environment is considered impure, as its reproduction is not guaranteed to be 100% reliable.</p>",
+        "id": 496620203,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1738176034
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"812902\">@Nithin</span></p>",
+        "id": 496620273,
+        "sender_full_name": "Nikhil Singh",
+        "timestamp": 1738176058
+    }
+]

@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p>What is the easiest way to automate a NixOS install on bare metal? I had this question coming from someone, and I didn't quite know how to answer it.</p>\n<p>Make a custom boot image I guess? </p>\n<p>Partition disks with disko I guess?</p>\n<p>But after that, is there a straightforward way to set up the boot image in such a way to pull in a (private) github nixosConfiguration from a flake to do all this stuff on first boot automatically?</p>",
+        "id": 439757403,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716279462
+    },
+    {
+        "content": "<p>I would say this: <a href=\"https://nixos.asia/en/nixos-install-oneclick\">https://nixos.asia/en/nixos-install-oneclick</a>, once the tutorial is complete.</p>",
+        "id": 439855776,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716309082
+    },
+    {
+        "content": "<p>ah awesome <span class=\"user-mention\" data-user-id=\"669081\">@Shivaraj B H</span> I will check it out.</p>\n<p>But I do not want to enter any commands on the machine I am installing NixOS on.</p>",
+        "id": 439855925,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716309128
+    },
+    {
+        "content": "<p>Then it would be <a href=\"https://github.com/nix-community/nixos-anywhere\">nixos-anywhere</a>. Assuming you have wired ethernet and ssh access, it should work.</p>",
+        "id": 439856686,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716309390
+    },
+    {
+        "content": "<p>yeah so the idea is then this?</p>\n<p>1) Make a custom boot iso for NixOS with ssh access and ssh keys and stuff<br>\n2) Boot machine from that ISO<br>\n3) Use nixos-anywhere remotely to do disk configuration and proper installation</p>",
+        "id": 439857010,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716309489
+    },
+    {
+        "content": "<p>You wouldn’t need NixOS in Step 1, it could be any Linux distro</p>",
+        "id": 439857558,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716309676
+    },
+    {
+        "content": "<p>Yeah okay, technically that is true, but assuming I don't wanna mess with that and have a fundamentalist-purist approach <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>\n<p>Also we are talking bare-metal install here, so I have physical access to the machine, I can put a USB drive in with whatever I have.</p>",
+        "id": 439857834,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716309746
+    },
+    {
+        "content": "<p>The important point is also: I don't want to <strong>install</strong> any other Linux distro first. I just want to boot a live ISO.</p>",
+        "id": 439857918,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716309776
+    },
+    {
+        "content": "<p>Can I use nixos-anywhere with, let's say, an Arch Linux Live USB boot?</p>",
+        "id": 439858013,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716309808
+    },
+    {
+        "content": "<p>Yes</p>",
+        "id": 439858255,
+        "sender_full_name": "Srid",
+        "timestamp": 1716309867
+    },
+    {
+        "content": "<blockquote>\n<p>Can I use nixos-anywhere with, let's say, an Arch Linux Live USB boot?</p>\n</blockquote>\n<p>Yes</p>\n<blockquote>\n<p>The important point is also: I don't want to <strong>install</strong> any other Linux distro first. I just want to boot a live ISO.</p>\n</blockquote>\n<p>In this case, I would still say <a href=\"https://nixos.asia/en/nixos-install-oneclick\">https://nixos.asia/en/nixos-install-oneclick</a> is most reliable approach</p>",
+        "id": 439858294,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716309877
+    }
+]

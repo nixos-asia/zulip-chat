@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>On the latest stable, uptime command gives wrong uptime on raspberry pi. It used to work fine before</p>\n<div class=\"codehilite\"><pre><span></span><code>shivam@vivy ~ $ uptime\n 20:30:24  up 216 days 18:21,  1 user,  load average: 0.04, 0.13, 0.10\nshivam@vivy ~ $ uptime --version\nuptime (GNU coreutils) 9.5\nPackaged by https://nixos.org\nCopyright (C) 2024 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later &lt;https://gnu.org/licenses/gpl.html&gt;.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by Joseph Arceneaux, David MacKenzie, and Kaveh Ghazi.\nshivam@vivy ~ $\n</code></pre></div>\n<p>How would I go about using uptime from an older version of coreutils in a temporary shell?</p>",
+        "id": 450478235,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1720623796
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Bash\"><pre><span></span><code>nix<span class=\"w\"> </span>shell<span class=\"w\"> </span>github:nixos/nixpkgs/nixos-23.05#coreutils<span class=\"w\"> </span>-c<span class=\"w\"> </span>uptime\n</code></pre></div>",
+        "id": 450494652,
+        "sender_full_name": "Srid",
+        "timestamp": 1720627101
+    },
+    {
+        "content": "<p>Replace <code>nixos-23.05</code> with the appropriate branch name or revision of <a href=\"https://github.com/NixOS/nixpkgs\">https://github.com/NixOS/nixpkgs</a></p>",
+        "id": 450494729,
+        "sender_full_name": "Srid",
+        "timestamp": 1720627127
+    },
+    {
+        "content": "<p>Thanks</p>\n<div class=\"codehilite\"><pre><span></span><code>shivam@vivy ~ $ nix --extra-experimental-features nix-command --extra-experimental-features flakes shell github:nixos/nixpkgs/23.11#coreutils -c uptime\n 22:30:52  up   0:34,  3 users,  load average: 0.26, 2.86, 3.02\nshivam@vivy ~ $ uptime\n 22:30:56  up 216 days 20:22,  3 users,  load average: 0.24, 2.82, 3.00\n</code></pre></div>",
+        "id": 450509528,
+        "sender_full_name": "majorkaks",
+        "timestamp": 1720630875
+    }
+]

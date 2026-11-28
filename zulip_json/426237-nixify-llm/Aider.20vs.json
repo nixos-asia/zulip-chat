@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Where Khoj (for search) and llmvm (for AI-LSP) is not, there's a bootstrapper with an optimized workflow to have a conversation on the entire code base:</p>\n<p><a href=\"https://github.com/paul-gauthier/aider\">https://github.com/paul-gauthier/aider</a></p>\n<p>It seems good for early prototyping, schaffolding before you enter the details in the idea with LSP-like support.</p>\n<p><span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> this seems to be our missing bit, after all. Should work with any model runtime, such as nitro / llmvm et al.</p>",
+        "id": 423165913,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708777544
+    },
+    {
+        "content": "<p>Code base context ...</p>\n<blockquote>\n<p>A simple solution is to send the entire codebase to GPT along with each change request. Now GPT has all the context! But this won’t work for even moderately sized repos, because they won’t fit into the context window.</p>\n</blockquote>\n<blockquote>\n<p>To address these issues, aider sends GPT a concise map of your whole git repository that includes the most important classes and functions along with their types and call signatures.</p>\n</blockquote>\n<blockquote>\n<p>This repository map is now built automatically using tree-sitter to extract symbol definitions from source files.</p>\n</blockquote>",
+        "id": 423166837,
+        "sender_full_name": "David Arnold",
+        "timestamp": 1708778511
+    },
+    {
+        "content": "<p>Indeed I was working on packaging aider just last night <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span> </p>\n<p>Seems like a good idea to send a \"repo context map\" using tree-sitter</p>",
+        "id": 423195564,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1708800973
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Is any configuration.nix file _guaranteed_ to be reproducible, or is it not? Is there a best practice of testing this? Is trying to install it on VM sufficient to test this?</p>",
+        "id": 440457510,
+        "sender_full_name": "Muhammad Rizqi Ardiansyah",
+        "timestamp": 1716536636
+    },
+    {
+        "content": "<p>What do you mean by guaranteed to be reproducible? <span aria-label=\"smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 440463082,
+        "sender_full_name": "Andreas",
+        "timestamp": 1716538994
+    },
+    {
+        "content": "<p>Well what I meant is that it's going to be the same system on every device</p>\n<p>...or is my understanding of the definition of said word incorrect?</p>",
+        "id": 440464567,
+        "sender_full_name": "Muhammad Rizqi Ardiansyah",
+        "timestamp": 1716539590
+    },
+    {
+        "content": "<p>If its only a <code>configuration.nix</code> file, it might not be reproducible because the packages might be coming from different nixpkgs on each of those devices, based on whatever is set in <a href=\"https://nixos.wiki/wiki/Nix_channels\">nix-channel</a>.</p>\n<p>But if you use <code>flake.nix</code>, it will be reproducible as you will be pinning the <code>nixpkgs</code> revision in <code>flake.lock</code>. See this tutorial to flakeify your existing <code>configuration.nix</code>: <a href=\"https://nixos.asia/en/nixos-install-flake#flakeify\">https://nixos.asia/en/nixos-install-flake#flakeify</a></p>",
+        "id": 440466615,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1716540458
+    }
+]

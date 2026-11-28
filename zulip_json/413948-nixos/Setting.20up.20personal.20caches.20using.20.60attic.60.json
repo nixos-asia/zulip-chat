@@ -1,0 +1,110 @@
+[
+    {
+        "content": "<p>[contd convo with <span class=\"user-mention\" data-user-id=\"678574\">@Andreas</span> ]</p>\n<p>I've been recommending people use <code>nix run github:...</code> for installing some of my software like Emanote, nixci, nix-health (especially as they are out-of-date on the increasingly unwieldy monorepo nixpkgs). </p>\n<p>To that end, I want to setup a small package set without IFD, providing cache for Linux and mac. </p>\n<p>I could expose the local nix store via <code>nix-serve-ng</code>, but <a href=\"https://github.com/zhaofengli/attic\">https://github.com/zhaofengli/attic</a> is probably the more reliable option down the line, especially for dealing with larger builds/caches (at work).</p>",
+        "id": 421225705,
+        "sender_full_name": "Srid",
+        "timestamp": 1707824176
+    },
+    {
+        "content": "<p>Yes, I was thinking about using something like attic. That might be a neat thing. IIRC it also just acts as a kind of cache overlay on <a href=\"http://cache.nixos.org\">cache.nixos.org</a>, so everything that is not in your specialized cache is just forwarded to the larger official one.</p>\n<p>For setting this up you would need some hardware though I guess, and an S3 compatible storage provider of some kind. And I was wondering how much storage and bandwidth you might need for your existing Haskell packages.</p>",
+        "id": 421226237,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707824406
+    },
+    {
+        "content": "<p>I think attic supports local storage too, if you just want store them in local disk to begin with.</p>",
+        "id": 421226342,
+        "sender_full_name": "Srid",
+        "timestamp": 1707824459
+    },
+    {
+        "content": "<p>As for bandwidth, for my personal projects the <a href=\"https://www.hetzner.com/dedicated-rootserver/matrix-ax/\">1 Gbits/s</a> should probably be good enough to begin with.</p>",
+        "id": 421226456,
+        "sender_full_name": "Srid",
+        "timestamp": 1707824514
+    },
+    {
+        "content": "<p>Of course cache is useless without a CI that pushes to it. For this I've been exploring GitHub runners (<a href=\"#narrow/stream/413948-nixos/topic/Self-hosted.20GitHub.20runners\">topic here</a>), and eventually want to set one up on my macbook as well.</p>",
+        "id": 421226615,
+        "sender_full_name": "Srid",
+        "timestamp": 1707824577
+    },
+    {
+        "content": "<p>Yes it does support local storage. Which might be sufficient, right.</p>\n<p>I was just wondering what happens to your storage if your machine goes down for whatever reason.</p>",
+        "id": 421226639,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707824589
+    },
+    {
+        "content": "<p>If store gets corrupt and recreated, just do a rebuild. There aren't a lot to rebuild.</p>",
+        "id": 421226702,
+        "sender_full_name": "Srid",
+        "timestamp": 1707824624
+    },
+    {
+        "content": "<p>Need to figure out a smart gcroot pinning system, that works with CI along with these 'recovery' instances.</p>",
+        "id": 421226824,
+        "sender_full_name": "Srid",
+        "timestamp": 1707824666
+    },
+    {
+        "content": "<blockquote>\n<p>a smart gcroot pinning system</p>\n</blockquote>\n<p>I am not quite sure I am following on this one</p>",
+        "id": 421227515,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707824983
+    },
+    {
+        "content": "<p>garbage collect everything but last N commits of stable (and desired) branches of repos.</p>",
+        "id": 421227644,
+        "sender_full_name": "Srid",
+        "timestamp": 1707825031
+    },
+    {
+        "content": "<p><a href=\"https://github.com/hercules-ci/hercules-ci-agent/issues/482\">https://github.com/hercules-ci/hercules-ci-agent/issues/482</a></p>",
+        "id": 421227727,
+        "sender_full_name": "Srid",
+        "timestamp": 1707825062
+    },
+    {
+        "content": "<p>Maybe the attic tutorial <a href=\"https://docs.attic.rs/tutorial.html\">https://docs.attic.rs/tutorial.html</a> is interesting, too. It comes with some kind of garbage collection capabilities.</p>",
+        "id": 421229211,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707825631
+    },
+    {
+        "content": "<p>FWIW, for me, digitalocean spaces is super cheap ($5 p/m) and putting it behind cloudflare CDN is free. Also they allow an unlimited number of buckets so long as you don't go over 500G so you could have multiple caches if you wanted to</p>",
+        "id": 421255969,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707835057
+    },
+    {
+        "content": "<blockquote>\n<p>500G</p>\n</blockquote>\n<p>Cloudflare R2? What did you get this number from?</p>",
+        "id": 421257153,
+        "sender_full_name": "Srid",
+        "timestamp": 1707835354
+    },
+    {
+        "content": "<p>Oh I guess I misremembered, it's 250G</p>",
+        "id": 421257353,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707835417
+    },
+    {
+        "content": "<p>(for $5)</p>",
+        "id": 421257475,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1707835450
+    },
+    {
+        "content": "<p>Any reason why I shouldn't put the cache data on one of these? <a href=\"https://www.hetzner.com/storage/storage-box/\">https://www.hetzner.com/storage/storage-box/</a></p>",
+        "id": 421292925,
+        "sender_full_name": "Srid",
+        "timestamp": 1707845765
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"667408\">Srid</span> <a href=\"#narrow/stream/413948-nixos/topic/Setting.20up.20personal.20caches.20using.20.60attic.60/near/421292925\">said</a>:</p>\n<blockquote>\n<p>Any reason why I shouldn't put the cache data on one of these? <a href=\"https://www.hetzner.com/storage/storage-box/\">https://www.hetzner.com/storage/storage-box/</a></p>\n</blockquote>\n<p>Do you have full SSH access to these? Not really, right. Not sure what you are planing but for attic is would probably be nice to get NixOS with Minio or something similar.</p>",
+        "id": 421294091,
+        "sender_full_name": "Andreas",
+        "timestamp": 1707846205
+    }
+]

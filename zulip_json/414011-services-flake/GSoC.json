@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Domen <a href=\"https://github.com/NixOS/GSoC/pull/18\">opened a PR</a> to add <code>devenv</code> to GSoC list of projects. </p>\n<p>Perhaps we can do the same for services-flakes. I can be a mentor, though I can't obviously open a PR there.</p>",
+        "id": 427495591,
+        "sender_full_name": "Srid",
+        "timestamp": 1710771574
+    },
+    {
+        "content": "<p>I missed this one, I think it is still not too late, but what tasks are we thinking here?</p>",
+        "id": 429717256,
+        "sender_full_name": "Shivaraj B H",
+        "timestamp": 1711478363
+    }
+]

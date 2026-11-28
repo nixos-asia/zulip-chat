@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I'd like to deploy NixOS VMs on Proxmox via terraform using Cloud-init images. (Potentially other real cloud providers with Terraform support as well) </p>\n<p>On the legacy nix community there was this one thread I found: <a href=\"https://discourse.nixos.org/t/a-cloudinit-image-for-use-in-proxmox/27519\">https://discourse.nixos.org/t/a-cloudinit-image-for-use-in-proxmox/27519</a></p>\n<p>Any ideas on that anyone?</p>",
+        "id": 430968513,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712139207
+    },
+    {
+        "content": "<p>The official documentation has a tutorial for deploying to AWS specifically with Terraform. </p>\n<p><a href=\"https://nix.dev/tutorials/nixos/deploying-nixos-using-terraform.html\">https://nix.dev/tutorials/nixos/deploying-nixos-using-terraform.html</a></p>\n<p>But I am not looking for AWS. I am not sure the AWS image would do much good then.</p>",
+        "id": 430969954,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712139704
+    },
+    {
+        "content": "<p>you can build VM images with NixOS out of the box. They use qemu by default so you should be able to wire those up with proxmox if desired. I have also made some of my own cloud images for digitalocean and aws in the past, there are nixos modules in nixpkgs that you can simply import that will then give you a build target for the image under <code>config.system.build</code></p>",
+        "id": 431114051,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1712156459
+    },
+    {
+        "content": "<p>but so if I build VM images, they won't support cloud-init, will they? So if I want to have a cluster of NixOS machines and set their IP address and authorized ssh-keys via cloud-init that won't work this way?</p>\n<p>I might try and see what I can make out of this guy's gist from legacy nix discourse: </p>\n<p><a href=\"https://gist.github.com/voidus/1230b200043b7f815e2513663d16353b\">https://gist.github.com/voidus/1230b200043b7f815e2513663d16353b</a></p>\n<p>That doesn't look too bad actually.</p>",
+        "id": 431300305,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712233337
+    },
+    {
+        "content": "<p>I know the do and aws images do respect ssh keys you set up through their api. Not sure if it uses cloud-init specifically for that or some ad hoc code path, but it works <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span></p>",
+        "id": 431316114,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1712238044
+    },
+    {
+        "content": "<p>There may be a nixos module for cloyd-init as well, haven't checked</p>",
+        "id": 431316216,
+        "sender_full_name": "Tim DeHerrera",
+        "timestamp": 1712238072
+    },
+    {
+        "content": "<p>yeah there is such a module afaik... I will try to build something myself and share it here if it works... or if I run into issues.</p>",
+        "id": 431318572,
+        "sender_full_name": "Andreas",
+        "timestamp": 1712238729
+    }
+]
